@@ -29,8 +29,10 @@
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
+    "@fontsource/geist-sans": "^5.2.5",
     "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^22.10.7",
+    "satori": "^0.26.0",
     "tsx": "^4.19.2",
     "vitest": "^2.1.8"
   },
