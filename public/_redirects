@@ -1,0 +1,6 @@
+# Cloudflare Pages redirects
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+# Astro's sitemap integration emits sitemap-index.xml; map the conventional
+# /sitemap.xml to it so both URLs work.
+/sitemap.xml  /sitemap-index.xml  301
