@@ -15,23 +15,48 @@ export const etsyFeeCalculator: CalculatorConfig = {
   intro:
     "Calculate Etsy seller fees on a sale and see what lands in your bank. Enter your item price and shipping to break down the listing fee, 6.5% transaction fee, payment processing and Offsite Ads — and add your cost to see real profit.",
 
+  // Cluster from the user's exports (etsy fee calculator.csv + etsy fees.csv),
+  // all relevant terms vol >= 90.
   keywords: {
-    primary: "etsy fee calculator", // vol 2,900
+    primary: "etsy fee calculator", // 2,900
     secondary: [
       "etsy charges calculator", // 2,900
+      "etsy fees", // 2,900
+      "etsy seller fees", // 2,900
+      "etsy sales fees", // 2,900
+      "etsy sale fee", // 2,900
+      "fees for etsy sellers", // 2,900
       "etsy calculator", // 1,000
       "etsy profit calculator", // 880
       "etsy fees calculator", // 480
       "etsy price calculator", // 320
     ],
     longTail: [
-      "etsy seller fees", // 2,900
-      "etsy fees", // 2,900
+      "etsy inc seller fees", // 2,900
+      "etsy shop cost", // 720
+      "etsy charges for selling", // 720
+      "cost for etsy shop", // 720
+      "cost for etsy store", // 720
+      "etsy charge to sell", // 720
       "etsy listing fee", // 590
-      "etsy transaction fee", // 170
-      "etsy payment processing fee",
+      "etsy payments", // 590
+      "cost to list on etsy", // 590
+      "etsy pricing", // 480
+      "etsy costs", // 320
       "cost to sell on etsy", // 320
+      "etsy commissions", // 320
+      "etsy cost to sell", // 210
+      "etsy shop fees", // 210
+      "etsy shop charges", // 210
+      "fees for etsy shop", // 210
+      "etsy payment processing", // 170
+      "etsy percentage fee", // 170
+      "etsy transaction fee", // 170
+      "etsy monthly fee", // 140
+      "etsy ads cost", // 140
+      "etsy monthly cost", // 140
       "etsy commission rates", // 110
+      "etsy charges", // 90
       "how much does etsy take per sale",
     ],
     competition: "M",

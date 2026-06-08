@@ -15,22 +15,47 @@ export const paypalFeeCalculator: CalculatorConfig = {
   intro:
     "Calculate how much PayPal charges on a payment and what you'll actually receive. Choose the transaction type, add the international surcharge, or work backwards to see what to charge so you keep a target amount after PayPal's fees.",
 
+  // Cluster from the user's export (paypal keywords.csv), all relevant
+  // fee/calculator terms vol >= 90 (currency-exchange terms excluded — that's a
+  // separate converter tool, a future page).
   keywords: {
-    primary: "paypal fee calculator", // vol 18,100
+    primary: "paypal fee calculator", // 18,100
     secondary: [
       "paypal charges calculator", // 18,100
+      "paypal cost calculator", // 18,100
+      "paypal commission calculator", // 18,100
+      "paypal price calculator", // 18,100
+      "paypal rate calculator", // 18,100
+      "paypal service fee calculator", // 18,100
+      "estimate paypal fees", // 18,100
+      "paypal fee converter", // 18,100
       "paypal calculator", // 4,400
       "paypal estimator", // 4,400
       "paypal goods and services fee calculator", // 1,600
-      "paypal commission calculator", // 18,100
     ],
     longTail: [
-      "estimate paypal fees", // 18,100
+      "calculate pp fees", // 18,100
+      "fee calculator for paypal", // 18,100
+      "figure out paypal fees", // 18,100
+      "paypal calculate fee", // 18,100
+      "paypal fee cal", // 18,100
+      "paypal service charge calculator", // 18,100
+      "paypalcalculator", // 4,400
       "paypal g&s fee calculator", // 880
+      "paypal goods and services calculator", // 880
+      "goods and services paypal calculator", // 880
+      "paypal gs fee calculator", // 880
+      "paypal g&s calculator", // 720
+      "paypal gs calculator", // 720
+      "wise paypal fee calculator", // 480
       "paypal fee calculator international", // 320
       "paypal invoice fee calculator", // 260
-      "paypal transaction fees calculator", // 110
       "paypal tax calculator", // 170
+      "online paypal fee calculator", // 170
+      "paypal instant transfer fee calculator", // 140
+      "paypal transaction fees calculator", // 110
+      "calculate paypal transaction fee", // 110
+      "paypal invoice calculator", // 110
       "how much does paypal charge to receive money",
     ],
     competition: "M",

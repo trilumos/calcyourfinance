@@ -17,28 +17,52 @@ export const stripeFeeCalculator: CalculatorConfig = {
   intro:
     "Calculate Stripe fees on any payment and see what lands in your account. Pick your country, include international cards or currency conversion, or flip it around to find what to charge so you receive a target amount after Stripe's processing fees.",
 
+  // Cluster built from the user's Google Keyword Planner exports
+  // (stripe fee calculator.csv + stripe fees.csv), all relevant terms vol >= 90.
   keywords: {
-    primary: "stripe fee calculator", // vol 1,600
+    primary: "stripe fee calculator", // 1,600
     secondary: [
       "calculate stripe fees", // 1,600
       "stripe fees", // 6,600
+      "fees for stripe", // 6,600
+      "stripe service charge", // 6,600
       "stripe processing fees", // 2,400
-      "stripe transaction fee", // 1,000
+      "stripe pricing", // 3,600
+      "stripe cost", // 3,600
+      "stripe rates", // 3,600
       "stripe credit card processing fees", // 1,300
       "stripe payment processing fees", // 1,300
+      "stripe transaction fee", // 1,000
+      "stripe charges", // 880
     ],
     longTail: [
+      "stripe payment fees", // 1,000
+      "stripe credit card fees", // 1,000
+      "stripe cc fees", // 1,000
+      "stripe payment charges", // 1,000
+      "stripe payment cost", // 1,000
+      "stripe transaction charges", // 1,000
+      "stripe charge fee", // 880
       "stripe fees per transaction", // 480
-      "how much does stripe charge per transaction",
-      "stripe pricing", // 3,600
-      "stripe charges", // 880
-      "stripe fee calculator international",
-      "stripe currency conversion fee", // 110
       "stripe percentage fee", // 260
+      "stripe invoice fee", // 260
+      "stripe invoice fees", // 170
+      "stripe merchant fees", // 140
+      "stripe merchant rates", // 140
+      "stripe monthly fee", // 140
+      "stripe surcharge", // 110
+      "stripe currency conversion", // 110
+      "stripe commission", // 90
+      "stripe service fee", // 90
+      "stripe card fees", // 90
+      "stripe card processing fees", // 90
       "stripe cost per transaction", // 90
+      "stripe card charges", // 90
+      "stripe account cost", // 90
+      "how much does stripe charge per transaction",
     ],
     competition: "M",
-    estVolume: 1600,
+    estVolume: 6600,
     intent: "tool",
   },
 
