@@ -1,6 +1,11 @@
 # Cloudflare Pages headers — security + caching
 # https://developers.cloudflare.com/pages/configuration/headers/
 
+# Keep the preview (*.pages.dev) domain out of search results so only the
+# canonical calcyourfinance.com gets indexed.
+https://calcyourfinance.pages.dev/*
+  X-Robots-Tag: noindex
+
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
