@@ -2,6 +2,7 @@
 import { SITE } from "../config/site";
 import { CATEGORY_META } from "../calculators/_types";
 import { activeCategories } from "../calculators";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 
 const cats = activeCategories().map((c) => CATEGORY_META[c]);
 ---
@@ -17,6 +18,7 @@ const cats = activeCategories().map((c) => CATEGORY_META[c]);
           <a href={`/${c.slug}`} class="text-[14px] font-medium text-body no-underline hover:text-ink">{c.label}</a>
         ))}
       </nav>
+      <LanguageSwitcher />
       <button
         type="button"
         id="theme-toggle"

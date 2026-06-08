@@ -1,0 +1,132 @@
+---
+/**
+ * On-demand language switcher (PLAN: multi-country usability).
+ * Uses Google Translate's element to translate the page client-side when a
+ * visitor chooses a language. To protect Core Web Vitals, Google's script is
+ * lazy-loaded — only for sessions that have actually selected a language
+ * (English visitors never load it). Choice persists via the `googtrans` cookie.
+ */
+const langs = [
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" },
+  { code: "fr", label: "Français" },
+  { code: "de", label: "Deutsch" },
+  { code: "pt", label: "Português" },
+  { code: "it", label: "Italiano" },
+  { code: "nl", label: "Nederlands" },
+  { code: "hi", label: "हिन्दी" },
+  { code: "ar", label: "العربية" },
+  { code: "zh-CN", label: "中文" },
+  { code: "ja", label: "日本語" },
+  { code: "ko", label: "한국어" },
+  { code: "id", label: "Bahasa Indonesia" },
+  { code: "tl", label: "Filipino" },
+  { code: "ms", label: "Bahasa Melayu" },
+  { code: "vi", label: "Tiếng Việt" },
+  { code: "th", label: "ไทย" },
+  { code: "tr", label: "Türkçe" },
+  { code: "pl", label: "Polski" },
+  { code: "ru", label: "Русский" },
+];
+const included = langs
+  .filter((l) => l.code !== "en")
+  .map((l) => l.code)
+  .join(",");
+---
+
+<div class="relative inline-flex items-center" translate="no">
+  <svg
+    class="pointer-events-none absolute left-2 size-4 text-mute"
+    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="10"></circle>
+    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+  </svg>
+  <select
+    id="lang-select"
+    aria-label="Translate this page"
+    class="field-select h-9 cursor-pointer rounded-md border border-hairline bg-canvas py-0 pl-7 pr-7 text-[13px] text-body hover:border-hairline-strong hover:text-ink"
+  >
+    {langs.map((l) => <option value={l.code}>{l.label}</option>)}
+  </select>
+</div>
+
+<!-- Hidden mount point for Google Translate -->
+<div id="google_translate_element" class="sr-only" aria-hidden="true"></div>
+
+<script is:inline define:vars={{ included }}>
+  (function () {
+    function getCookie(n) {
+      var m = document.cookie.match("(^|;)\\s*" + n + "\\s*=\\s*([^;]+)");
+      return m ? m.pop() : "";
+    }
+    function currentLang() {
+      var c = getCookie("googtrans");
+      if (c) {
+        var p = c.split("/");
+        return p[2] || "en";
+      }
+      return "en";
+    }
+    function loadGoogle() {
+      if (window.__gtLoaded) return;
+      window.__gtLoaded = true;
+      window.googleTranslateElementInit = function () {
+        /* global google */
+        new google.translate.TranslateElement(
+          { pageLanguage: "en", includedLanguages: included, autoDisplay: false },
+          "google_translate_element"
+        );
+      };
+      var s = document.createElement("script");
+      s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      s.async = true;
+      document.body.appendChild(s);
+    }
+
+    var sel = document.getElementById("lang-select");
+    if (sel) {
+      sel.value = currentLang();
+      sel.addEventListener("change", function () {
+        var lang = sel.value;
+        var host = location.hostname;
+        var expire = "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        document.cookie = "googtrans=; path=/" + expire;
+        document.cookie = "googtrans=; path=/; domain=." + host + expire;
+        if (lang !== "en") {
+          document.cookie = "googtrans=/en/" + lang + "; path=/";
+          document.cookie = "googtrans=/en/" + lang + "; path=/; domain=." + host;
+        }
+        location.reload();
+      });
+    }
+
+    // Only pull in Google's script when this session is already translated.
+    if (currentLang() !== "en") loadGoogle();
+  })();
+</script>
+
+<!-- Hide Google Translate's injected banner/tooltip chrome. -->
+<style is:global>
+  .goog-te-banner-frame,
+  .goog-te-gadget-icon,
+  #goog-gt-tt,
+  .goog-te-balloon-frame {
+    display: none !important;
+  }
+  .skiptranslate iframe {
+    display: none !important;
+  }
+  body {
+    top: 0 !important;
+    position: static !important;
+  }
+  .goog-text-highlight {
+    background: none !important;
+    box-shadow: none !important;
+  }
+  font {
+    vertical-align: inherit;
+  }
+</style>
