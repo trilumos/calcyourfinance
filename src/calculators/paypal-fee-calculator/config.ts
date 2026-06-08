@@ -10,28 +10,31 @@ export const paypalFeeCalculator: CalculatorConfig = {
   platform: "paypal",
   title: "PayPal Fee Calculator",
   metaDescription:
-    "Free PayPal fee calculator. See what PayPal takes on goods & services, checkout or micropayments and what you'll receive — US & UK rates, plus a reverse mode.",
+    "Free PayPal fee calculator. Calculate PayPal goods & services, checkout and micropayment fees and what you'll receive — US & UK, with international fees and a reverse mode.",
   h1: "PayPal Fee Calculator",
   intro:
-    "Find out exactly how much PayPal charges on a payment and what you'll actually receive. Choose the transaction type, add the international surcharge, or work backwards to see what to charge so you keep a target amount.",
+    "Calculate how much PayPal charges on a payment and what you'll actually receive. Choose the transaction type, add the international surcharge, or work backwards to see what to charge so you keep a target amount after PayPal's fees.",
 
   keywords: {
-    primary: "paypal fee calculator",
+    primary: "paypal fee calculator", // vol 18,100
     secondary: [
-      "paypal fees calculator",
-      "paypal goods and services fee calculator",
-      "how much does paypal charge",
-      "paypal transaction fee calculator",
+      "paypal charges calculator", // 18,100
+      "paypal calculator", // 4,400
+      "paypal estimator", // 4,400
+      "paypal goods and services fee calculator", // 1,600
+      "paypal commission calculator", // 18,100
     ],
     longTail: [
-      "paypal fee calculator uk",
-      "how much does paypal charge for $100",
-      "paypal goods and services fee",
-      "paypal fee for receiving money",
-      "how to calculate paypal fees",
-      "paypal micropayments fee calculator",
+      "estimate paypal fees", // 18,100
+      "paypal g&s fee calculator", // 880
+      "paypal fee calculator international", // 320
+      "paypal invoice fee calculator", // 260
+      "paypal transaction fees calculator", // 110
+      "paypal tax calculator", // 170
+      "how much does paypal charge to receive money",
     ],
     competition: "M",
+    estVolume: 18100,
     intent: "tool",
   },
 

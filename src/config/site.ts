@@ -9,7 +9,7 @@ export const SITE = {
   url: "https://calcyourfinance.com",
   tagline: "Free finance & e-commerce calculators",
   description:
-    "Free, fast calculators for e-commerce fees, payment processing, AI/API costs, freelancing, and personal finance. No signup. Works on mobile.",
+    "Free fee calculators for Stripe, PayPal, Etsy and more. Instantly calculate payment processing fees, seller fees and exactly what you keep — cited, dated rates. No signup.",
   locale: "en_US",
   language: "en",
 

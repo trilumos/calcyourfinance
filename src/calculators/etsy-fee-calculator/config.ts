@@ -10,28 +10,32 @@ export const etsyFeeCalculator: CalculatorConfig = {
   platform: "etsy",
   title: "Etsy Fee Calculator",
   metaDescription:
-    "Free Etsy fee calculator. See your exact selling fees — listing, transaction, processing and Offsite Ads — plus payout and profit. US, UK, EU, CA, AU.",
+    "Free Etsy fee calculator. Calculate Etsy seller fees — listing, transaction, payment processing and Offsite Ads — plus your payout and profit. US, UK, EU, CA, AU.",
   h1: "Etsy Fee Calculator",
   intro:
-    "See exactly what Etsy takes on a sale and what lands in your bank. Enter your item price and shipping to break down the listing fee, 6.5% transaction fee, payment processing and Offsite Ads — and add your cost to see real profit.",
+    "Calculate Etsy seller fees on a sale and see what lands in your bank. Enter your item price and shipping to break down the listing fee, 6.5% transaction fee, payment processing and Offsite Ads — and add your cost to see real profit.",
 
   keywords: {
-    primary: "etsy fee calculator",
+    primary: "etsy fee calculator", // vol 2,900
     secondary: [
-      "etsy fees calculator",
-      "etsy profit calculator",
-      "etsy selling fees calculator",
-      "how much does etsy take",
+      "etsy charges calculator", // 2,900
+      "etsy calculator", // 1,000
+      "etsy profit calculator", // 880
+      "etsy fees calculator", // 480
+      "etsy price calculator", // 320
     ],
     longTail: [
-      "etsy fee calculator uk",
+      "etsy seller fees", // 2,900
+      "etsy fees", // 2,900
+      "etsy listing fee", // 590
+      "etsy transaction fee", // 170
+      "etsy payment processing fee",
+      "cost to sell on etsy", // 320
+      "etsy commission rates", // 110
       "how much does etsy take per sale",
-      "etsy fees on $100 sale",
-      "etsy transaction fee calculator",
-      "etsy offsite ads fee calculator",
-      "etsy profit margin calculator",
     ],
     competition: "M",
+    estVolume: 2900,
     intent: "tool",
   },
 
@@ -121,6 +125,10 @@ We keep Etsy's rates in a single dated source file and stamp the page with a "fe
     {
       q: "How much does Etsy take per sale?",
       a: "Etsy charges a $0.20 listing fee, a 6.5% transaction fee on the item price plus shipping, and payment processing (3% + $0.25 in the US). On a $25 item with $5 shipping that's $3.30 in fees, so you keep $26.70 — roughly 11% of the sale. Offsite Ads, if applicable, add more.",
+    },
+    {
+      q: "What are the seller fees on Etsy?",
+      a: "Etsy's seller fees are: a $0.20 listing fee per item sold, a 6.5% transaction fee on the total the buyer pays (including shipping), and a payment processing fee that varies by country (3% + $0.25 in the US, 4% + 20p in the UK). Optional costs include Offsite Ads (12–15%, capped at $100/order) and Etsy Ads if you advertise. There is no monthly subscription on the standard plan. This calculator adds all the applicable seller fees together for you.",
     },
     {
       q: "What are Etsy's fees on a $100 sale?",

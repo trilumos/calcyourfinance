@@ -12,28 +12,33 @@ export const stripeFeeCalculator: CalculatorConfig = {
   platform: "stripe",
   title: "Stripe Fee Calculator",
   metaDescription:
-    "Free Stripe fee calculator. See exactly what Stripe takes and what you keep on any sale — US, UK, EU, Canada, Australia, India and more, plus a reverse mode.",
+    "Free Stripe fee calculator. Calculate Stripe processing fees and what you keep on any sale — US, UK, EU, India and more, with transaction fees, international cards and a reverse mode.",
   h1: "Stripe Fee Calculator",
   intro:
-    "Work out the exact Stripe processing fee on a payment and what lands in your account. Pick your country, toggle international cards or currency conversion, or flip it around to find what to charge so you receive a target amount.",
+    "Calculate Stripe fees on any payment and see what lands in your account. Pick your country, include international cards or currency conversion, or flip it around to find what to charge so you receive a target amount after Stripe's processing fees.",
 
   keywords: {
-    primary: "stripe fee calculator",
+    primary: "stripe fee calculator", // vol 1,600
     secondary: [
-      "stripe fees calculator",
-      "stripe processing fee calculator",
-      "stripe payment fee calculator",
-      "how much does stripe charge",
+      "calculate stripe fees", // 1,600
+      "stripe fees", // 6,600
+      "stripe processing fees", // 2,400
+      "stripe transaction fee", // 1,000
+      "stripe credit card processing fees", // 1,300
+      "stripe payment processing fees", // 1,300
     ],
     longTail: [
-      "stripe fee calculator uk",
+      "stripe fees per transaction", // 480
       "how much does stripe charge per transaction",
-      "stripe fees on $100",
-      "stripe international card fee calculator",
-      "how to calculate stripe fees",
-      "what does stripe charge to receive $1000",
+      "stripe pricing", // 3,600
+      "stripe charges", // 880
+      "stripe fee calculator international",
+      "stripe currency conversion fee", // 110
+      "stripe percentage fee", // 260
+      "stripe cost per transaction", // 90
     ],
     competition: "M",
+    estVolume: 1600,
     intent: "tool",
   },
 
@@ -151,6 +156,10 @@ Payment pricing changes, so we store every rate in a single, dated source file a
     {
       q: "How much does Stripe charge per transaction?",
       a: "In the US, Stripe's standard rate is 2.9% + $0.30 per successful card charge. Rates differ by country (for example 1.5% + 20p in the UK and 1.7% + A$0.30 in Australia), and international cards or currency conversion add surcharges. There are no setup or monthly fees on standard pricing.",
+    },
+    {
+      q: "What are Stripe's credit card processing fees?",
+      a: "Stripe's credit card processing fees are charged per successful transaction as a percentage plus a small fixed fee — 2.9% + $0.30 in the US for standard online card payments. The same rate covers Visa, Mastercard, American Express and Discover; there are no separate monthly or card-network charges on standard pay-as-you-go pricing. Enter an amount above to see the exact processing fee and your net payout.",
     },
     {
       q: "What are Stripe's fees on $100?",
