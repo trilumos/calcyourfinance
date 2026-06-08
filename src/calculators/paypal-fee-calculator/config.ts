@@ -1,0 +1,159 @@
+import type { CalculatorConfig, InputValues, ComputeCtx, CalcResult } from "../_types";
+import { paypalFees } from "../../config/fees";
+import { computePayPalFee } from "./formula";
+
+export const paypalFeeCalculator: CalculatorConfig = {
+  slug: "paypal-fee-calculator",
+  kind: "single",
+  category: "payment-fees",
+
+  platform: "paypal",
+  title: "PayPal Fee Calculator",
+  metaDescription:
+    "Free PayPal fee calculator. See what PayPal takes on goods & services, checkout or micropayments and what you'll receive — US & UK rates, plus a reverse mode.",
+  h1: "PayPal Fee Calculator",
+  intro:
+    "Find out exactly how much PayPal charges on a payment and what you'll actually receive. Choose the transaction type, add the international surcharge, or work backwards to see what to charge so you keep a target amount.",
+
+  keywords: {
+    primary: "paypal fee calculator",
+    secondary: [
+      "paypal fees calculator",
+      "paypal goods and services fee calculator",
+      "how much does paypal charge",
+      "paypal transaction fee calculator",
+    ],
+    longTail: [
+      "paypal fee calculator uk",
+      "how much does paypal charge for $100",
+      "paypal goods and services fee",
+      "paypal fee for receiving money",
+      "how to calculate paypal fees",
+      "paypal micropayments fee calculator",
+    ],
+    competition: "M",
+    intent: "tool",
+  },
+
+  countries: { supported: ["US", "GB"], default: "US" },
+
+  inputs: [
+    {
+      id: "mode",
+      label: "What do you want to find?",
+      type: "select",
+      default: "charge",
+      options: [
+        { value: "charge", label: "I'm receiving this amount" },
+        { value: "net", label: "I want to keep this amount" },
+      ],
+    },
+    {
+      id: "amount",
+      label: "Amount",
+      type: "currency",
+      default: 100,
+      min: 0,
+      help: "The payment amount, or the amount you want to keep.",
+    },
+    {
+      id: "txType",
+      label: "Transaction type",
+      type: "select",
+      default: "goods",
+      options: [
+        { value: "goods", label: "Goods & Services (receive money)" },
+        { value: "checkout", label: "PayPal Checkout / online store" },
+        { value: "micro", label: "Micropayments (small sales)" },
+      ],
+      help: "Rates vary by product. UK uses one standard commercial rate.",
+    },
+    {
+      id: "international",
+      label: "International / cross-border payment",
+      type: "toggle",
+      default: false,
+      help: "Sender is in another country.",
+    },
+  ],
+
+  compute(values: InputValues, ctx: ComputeCtx): CalcResult {
+    const country = paypalFees[ctx.country] ?? paypalFees.US!;
+    const variant =
+      country.variants.find((v) => v.id === values.txType) ?? country.variants[0];
+
+    const r = computePayPalFee({
+      amount: Number(values.amount) || 0,
+      mode: values.mode === "net" ? "net" : "charge",
+      percent: variant.percent,
+      fixed: variant.fixed,
+      crossBorderPercent: country.crossBorderPercent,
+      international: Boolean(values.international),
+    });
+
+    return {
+      headline: {
+        label: "You receive",
+        display: ctx.formatCurrency(r.net),
+        sub: `Effective fee ${ctx.formatPercent(r.effectiveRate)} of the payment`,
+      },
+      rows: [
+        { label: "Payment amount", display: ctx.formatCurrency(r.charge) },
+        {
+          label: `PayPal fee (${ctx.formatPercent(variant.percent)} + ${ctx.formatCurrency(variant.fixed)})`,
+          display: ctx.formatCurrency(r.feeAmount),
+          kind: "deduction",
+          hint: r.ratePercent !== variant.percent ? `${ctx.formatPercent(r.ratePercent)} with cross-border` : undefined,
+        },
+        { label: "You receive", display: ctx.formatCurrency(r.net), kind: "net" },
+      ],
+    };
+  },
+
+  howItWorks:
+    "PayPal charges a percentage of the payment plus a small fixed fee on every commercial transaction. The percentage depends on the product: in the US, receiving money for goods & services is 2.99% + $0.49, PayPal Checkout is 3.49% + $0.49, and micropayments are 4.99% + $0.09. In the UK the standard commercial rate is 2.9% + £0.30.\n\nThe fee is: amount × rate% + fixed fee. International (cross-border) payments add a surcharge — about +1.5% in the US and +1.29%/+1.99% in the UK depending on where the sender is. To find what to ask for so you keep a target amount, we gross it up: charge = (target + fixed) ÷ (1 − rate).\n\nThese are PayPal's published standard rates; some accounts qualify for different pricing, and currency conversion can add a further fee.",
+
+  workedExample: {
+    scenario: "A US customer sends you $100 for goods & services.",
+    steps: [
+      { label: "Payment amount", value: "$100.00" },
+      { label: "Percentage fee (2.99%)", value: "$2.99" },
+      { label: "Fixed fee", value: "$0.49" },
+      { label: "Total PayPal fee", value: "$3.48" },
+    ],
+    result: "You receive $96.52",
+  },
+
+  faqs: [
+    {
+      q: "How much does PayPal charge to receive money?",
+      a: "For goods & services payments in the US, PayPal charges 2.99% + $0.49. So on $100 you receive $96.52. PayPal Checkout is 3.49% + $0.49 and micropayments are 4.99% + $0.09. In the UK the standard rate is 2.9% + £0.30.",
+    },
+    {
+      q: "How much does PayPal charge for $100?",
+      a: "On a $100 US goods & services payment, PayPal's fee is 2.99% + $0.49 = $3.48, leaving you $96.52. Use the calculator above for other amounts, transaction types and countries.",
+    },
+    {
+      q: "Is there a fee for sending PayPal to friends and family?",
+      a: "Sending money to friends and family within the same country with a linked bank or PayPal balance is usually free. Fees apply to goods & services payments and to card-funded or cross-border transfers. This calculator covers commercial (goods & services) fees.",
+    },
+    {
+      q: "How do I calculate what to charge so I receive an exact amount?",
+      a: "Switch to 'I want to keep this amount.' The calculator grosses up the request using charge = (target + fixed) ÷ (1 − rate). For example, to keep $100 on a US goods & services payment you'd ask for about $103.59.",
+    },
+    {
+      q: "Does PayPal charge extra for international payments?",
+      a: "Yes. Cross-border payments add a surcharge on top of the domestic rate — roughly +1.5% in the US. Currency conversion can add a further fee. Toggle 'international' above to include the surcharge.",
+    },
+  ],
+
+  related: ["stripe-fee-calculator", "etsy-fee-calculator"],
+
+  sources: [
+    { label: "PayPal — US merchant fees", url: "https://www.paypal.com/us/webapps/mpp/merchant-fees" },
+    { label: "PayPal — UK business fees", url: "https://www.paypal.com/uk/business/paypal-business-fees" },
+  ],
+
+  feesVerifiedOn: "2026-06-08",
+  lastUpdated: "2026-06-08",
+};

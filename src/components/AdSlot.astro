@@ -1,0 +1,28 @@
+---
+/**
+ * Toggleable ad slot (PLAN §8). Reserves fixed space so enabling ads later
+ * causes ZERO layout shift. One config flag (SITE.ads) flips the whole site
+ * between none / AdSense / Ezoic / Mediavine.
+ */
+import { SITE } from "../config/site";
+
+interface Props {
+  slot: "header" | "in-content" | "footer";
+  minHeight?: number;
+}
+const { slot, minHeight = 280 } = Astro.props;
+const enabled = SITE.ads.enabled && SITE.ads.provider !== "none";
+---
+
+{
+  enabled && (
+    <aside
+      class="my-6 flex items-center justify-center rounded-lg border border-dashed border-hairline-strong bg-canvas-soft"
+      style={`min-height:${minHeight}px`}
+      data-slot={slot}
+      data-provider={SITE.ads.provider}
+    >
+      <div data-ad-slot={slot} />
+    </aside>
+  )
+}

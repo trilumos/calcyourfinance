@@ -1,0 +1,30 @@
+---
+/** FAQ section. JSON-LD FAQPage is emitted at the page level (lib/seo). */
+import type { Faq } from "../calculators/_types";
+interface Props {
+  faqs: Faq[];
+}
+const { faqs } = Astro.props;
+---
+
+{
+  faqs.length > 0 && (
+    <section class="mt-12" aria-labelledby="faq-heading">
+      <p class="eyebrow">FAQ</p>
+      <h2 id="faq-heading" class="mb-4 mt-1">Frequently asked questions</h2>
+      <div class="border-t border-hairline">
+        {faqs.map((f) => (
+          <details class="group border-b border-hairline">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-medium text-ink">
+              {f.q}
+              <span class="font-mono text-[20px] leading-none text-mute transition group-open:rotate-45">+</span>
+            </summary>
+            <div class="max-w-[42rem] pb-4 text-body">
+              <p>{f.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  )
+}

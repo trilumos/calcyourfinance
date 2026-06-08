@@ -1,0 +1,148 @@
+---
+/**
+ * CalculatorShell — shared page template (PLAN §4). Order: breadcrumbs → tool
+ * (above fold) → how-it-works → worked example → related → FAQ → sources.
+ * Computes the initial result server-side (SEO + zero CLS). Applies a subtle
+ * theme-aware platform accent to the result number + a labelled chip.
+ */
+import type { CalculatorConfig, ComputeCtx, InputValues } from "../calculators/_types";
+import { CATEGORY_META } from "../calculators/_types";
+import { relatedCalculators } from "../calculators";
+import { getPlatform } from "../config/platforms";
+import { formatCurrency, formatNumber, formatPercent } from "../lib/money";
+
+import Breadcrumbs from "./Breadcrumbs.astro";
+import CalculatorIsland from "./CalculatorIsland.tsx";
+import FAQ from "./FAQ.astro";
+import RelatedCalculators from "./RelatedCalculators.astro";
+import AdSlot from "./AdSlot.astro";
+
+interface Props {
+  config: CalculatorConfig;
+}
+const { config } = Astro.props;
+
+const cat = CATEGORY_META[config.category];
+const platform = getPlatform(config.platform);
+const initialCountry = config.countries?.default ?? "US";
+
+const ctx: ComputeCtx = {
+  country: initialCountry,
+  formatCurrency: (v, opts) => formatCurrency(v, initialCountry, opts),
+  formatPercent: (v, dp) => formatPercent(v, dp),
+  formatNumber: (v, dp) => formatNumber(v, initialCountry, dp),
+};
+const defaults: InputValues = Object.fromEntries(
+  config.inputs.map((i) => [i.id, i.default]),
+);
+const initialResult = config.compute(defaults, ctx);
+
+const related = relatedCalculators(config);
+const howItWorksParas = config.howItWorks.split("\n\n");
+
+const accentStyle = platform
+  ? `--accent-l:${platform.color};--accent-d:${platform.colorDark ?? platform.color}`
+  : undefined;
+---
+
+<article class="py-4 pb-12">
+  <div class="container mx-auto max-w-[64rem] px-4">
+    <Breadcrumbs
+      items={[
+        { label: "Home", href: "/" },
+        { label: cat.label, href: `/${cat.slug}` },
+        { label: config.title },
+      ]}
+    />
+
+    <header class="mb-4 mt-3 max-w-[52rem]">
+      <div class="mb-2 flex flex-wrap items-center gap-3">
+        <p class="eyebrow">{cat.label}</p>
+        {
+          platform && (
+            <span
+              class="calc-accent inline-flex items-center gap-1.5 rounded-full border border-hairline bg-canvas px-2.5 py-0.5 text-[12px] font-medium text-body"
+              style={accentStyle}
+            >
+              <span class="size-2 rounded-full bg-accent" />
+              {platform.name}
+            </span>
+          )
+        }
+        {
+          config.feesVerifiedOn && (
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-canvas-soft px-2.5 py-0.5 text-[12px] text-body">
+              Fees verified {config.feesVerifiedOn}
+            </span>
+          )
+        }
+      </div>
+      <h1>{config.h1}</h1>
+      <p class="mt-2 max-w-[42rem] text-[15px] text-body">{config.intro}</p>
+    </header>
+
+    <!-- THE TOOL, above the fold -->
+    <section class="calc-accent mb-5" aria-label="Calculator" style={accentStyle}>
+      <CalculatorIsland
+        client:load
+        slug={config.slug}
+        inputs={config.inputs}
+        initialResult={initialResult}
+        countryCodes={config.countries?.supported}
+        initialCountry={initialCountry}
+      />
+    </section>
+
+    <AdSlot slot="in-content" />
+
+    <div class="prose">
+      <section aria-labelledby="how-heading">
+        <p class="eyebrow">The method</p>
+        <h2 id="how-heading" class="mt-1">How it works</h2>
+        {howItWorksParas.map((p) => <p>{p}</p>)}
+      </section>
+
+      <section class="mt-8" aria-labelledby="example-heading">
+        <h2 id="example-heading">Worked example</h2>
+        <p>{config.workedExample.scenario}</p>
+        <div class="mt-4 max-w-[42rem] rounded-xl border border-hairline border-l-[3px] border-l-accent bg-canvas p-5">
+          <dl>
+            {
+              config.workedExample.steps.map((s) => (
+                <div class="flex justify-between gap-4 border-b border-dashed border-hairline py-2">
+                  <dt class="text-body">{s.label}</dt>
+                  <dd class="tnum font-medium text-ink">{s.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <p class="tnum mt-4 text-[18px] font-semibold text-accent">
+            {config.workedExample.result}
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <RelatedCalculators items={related} />
+
+    <div class="prose">
+      <FAQ faqs={config.faqs} />
+
+      <section class="mt-12" aria-labelledby="sources-heading">
+        <h2 id="sources-heading">Sources &amp; methodology</h2>
+        <ul>
+          {
+            config.sources.map((s) => (
+              <li>
+                <a href={s.url} rel="nofollow noopener" target="_blank">
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-4 font-mono text-[13px] text-mute">Last updated {config.lastUpdated}.</p>
+      </section>
+    </div>
+  </div>
+</article>

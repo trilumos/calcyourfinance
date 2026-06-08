@@ -1,0 +1,34 @@
+---
+import { SITE } from "../config/site";
+import { CATEGORY_META } from "../calculators/_types";
+import { activeCategories } from "../calculators";
+
+const cats = activeCategories().map((c) => CATEGORY_META[c]);
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 border-t border-hairline bg-canvas-soft pb-6 pt-12">
+  <div class="container mx-auto grid max-w-[64rem] gap-8 px-4 sm:grid-cols-[1.2fr_2fr]">
+    <div>
+      <a href="/" class="text-[17px] font-semibold tracking-tight text-ink no-underline">CalcYourFinance</a>
+      <p class="mt-1.5 text-[13px] text-mute">{SITE.tagline}.</p>
+    </div>
+    <nav class="grid grid-cols-2 gap-6" aria-label="Footer">
+      <div>
+        <h2 class="eyebrow mb-2.5">Calculators</h2>
+        {cats.map((c) => (
+          <a href={`/${c.slug}`} class="block py-0.5 text-[13px] text-body no-underline hover:text-ink">{c.label}</a>
+        ))}
+      </div>
+      <div>
+        <h2 class="eyebrow mb-2.5">About</h2>
+        <a href="/about" class="block py-0.5 text-[13px] text-body no-underline hover:text-ink">About &amp; methodology</a>
+        <a href="/methodology" class="block py-0.5 text-[13px] text-body no-underline hover:text-ink">How we verify</a>
+      </div>
+    </nav>
+  </div>
+  <div class="container mx-auto mt-6 flex max-w-[64rem] flex-wrap justify-between gap-2 border-t border-dashed border-hairline px-4 pt-4">
+    <p class="max-w-[46rem] text-[13px] text-mute">{SITE.disclaimer}</p>
+    <p class="font-mono text-[13px] text-mute">© {year} {SITE.name}</p>
+  </div>
+</footer>

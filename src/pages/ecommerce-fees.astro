@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CategoryHub from "../components/CategoryHub.astro";
+import { CATEGORY_META } from "../calculators/_types";
+
+const meta = CATEGORY_META["ecommerce-fees"];
+---
+
+<BaseLayout
+  title={`${meta.label} Calculators | CalcYourFinance`}
+  description={meta.blurb}
+  canonicalPath="/ecommerce-fees"
+>
+  <CategoryHub category="ecommerce-fees" />
+</BaseLayout>

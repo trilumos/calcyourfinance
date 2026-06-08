@@ -1,0 +1,109 @@
+---
+/**
+ * BaseLayout — every <head> SEO concern in one place (PLAN §6):
+ * title, meta description, canonical, Open Graph, Twitter card, JSON-LD.
+ */
+import "../styles/global.css";
+// Self-hosted Geist (variable woff2) — best for Core Web Vitals.
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+
+import { SITE } from "../config/site";
+import { organizationSchema, absUrl } from "../lib/seo";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string; // e.g. "/stripe-fee-calculator"
+  ogImage?: string; // absolute URL
+  schemas?: unknown[]; // JSON-LD objects
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  ogImage = absUrl("/og/default.png"),
+  schemas = [],
+  noindex = false,
+} = Astro.props;
+
+const canonical = absUrl(canonicalPath);
+const allSchemas = [organizationSchema(), ...schemas];
+---
+
+<!doctype html>
+<html lang={SITE.language}>
+  <head>
+    <!-- Set theme before paint (default light) to avoid any flash. -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t === "dark" || t === "light") {
+            document.documentElement.dataset.theme = t;
+          } else {
+            document.documentElement.dataset.theme = "light";
+          }
+        } catch (e) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="CYF" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={SITE.locale} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- JSON-LD -->
+    {
+      allSchemas.map((s) => (
+        <script type="application/ld+json" set:html={JSON.stringify(s)} />
+      ))
+    }
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-on-primary"
+      >Skip to content</a
+    >
+    <SiteHeader />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

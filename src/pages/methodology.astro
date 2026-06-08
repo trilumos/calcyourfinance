@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+---
+
+<BaseLayout
+  title="Our Methodology — How We Verify Fees & Formulas"
+  description="How CalcYourFinance sources platform fees, verifies rates against official pricing pages, dates them, and tests every formula."
+  canonicalPath="/methodology"
+>
+  <section class="container mx-auto max-w-[52rem] px-4 py-6 pb-16">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Methodology" }]} />
+    <h1 class="my-5">How we verify fees &amp; formulas</h1>
+    <div class="prose">
+      <h2>1. Fees come from the source</h2>
+      <p>
+        We take every rate from the platform's own published pricing or fee page —
+        not from third-party summaries. Each calculator links its sources at the
+        bottom of the page so you can check them yourself.
+      </p>
+
+      <h2>2. Everything is dated</h2>
+      <p>
+        Fees change. Each fee calculator shows a "Fees last verified" date. All rates
+        live in a single configuration file, so when a platform updates pricing we
+        change it in one place and the date refreshes everywhere it's used.
+      </p>
+
+      <h2>3. The math is tested</h2>
+      <p>
+        Each formula is a pure function with unit tests covering normal cases, edge
+        cases (zero and very large amounts), currency rounding, and the reverse
+        "what to charge to receive X" calculation. We round money explicitly to the
+        cent so results match what the platform actually deducts.
+      </p>
+
+      <h2>4. Country-aware by design</h2>
+      <p>
+        Many platforms charge different rates in different countries. Where that's
+        true, the calculator includes a country selector and the percentages, fixed
+        fees and currency formatting all update together.
+      </p>
+
+      <h2>5. Estimates, not advice</h2>
+      <p>
+        These tools are for estimation. Platforms may apply additional fees (taxes
+        such as VAT/GST, currency conversion, chargebacks, or negotiated custom
+        rates) that a general calculator can't know about. Always confirm the final
+        figure with the platform before making decisions.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

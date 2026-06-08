@@ -1,0 +1,38 @@
+{
+  "name": "calcyourfinance",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fast, config-driven finance & e-commerce calculators — calcyourfinance.com",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "keywords": "tsx scripts/build-keywords.ts"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^4.0.4",
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource-variable/geist": "^5.2.9",
+    "@fontsource-variable/geist-mono": "^5.2.8",
+    "@fontsource-variable/hanken-grotesk": "^5.2.8",
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^5.2.5",
+    "preact": "^10.25.4",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "tsx": "^4.19.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20.3.0"
+  }
+}

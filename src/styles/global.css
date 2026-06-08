@@ -1,0 +1,292 @@
+/* ===========================================================================
+   CalcYourFinance — Tailwind v4 + Geist design system (from DESIGN.md).
+   Vercel-inspired: ink-on-near-white, Geist + Geist Mono, mono eyebrows,
+   pill CTAs, subtle stacked shadows. Light by default; dark via the toggle.
+   =========================================================================== */
+@import "tailwindcss";
+
+/* Dark mode driven by the explicit [data-theme] toggle (default light). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---- Semantic color variables (swap by theme) ---------------------------- */
+:root {
+  --canvas: #ffffff;
+  --canvas-soft: #fafafa;
+  --canvas-soft-2: #f5f5f5;
+  --ink: #171717;
+  --body: #4d4d4d;
+  --mute: #888888;
+  --hairline: #ebebeb;
+  --hairline-strong: #d4d4d4;
+  --link: #0070f3;
+  --link-deep: #0761d1;
+  --error: #c50000;
+  --error-soft: #f7d4d6;
+  --primary: #171717; /* CTA ink */
+  --on-primary: #ffffff;
+  /* Per-page accent (platform brand colour); defaults to link blue. */
+  --accent: #0070f3;
+}
+
+[data-theme="dark"] {
+  --canvas: #111111;
+  --canvas-soft: #0a0a0a;
+  --canvas-soft-2: #1a1a1a;
+  --ink: #ededed;
+  --body: #a1a1a1;
+  --mute: #8f8f8f;
+  --hairline: #2a2a2a;
+  --hairline-strong: #4d4d4d;
+  --link: #3b9eff;
+  --link-deep: #6cb6ff;
+  --error: #ff6166;
+  --error-soft: #2a1416;
+  --primary: #ededed; /* polarity flip: light pill, dark text */
+  --on-primary: #0a0a0a;
+  --accent: #3b9eff;
+}
+
+/* ---- Map vars into Tailwind utilities (color-*, font-*, etc.) ------------- */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-canvas-soft: var(--canvas-soft);
+  --color-canvas-soft-2: var(--canvas-soft-2);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-mute: var(--mute);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-link: var(--link);
+  --color-link-deep: var(--link-deep);
+  --color-error: var(--error);
+  --color-error-soft: var(--error-soft);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-accent: var(--accent);
+
+  --font-sans: "Geist Variable", Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --radius-pill: 100px;
+
+  /* Subtle stacked shadows (DESIGN.md elevation ladder). */
+  --shadow-card: 0px 1px 1px rgba(0, 0, 0, 0.02), 0px 2px 2px rgba(0, 0, 0, 0.04);
+  --shadow-float: 0px 2px 2px rgba(0, 0, 0, 0.04), 0px 8px 16px -4px rgba(0, 0, 0, 0.04);
+}
+
+/* ---- Base ---------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--canvas-soft);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+
+  /* Geist display voice: weight 600 ceiling, sentence-case, negative tracking. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 600;
+    color: var(--ink);
+    text-wrap: balance;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  h1 {
+    font-size: clamp(1.85rem, 1.4rem + 1.9vw, 2.75rem);
+  }
+  h2 {
+    font-size: clamp(1.45rem, 1.2rem + 1vw, 2rem);
+    letter-spacing: -0.025em;
+  }
+  h3 {
+    font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+    letter-spacing: -0.02em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  a {
+    color: var(--link);
+    text-underline-offset: 0.16em;
+  }
+  a:hover {
+    color: var(--link-deep);
+  }
+  :focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  input,
+  button,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+/* ---- Small, stable component primitives ---------------------------------- */
+@layer components {
+  /* Mono technical eyebrow (DESIGN: caption-mono, uppercase voice). */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+
+  /* Universal card: hairline ring + subtle stacked shadow. */
+  .card {
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Buttons — marketing pill scale. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0 1.25rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+  .btn-primary:hover {
+    opacity: 0.85;
+    color: var(--on-primary);
+  }
+  .btn-secondary {
+    background: var(--canvas);
+    color: var(--ink);
+    border-color: var(--hairline-strong);
+  }
+  .btn-secondary:hover {
+    background: var(--canvas-soft-2);
+    color: var(--ink);
+  }
+
+  /* Form control. */
+  .field-control {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 0.75rem;
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    color: var(--ink);
+    font-size: 15px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    -moz-appearance: textfield;
+  }
+  .field-control:hover {
+    border-color: var(--hairline-strong);
+  }
+  .field-control:focus {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ink) 12%, transparent);
+  }
+
+  /* Select variant: field-control + chevron. */
+  .field-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    padding-right: 2.3rem;
+    cursor: pointer;
+  }
+
+  /* Theme-aware platform accent scope: text-accent → platform brand colour. */
+  .calc-accent {
+    --accent: var(--accent-l, var(--link));
+  }
+  [data-theme="dark"] .calc-accent {
+    --accent: var(--accent-d, var(--accent-l, var(--link)));
+  }
+
+  /* Readable long-form prose (no Typography plugin). */
+  .prose {
+    max-width: 42rem;
+    color: var(--body);
+    line-height: 1.7;
+  }
+  .prose :where(p, ul, ol) {
+    margin-top: 0.9rem;
+  }
+  .prose :where(h2) {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+  .prose :where(h3) {
+    margin-top: 1.35rem;
+    margin-bottom: 0.35rem;
+    color: var(--ink);
+  }
+  .prose :where(a) {
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+  }
+  .prose :where(ul, ol) {
+    padding-left: 1.25rem;
+  }
+  .prose :where(li) {
+    margin-top: 0.4rem;
+  }
+  .prose :where(strong) {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Tabular figures helper. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+}

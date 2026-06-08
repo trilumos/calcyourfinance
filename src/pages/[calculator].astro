@@ -1,0 +1,31 @@
+---
+/**
+ * Dynamic route — generates a static page for every calculator in the registry.
+ * Static page files (e.g. payment-fees.astro) take precedence; this handles
+ * all calculator slugs.
+ */
+import { calculators, getCalculator } from "../calculators";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CalculatorShell from "../components/CalculatorShell.astro";
+import { pageTitle, calculatorSchemas, ogImageUrl } from "../lib/seo";
+
+export function getStaticPaths() {
+  return calculators.map((c) => ({ params: { calculator: c.slug } }));
+}
+
+const { calculator } = Astro.params;
+const config = getCalculator(calculator!);
+if (!config) {
+  return Astro.redirect("/404");
+}
+---
+
+<BaseLayout
+  title={pageTitle(config)}
+  description={config.metaDescription}
+  canonicalPath={`/${config.slug}`}
+  ogImage={ogImageUrl(config.slug)}
+  schemas={calculatorSchemas(config)}
+>
+  <CalculatorShell config={config} />
+</BaseLayout>

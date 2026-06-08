@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { SITE } from "../config/site";
+---
+
+<BaseLayout
+  title="About CalcYourFinance"
+  description="Who builds CalcYourFinance, how we verify every fee and formula, and why you can trust the numbers."
+  canonicalPath="/about"
+>
+  <section class="container mx-auto max-w-[52rem] px-4 py-6 pb-16">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About" }]} />
+    <h1 class="my-5">About CalcYourFinance</h1>
+    <div class="prose">
+      <p>
+        CalcYourFinance builds fast, accurate calculators for the money questions
+        small businesses, sellers and freelancers actually search for — what a
+        platform's fees really cost, what you keep on a sale, and what to charge to
+        hit a target.
+      </p>
+
+      <h2>How we keep it accurate</h2>
+      <p>
+        Every fee rate is taken from the platform's official pricing page, stored in
+        one editable configuration file, and stamped with the date we last verified
+        it. When a platform changes its pricing, we update that file and the new
+        "last verified" date appears on every affected calculator.
+      </p>
+      <p>
+        Each calculator's math lives in a pure, unit-tested function. That means the
+        numbers are reproducible and we can prove they're right — not just assert it.
+        Where rates differ by country, you can pick yours and the calculation follows.
+      </p>
+
+      <h2>Who's behind it</h2>
+      <p>{SITE.author.name} — {SITE.author.role}. {SITE.author.bio}</p>
+
+      <h2>Important</h2>
+      <p class="rounded-md border-l-[3px] border-l-link bg-canvas-soft p-4 text-body">{SITE.disclaimer}</p>
+
+      <p>
+        See our <a href="/methodology">methodology page</a> for exactly how we source
+        and verify fees.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

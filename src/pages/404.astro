@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="That page doesn't exist."
+  canonicalPath="/404"
+  noindex={true}
+>
+  <section class="container mx-auto max-w-[36rem] px-4 py-20 text-center">
+    <p class="eyebrow">404</p>
+    <h1 class="my-4">We couldn't find that page.</h1>
+    <p class="mb-6 text-body">The calculator or page you're after may have moved.</p>
+    <a href="/" class="btn btn-primary">Back to all calculators</a>
+  </section>
+</BaseLayout>

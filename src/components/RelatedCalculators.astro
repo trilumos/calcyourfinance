@@ -1,0 +1,33 @@
+---
+/** Internal-linking block (PLAN §4 step 7) — critical for SEO + session depth. */
+import type { CalculatorConfig } from "../calculators/_types";
+import { CATEGORY_META } from "../calculators/_types";
+interface Props {
+  items: CalculatorConfig[];
+  heading?: string;
+}
+const { items, heading = "Related calculators" } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section class="mt-12" aria-labelledby="related-heading">
+      <p class="eyebrow">Keep calculating</p>
+      <h2 id="related-heading" class="mb-4 mt-1">{heading}</h2>
+      <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))]">
+        {items.map((c) => (
+          <li>
+            <a
+              href={`/${c.slug}`}
+              class="card flex h-full flex-col gap-1.5 p-4 no-underline transition hover:border-hairline-strong hover:shadow-float"
+            >
+              <span class="font-mono text-[11px] uppercase tracking-wide text-mute">{CATEGORY_META[c.category].label}</span>
+              <span class="font-medium text-ink">{c.title}</span>
+              <span class="mt-auto text-[13px] text-link">Open →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
