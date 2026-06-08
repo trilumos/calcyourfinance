@@ -39,6 +39,21 @@ const initialResult = config.compute(defaults, ctx);
 
 const related = relatedCalculators(config);
 const howItWorksParas = config.howItWorks.split("\n\n");
+// Parse the SEO copy: a block may be a "## Heading", a paragraph, or a
+// "## Heading\nparagraph" pair — split the heading line from its paragraph.
+const seoBlocks = config.seoContent
+  .split("\n\n")
+  .map((b) => b.trim())
+  .filter(Boolean)
+  .flatMap((b) => {
+    if (!b.startsWith("## ")) return [{ h: "", p: b }];
+    const nl = b.indexOf("\n");
+    if (nl === -1) return [{ h: b.slice(3).trim(), p: "" }];
+    return [
+      { h: b.slice(3, nl).trim(), p: "" },
+      { h: "", p: b.slice(nl + 1).trim() },
+    ];
+  });
 
 const accentStyle = platform
   ? `--accent-l:${platform.color};--accent-d:${platform.colorDark ?? platform.color}`
@@ -122,6 +137,14 @@ const accentStyle = platform
         </div>
       </section>
     </div>
+
+    <section class="prose mt-10" aria-labelledby="about-heading">
+      <p class="eyebrow">Guide</p>
+      <h2 id="about-heading" class="mt-1">About the {config.title.replace(" Calculator", "")} calculator</h2>
+      {
+        seoBlocks.map((b) => (b.h ? <h3>{b.h}</h3> : <p>{b.p}</p>))
+      }
+    </section>
 
     <RelatedCalculators items={related} />
 

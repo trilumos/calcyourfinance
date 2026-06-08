@@ -284,6 +284,35 @@ A page is "done" only when ALL of:
 
 ---
 
+## 5b. Website Checklist — verify before deploy / before each page ships
+
+**Standing rule:** every calculator page must satisfy this **before** it's pushed to GitHub
+(which auto-redeploys via Cloudflare Pages). Site-wide items are verified once before the first
+deploy and re-checked when structure changes.
+
+### Per page (every calculator)
+- [ ] **Mobile responsive** — works and looks right at 360px → desktop; large tap targets; no horizontal scroll.
+- [ ] **On-page SEO copy** — **≥ 600 words** of original content about the tool on the page
+      (`seoContent` in the config), in addition to intro / how-it-works / worked example.
+- [ ] **OG / Twitter meta tags** — title, description, canonical, `og:*`, `twitter:*`, and a
+      **resolving `og:image`** (per-page generated PNG).
+- [ ] **FAQ section with JSON-LD** — `FAQPage` schema (plus `WebApplication` + `BreadcrumbList`),
+      validated in Google's Rich Results Test.
+- [ ] Sources cited + `verifiedOn` date; "last updated" date; tested formula.
+- [ ] Internal links (related block + category hub); added to sitemap automatically.
+
+### Site-wide (before first deploy)
+- [ ] **Legal/company pages:** Privacy Policy, Terms & Conditions, About Us, Contact Us (linked in footer).
+- [ ] **Error pages:** 404 (+ generic 500/error).
+- [ ] **`robots.txt`** (allows crawl, points at sitemap).
+- [ ] **`sitemap.xml`** (auto-generated; excludes error pages).
+- [ ] **Google Analytics** (GA4) wired (gated on `SITE.analytics.gaId`).
+- [ ] **`_headers`** file for Cloudflare Pages (security + cache headers).
+- [ ] After connecting the `.com` domain in Cloudflare Pages, **disable the `*.workers.dev` /
+      `*.pages.dev` preview domain** from indexing (so only the canonical domain ranks).
+
+---
+
 ## 6. Technical SEO baked into the framework
 
 - Per-page `<title>`, meta description, canonical, Open Graph + Twitter card, generated OG image.

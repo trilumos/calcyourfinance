@@ -169,6 +169,12 @@ export interface CalculatorConfig {
   comparisonOf?: string[];
 
   howItWorks: string; // markdown-ish plain text (paragraphs split on \n\n)
+  /**
+   * Long-form on-page SEO copy (≥600 words) about the tool. Paragraphs split
+   * on \n\n; a block starting with "## " renders as a subheading. Required for
+   * the pre-deploy checklist (PLAN §5b).
+   */
+  seoContent: string;
   workedExample: WorkedExample;
   faqs: Faq[];
   related: string[]; // sibling slugs

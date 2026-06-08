@@ -32,6 +32,15 @@ export const SITE = {
   disclaimer:
     "For estimation only — not financial advice. Verify current fees and rates with the official source before making decisions.",
 
+  // Contact + legal. Used by Contact / Privacy / Terms pages and footer.
+  contactEmail: "trilumos.app@gmail.com",
+  effectiveDate: "2026-06-08", // for legal pages "last updated"
+
+  // Analytics — paste a GA4 Measurement ID to enable (gated; empty = off).
+  analytics: {
+    gaId: "G-CT3RKRWBTF",
+  },
+
   // Monetization provider switch (PLAN §8). One line flips the whole site.
   ads: {
     enabled: false,

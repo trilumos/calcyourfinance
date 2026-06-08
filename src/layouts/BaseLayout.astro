@@ -93,6 +93,27 @@ const allSchemas = [organizationSchema(), ...schemas];
         <script type="application/ld+json" set:html={JSON.stringify(s)} />
       ))
     }
+
+    <!-- Google Analytics (GA4) — only when a Measurement ID is configured. -->
+    {
+      SITE.analytics.gaId && (
+        <>
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${SITE.analytics.gaId}`}
+          />
+          <script is:inline define:vars={{ gaId: SITE.analytics.gaId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId);
+          </script>
+        </>
+      )
+    }
   </head>
   <body>
     <a

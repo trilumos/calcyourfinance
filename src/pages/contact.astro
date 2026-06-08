@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { SITE } from "../config/site";
+---
+
+<BaseLayout
+  title="Contact Us"
+  description="Get in touch with CalcYourFinance — report an out-of-date fee, suggest a calculator, or ask a question."
+  canonicalPath="/contact"
+>
+  <section class="container mx-auto max-w-[52rem] px-4 py-6 pb-16">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
+    <h1 class="my-5">Contact us</h1>
+    <div class="prose">
+      <p>
+        We'd love to hear from you — especially if you spot a fee that's out of date,
+        want to suggest a calculator, or have a question about how a tool works.
+      </p>
+      <p>
+        The fastest way to reach us is by email:
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+      </p>
+
+      <h2>Reporting an incorrect fee</h2>
+      <p>
+        Platform fees change, and we update them as fast as we can. If a rate looks
+        wrong, email us the calculator name and a link to the platform's official
+        pricing page and we'll verify and fix it. Every fee on the site carries a
+        "last verified" date so you can always see how current it is.
+      </p>
+
+      <h2>Suggesting a calculator</h2>
+      <p>
+        Want a calculator we don't have yet — a specific platform's fees, a comparison,
+        or an AI/API cost estimator? Tell us what you'd use and we'll add it to the
+        roadmap.
+      </p>
+
+      <p>
+        We typically reply within a few business days. For how we handle your data,
+        see our <a href="/privacy">privacy policy</a>.
+      </p>
+    </div>
+
+    <a href={`mailto:${SITE.contactEmail}`} class="btn btn-primary mt-6">Email us</a>
+  </section>
+</BaseLayout>

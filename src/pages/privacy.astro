@@ -1,0 +1,84 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { SITE } from "../config/site";
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="How CalcYourFinance handles your data: our calculators run in your browser, we don't store your inputs, and we explain exactly what analytics and ads collect."
+  canonicalPath="/privacy"
+>
+  <section class="container mx-auto max-w-[52rem] px-4 py-6 pb-16">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Privacy Policy" }]} />
+    <h1 class="my-5">Privacy Policy</h1>
+    <div class="prose">
+      <p>Last updated: {SITE.effectiveDate}.</p>
+      <p>
+        {SITE.name} ("we", "us") operates {SITE.domain}. This policy explains what
+        information we collect and how we use it. In short: our calculators run
+        entirely in your browser, and we do not collect or store the numbers you type
+        into them.
+      </p>
+
+      <h2>Calculator inputs</h2>
+      <p>
+        Every calculation on this site happens locally in your browser using
+        client-side JavaScript. The amounts, prices and other values you enter are
+        <strong>not sent to our servers and are not stored or logged by us</strong>.
+        When you close or reload the page, that data is gone.
+      </p>
+
+      <h2>Analytics</h2>
+      <p>
+        We may use a privacy-conscious analytics tool (such as Google Analytics) to
+        understand aggregate, anonymous usage — for example which calculators are
+        popular and which countries visitors come from. This may set cookies or
+        similar identifiers and collect data such as your approximate location,
+        device type, browser and the pages you view. It does not include the values
+        you enter into calculators. Google's use of data is governed by its own
+        privacy policy.
+      </p>
+
+      <h2>Advertising</h2>
+      <p>
+        We may display advertising from third-party networks (such as Google AdSense)
+        to support the free tools. Ad partners may use cookies to serve and measure
+        ads. You can control ad personalisation through your browser settings and
+        through the ad provider's own settings. When advertising is enabled, this
+        section will reflect the specific partners in use.
+      </p>
+
+      <h2>Cookies</h2>
+      <p>
+        We use minimal cookies/local storage — for example, to remember your light or
+        dark theme preference. Analytics and advertising partners may set their own
+        cookies as described above. You can clear or block cookies in your browser at
+        any time.
+      </p>
+
+      <h2>Your choices</h2>
+      <p>
+        Because we don't collect personal accounts or store your inputs, there is no
+        profile to delete. You can disable cookies, use your browser's "do not track"
+        and ad-personalisation controls, or contact us with any privacy question.
+      </p>
+
+      <h2>Children</h2>
+      <p>This site is intended for a general, adult audience and is not directed at children.</p>
+
+      <h2>Changes</h2>
+      <p>
+        We may update this policy as the site evolves. Material changes will be
+        reflected by the "last updated" date above.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about privacy? Email
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a> or see our
+        <a href="/contact">contact page</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

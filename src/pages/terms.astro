@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { SITE } from "../config/site";
+---
+
+<BaseLayout
+  title="Terms & Conditions"
+  description="The terms for using CalcYourFinance: our calculators are free estimation tools provided for informational purposes, not financial advice."
+  canonicalPath="/terms"
+>
+  <section class="container mx-auto max-w-[52rem] px-4 py-6 pb-16">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Terms & Conditions" }]} />
+    <h1 class="my-5">Terms &amp; Conditions</h1>
+    <div class="prose">
+      <p>Last updated: {SITE.effectiveDate}.</p>
+      <p>
+        By using {SITE.domain} ("the Site") you agree to these terms. If you do not
+        agree, please do not use the Site.
+      </p>
+
+      <h2>1. Estimates, not financial advice</h2>
+      <p>
+        The calculators and content on this Site are provided for general
+        informational and estimation purposes only. They do not constitute financial,
+        accounting, tax, legal or professional advice. Fees, rates and formulas are
+        estimates based on publicly available information and may not reflect your
+        exact circumstances, negotiated rates, taxes, or a provider's latest pricing.
+        Always verify figures with the relevant platform or a qualified professional
+        before making decisions.
+      </p>
+
+      <h2>2. No warranty</h2>
+      <p>
+        The Site is provided "as is" and "as available" without warranties of any
+        kind, express or implied, including accuracy, completeness, fitness for a
+        particular purpose, or uninterrupted availability. While we work hard to keep
+        fee data correct and dated, we do not guarantee it is error-free or current.
+      </p>
+
+      <h2>3. Limitation of liability</h2>
+      <p>
+        To the fullest extent permitted by law, {SITE.name} will not be liable for any
+        loss or damage — including lost profits, mispricing, or any direct, indirect,
+        incidental or consequential damages — arising from your use of, or reliance
+        on, the Site or its calculators.
+      </p>
+
+      <h2>4. Third-party names and trademarks</h2>
+      <p>
+        Platform names such as Stripe, PayPal and Etsy are trademarks of their
+        respective owners. We reference them only to identify the service a calculator
+        relates to. {SITE.name} is independent and is not affiliated with, endorsed
+        by, or sponsored by any of these companies.
+      </p>
+
+      <h2>5. Acceptable use</h2>
+      <p>
+        You agree not to misuse the Site, attempt to disrupt it, scrape it at a
+        damaging scale, or use it for any unlawful purpose.
+      </p>
+
+      <h2>6. Intellectual property</h2>
+      <p>
+        The Site's design, text and code are owned by {SITE.name} unless otherwise
+        noted. You may use the calculators for personal and business purposes but may
+        not copy or republish the Site's content wholesale without permission.
+      </p>
+
+      <h2>7. Changes</h2>
+      <p>
+        We may update these terms or the Site at any time. Continued use after changes
+        means you accept the updated terms.
+      </p>
+
+      <h2>8. Contact</h2>
+      <p>
+        Questions? Email
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

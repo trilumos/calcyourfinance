@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Something went wrong"
+  description="An unexpected error occurred."
+  canonicalPath="/500"
+  noindex={true}
+>
+  <section class="container mx-auto max-w-[36rem] px-4 py-20 text-center">
+    <p class="eyebrow">500</p>
+    <h1 class="my-4">Something went wrong.</h1>
+    <p class="mb-6 text-body">An unexpected error occurred on our end. Please try again, or head back to the calculators.</p>
+    <a href="/" class="btn btn-primary">Back to all calculators</a>
+  </section>
+</BaseLayout>

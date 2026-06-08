@@ -18,6 +18,9 @@ export default defineConfig({
       changefreq: "weekly",
       priority: 0.7,
       lastmod: new Date(),
+      // Keep error/utility pages out of the sitemap.
+      filter: (page) =>
+        !/\/(404|500)\/?$/.test(page),
     }),
   ],
   build: {

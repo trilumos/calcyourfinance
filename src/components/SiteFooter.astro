@@ -13,7 +13,7 @@ const year = new Date().getFullYear();
       <a href="/" class="text-[17px] font-semibold tracking-tight text-ink no-underline">CalcYourFinance</a>
       <p class="mt-1.5 text-[13px] text-mute">{SITE.tagline}.</p>
     </div>
-    <nav class="grid grid-cols-2 gap-6" aria-label="Footer">
+    <nav class="grid grid-cols-2 gap-6 sm:grid-cols-3" aria-label="Footer">
       <div>
         <h2 class="eyebrow mb-2.5">Calculators</h2>
         {cats.map((c) => (
@@ -22,8 +22,14 @@ const year = new Date().getFullYear();
       </div>
       <div>
         <h2 class="eyebrow mb-2.5">About</h2>
-        <a href="/about" class="block py-0.5 text-[13px] text-body no-underline hover:text-ink">About &amp; methodology</a>
+        <a href="/about" class="block py-0.5 text-[13px] text-body no-underline hover:text-ink">About us</a>
         <a href="/methodology" class="block py-0.5 text-[13px] text-body no-underline hover:text-ink">How we verify</a>
+        <a href="/contact" class="block py-0.5 text-[13px] text-body no-underline hover:text-ink">Contact</a>
+      </div>
+      <div>
+        <h2 class="eyebrow mb-2.5">Legal</h2>
+        <a href="/privacy" class="block py-0.5 text-[13px] text-body no-underline hover:text-ink">Privacy policy</a>
+        <a href="/terms" class="block py-0.5 text-[13px] text-body no-underline hover:text-ink">Terms &amp; conditions</a>
       </div>
     </nav>
   </div>

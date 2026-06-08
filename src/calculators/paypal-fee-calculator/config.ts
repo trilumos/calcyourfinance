@@ -113,6 +113,23 @@ export const paypalFeeCalculator: CalculatorConfig = {
   howItWorks:
     "PayPal charges a percentage of the payment plus a small fixed fee on every commercial transaction. The percentage depends on the product: in the US, receiving money for goods & services is 2.99% + $0.49, PayPal Checkout is 3.49% + $0.49, and micropayments are 4.99% + $0.09. In the UK the standard commercial rate is 2.9% + £0.30.\n\nThe fee is: amount × rate% + fixed fee. International (cross-border) payments add a surcharge — about +1.5% in the US and +1.29%/+1.99% in the UK depending on where the sender is. To find what to ask for so you keep a target amount, we gross it up: charge = (target + fixed) ÷ (1 − rate).\n\nThese are PayPal's published standard rates; some accounts qualify for different pricing, and currency conversion can add a further fee.",
 
+  seoContent: `Our PayPal fee calculator is a free, instant tool that tells you exactly how much PayPal takes from a payment and how much you actually keep. PayPal is one of the most widely used ways to get paid online, but its fee structure is genuinely confusing — the rate depends on the type of transaction, where the sender is located, and which country you receive money in. This calculator removes the guesswork: choose your transaction type, enter the amount, and see your net payout and the effective fee instantly.
+
+## Understanding PayPal's transaction types
+The single biggest source of confusion is that PayPal charges different rates for different products. In the United States, receiving money for goods and services is 2.99% plus a $0.49 fixed fee, PayPal Checkout (the branded button on an online store) is 3.49% plus $0.49, and micropayments — a special plan for low-value sales — are 4.99% plus a smaller $0.09 fixed fee. Sending money to friends and family domestically from your balance or bank is generally free, which is why it should never be used for commercial sales. Our calculator lets you pick the exact product so the result matches what PayPal will really deduct.
+
+## How the fee is calculated
+The formula is amount × rate% + fixed fee, and your net is the amount minus that fee. Because of the fixed component, small payments are disproportionately expensive: on a $5 goods-and-services payment, the $0.49 fee is nearly 10% before the percentage is even applied — which is exactly why the micropayments plan exists. The calculator shows your effective rate so you can see the true cost. If you need to receive an exact amount after fees, switch to reverse mode and it works out what to request using charge = (target + fixed) ÷ (1 − rate).
+
+## Cross-border and currency considerations
+PayPal adds a surcharge when the buyer is in another country. In the US this cross-border fee is roughly an extra 1.5%; in the UK it is about 1.29% for senders in the EEA and 1.99% for the rest of the world, layered on top of the standard 2.9% plus 30p commercial rate. Currency conversion adds a further percentage. Toggle the international option to include the cross-border surcharge in your result. These layered fees are where sellers most often underestimate their costs, so we model them directly and cite PayPal's official merchant and business fee pages.
+
+## Who uses this calculator
+Online sellers and marketplace merchants use it to price products so they keep enough after fees. Freelancers and service providers use the reverse mode to invoice clients for the right take-home amount. Resellers on platforms that settle through PayPal use it to check margins before listing. Creators accepting tips and supporters use it to estimate how much of each contribution arrives. It runs entirely in your browser — no account, no tracking of your numbers, and it works perfectly on a phone.
+
+## Accuracy and important caveats
+We keep every rate in a dated configuration file and stamp the page with a "fees last verified" date, updating both whenever PayPal changes its pricing. Treat the results as estimates of standard published rates: your account may qualify for different pricing, and additional costs can apply, including currency-conversion spreads, chargeback and dispute fees, and the fact that the fixed fee is not always returned on refunds. Different countries also have their own rate cards, and we are expanding country coverage over time. For anything mission-critical, confirm the final number in your PayPal account — but for quick, dependable estimates of what you will actually receive, this tool gives you a clear, honest answer in seconds.`,
+
   workedExample: {
     scenario: "A US customer sends you $100 for goods & services.",
     steps: [
