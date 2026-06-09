@@ -1,5 +1,6 @@
 import type { CalculatorConfig, InputValues, ComputeCtx, CalcResult } from "../_types";
 import { etsyFees } from "../../config/fees";
+import { etsyRateCards } from "../../lib/rateCards";
 import { computeEtsyFee } from "./formula";
 
 export const etsyFeeCalculator: CalculatorConfig = {
@@ -133,6 +134,13 @@ New Etsy sellers use it to set their very first prices correctly. Established sh
 
 ## Accuracy and things to remember
 We keep Etsy's rates in a single dated source file and stamp the page with a "fees last verified" date, updating both whenever Etsy changes its pricing. The results are estimates of standard published fees. A few extra factors can apply that a general calculator cannot know: some countries add a small regulatory operating fee, currency conversion has its own charge if you list and get paid in different currencies, and sales tax or VAT handling varies by location. Etsy also runs occasional promotions and offers. For day-to-day pricing decisions, though, this calculator gives you a fast, accurate picture of what Etsy takes and what you keep on every sale.`,
+
+  rateCards: {
+    heading: "Etsy fees by country",
+    intro:
+      "The $0.20 listing fee and 6.5% transaction fee are the same everywhere; only payment processing changes by country. Offsite Ads (12–15%, capped at $100/order) may also apply.",
+    cards: etsyRateCards(["US", "GB", "CA", "AU", "EU"]),
+  },
 
   workedExample: {
     scenario: "You sell a $25 item with $5 shipping to a US buyer (not from Offsite Ads).",

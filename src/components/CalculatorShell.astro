@@ -15,6 +15,7 @@ import Breadcrumbs from "./Breadcrumbs.astro";
 import CalculatorIsland from "./CalculatorIsland.tsx";
 import FAQ from "./FAQ.astro";
 import RelatedCalculators from "./RelatedCalculators.astro";
+import RateCards from "./RateCards.astro";
 import AdSlot from "./AdSlot.astro";
 
 interface Props {
@@ -137,6 +138,8 @@ const accentStyle = platform
         </div>
       </section>
     </div>
+
+    {config.rateCards && <RateCards data={config.rateCards} />}
 
     <section class="prose mt-10" aria-labelledby="about-heading">
       <p class="eyebrow">Guide</p>

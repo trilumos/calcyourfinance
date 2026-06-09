@@ -134,6 +134,19 @@ export interface Faq {
   a: string;
 }
 
+/* ---- Rate cards (per-country fee reference grid) ------------------------- */
+export interface RateCard {
+  code: string; // e.g. "GB"
+  name: string; // e.g. "United Kingdom"
+  rows: { label: string; value: string }[];
+  note?: string;
+}
+export interface RateCardsData {
+  heading: string;
+  intro?: string;
+  cards: RateCard[];
+}
+
 export interface Source {
   label: string;
   url: string;
@@ -175,6 +188,8 @@ export interface CalculatorConfig {
    * the pre-deploy checklist (PLAN §5b).
    */
   seoContent: string;
+  /** Optional per-country fee reference grid (PLAN: country rate cards). */
+  rateCards?: RateCardsData;
   workedExample: WorkedExample;
   faqs: Faq[];
   related: string[]; // sibling slugs

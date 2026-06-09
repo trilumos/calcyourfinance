@@ -1,0 +1,39 @@
+---
+/** Per-country fee reference grid (PLAN: country rate cards). */
+import type { RateCardsData } from "../calculators/_types";
+interface Props {
+  data: RateCardsData;
+}
+const { data } = Astro.props;
+---
+
+{
+  data.cards.length > 0 && (
+    <section class="mt-10" aria-labelledby="rates-heading">
+      <p class="eyebrow">Reference</p>
+      <h2 id="rates-heading" class="mb-2 mt-1">{data.heading}</h2>
+      {data.intro && <p class="mb-5 max-w-[42rem] text-body">{data.intro}</p>}
+      <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(13.5rem,1fr))]">
+        {data.cards.map((card) => (
+          <li class="card p-4">
+            <div class="mb-2 flex items-baseline gap-2">
+              <span class="font-mono text-[12px] font-medium text-mute" translate="no">{card.code}</span>
+              <span class="font-semibold text-ink">{card.name}</span>
+            </div>
+            <dl class="flex flex-col gap-1">
+              {card.rows.map((row) => (
+                <div class="flex items-baseline justify-between gap-3 text-[13px]">
+                  <dt class="text-body">{row.label}</dt>
+                  <dd class="tnum font-medium text-ink">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+            {card.note && (
+              <p class="mt-2 border-t border-hairline pt-2 text-[12px] text-mute">{card.note}</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

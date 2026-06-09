@@ -1,5 +1,6 @@
 import type { CalculatorConfig, InputValues, ComputeCtx, CalcResult } from "../_types";
 import { stripeFees } from "../../config/fees";
+import { stripeRateCards } from "../../lib/rateCards";
 import { computeStripeFee } from "./formula";
 
 const COUNTRIES = ["US", "GB", "CA", "AU", "EU", "IN", "SG", "BR"] as const;
@@ -164,6 +165,13 @@ E-commerce sellers use it to set prices that preserve margin after fees. SaaS fo
 
 ## Keeping the numbers accurate
 Payment pricing changes, so we store every rate in a single, dated source file and stamp each calculator with a "fees last verified" date. When Stripe updates its pricing, we update the figure and the date together. Remember that this tool provides estimates for standard pay-as-you-go pricing: high-volume businesses can negotiate custom rates, and additional costs such as chargebacks, refunds (where the fixed fee may not be returned), disputes, payout fees, or local taxes can apply. Always confirm the final figure against your Stripe dashboard before making pricing decisions — but for fast, reliable everyday estimates, this calculator gives you the real cost of getting paid.`,
+
+  rateCards: {
+    heading: "Stripe fees by country",
+    intro:
+      "Stripe's standard online card-processing rates for the countries this calculator covers. \"Domestic\" is a card issued in the same country; \"international\" is a card issued elsewhere.",
+    cards: stripeRateCards([...COUNTRIES]),
+  },
 
   workedExample: {
     scenario: "You sell a $100 product in the US and the customer pays with a standard US card.",

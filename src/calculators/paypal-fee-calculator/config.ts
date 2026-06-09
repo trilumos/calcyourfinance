@@ -1,5 +1,6 @@
 import type { CalculatorConfig, InputValues, ComputeCtx, CalcResult } from "../_types";
 import { paypalFees } from "../../config/fees";
+import { paypalRateCards } from "../../lib/rateCards";
 import { computePayPalFee } from "./formula";
 
 export const paypalFeeCalculator: CalculatorConfig = {
@@ -157,6 +158,13 @@ Online sellers and marketplace merchants use it to price products so they keep e
 
 ## Accuracy and important caveats
 We keep every rate in a dated configuration file and stamp the page with a "fees last verified" date, updating both whenever PayPal changes its pricing. Treat the results as estimates of standard published rates: your account may qualify for different pricing, and additional costs can apply, including currency-conversion spreads, chargeback and dispute fees, and the fact that the fixed fee is not always returned on refunds. Different countries also have their own rate cards, and we are expanding country coverage over time. For anything mission-critical, confirm the final number in your PayPal account — but for quick, dependable estimates of what you will actually receive, this tool gives you a clear, honest answer in seconds.`,
+
+  rateCards: {
+    heading: "PayPal fees by country",
+    intro:
+      "PayPal's standard commercial rates for the countries this calculator covers. Cross-border (international) payments add a surcharge on top.",
+    cards: paypalRateCards(["US", "GB"]),
+  },
 
   workedExample: {
     scenario: "A US customer sends you $100 for goods & services.",
