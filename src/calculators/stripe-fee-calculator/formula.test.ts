@@ -61,6 +61,14 @@ describe("computeStripeFee", () => {
     expect(r.totalFee).toBeCloseTo(24.17, 1);
   });
 
+  it("add-ons (Billing/Invoicing) add to the rate", () => {
+    const r = computeStripeFee({
+      amount: 100, mode: "charge", percent: 2.9, fixed: 0.3, addOnPercent: 0.7,
+    });
+    expect(r.ratePercent).toBe(3.6); // 2.9 + 0.7
+    expect(r.totalFee).toBe(3.9); // 100*0.036 + 0.30
+  });
+
   it("zero / invalid amount returns zeros", () => {
     expect(computeStripeFee({ amount: 0, mode: "charge", percent: 2.9, fixed: 0.3 }).net).toBe(0);
     expect(computeStripeFee({ amount: -5, mode: "charge", percent: 2.9, fixed: 0.3 }).totalFee).toBe(0);

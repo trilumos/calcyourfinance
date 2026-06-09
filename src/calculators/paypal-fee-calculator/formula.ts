@@ -12,6 +12,7 @@ export interface PayPalFeeInput {
   percent: number; // selected variant's %
   fixed: number; // selected variant's fixed fee
   crossBorderPercent?: number; // extra % for international senders
+  conversionPercent?: number; // extra % when currency conversion applies
   international?: boolean;
 }
 
@@ -30,10 +31,12 @@ export function computePayPalFee(input: PayPalFeeInput): PayPalFeeBreakdown {
     percent,
     fixed,
     crossBorderPercent = 0,
+    conversionPercent = 0,
     international = false,
   } = input;
 
-  const ratePercent = percent + (international ? crossBorderPercent : 0);
+  const ratePercent =
+    percent + (international ? crossBorderPercent : 0) + conversionPercent;
   const r = ratePercent / 100;
 
   if (!Number.isFinite(amount) || amount <= 0 || r >= 1) {

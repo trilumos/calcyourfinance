@@ -104,6 +104,13 @@ export const paypalFeeCalculator: CalculatorConfig = {
       default: false,
       help: "Sender is in another country.",
     },
+    {
+      id: "conversion",
+      label: "Currency conversion required",
+      type: "toggle",
+      default: false,
+      help: "Adds PayPal's ~3% currency-conversion fee.",
+    },
   ],
 
   compute(values: InputValues, ctx: ComputeCtx): CalcResult {
@@ -117,6 +124,7 @@ export const paypalFeeCalculator: CalculatorConfig = {
       percent: variant.percent,
       fixed: variant.fixed,
       crossBorderPercent: country.crossBorderPercent,
+      conversionPercent: values.conversion ? country.currencyConversionPercent : 0,
       international: Boolean(values.international),
     });
 

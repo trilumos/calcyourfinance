@@ -55,18 +55,18 @@ export function etsyRateCards(codes: CountryCode[]): RateCard[] {
     .map((code): RateCard | null => {
       const f = etsyFees[code];
       if (!f) return null;
-      return {
-        code,
-        name: getCountry(code).name,
-        rows: [
-          { label: "Listing", value: fixed(f.listingFee, code) },
-          { label: "Transaction", value: `${f.transactionPercent}%` },
-          {
-            label: "Processing",
-            value: pctPlusFixed(f.processing.percent, f.processing.fixed, code),
-          },
-        ],
-      };
+      const rows = [
+        { label: "Listing", value: fixed(f.listingFee, code) },
+        { label: "Transaction", value: `${f.transactionPercent}%` },
+        {
+          label: "Processing",
+          value: pctPlusFixed(f.processing.percent, f.processing.fixed, code),
+        },
+      ];
+      if (f.regulatoryPercent) {
+        rows.push({ label: "Regulatory", value: `${f.regulatoryPercent}%` });
+      }
+      return { code, name: getCountry(code).name, rows };
     })
     .filter((c): c is RateCard => c !== null);
 }

@@ -18,6 +18,8 @@ export interface EtsyFeeInput {
   offsiteAds?: boolean;
   offsiteAdsPercent?: number; // 15 (<$10k/yr) or 12 (>$10k/yr)
   offsiteAdsCap?: number; // per-order cap, e.g. 100
+  regulatoryPercent?: number; // mandatory regulatory operating fee % (some countries)
+  currencyConversionPercent?: number; // 2.5% when shop/payment currency differ
 }
 
 export interface EtsyFeeBreakdown {
@@ -26,6 +28,8 @@ export interface EtsyFeeBreakdown {
   transactionFee: number;
   processingFee: number;
   offsiteAdsFee: number;
+  regulatoryFee: number;
+  conversionFee: number;
   totalFees: number;
   payout: number; // revenue − Etsy fees
   profit: number; // payout − item cost
@@ -44,6 +48,8 @@ export function computeEtsyFee(input: EtsyFeeInput): EtsyFeeBreakdown {
     offsiteAds = false,
     offsiteAdsPercent = 15,
     offsiteAdsCap = 100,
+    regulatoryPercent = 0,
+    currencyConversionPercent = 0,
   } = input;
 
   const price = Number.isFinite(itemPrice) && itemPrice > 0 ? itemPrice : 0;
@@ -53,7 +59,8 @@ export function computeEtsyFee(input: EtsyFeeInput): EtsyFeeBreakdown {
   if (revenue <= 0) {
     return {
       revenue: 0, listingFee: 0, transactionFee: 0, processingFee: 0,
-      offsiteAdsFee: 0, totalFees: 0, payout: 0, profit: 0, takeRatePercent: 0,
+      offsiteAdsFee: 0, regulatoryFee: 0, conversionFee: 0,
+      totalFees: 0, payout: 0, profit: 0, takeRatePercent: 0,
     };
   }
 
@@ -62,8 +69,12 @@ export function computeEtsyFee(input: EtsyFeeInput): EtsyFeeBreakdown {
   const offsiteAdsFee = offsiteAds
     ? roundMoney(Math.min(revenue * (offsiteAdsPercent / 100), offsiteAdsCap))
     : 0;
+  const regulatoryFee = roundMoney(revenue * (regulatoryPercent / 100));
+  const conversionFee = roundMoney(revenue * (currencyConversionPercent / 100));
 
-  const totalFees = roundMoney(listingFee + transactionFee + processingFee + offsiteAdsFee);
+  const totalFees = roundMoney(
+    listingFee + transactionFee + processingFee + offsiteAdsFee + regulatoryFee + conversionFee,
+  );
   const payout = roundMoney(revenue - totalFees);
   const profit = roundMoney(payout - (itemCost > 0 ? itemCost : 0));
   const takeRatePercent = roundTo((totalFees / revenue) * 100, 2);
@@ -74,6 +85,8 @@ export function computeEtsyFee(input: EtsyFeeInput): EtsyFeeBreakdown {
     transactionFee,
     processingFee,
     offsiteAdsFee,
+    regulatoryFee,
+    conversionFee,
     totalFees,
     payout,
     profit,

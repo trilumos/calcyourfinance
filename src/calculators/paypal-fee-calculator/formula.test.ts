@@ -36,6 +36,13 @@ describe("computePayPalFee", () => {
     expect(r.charge).toBe(103.59);
   });
 
+  it("currency conversion adds the conversion %", () => {
+    const r = computePayPalFee({
+      amount: 100, mode: "charge", percent: 2.99, fixed: 0.49, conversionPercent: 3,
+    });
+    expect(r.ratePercent).toBe(5.99); // 2.99 + 3
+  });
+
   it("zero amount returns zeros", () => {
     expect(computePayPalFee({ amount: 0, mode: "charge", percent: 2.99, fixed: 0.49 }).net).toBe(0);
   });

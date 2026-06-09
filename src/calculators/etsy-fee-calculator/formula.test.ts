@@ -59,6 +59,16 @@ describe("computeEtsyFee", () => {
     expect(r.processingFee).toBe(1.4); // 4% of 30 + 0.20
   });
 
+  it("regulatory operating fee is applied on revenue", () => {
+    const r = computeEtsyFee({ itemPrice: 25, shipping: 5, ...US, regulatoryPercent: 0.32 });
+    expect(r.regulatoryFee).toBe(0.1); // 0.32% of 30 = 0.096 → 0.10
+  });
+
+  it("currency conversion fee is 2.5% of revenue", () => {
+    const r = computeEtsyFee({ itemPrice: 25, shipping: 5, ...US, currencyConversionPercent: 2.5 });
+    expect(r.conversionFee).toBe(0.75); // 2.5% of 30
+  });
+
   it("zero revenue returns zeros", () => {
     const r = computeEtsyFee({ itemPrice: 0, shipping: 0, ...US });
     expect(r.payout).toBe(0);

@@ -4,6 +4,36 @@ Living log of what's shipped and what's next (PLAN §11).
 
 ---
 
+## 2026-06-09 — More countries, more fee options, custom searchable dropdown
+
+### Done
+- **Stripe → 22 countries** (verified): added Japan, New Zealand, Hong Kong, Mexico,
+  Malaysia, Sweden + Eurozone members (DE/FR/ES/IT/NL/IE/BE/AT share the EEA rate).
+  Country selector, rate-card grid and country-keyword variants all expand automatically.
+- **New fee options:**
+  - Stripe: "Recurring / subscription (Stripe Billing +0.7%)" and "Sent with Stripe
+    Invoicing (+0.4%)" toggles (formula `addOnPercent`).
+  - PayPal: "Currency conversion (~3%)" toggle.
+  - Etsy: "Currency conversion (2.5%)" toggle + the per-country **regulatory operating
+    fee** (UK 0.32%, FR 0.47%, ES 0.72%, IT 0.32%) now modeled and shown; Etsy expanded
+    to 10 countries.
+- **Custom searchable dropdown** replacing the plain native `<select>` everywhere in the
+  calculator (DESIGN.md/Geist styling): button + popover, **type-to-search** for the
+  country list (matches name/code/currency/search-alias, e.g. "uk" → United Kingdom),
+  keyboard nav (↑/↓/Enter/Esc), click-outside close, selected shown in the platform
+  accent, works in light + dark.
+- Data-driven throughout: fees in `fees.ts` (new `stripeAddOns`, PayPal
+  `currencyConversionPercent`, Etsy `regulatoryPercent` + `ETSY_CURRENCY_CONVERSION_PERCENT`),
+  rate cards + keyword variants regenerate from it. keywords.md now 1,363 keywords.
+- Verified: 27 unit tests pass (new add-on / conversion / regulatory tests); `astro build`
+  clean; in-browser light + dark, country switch recompute, and search all confirmed.
+
+### Notes
+- PayPal still US/UK only (per-country PayPal rates need separate verification — next batch).
+- Etsy regulatory fees increase on 2026-06-22; current rates used, re-verify then.
+
+---
+
 ## 2026-06-08 — Pre-deploy checklist (Website Checklist) complete
 
 ### Done (PLAN §5b)

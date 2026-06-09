@@ -1,9 +1,12 @@
 import type { CalculatorConfig, InputValues, ComputeCtx, CalcResult } from "../_types";
-import { stripeFees } from "../../config/fees";
+import { stripeFees, stripeAddOns } from "../../config/fees";
 import { stripeRateCards } from "../../lib/rateCards";
 import { computeStripeFee } from "./formula";
 
-const COUNTRIES = ["US", "GB", "CA", "AU", "EU", "IN", "SG", "BR"] as const;
+const COUNTRIES = [
+  "US", "GB", "CA", "AU", "EU", "IN", "SG", "BR", "JP", "NZ", "HK",
+  "MX", "MY", "SE", "DE", "FR", "ES", "IT", "NL", "IE", "BE", "AT",
+] as const;
 
 export const stripeFeeCalculator: CalculatorConfig = {
   slug: "stripe-fee-calculator",
@@ -102,10 +105,28 @@ export const stripeFeeCalculator: CalculatorConfig = {
       default: false,
       help: "Adds Stripe's currency-conversion surcharge.",
     },
+    {
+      id: "recurring",
+      label: "Recurring / subscription (Stripe Billing)",
+      type: "toggle",
+      default: false,
+      help: "Adds Stripe Billing's 0.7% on recurring payments.",
+    },
+    {
+      id: "invoicing",
+      label: "Sent with Stripe Invoicing",
+      type: "toggle",
+      default: false,
+      help: "Adds Stripe Invoicing's 0.4% per paid invoice.",
+    },
   ],
 
   compute(values: InputValues, ctx: ComputeCtx): CalcResult {
     const rate = stripeFees[ctx.country] ?? stripeFees.US!;
+    const addOnPercent =
+      (values.recurring ? stripeAddOns.billingPercent : 0) +
+      (values.invoicing ? stripeAddOns.invoicingPercent : 0);
+
     const r = computeStripeFee({
       amount: Number(values.amount) || 0,
       mode: values.mode === "net" ? "net" : "charge",
@@ -113,6 +134,7 @@ export const stripeFeeCalculator: CalculatorConfig = {
       fixed: rate.fixed,
       intlSurcharge: rate.intlSurchargePercent,
       fxPercent: rate.fxPercent,
+      addOnPercent,
       taxOnFeePercent: rate.taxOnFeePercent,
       international: Boolean(values.international),
       conversion: Boolean(values.conversion),

@@ -28,15 +28,22 @@ export type CountryCode =
   | "IN"
   | "SG"
   | "BR"
+  | "JP"
+  | "NZ"
+  | "HK"
+  | "MX"
+  | "MY"
+  | "SE"
   | "DE"
   | "FR"
+  | "ES"
+  | "IT"
   | "NL"
   | "IE"
-  | "NZ"
-  | "MX"
+  | "BE"
+  | "AT"
   | "AE"
   | "PH"
-  | "MY"
   | "ZA";
 
 export const COUNTRIES: Record<CountryCode, Country> = {
@@ -51,15 +58,22 @@ export const COUNTRIES: Record<CountryCode, Country> = {
 
   // Tier-2 — enabled per calculator where the platform publishes a distinct
   // rate AND there is search demand (validated during research).
+  JP: { code: "JP", name: "Japan", currency: "JPY", locale: "ja-JP", tier: 2 },
+  NZ: { code: "NZ", name: "New Zealand", currency: "NZD", locale: "en-NZ", tier: 2 },
+  HK: { code: "HK", name: "Hong Kong", currency: "HKD", locale: "en-HK", tier: 2 },
+  MX: { code: "MX", name: "Mexico", currency: "MXN", locale: "es-MX", tier: 2 },
+  MY: { code: "MY", name: "Malaysia", currency: "MYR", locale: "en-MY", tier: 2 },
+  SE: { code: "SE", name: "Sweden", currency: "SEK", locale: "sv-SE", tier: 2 },
   DE: { code: "DE", name: "Germany", currency: "EUR", locale: "de-DE", tier: 2 },
   FR: { code: "FR", name: "France", currency: "EUR", locale: "fr-FR", tier: 2 },
+  ES: { code: "ES", name: "Spain", currency: "EUR", locale: "es-ES", tier: 2 },
+  IT: { code: "IT", name: "Italy", currency: "EUR", locale: "it-IT", tier: 2 },
   NL: { code: "NL", name: "Netherlands", currency: "EUR", locale: "nl-NL", tier: 2 },
   IE: { code: "IE", name: "Ireland", currency: "EUR", locale: "en-IE", tier: 2 },
-  NZ: { code: "NZ", name: "New Zealand", currency: "NZD", locale: "en-NZ", tier: 2 },
-  MX: { code: "MX", name: "Mexico", currency: "MXN", locale: "es-MX", tier: 2 },
+  BE: { code: "BE", name: "Belgium", currency: "EUR", locale: "nl-BE", tier: 2 },
+  AT: { code: "AT", name: "Austria", currency: "EUR", locale: "de-AT", tier: 2 },
   AE: { code: "AE", name: "United Arab Emirates", currency: "AED", locale: "en-AE", tier: 2 },
   PH: { code: "PH", name: "Philippines", currency: "PHP", locale: "en-PH", tier: 2 },
-  MY: { code: "MY", name: "Malaysia", currency: "MYR", locale: "en-MY", tier: 2 },
   ZA: { code: "ZA", name: "South Africa", currency: "ZAR", locale: "en-ZA", tier: 2 },
 };
 
@@ -77,15 +91,22 @@ export const COUNTRY_SEARCH_NAME: Record<CountryCode, string> = {
   IN: "india",
   SG: "singapore",
   BR: "brazil",
+  JP: "japan",
+  NZ: "new zealand",
+  HK: "hong kong",
+  MX: "mexico",
+  MY: "malaysia",
+  SE: "sweden",
   DE: "germany",
   FR: "france",
+  ES: "spain",
+  IT: "italy",
   NL: "netherlands",
   IE: "ireland",
-  NZ: "new zealand",
-  MX: "mexico",
+  BE: "belgium",
+  AT: "austria",
   AE: "uae",
   PH: "philippines",
-  MY: "malaysia",
   ZA: "south africa",
 };
 

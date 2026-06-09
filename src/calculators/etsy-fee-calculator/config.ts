@@ -1,5 +1,5 @@
 import type { CalculatorConfig, InputValues, ComputeCtx, CalcResult } from "../_types";
-import { etsyFees } from "../../config/fees";
+import { etsyFees, ETSY_CURRENCY_CONVERSION_PERCENT } from "../../config/fees";
 import { etsyRateCards } from "../../lib/rateCards";
 import { computeEtsyFee } from "./formula";
 
@@ -65,7 +65,7 @@ export const etsyFeeCalculator: CalculatorConfig = {
     intent: "tool",
   },
 
-  countries: { supported: ["US", "GB", "CA", "AU", "EU"], default: "US" },
+  countries: { supported: ["US", "GB", "CA", "AU", "EU", "DE", "FR", "ES", "IT", "NL"], default: "US" },
 
   inputs: [
     { id: "itemPrice", label: "Item price", type: "currency", default: 25, min: 0, help: "Price the buyer pays for the item." },
@@ -73,11 +73,13 @@ export const etsyFeeCalculator: CalculatorConfig = {
     { id: "itemCost", label: "Your item cost (optional)", type: "currency", default: 0, min: 0, help: "Cost of goods, to calculate profit." },
     { id: "offsiteAds", label: "This sale came from Offsite Ads", type: "toggle", default: false, help: "Adds the Offsite Ads fee (capped per order)." },
     { id: "highVolume", label: "I make over $10k/year on Etsy", type: "toggle", default: false, help: "Lowers the Offsite Ads rate from 15% to 12%." },
+    { id: "conversion", label: "Currency conversion (different listing currency)", type: "toggle", default: false, help: "Adds Etsy's 2.5% currency-conversion fee." },
   ],
 
   compute(values: InputValues, ctx: ComputeCtx): CalcResult {
     const f = etsyFees[ctx.country] ?? etsyFees.US!;
     const offsiteAds = Boolean(values.offsiteAds);
+    const conversion = Boolean(values.conversion);
     const r = computeEtsyFee({
       itemPrice: Number(values.itemPrice) || 0,
       shipping: Number(values.shipping) || 0,
@@ -89,6 +91,8 @@ export const etsyFeeCalculator: CalculatorConfig = {
       offsiteAds,
       offsiteAdsPercent: values.highVolume ? f.offsiteAds.over10k : f.offsiteAds.under10k,
       offsiteAdsCap: f.offsiteAds.capPerOrder,
+      regulatoryPercent: f.regulatoryPercent ?? 0,
+      currencyConversionPercent: conversion ? ETSY_CURRENCY_CONVERSION_PERCENT : 0,
     });
 
     const hasCost = (Number(values.itemCost) || 0) > 0;
@@ -99,6 +103,12 @@ export const etsyFeeCalculator: CalculatorConfig = {
     ];
     if (offsiteAds) {
       rows.push({ label: "Offsite Ads fee", display: ctx.formatCurrency(r.offsiteAdsFee), kind: "deduction" as const });
+    }
+    if (r.regulatoryFee > 0) {
+      rows.push({ label: `Regulatory operating fee (${ctx.formatPercent(f.regulatoryPercent ?? 0)})`, display: ctx.formatCurrency(r.regulatoryFee), kind: "deduction" as const });
+    }
+    if (conversion) {
+      rows.push({ label: "Currency conversion (2.5%)", display: ctx.formatCurrency(r.conversionFee), kind: "deduction" as const });
     }
     rows.push({ label: "Your payout", display: ctx.formatCurrency(r.payout), kind: "net" as const });
     if (hasCost) {
@@ -116,7 +126,7 @@ export const etsyFeeCalculator: CalculatorConfig = {
   },
 
   howItWorks:
-    "Etsy charges several fees on every sale. A $0.20 listing fee each time an item sells, a 6.5% transaction fee on the total the buyer pays (item price plus the shipping you charge), and a payment-processing fee that varies by country — 3% + $0.25 in the US, 4% + 20p in the UK.\n\nIf the sale came from Etsy's Offsite Ads, there's an additional advertising fee: 15% of the order for most sellers, or 12% once you pass $10,000 in sales over 12 months, capped at $100 per order. Your payout is the sale total minus these fees; subtract your cost of goods to see profit.\n\nSome countries also add a small regulatory operating fee not shown here. These are Etsy's published rates.",
+    "Etsy charges several fees on every sale. A $0.20 listing fee each time an item sells, a 6.5% transaction fee on the total the buyer pays (item price plus the shipping you charge), and a payment-processing fee that varies by country — 3% + $0.25 in the US, 4% + 20p in the UK.\n\nIf the sale came from Etsy's Offsite Ads, there's an additional advertising fee: 15% of the order for most sellers, or 12% once you pass $10,000 in sales over 12 months, capped at $100 per order. Your payout is the sale total minus these fees; subtract your cost of goods to see profit.\n\nSome countries (such as the UK, France, Italy and Spain) also charge a mandatory regulatory operating fee, and Etsy adds a 2.5% currency-conversion fee when your listing and payment currencies differ — both are included above when applicable. These are Etsy's published rates.",
 
   seoContent: `Our Etsy fee calculator is a free, instant tool that breaks down every fee Etsy charges on a sale and shows your real payout and profit. Selling on Etsy looks simple, but the fees stack up from several directions at once — a listing fee, a transaction fee, payment processing, and sometimes an advertising fee — and it is easy to be surprised by how little is left. This calculator adds all of it up for you the moment you enter your item price and shipping, so you can price with confidence and protect your margin.
 
@@ -139,7 +149,7 @@ We keep Etsy's rates in a single dated source file and stamp the page with a "fe
     heading: "Etsy fees by country",
     intro:
       "The $0.20 listing fee and 6.5% transaction fee are the same everywhere; only payment processing changes by country. Offsite Ads (12–15%, capped at $100/order) may also apply.",
-    cards: etsyRateCards(["US", "GB", "CA", "AU", "EU"]),
+    cards: etsyRateCards(["US", "GB", "CA", "AU", "EU", "DE", "FR", "ES", "IT", "NL"]),
   },
 
   workedExample: {

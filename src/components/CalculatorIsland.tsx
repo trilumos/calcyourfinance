@@ -5,14 +5,19 @@
  * sees numbers), then lazy-loads THIS calculator's pure compute() — code-split
  * per calculator — to recompute live as inputs change.
  */
-import { useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type {
   CalcResult,
   ComputeCtx,
   InputSpec,
   InputValues,
 } from "../calculators/_types";
-import { countriesFor, getCountry, type CountryCode } from "../lib/countries";
+import {
+  COUNTRY_SEARCH_NAME,
+  countriesFor,
+  getCountry,
+  type CountryCode,
+} from "../lib/countries";
 import { formatCurrency, formatNumber, formatPercent } from "../lib/money";
 
 type ComputeFn = (values: InputValues, ctx: ComputeCtx) => CalcResult;
@@ -25,6 +30,12 @@ interface Props {
   initialResult: CalcResult;
   countryCodes?: CountryCode[];
   initialCountry: CountryCode;
+}
+
+interface Option {
+  value: string;
+  label: string;
+  search?: string;
 }
 
 function makeCtx(country: CountryCode): ComputeCtx {
@@ -54,10 +65,16 @@ export default function CalculatorIsland({
   const [compute, setCompute] = useState<ComputeFn | null>(null);
   const [result, setResult] = useState<CalcResult>(initialResult);
 
-  const countryList = useMemo(
-    () => (countryCodes ? countriesFor(countryCodes) : []),
+  const countryOptions = useMemo<Option[]>(
+    () =>
+      (countryCodes ? countriesFor(countryCodes) : []).map((c) => ({
+        value: c.code,
+        label: `${c.name} (${c.currency})`,
+        search: `${c.name} ${c.code} ${c.currency} ${COUNTRY_SEARCH_NAME[c.code] ?? ""}`,
+      })),
     [countryCodes],
   );
+
   const currencySymbol = useMemo(() => {
     try {
       const c = getCountry(country);
@@ -99,9 +116,10 @@ export default function CalculatorIsland({
     void recompute(next, country);
   }
 
-  function onCountry(code: CountryCode) {
-    setCountry(code);
-    void recompute(values, code);
+  function onCountry(code: string) {
+    const cc = code as CountryCode;
+    setCountry(cc);
+    void recompute(values, cc);
   }
 
   return (
@@ -110,22 +128,16 @@ export default function CalculatorIsland({
         class="card flex flex-col gap-4 p-5"
         onSubmit={(e) => e.preventDefault()}
       >
-        {countryList.length > 1 && (
+        {countryOptions.length > 1 && (
           <label class="flex flex-col gap-1.5">
             <span class="text-[13px] font-medium text-ink">Country / region</span>
-            <select
-              class="field-control field-select tnum"
-              name="country"
-              autoComplete="country"
+            <Select
+              options={countryOptions}
               value={country}
-              onChange={(e) => onCountry(e.currentTarget.value as CountryCode)}
-            >
-              {countryList.map((c) => (
-                <option value={c.code} key={c.code}>
-                  {c.name} ({c.currency})
-                </option>
-              ))}
-            </select>
+              onChange={onCountry}
+              ariaLabel="Country or region"
+              searchable
+            />
           </label>
         )}
 
@@ -141,6 +153,129 @@ export default function CalculatorIsland({
       </form>
 
       <Readout result={result} />
+    </div>
+  );
+}
+
+/* ---- Custom dropdown ----------------------------------------------------- */
+function Select({
+  options,
+  value,
+  onChange,
+  ariaLabel,
+  searchable = false,
+}: {
+  options: Option[];
+  value: string;
+  onChange: (v: string) => void;
+  ariaLabel: string;
+  searchable?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [active, setActive] = useState(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const selected = options.find((o) => o.value === value);
+  const filtered = useMemo(() => {
+    if (!query) return options;
+    const q = query.toLowerCase();
+    return options.filter((o) => (o.search ?? o.label).toLowerCase().includes(q));
+  }, [options, query]);
+
+  useEffect(() => {
+    if (!open) return;
+    function onDoc(e: MouseEvent) {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    if (searchable) searchRef.current?.focus();
+    setActive(Math.max(0, filtered.findIndex((o) => o.value === value)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  function choose(v: string) {
+    onChange(v);
+    setOpen(false);
+    setQuery("");
+  }
+
+  function onKey(e: KeyboardEvent) {
+    if (e.key === "Escape") {
+      setOpen(false);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActive((a) => Math.min(a + 1, filtered.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActive((a) => Math.max(a - 1, 0));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      const o = filtered[active];
+      if (o) choose(o.value);
+    }
+  }
+
+  return (
+    <div class="relative" ref={rootRef}>
+      <button
+        type="button"
+        class="select-trigger"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={ariaLabel}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span class="truncate">{selected?.label ?? "Select…"}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      {open && (
+        <div class="select-popover" onKeyDown={onKey}>
+          {searchable && (
+            <div class="select-search">
+              <input
+                ref={searchRef}
+                type="text"
+                inputMode="search"
+                placeholder="Search countries…"
+                value={query}
+                onInput={(e) => {
+                  setQuery(e.currentTarget.value);
+                  setActive(0);
+                }}
+              />
+            </div>
+          )}
+          <ul class="select-list" role="listbox" aria-label={ariaLabel}>
+            {filtered.length === 0 && <li class="select-empty">No matches</li>}
+            {filtered.map((o, i) => (
+              <li key={o.value} role="option" aria-selected={o.value === value}>
+                <button
+                  type="button"
+                  class={`select-option ${o.value === value ? "is-selected" : ""} ${i === active ? "is-active" : ""}`}
+                  onMouseEnter={() => setActive(i)}
+                  onClick={() => choose(o.value)}
+                >
+                  <span class="truncate">{o.label}</span>
+                  {o.value === value && (
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
@@ -161,21 +296,14 @@ function Field({
 
   if (input.type === "select") {
     return (
-      <label class="flex flex-col gap-1.5" for={id}>
+      <label class="flex flex-col gap-1.5">
         <span class="text-[13px] font-medium text-ink">{input.label}</span>
-        <select
-          id={id}
-          name={input.id}
-          class="field-control field-select"
+        <Select
+          options={(input.options ?? []).map((o) => ({ value: o.value, label: o.label }))}
           value={String(value)}
-          onChange={(e) => onInput(input.id, e.currentTarget.value)}
-        >
-          {input.options?.map((o) => (
-            <option value={o.value} key={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+          onChange={(v) => onInput(input.id, v)}
+          ariaLabel={input.label}
+        />
         {input.help && <span class="text-[13px] leading-snug text-mute">{input.help}</span>}
       </label>
     );
@@ -186,6 +314,7 @@ function Field({
       <label class="flex items-center gap-3" for={id}>
         <input
           id={id}
+          name={input.id}
           type="checkbox"
           class="size-[18px] shrink-0 cursor-pointer accent-ink"
           checked={Boolean(value)}

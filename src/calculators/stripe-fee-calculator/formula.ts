@@ -17,6 +17,7 @@ export interface StripeFeeInput {
   fixed: number; // fixed fee in country currency
   intlSurcharge?: number; // extra % for international cards
   fxPercent?: number; // extra % when currency conversion applies
+  addOnPercent?: number; // extra % from add-ons (Billing 0.7%, Invoicing 0.4%)
   taxOnFeePercent?: number; // tax levied on the fee itself (e.g. India GST 18%)
   international?: boolean;
   conversion?: boolean;
@@ -47,13 +48,17 @@ export function computeStripeFee(input: StripeFeeInput): StripeFeeBreakdown {
     fixed,
     intlSurcharge = 0,
     fxPercent = 0,
+    addOnPercent = 0,
     taxOnFeePercent = 0,
     international = false,
     conversion = false,
   } = input;
 
   const ratePercent =
-    percent + (international ? intlSurcharge : 0) + (conversion ? fxPercent : 0);
+    percent +
+    (international ? intlSurcharge : 0) +
+    (conversion ? fxPercent : 0) +
+    addOnPercent;
   const r = ratePercent / 100;
   const tf = taxOnFeePercent / 100;
 
