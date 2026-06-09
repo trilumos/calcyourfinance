@@ -108,6 +108,29 @@ export interface PayPalFees {
 }
 export type PayPalFeesByCountry = Partial<Record<CountryCode, PayPalFees>>;
 
+// Eurozone PayPal: standard "commercial transaction / Checkout" rate + a
+// micropayments plan. Cross-border is +1.29% (UK) / +1.99% (rest of world);
+// EEA senders +0%. Currency conversion ~3%. Standard rate varies by country
+// (DE 2.99%, FR/ES 2.90%, others 3.40%) so each is passed in explicitly.
+const PAYPAL_EUR_NOTE =
+  "Cross-border +1.29% (UK) or +1.99% (rest of world); EEA senders +0%. Currency conversion ~3%.";
+const paypalEuro = (
+  cc: string,
+  std: [number, number],
+  micro: [number, number],
+): PayPalFees => ({
+  currency: "EUR",
+  variants: [
+    { id: "checkout", label: "Commercial transaction / Checkout", percent: std[0], fixed: std[1] },
+    { id: "micro", label: "Micropayments (small sales)", percent: micro[0], fixed: micro[1] },
+  ],
+  crossBorderPercent: 1.99,
+  currencyConversionPercent: 3,
+  notes: PAYPAL_EUR_NOTE,
+  source: `https://www.paypal.com/${cc}/business/paypal-business-fees`,
+  verifiedOn: VERIFIED,
+});
+
 export const paypalFees: PayPalFeesByCountry = {
   US: {
     currency: "USD",
@@ -131,6 +154,160 @@ export const paypalFees: PayPalFeesByCountry = {
     currencyConversionPercent: 3,
     notes: "Cross-border +1.29% (EEA) or +1.99% (rest of world); currency conversion ~3%.",
     source: "https://www.paypal.com/uk/business/paypal-business-fees",
+    verifiedOn: VERIFIED,
+  },
+  CA: {
+    currency: "CAD",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 2.9, fixed: 0.3 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.0, fixed: 0.05 },
+    ],
+    crossBorderPercent: 1.0, // US senders +0.80%; rest of world +1.00%
+    currencyConversionPercent: 4,
+    notes: "Cross-border +0.80% (US) or +1.00% (rest of world); currency conversion ~4%.",
+    source: "https://www.paypal.com/ca/business/paypal-business-fees",
+    verifiedOn: VERIFIED,
+  },
+  AU: {
+    currency: "AUD",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 2.9, fixed: 0.3 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.0, fixed: 0.05 },
+    ],
+    crossBorderPercent: 1.0,
+    currencyConversionPercent: 4,
+    notes: "Cross-border +1.00% for all international payments; currency conversion ~4%.",
+    source: "https://www.paypal.com/au/business/paypal-business-fees",
+    verifiedOn: VERIFIED,
+  },
+  SG: {
+    currency: "SGD",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 3.9, fixed: 0.5 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.5, fixed: 0.08 },
+    ],
+    crossBorderPercent: 0.5,
+    currencyConversionPercent: 3,
+    notes: "Cross-border +0.50%; currency conversion ~3%.",
+    source: "https://www.paypal.com/sg/business/paypal-business-fees",
+    verifiedOn: VERIFIED,
+  },
+  JP: {
+    currency: "JPY",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 3.6, fixed: 40 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.0, fixed: 7 },
+    ],
+    crossBorderPercent: 0.5,
+    currencyConversionPercent: 4,
+    notes: "Cross-border +0.50%; currency conversion ~4%.",
+    source: "https://www.paypal.com/jp/webapps/mpp/merchant-fees",
+    verifiedOn: VERIFIED,
+  },
+  NZ: {
+    currency: "NZD",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 3.4, fixed: 0.45 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.0, fixed: 0.08 },
+    ],
+    crossBorderPercent: 1.0,
+    currencyConversionPercent: 4,
+    notes: "Cross-border +1.00%; currency conversion ~4%.",
+    source: "https://www.paypal.com/nz/webapps/mpp/merchant-fees",
+    verifiedOn: VERIFIED,
+  },
+  HK: {
+    currency: "HKD",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 3.9, fixed: 2.35 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.0, fixed: 0.39 },
+    ],
+    crossBorderPercent: 0.5,
+    currencyConversionPercent: 4,
+    notes: "Cross-border +0.50%; currency conversion ~4%.",
+    source: "https://www.paypal.com/hk/business/paypal-business-fees",
+    verifiedOn: VERIFIED,
+  },
+  MX: {
+    currency: "MXN",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 3.95, fixed: 4 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.0, fixed: 0.55 },
+    ],
+    crossBorderPercent: 0.5,
+    currencyConversionPercent: 3.5,
+    notes: "Cross-border +0.50%; currency conversion ~3.5%. Mexican IVA (VAT) applies on top of PayPal fees.",
+    source: "https://www.paypal.com/mx/webapps/mpp/merchant-fees",
+    verifiedOn: VERIFIED,
+  },
+  MY: {
+    currency: "MYR",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 3.9, fixed: 2 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.5, fixed: 0.2 },
+    ],
+    crossBorderPercent: 0.5,
+    currencyConversionPercent: 4,
+    notes: "Cross-border +0.50%; currency conversion ~4%.",
+    source: "https://www.paypal.com/my/business/paypal-business-fees",
+    verifiedOn: VERIFIED,
+  },
+  SE: {
+    currency: "SEK",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 3.4, fixed: 3.25 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.0, fixed: 0.54 },
+    ],
+    crossBorderPercent: 1.99,
+    currencyConversionPercent: 3,
+    notes: PAYPAL_EUR_NOTE,
+    source: "https://www.paypal.com/se/business/paypal-business-fees",
+    verifiedOn: VERIFIED,
+  },
+  IN: {
+    currency: "INR",
+    variants: [
+      { id: "checkout", label: "International commercial transaction", percent: 4.4, fixed: 3 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 6.0, fixed: 0.25 },
+    ],
+    crossBorderPercent: 0, // India PayPal supports international payments only — the base rate already reflects cross-border.
+    currencyConversionPercent: 3,
+    notes: "PayPal India supports international payments only; the 4.40% rate already reflects cross-border. Currency conversion ~3%.",
+    source: "https://www.paypal.com/in/business/paypal-business-fees",
+    verifiedOn: VERIFIED,
+  },
+  BR: {
+    currency: "BRL",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 4.79, fixed: 0.6 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 9.5, fixed: 0.1 },
+    ],
+    crossBorderPercent: 1.61,
+    currencyConversionPercent: 3.5,
+    notes: "Cross-border +1.61%; currency conversion ~3.5%.",
+    source: "https://www.paypal.com/br/business/paypal-business-fees",
+    verifiedOn: VERIFIED,
+  },
+  DE: paypalEuro("de", [2.99, 0.39], [4.99, 0.09]),
+  FR: paypalEuro("fr", [2.9, 0.35], [5.0, 0.1]),
+  ES: paypalEuro("es", [2.9, 0.35], [5.0, 0.05]),
+  IT: paypalEuro("it", [3.4, 0.35], [5.0, 0.1]),
+  NL: paypalEuro("nl", [3.4, 0.35], [5.0, 0.05]),
+  IE: paypalEuro("ie", [3.4, 0.35], [5.0, 0.05]),
+  BE: paypalEuro("be", [3.4, 0.35], [5.0, 0.05]),
+  AT: paypalEuro("at", [3.4, 0.35], [5.0, 0.1]),
+  EU: {
+    currency: "EUR",
+    variants: [
+      { id: "checkout", label: "Commercial transaction / Checkout", percent: 3.4, fixed: 0.35 },
+      { id: "micro", label: "Micropayments (small sales)", percent: 5.0, fixed: 0.05 },
+    ],
+    crossBorderPercent: 1.99,
+    currencyConversionPercent: 3,
+    notes:
+      "Representative Eurozone rate; the standard rate varies by country (e.g. Germany 2.99% + €0.39, France/Spain 2.90% + €0.35). " +
+      PAYPAL_EUR_NOTE,
+    source: "https://www.paypal.com/ie/business/paypal-business-fees",
     verifiedOn: VERIFIED,
   },
 };
@@ -181,4 +358,26 @@ export const etsyFees: EtsyFeesByCountry = {
   ES: { ...ETSY_EU, regulatoryPercent: 0.72 },
   IT: { ...ETSY_EU, regulatoryPercent: 0.32 },
   NL: { ...ETSY_EU },
+  IE: { ...ETSY_EU },
+  BE: { ...ETSY_EU },
+  AT: { ...ETSY_EU },
+  SE: { ...ETSY_BASE, processing: { percent: 4, fixed: 3 }, currency: "SEK" },
+  SG: { ...ETSY_BASE, processing: { percent: 4.4, fixed: 0.35 }, currency: "SGD" },
+  HK: { ...ETSY_BASE, processing: { percent: 4.4, fixed: 2 }, currency: "HKD" },
+  NZ: {
+    ...ETSY_BASE,
+    processing: { percent: 4, fixed: 0.3 },
+    currency: "NZD",
+    notes: "Etsy lists processing as 3–4% + NZ$0.30 depending on the card; the upper figure is shown for a conservative payout estimate.",
+  },
+  MX: { ...ETSY_BASE, processing: { percent: 4.5, fixed: 10 }, currency: "MXN" },
+  IN: {
+    ...ETSY_BASE,
+    processing: { percent: 5, fixed: 25 },
+    currency: "INR",
+    regulatoryPercent: 0.29,
+    notes:
+      "Etsy lists processing as 3–5% + ₹25 depending on the card; the upper figure is shown for a conservative payout estimate. Payouts settle in USD via Payoneer. The 0.29% regulatory operating fee is scheduled to drop to 0.05% on 2026-06-22.",
+    source: "https://www.etsy.com/in-en/sell",
+  },
 };

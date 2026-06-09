@@ -4,6 +4,36 @@ Living log of what's shipped and what's next (PLAN §11).
 
 ---
 
+## 2026-06-09 — PayPal & Etsy country coverage expanded to match Stripe
+
+### Done
+- **PayPal → 22 countries** (was 2: US, GB). Added CA, AU, EU (bloc), IN, SG, BR, JP, NZ,
+  HK, MX, MY, SE, DE, FR, ES, IT, NL, IE, BE, AT — full parity with Stripe. Every rate read
+  from the official `paypal.com/<cc>` business/merchant fee page (all HIGH confidence).
+  Each country now carries a standard commercial/Checkout variant **plus a micropayments
+  variant**, the correct cross-border surcharge, and currency-conversion %. Notable: India
+  is international-only (base rate already reflects cross-border); Mexico fees attract IVA;
+  Eurozone is **not** uniform (DE 2.99%+€0.39, FR/ES 2.90%+€0.35, others 3.40%+€0.35), so
+  the `EU` bloc uses the most common 3.40% with a note.
+- **Etsy → 19 countries** (was 10). Added IE, BE, AT, SE, SG, HK, NZ, MX, **IN**. Processing
+  rates verified from official `etsy.com/<cc>/sell` (or `/payments`) pages.
+  - **India**: charged in INR (5% + ₹25 + 0.29% regulatory operating fee, dropping to 0.05%
+    on 2026-06-22). Fits the normal model — only the *payout* settles in USD via Payoneer,
+    which is downstream of the fee math.
+  - **Still excluded** (honest coverage, per the "official source + verifiedOn" rule):
+    **Japan** (Etsy quotes it as 6% + **US$0.30** — genuinely USD-settled; representing it
+    needs a per-(calculator, country) display-currency override, since JPY is hard-wired as
+    Japan's currency for Stripe/PayPal — deferred as it risks FX inaccuracy for one country),
+    **Brazil** (no rate published on any official Etsy page), **Malaysia** (every official MY
+    page 404s; only secondary sources).
+- Data-driven as always: only `fees.ts` (+ `paypalEuro` helper) and the two `config.ts`
+  country lists / rate-card lists changed; selectors, rate cards and country-keyword
+  variants regenerate from it. keywords.md now **2,396** keywords (was 1,363).
+- Verified: 27 unit tests pass; `astro build` clean (13 pages); new countries confirmed
+  rendering in the static HTML rate cards for both pages.
+
+---
+
 ## 2026-06-09 — More countries, more fee options, custom searchable dropdown
 
 ### Done

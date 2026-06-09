@@ -11,7 +11,7 @@ export const etsyFeeCalculator: CalculatorConfig = {
   platform: "etsy",
   title: "Etsy Fee Calculator",
   metaDescription:
-    "Free Etsy fee calculator. Calculate Etsy seller fees — listing, transaction, payment processing and Offsite Ads — plus your payout and profit. US, UK, EU, CA, AU.",
+    "Free Etsy fee calculator. Calculate Etsy seller fees — listing, transaction, payment processing and Offsite Ads — plus your payout and profit, across 19 countries.",
   h1: "Etsy Fee Calculator",
   intro:
     "Calculate Etsy seller fees on a sale and see what lands in your bank. Enter your item price and shipping to break down the listing fee, 6.5% transaction fee, payment processing and Offsite Ads — and add your cost to see real profit.",
@@ -65,7 +65,13 @@ export const etsyFeeCalculator: CalculatorConfig = {
     intent: "tool",
   },
 
-  countries: { supported: ["US", "GB", "CA", "AU", "EU", "DE", "FR", "ES", "IT", "NL"], default: "US" },
+  countries: {
+    supported: [
+      "US", "GB", "CA", "AU", "EU", "IN", "DE", "FR", "ES", "IT", "NL",
+      "IE", "BE", "AT", "SE", "SG", "HK", "NZ", "MX",
+    ],
+    default: "US",
+  },
 
   inputs: [
     { id: "itemPrice", label: "Item price", type: "currency", default: 25, min: 0, help: "Price the buyer pays for the item." },
@@ -149,7 +155,10 @@ We keep Etsy's rates in a single dated source file and stamp the page with a "fe
     heading: "Etsy fees by country",
     intro:
       "The $0.20 listing fee and 6.5% transaction fee are the same everywhere; only payment processing changes by country. Offsite Ads (12–15%, capped at $100/order) may also apply.",
-    cards: etsyRateCards(["US", "GB", "CA", "AU", "EU", "DE", "FR", "ES", "IT", "NL"]),
+    cards: etsyRateCards([
+      "US", "GB", "CA", "AU", "EU", "IN", "DE", "FR", "ES", "IT", "NL",
+      "IE", "BE", "AT", "SE", "SG", "HK", "NZ", "MX",
+    ]),
   },
 
   workedExample: {
@@ -198,6 +207,6 @@ We keep Etsy's rates in a single dated source file and stamp the page with a "fe
     { label: "Etsy Help — payment processing fees", url: "https://help.etsy.com/hc/en-us/articles/115015628847" },
   ],
 
-  feesVerifiedOn: "2026-06-08",
-  lastUpdated: "2026-06-08",
+  feesVerifiedOn: "2026-06-09",
+  lastUpdated: "2026-06-09",
 };

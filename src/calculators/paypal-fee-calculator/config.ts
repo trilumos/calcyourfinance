@@ -11,7 +11,7 @@ export const paypalFeeCalculator: CalculatorConfig = {
   platform: "paypal",
   title: "PayPal Fee Calculator",
   metaDescription:
-    "Free PayPal fee calculator. Calculate PayPal goods & services, checkout and micropayment fees and what you'll receive — US & UK, with international fees and a reverse mode.",
+    "Free PayPal fee calculator. Calculate PayPal goods & services, checkout and micropayment fees and what you'll receive across 22 countries, with international fees and a reverse mode.",
   h1: "PayPal Fee Calculator",
   intro:
     "Calculate how much PayPal charges on a payment and what you'll actually receive. Choose the transaction type, add the international surcharge, or work backwards to see what to charge so you keep a target amount after PayPal's fees.",
@@ -64,7 +64,13 @@ export const paypalFeeCalculator: CalculatorConfig = {
     intent: "tool",
   },
 
-  countries: { supported: ["US", "GB"], default: "US" },
+  countries: {
+    supported: [
+      "US", "GB", "CA", "AU", "EU", "IN", "SG", "BR", "JP", "NZ", "HK",
+      "MX", "MY", "SE", "DE", "FR", "ES", "IT", "NL", "IE", "BE", "AT",
+    ],
+    default: "US",
+  },
 
   inputs: [
     {
@@ -95,7 +101,7 @@ export const paypalFeeCalculator: CalculatorConfig = {
         { value: "checkout", label: "PayPal Checkout / online store" },
         { value: "micro", label: "Micropayments (small sales)" },
       ],
-      help: "Rates vary by product. UK uses one standard commercial rate.",
+      help: "Rates vary by product and country. Many countries use one standard commercial rate plus a micropayments plan.",
     },
     {
       id: "international",
@@ -171,7 +177,10 @@ We keep every rate in a dated configuration file and stamp the page with a "fees
     heading: "PayPal fees by country",
     intro:
       "PayPal's standard commercial rates for the countries this calculator covers. Cross-border (international) payments add a surcharge on top.",
-    cards: paypalRateCards(["US", "GB"]),
+    cards: paypalRateCards([
+      "US", "GB", "CA", "AU", "EU", "IN", "SG", "BR", "JP", "NZ", "HK",
+      "MX", "MY", "SE", "DE", "FR", "ES", "IT", "NL", "IE", "BE", "AT",
+    ]),
   },
 
   workedExample: {
@@ -213,8 +222,13 @@ We keep every rate in a dated configuration file and stamp the page with a "fees
   sources: [
     { label: "PayPal — US merchant fees", url: "https://www.paypal.com/us/webapps/mpp/merchant-fees" },
     { label: "PayPal — UK business fees", url: "https://www.paypal.com/uk/business/paypal-business-fees" },
+    { label: "PayPal — Canada business fees", url: "https://www.paypal.com/ca/business/paypal-business-fees" },
+    { label: "PayPal — Australia business fees", url: "https://www.paypal.com/au/business/paypal-business-fees" },
+    { label: "PayPal — Germany business fees", url: "https://www.paypal.com/de/business/paypal-business-fees" },
+    { label: "PayPal — Ireland (Eurozone) business fees", url: "https://www.paypal.com/ie/business/paypal-business-fees" },
+    { label: "PayPal — India business fees", url: "https://www.paypal.com/in/business/paypal-business-fees" },
   ],
 
-  feesVerifiedOn: "2026-06-08",
-  lastUpdated: "2026-06-08",
+  feesVerifiedOn: "2026-06-09",
+  lastUpdated: "2026-06-09",
 };
