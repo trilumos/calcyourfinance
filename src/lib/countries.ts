@@ -63,6 +63,32 @@ export const COUNTRIES: Record<CountryCode, Country> = {
   ZA: { code: "ZA", name: "South Africa", currency: "ZAR", locale: "en-ZA", tier: 2 },
 };
 
+/**
+ * Search-friendly country names used to generate country-specific keyword
+ * variants (e.g. "stripe fee calculator for uk"). These reflect how people
+ * actually search, not the formal country name.
+ */
+export const COUNTRY_SEARCH_NAME: Record<CountryCode, string> = {
+  US: "usa",
+  GB: "uk",
+  CA: "canada",
+  AU: "australia",
+  EU: "europe",
+  IN: "india",
+  SG: "singapore",
+  BR: "brazil",
+  DE: "germany",
+  FR: "france",
+  NL: "netherlands",
+  IE: "ireland",
+  NZ: "new zealand",
+  MX: "mexico",
+  AE: "uae",
+  PH: "philippines",
+  MY: "malaysia",
+  ZA: "south africa",
+};
+
 /** Resolve a country's display + currency metadata, defaulting safely to US. */
 export function getCountry(code: CountryCode | string | undefined): Country {
   if (code && code in COUNTRIES) return COUNTRIES[code as CountryCode];

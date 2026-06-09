@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { calculators } from "../src/calculators/index.ts";
 import { SITE } from "../src/config/site.ts";
+import { COUNTRY_SEARCH_NAME } from "../src/lib/countries.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(__dirname, "..", "keywords.md");
@@ -18,7 +19,7 @@ interface Row {
   keyword: string;
   page: string;
   url: string;
-  role: "primary" | "secondary" | "long-tail";
+  role: "primary" | "secondary" | "long-tail" | "country";
   intent: string;
   competition: string;
   status: string;
@@ -34,9 +35,29 @@ for (const c of calculators) {
     competition: c.keywords.competition,
     status: "built",
   };
+
+  const baseKeywords = [
+    c.keywords.primary,
+    ...c.keywords.secondary,
+    ...c.keywords.longTail,
+  ];
+
   rows.push({ ...base, keyword: c.keywords.primary, role: "primary" });
   for (const k of c.keywords.secondary) rows.push({ ...base, keyword: k, role: "secondary" });
   for (const k of c.keywords.longTail) rows.push({ ...base, keyword: k, role: "long-tail" });
+
+  // Standing rule (PLAN §A): for every supported country, add a
+  // "<keyword> for <country>" variant of each base keyword so the page can
+  // rank for country-specific searches (e.g. "stripe fee calculator for uk").
+  if (c.countries) {
+    for (const code of c.countries.supported) {
+      const country = COUNTRY_SEARCH_NAME[code];
+      if (!country) continue;
+      for (const k of baseKeywords) {
+        rows.push({ ...base, keyword: `${k} for ${country}`, role: "country" });
+      }
+    }
+  }
 }
 
 const header = `# Keyword tracker — ${SITE.name}

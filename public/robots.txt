@@ -1,3 +1,8 @@
+# CalcYourFinance — all crawlers welcome, including AI / LLM bots
+# (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-Web, PerplexityBot,
+# Google-Extended, CCBot, etc.). We allow full crawling for both search and
+# AI visibility. See /llms.txt for an LLM-friendly site summary.
+
 User-agent: *
 Allow: /
 

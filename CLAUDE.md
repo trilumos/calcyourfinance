@@ -59,6 +59,11 @@ all math client-side. One shared template; a new calculator = a config + a formu
   dependent pages. Web-search the official pricing page when adding/verifying fees; render the date.
 - **Per-page keywords** live in each config's `keywords` field; the root `keywords.md` is
   **auto-generated** by `npm run keywords` — never hand-edit it.
+- **Country keyword rule (standing):** `build-keywords.ts` automatically adds a
+  `"<keyword> for <country>"` variant of **every** base keyword for **every** supported
+  country (search-friendly names in `COUNTRY_SEARCH_NAME`, e.g. "uk", "india", "singapore"),
+  so each page targets country-specific searches ("stripe fee calculator for uk"). This is
+  automatic for any calculator with a `countries` field — don't hand-add these.
 - Country-aware calcs use a country selector; rates/currency/worked example update together.
 - **SSR the initial result** (CalculatorShell computes server-side) so static HTML has the numbers
   (SEO + zero CLS); the island hydrates for interactivity.
