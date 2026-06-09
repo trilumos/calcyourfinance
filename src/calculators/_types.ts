@@ -100,6 +100,36 @@ export interface CalcResult {
   rows: ResultRow[];
 }
 
+/* ---- Comparison results (kind:"comparison") ------------------------------ */
+/** One platform's column in a side-by-side comparison readout. */
+export interface ComparisonColumn {
+  /** Platform key (src/config/platforms.ts) — drives the accent colour. */
+  platform: string;
+  name: string; // "Stripe"
+  net: string; // pre-formatted "you keep" / "you charge" headline figure
+  netLabel: string; // "You keep" (charge mode) or "You charge" (net mode)
+  fee: string; // pre-formatted total fee
+  rateLabel: string; // "2.9% + $0.30"
+  effective: string; // "Effective 3.20%"
+  isWinner: boolean;
+  /** Small note about this platform's extras, linking to its single tool. */
+  note?: { text: string; href: string };
+}
+
+export interface ComparisonResult {
+  variant: "comparison";
+  /** Winner banner: a sentence + supporting context (or a tie message). */
+  verdict: { text: string; sub: string };
+  columns: ComparisonColumn[];
+}
+
+/** Discriminates a comparison readout from a single receipt readout. */
+export function isComparisonResult(
+  r: CalcResult | ComparisonResult,
+): r is ComparisonResult {
+  return "variant" in r && r.variant === "comparison";
+}
+
 /** Formatters + selected country handed to a config's compute() adapter. */
 export interface ComputeCtx {
   country: CountryCode;
@@ -176,7 +206,7 @@ export interface CalculatorConfig {
 
   inputs: InputSpec[];
   /** Presentation adapter: calls pure formula(s), returns display-ready result. */
-  compute: (values: InputValues, ctx: ComputeCtx) => CalcResult;
+  compute: (values: InputValues, ctx: ComputeCtx) => CalcResult | ComparisonResult;
 
   /** For kind:"comparison" — platform keys being compared. */
   comparisonOf?: string[];

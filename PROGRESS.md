@@ -4,6 +4,48 @@ Living log of what's shipped and what's next (PLAN §11).
 
 ---
 
+## 2026-06-09 — First comparison calculator: Stripe vs PayPal (+ comparison engine)
+
+### Done (PLAN §2 1D — comparison calculators)
+- **`/stripe-vs-paypal-fee-calculator`** — the first `kind: "comparison"` page, and the
+  reusable engine support every future comparison (Stripe vs Square, Wise vs PayPal, …) will
+  share. Pure reuse of existing `config/fees.ts` data + the two unit-tested formulas — no new
+  fee research, no new math.
+- **Result UX:** side-by-side platform cards with a **winner banner** ("Stripe is cheaper by
+  $0.78 on $100"). Each card shows what you keep, the fee, the rate label, effective rate, a
+  "Cheaper" badge on the winner, and a note linking to that platform's single tool for its
+  extras (Stripe Billing/Invoicing; PayPal G&S/micropayments). Winner banner + winning card
+  adopt that platform's brand accent.
+- **Engine:** added `ComparisonResult`/`ComparisonColumn` types + `isComparisonResult` guard
+  to `_types.ts`; widened `compute` return; added a `<ComparisonReadout>` branch to the
+  generic `CalculatorIsland` (the single-receipt `<Readout>`, inputs form, country search,
+  SSR-initial-result and lazy recompute are all unchanged). No `CalculatorShell` change — a
+  comparison config carries no single `platform`, so no header chip renders.
+- **Inputs:** mode (charge/net), amount, **PayPal product** (Checkout / Goods & Services /
+  Micropayments — the one asymmetric input, since Stripe has a single online rate), and shared
+  international + currency-conversion toggles. Reverse mode grosses each platform up
+  independently and the smaller required charge wins.
+- **Math (TDD):** `compareFees()` composes `computeStripeFee` + `computePayPalFee` and decides
+  the verdict (higher net wins in charge mode; lower charge wins in net mode; a sub-cent gap is
+  a tie — no "cheaper by $0.00"). 7 new tests, written-failing-first: winner selection, the
+  small-amount flip to PayPal micropayments, tie, reverse-mode parity, surcharge pass-through.
+- **Integration:** registered in `index.ts`; auto-listed on the `/payment-fees` hub; Stripe &
+  PayPal single configs' `related[]` now point back at the comparison; new keyword cluster +
+  co-located `keywords.md`; `npm run keywords` → **2,810** keywords (was 2,396);
+  `npm run og` mints `/og/stripe-vs-paypal-fee-calculator.png`.
+- **Verified:** 34 tests pass (27 + 7); `astro build` clean (14 pages, was 13); SSR HTML
+  carries both nets, the verdict, the winner badge, canonical, og:image and
+  WebApplication/FAQPage/BreadcrumbList JSON-LD; new UI passed the web-design-guidelines review.
+- Design spec: `docs/superpowers/specs/2026-06-09-stripe-vs-paypal-comparison-design.md`.
+
+### Standing pattern (confirmed with user)
+Build each tool **fully integrated** (config + formula + tests + SEO + internal links + hub +
+OG) before moving on; when a new tool can be compared against existing ones, add those
+comparison pages too. Comparisons involving Etsy are skipped (marketplace, not an
+apples-to-apples processor) until more processors land.
+
+---
+
 ## 2026-06-09 — PayPal & Etsy country coverage expanded to match Stripe
 
 ### Done

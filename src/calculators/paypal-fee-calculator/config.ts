@@ -217,7 +217,7 @@ We keep every rate in a dated configuration file and stamp the page with a "fees
     },
   ],
 
-  related: ["stripe-fee-calculator", "etsy-fee-calculator"],
+  related: ["stripe-fee-calculator", "stripe-vs-paypal-fee-calculator", "etsy-fee-calculator"],
 
   sources: [
     { label: "PayPal — US merchant fees", url: "https://www.paypal.com/us/webapps/mpp/merchant-fees" },

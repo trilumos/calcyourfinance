@@ -8,26 +8,30 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type {
   CalcResult,
+  ComparisonResult,
   ComputeCtx,
   InputSpec,
   InputValues,
 } from "../calculators/_types";
+import { isComparisonResult } from "../calculators/_types";
 import {
   COUNTRY_SEARCH_NAME,
   countriesFor,
   getCountry,
   type CountryCode,
 } from "../lib/countries";
+import { getPlatform } from "../config/platforms";
 import { formatCurrency, formatNumber, formatPercent } from "../lib/money";
 
-type ComputeFn = (values: InputValues, ctx: ComputeCtx) => CalcResult;
+type CalcOutput = CalcResult | ComparisonResult;
+type ComputeFn = (values: InputValues, ctx: ComputeCtx) => CalcOutput;
 
 const configModules = import.meta.glob("../calculators/*/config.ts");
 
 interface Props {
   slug: string;
   inputs: InputSpec[];
-  initialResult: CalcResult;
+  initialResult: CalcOutput;
   countryCodes?: CountryCode[];
   initialCountry: CountryCode;
 }
@@ -63,7 +67,7 @@ export default function CalculatorIsland({
   const [values, setValues] = useState<InputValues>(() => defaultValues(inputs));
   const [country, setCountry] = useState<CountryCode>(initialCountry);
   const [compute, setCompute] = useState<ComputeFn | null>(null);
-  const [result, setResult] = useState<CalcResult>(initialResult);
+  const [result, setResult] = useState<CalcOutput>(initialResult);
 
   const countryOptions = useMemo<Option[]>(
     () =>
@@ -152,7 +156,11 @@ export default function CalculatorIsland({
         ))}
       </form>
 
-      <Readout result={result} />
+      {isComparisonResult(result) ? (
+        <ComparisonReadout result={result} />
+      ) : (
+        <Readout result={result} />
+      )}
     </div>
   );
 }
@@ -406,6 +414,84 @@ function Readout({ result }: { result: CalcResult }) {
           );
         })}
       </dl>
+    </output>
+  );
+}
+
+/* ---- Comparison readout (kind:"comparison") ------------------------------ */
+function accentStyleFor(platform: string): string | undefined {
+  const p = getPlatform(platform);
+  if (!p) return undefined;
+  return `--accent-l:${p.color};--accent-d:${p.colorDark ?? p.color}`;
+}
+
+function ComparisonReadout({ result }: { result: ComparisonResult }) {
+  const winner = result.columns.find((c) => c.isWinner);
+  const tie = !winner;
+  return (
+    <output class="sticky top-4 block" aria-live="polite">
+      <div
+        class={`calc-accent mb-3 flex items-center gap-2.5 rounded-xl border px-4 py-3 text-[15px] font-medium ${
+          tie
+            ? "border-hairline bg-canvas-soft text-body"
+            : "border-accent/30 bg-accent/5 text-ink"
+        }`}
+        style={winner ? accentStyleFor(winner.platform) : undefined}
+      >
+        {!tie && (
+          <svg class="size-5 shrink-0 text-accent" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5" />
+          </svg>
+        )}
+        <span class="min-w-0">
+          {result.verdict.text}
+          {result.verdict.sub && (
+            <span class="block text-[13px] font-normal text-mute">{result.verdict.sub}</span>
+          )}
+        </span>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2">
+        {result.columns.map((col) => (
+          <div
+            key={col.platform}
+            class={`calc-accent card flex flex-col p-4 ${col.isWinner ? "ring-1 ring-accent/40" : ""}`}
+            style={accentStyleFor(col.platform)}
+          >
+            <div class="mb-2 flex items-center justify-between gap-2">
+              <span class="eyebrow" translate="no">{col.name}</span>
+              {col.isWinner && (
+                <span class="rounded-full bg-accent/10 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-accent">
+                  Cheaper
+                </span>
+              )}
+            </div>
+            <span class="text-[13px] text-mute">{col.netLabel}</span>
+            <span class="tnum text-accent text-[clamp(1.6rem,1.3rem+1.4vw,2.4rem)] font-semibold leading-none tracking-tight">
+              {col.net}
+            </span>
+            <dl class="mt-3 flex flex-col gap-1.5 border-t border-hairline pt-3 text-[14px]">
+              <div class="flex items-baseline justify-between gap-2">
+                <dt class="min-w-0 text-body">Fee ({col.rateLabel})</dt>
+                <dd class="tnum shrink-0 whitespace-nowrap font-medium text-error">−{col.fee}</dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-2">
+                <dt class="text-body">Effective rate</dt>
+                <dd class="tnum shrink-0 font-medium text-ink">{col.effective}</dd>
+              </div>
+            </dl>
+            {col.note && (
+              <p class="mt-3 text-[12px] leading-snug text-mute">
+                {col.note.text}{" "}
+                <a class="font-medium text-accent underline-offset-2 hover:underline" href={col.note.href}>
+                  Open the {col.name} calculator
+                </a>
+                .
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
     </output>
   );
 }
