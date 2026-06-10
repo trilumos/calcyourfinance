@@ -18,6 +18,9 @@ export const platforms: Record<string, Platform> = {
   stripe: { id: "stripe", name: "Stripe", color: "#635BFF", colorDark: "#8B85FF" },
   paypal: { id: "paypal", name: "PayPal", color: "#0070E0", colorDark: "#3B9EFF" },
   etsy: { id: "etsy", name: "Etsy", color: "#E0571B", colorDark: "#FF7A3D" },
+  // Deep navy (distinct from PayPal's azure) for Square, which has no strong
+  // colour identity beyond black — recognition only.
+  square: { id: "square", name: "Square", color: "#1351D8", colorDark: "#5C9DFF" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

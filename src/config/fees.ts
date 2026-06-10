@@ -313,6 +313,114 @@ export const paypalFees: PayPalFeesByCountry = {
 };
 
 /* ===========================================================================
+   SQUARE — payment processing (free/standard plan)
+   Source: official squareup.com/<cc> pricing/fee pages. Modeled as named rate
+   variants (online / in-person / keyed) like PayPal, plus a foreign-card
+   surcharge. The surcharge reflects the ONLINE (card-not-present) rate, which
+   is this calculator's default and the one used in comparisons. Ireland adds
+   VAT on top of the fee (modeled via taxOnFeePercent, like India GST on Stripe).
+   =========================================================================== */
+export interface SquareVariant {
+  id: string;
+  label: string;
+  percent: number;
+  fixed: number;
+}
+export interface SquareFees {
+  currency: string;
+  variants: SquareVariant[]; // [0] = online (default + comparison rate)
+  /** Extra % for cards issued outside the country (online card-not-present). */
+  intlSurchargePercent: number;
+  /** Tax levied on the fee itself (e.g. 23% Irish VAT on Square fees). */
+  taxOnFeePercent?: number;
+  taxLabel?: string;
+  notes?: string;
+  source: string;
+  verifiedOn: string;
+}
+export type SquareFeesByCountry = Partial<Record<CountryCode, SquareFees>>;
+
+const SQUARE_SRC = (path: string) => `https://squareup.com/${path}`;
+const sqVariants = (
+  online: [number, number],
+  inperson: [number, number],
+  keyed: [number, number],
+): SquareVariant[] => [
+  { id: "online", label: "Online / e-commerce", percent: online[0], fixed: online[1] },
+  { id: "inperson", label: "In person (tap, dip, swipe)", percent: inperson[0], fixed: inperson[1] },
+  { id: "keyed", label: "Manually keyed / card on file", percent: keyed[0], fixed: keyed[1] },
+];
+
+export const squareFees: SquareFeesByCountry = {
+  US: {
+    currency: "USD",
+    variants: sqVariants([3.3, 0.3], [2.6, 0.15], [3.5, 0.15]),
+    intlSurchargePercent: 0,
+    notes: "Free plan online rate 3.3% + $0.30 (paid plans / Web Payments API are 2.9% + $0.30). No published international surcharge.",
+    source: SQUARE_SRC("us/en/payments/our-fees"),
+    verifiedOn: VERIFIED,
+  },
+  CA: {
+    currency: "CAD",
+    variants: sqVariants([2.8, 0.3], [2.5, 0], [3.3, 0.15]),
+    intlSurchargePercent: 1.5,
+    notes: "+1.5% on cards issued outside Canada (all transaction types).",
+    source: SQUARE_SRC("ca/en/pricing"),
+    verifiedOn: VERIFIED,
+  },
+  AU: {
+    currency: "AUD",
+    variants: sqVariants([2.2, 0], [1.6, 0], [2.2, 0]),
+    intlSurchargePercent: 0,
+    notes: "No fixed per-transaction fee, no international surcharge. In-person 1.6% applies to accounts opened after 30 May 2024 (earlier accounts 1.9%).",
+    source: SQUARE_SRC("au/en/payments/our-fees"),
+    verifiedOn: VERIFIED,
+  },
+  JP: {
+    currency: "JPY",
+    variants: sqVariants([3.6, 0], [2.5, 0], [3.75, 0]),
+    intlSurchargePercent: 0,
+    notes: "No fixed per-transaction fee. In-person 2.5% applies to major brands under ¥30M/yr; higher-volume sellers pay more.",
+    source: SQUARE_SRC("jp/ja/pricing"),
+    verifiedOn: VERIFIED,
+  },
+  GB: {
+    currency: "GBP",
+    variants: sqVariants([1.4, 0.25], [1.75, 0], [2.5, 0]),
+    intlSurchargePercent: 1.1, // online: UK 1.4% → non-UK 2.5% (+£0.25 either way)
+    notes: "Online rate is for UK cards; non-UK online cards are 2.5% + £0.25. Card-present non-UK adds +1.5%.",
+    source: SQUARE_SRC("gb/en/pricing"),
+    verifiedOn: VERIFIED,
+  },
+  IE: {
+    currency: "EUR",
+    variants: sqVariants([1.4, 0.25], [1.75, 0], [2, 0]),
+    intlSurchargePercent: 1.5, // online: EEA 1.4% → non-EEA 2.9%
+    taxOnFeePercent: 23,
+    taxLabel: "VAT",
+    notes: "Irish VAT (23%) applies on top of Square's fee. Online rate is for EU/EEA cards; non-EEA online cards are 2.9% + €0.25.",
+    source: SQUARE_SRC("ie/en/pricing"),
+    verifiedOn: VERIFIED,
+  },
+  FR: {
+    currency: "EUR",
+    variants: sqVariants([1.4, 0.25], [1.65, 0], [2, 0]),
+    intlSurchargePercent: 1.5, // online: EEA 1.4% → non-EEA 2.9%
+    notes: "Online rate is for EU/EEA cards; non-EEA online cards are 2.9% + €0.25. Card-present non-EEA adds +1.5%.",
+    source: SQUARE_SRC("fr/fr/pricing"),
+    verifiedOn: VERIFIED,
+  },
+  ES: {
+    currency: "EUR",
+    variants: sqVariants([1.4, 0.25], [1.25, 0.05], [2, 0]),
+    intlSurchargePercent: 1.5, // online: EEA 1.4% → non-EEA 2.9%
+    notes: "Online rate is for EU/EEA cards; non-EEA online cards are 2.9% + €0.25. Card-present non-EEA adds +1.5%.",
+    source: SQUARE_SRC("es/es/pricing"),
+    verifiedOn: VERIFIED,
+  },
+};
+
+/* ===========================================================================
    ETSY — seller fees
    Listing fee ($0.20) and transaction fee (6.5%) are global; payment
    processing varies by country. Source: Etsy Fees & Payments Policy + Help.

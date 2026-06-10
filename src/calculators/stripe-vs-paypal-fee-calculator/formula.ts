@@ -7,7 +7,7 @@
  *
  * A difference that rounds to zero is a tie (no misleading "cheaper by $0.00").
  */
-import { roundMoney } from "../../lib/money";
+import { decideComparison } from "../../lib/compare";
 import { computeStripeFee, type StripeFeeBreakdown } from "../stripe-fee-calculator/formula";
 import { computePayPalFee, type PayPalFeeBreakdown } from "../paypal-fee-calculator/formula";
 
@@ -65,18 +65,12 @@ export function compareFees(input: CompareInput): CompareResult {
     international,
   });
 
-  const stripeMetric = mode === "net" ? stripe.charge : stripe.net;
-  const paypalMetric = mode === "net" ? paypal.charge : paypal.net;
-  const savings = roundMoney(Math.abs(stripeMetric - paypalMetric));
+  const { winner, savings } = decideComparison(stripe, paypal, mode);
 
-  let winner: CompareResult["winner"];
-  if (savings === 0) {
-    winner = "tie";
-  } else if (mode === "net") {
-    winner = stripeMetric < paypalMetric ? "stripe" : "paypal";
-  } else {
-    winner = stripeMetric > paypalMetric ? "stripe" : "paypal";
-  }
-
-  return { stripe, paypal, winner, savings };
+  return {
+    stripe,
+    paypal,
+    winner: winner === "a" ? "stripe" : winner === "b" ? "paypal" : "tie",
+    savings,
+  };
 }

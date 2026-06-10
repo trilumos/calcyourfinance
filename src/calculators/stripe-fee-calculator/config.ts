@@ -233,7 +233,7 @@ Payment pricing changes, so we store every rate in a single, dated source file a
     },
   ],
 
-  related: ["paypal-fee-calculator", "stripe-vs-paypal-fee-calculator", "etsy-fee-calculator"],
+  related: ["paypal-fee-calculator", "square-fee-calculator", "stripe-vs-paypal-fee-calculator", "stripe-vs-square-fee-calculator"],
 
   sources: [
     { label: "Stripe — official pricing (US)", url: "https://stripe.com/us/pricing" },

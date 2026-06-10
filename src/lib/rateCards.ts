@@ -5,7 +5,7 @@
  */
 import { getCountry, type CountryCode } from "./countries";
 import { roundTo } from "./money";
-import { stripeFees, etsyFees, paypalFees } from "../config/fees";
+import { stripeFees, etsyFees, paypalFees, squareFees } from "../config/fees";
 import type { RateCard } from "../calculators/_types";
 
 /** Format a fixed fee in a country's own currency (e.g. "$0.30", "£0.20"). */
@@ -67,6 +67,33 @@ export function etsyRateCards(codes: CountryCode[]): RateCard[] {
         rows.push({ label: "Regulatory", value: `${f.regulatoryPercent}%` });
       }
       return { code, name: getCountry(code).name, rows };
+    })
+    .filter((c): c is RateCard => c !== null);
+}
+
+const SQUARE_LABEL: Record<string, string> = {
+  online: "Online",
+  inperson: "In person",
+  keyed: "Keyed",
+};
+
+export function squareRateCards(codes: CountryCode[]): RateCard[] {
+  return codes
+    .map((code): RateCard | null => {
+      const f = squareFees[code];
+      if (!f) return null;
+      const noteParts: string[] = [];
+      if (f.intlSurchargePercent > 0) noteParts.push(`+${f.intlSurchargePercent}% foreign card (online)`);
+      if (f.taxOnFeePercent) noteParts.push(`+${f.taxOnFeePercent}% ${f.taxLabel ?? "tax"} on fees`);
+      return {
+        code,
+        name: getCountry(code).name,
+        rows: f.variants.map((v) => ({
+          label: SQUARE_LABEL[v.id] ?? v.label,
+          value: pctPlusFixed(v.percent, v.fixed, code),
+        })),
+        note: noteParts.join(" · ") || undefined,
+      };
     })
     .filter((c): c is RateCard => c !== null);
 }

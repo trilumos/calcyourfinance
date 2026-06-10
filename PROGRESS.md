@@ -4,6 +4,36 @@ Living log of what's shipped and what's next (PLAN §11).
 
 ---
 
+## 2026-06-10 — Square calculator + Stripe vs Square & Square vs PayPal comparisons
+
+### Done (PLAN §2 1A processors + 1D comparisons)
+- **`/square-fee-calculator`** — Square across its **8 markets** (US, CA, AU, JP, GB, IE, FR, ES;
+  Square doesn't operate beyond these). Rates researched from official `squareup.com/<cc>` pages
+  (all HIGH confidence), stored in `fees.ts` as **named variants** (online / in-person / keyed)
+  like PayPal, with a foreign-card surcharge and **Irish VAT-on-fee** (23%). Payment-type
+  selector, foreign-card toggle, reverse mode; rate cards + keyword variants regenerate from data.
+  - Gotchas captured: AU & JP have **no fixed fee** (pure %); US online is plan-dependent
+    (free plan 3.3% + $0.30 modelled); GB/IE/FR/ES are two-tier (domestic vs foreign card);
+    IE adds VAT on the fee.
+- **Two comparisons** (engine reused): **`/stripe-vs-square-fee-calculator`** and
+  **`/square-vs-paypal-fee-calculator`**. Both compare on the **online** rate (apples-to-apples);
+  Square-vs-PayPal exposes the PayPal product selector. Verdict genuinely flips by country
+  (e.g. Stripe wins US online, Square wins UK online) and by amount (PayPal micropayments wins
+  tiny sales).
+- **Refactor:** extracted the winner logic into a shared **`lib/compare.ts` `decideComparison()`**
+  (charge → higher net wins; net → lower charge wins; sub-cent gap = tie) and routed all three
+  comparisons through it. stripe-vs-paypal refactored to use it (its 7 tests still green).
+- **Square accent** added to `platforms.ts` (deep navy, distinct from PayPal azure).
+- **TDD:** `computeSquareFee` (7 tests) + `compareStripeSquare` (5) + `compareSquarePaypal` (5),
+  all written failing-first. Test cases pin the per-country/per-amount winner flips.
+- **Integration:** all three registered; auto on `/payment-fees` hub; Stripe/PayPal/Square
+  `related[]` cross-link the new pages; `npm run keywords` → **3,278** keywords (7 pages, was 2,810
+  /4); `npm run og` → 8 OG images.
+- **Verified:** 51 tests pass; `astro build` clean (17 pages, was 14); SSR HTML on all three new
+  pages carries the numbers, verdict, winner badge, byline and WebApplication/Breadcrumb JSON-LD.
+
+---
+
 ## 2026-06-09 — SEO hardening (Google Search Central audit) + named YMYL author
 
 ### Done

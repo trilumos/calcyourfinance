@@ -8,13 +8,19 @@ import type { CalculatorConfig, Category } from "./_types";
 import { stripeFeeCalculator } from "./stripe-fee-calculator/config";
 import { paypalFeeCalculator } from "./paypal-fee-calculator/config";
 import { etsyFeeCalculator } from "./etsy-fee-calculator/config";
+import { squareFeeCalculator } from "./square-fee-calculator/config";
 import { stripeVsPaypalCalculator } from "./stripe-vs-paypal-fee-calculator/config";
+import { stripeVsSquareCalculator } from "./stripe-vs-square-fee-calculator/config";
+import { squareVsPaypalCalculator } from "./square-vs-paypal-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
   paypalFeeCalculator,
   etsyFeeCalculator,
+  squareFeeCalculator,
   stripeVsPaypalCalculator,
+  stripeVsSquareCalculator,
+  squareVsPaypalCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */
