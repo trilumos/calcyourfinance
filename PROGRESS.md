@@ -4,6 +4,51 @@ Living log of what's shipped and what's next (PLAN §11).
 
 ---
 
+## 2026-06-10 — Payment-fees scope locked + Phase A (Cash App, Venmo + 3 comparisons) + cross-links
+
+### Scope decision (PLAN §2 1A)
+Triaged the full 1A processor list against demand + model fit. **Defensible complete set (~10):**
+Stripe/PayPal/Square (done) + Cash App, Venmo, Wise, Payoneer + Razorpay, **Paytm**, Paddle,
+Lemon Squeezy. **Dropped:** Apple/Google Pay (no separate merchant fee — ride the underlying
+processor), **Juspay** (orchestration layer, enterprise/negotiated, no public rate), standalone
+UPI (zero-MDR → ₹0). **Deferred:** Braintree, Skrill, Authorize.net, Mollie, Adyen, FastSpring,
+2Checkout, **PhonePe** (only a blended 1.95%, no official per-method breakdown), and BNPL
+(Klarna/Afterpay). Comparisons = relevant/high-demand pairs only, not the full matrix.
+- India research nugget: **UPI P2M is zero-MDR (free for merchants)** in India (still law June
+  2026); Razorpay/Paytm's % is a *platform fee* applying even on UPI — to be stated on those pages.
+
+### Done — cross-link feature
+- **"Compare with other platforms" callout** below the result on every single calculator whose
+  platform has comparison pages (auto-derived from `comparisonOf` via `comparisonsForPlatform`).
+  Hidden on Etsy (no comparison) and on comparison pages themselves.
+
+### Done — Phase A (US flat-rate wallets)
+- **`/venmo-fee-calculator`** (1.9% + $0.10 business / 2.99% personal G&S / 1.75% instant) and
+  **`/cashapp-fee-calculator`** (2.75% business flat / 1.75% instant / 3% credit-card), both
+  US-only, payment-type selector + reverse mode. Country selector auto-hides (single country).
+  Rates verified from official pages 2026-06-10 (corrected Cash App to **2.75%**, not the
+  agent's mistaken 2.6% + $0.15).
+- **3 comparisons:** `/paypal-vs-venmo-fee-calculator`, `/cashapp-vs-paypal-fee-calculator`,
+  `/cashapp-vs-venmo-fee-calculator` (standard receiving rate each: PayPal G&S 2.99% + $0.49,
+  Venmo business, Cash App business). Verdicts: Venmo beats PayPal by $1.48/$100; Cash App beats
+  PayPal by $0.73; Venmo beats Cash App by $0.75.
+- **Shared utils (DRY):** `lib/flatFee.ts` `computeFlatFee` (percent + fixed + extra% + tax-on-fee)
+  and `lib/compare.ts` `compareFlat` — so flat processors don't each need a formula file. Venmo
+  Cash App + the 3 comparisons all route through them. Platform accents added (Venmo blue, Cash
+  App green).
+- **TDD:** `computeFlatFee` (6) + `compareFlat` (4), RED-first.
+- **Integration:** all 5 registered; auto on `/payment-fees` hub; PayPal `related[]` updated;
+  `npm run keywords` → **3,430** (12 pages); `npm run og` → 13 images.
+- **Verified:** 61 tests pass; `astro build` clean (22 pages, was 17); SSR numbers/verdict/byline/
+  JSON-LD confirmed on all 5; US-only country selector correctly hidden.
+
+### Next (paused here per request)
+- **Phase B:** Wise (transfer/FX corridor model) + Wise vs PayPal; Payoneer (receiving/withdrawal).
+- **Phase C:** Razorpay, Paytm (per-method, UPI-free + 18% GST), Paddle, Lemon Squeezy (+ Paddle vs
+  Lemon Squeezy). Backlog: PhonePe, Braintree, BNPL, the rest.
+
+---
+
 ## 2026-06-10 — Square calculator + Stripe vs Square & Square vs PayPal comparisons
 
 ### Done (PLAN §2 1A processors + 1D comparisons)

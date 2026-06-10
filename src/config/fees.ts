@@ -421,6 +421,56 @@ export const squareFees: SquareFeesByCountry = {
 };
 
 /* ===========================================================================
+   VENMO & CASH APP — US-only P2P/business wallets
+   Flat percentage (+ small fixed for Venmo business) by transaction type.
+   No per-country variation (US only). Source: official help/fees pages.
+   =========================================================================== */
+export interface WalletVariant {
+  id: string;
+  label: string;
+  percent: number;
+  fixed: number;
+}
+export interface WalletFees {
+  currency: string;
+  variants: WalletVariant[]; // [0] = the default/primary business rate
+  notes?: string;
+  source: string;
+  verifiedOn: string;
+}
+export type WalletFeesByCountry = Partial<Record<CountryCode, WalletFees>>;
+
+export const venmoFees: WalletFeesByCountry = {
+  US: {
+    currency: "USD",
+    variants: [
+      { id: "business", label: "Business profile payment", percent: 1.9, fixed: 0.1 },
+      { id: "goods", label: "Goods & Services (personal account)", percent: 2.99, fixed: 0 },
+      { id: "instant", label: "Instant transfer (cash out)", percent: 1.75, fixed: 0 },
+    ],
+    notes:
+      "US-only. Business profile 1.9% + $0.10; a Goods & Services flag on a personal account is 2.99%. Instant transfer 1.75% (min $0.25, max $25); standard transfer is free.",
+    source: "https://venmo.com/resources/our-fees",
+    verifiedOn: "2026-06-10",
+  },
+};
+
+export const cashappFees: WalletFeesByCountry = {
+  US: {
+    currency: "USD",
+    variants: [
+      { id: "business", label: "Business account payment", percent: 2.75, fixed: 0 },
+      { id: "instant", label: "Instant deposit (cash out)", percent: 1.75, fixed: 0 },
+      { id: "creditcard", label: "Sent with a credit card", percent: 3, fixed: 0 },
+    ],
+    notes:
+      "US-only. Business accounts pay 2.75% per payment received (no fixed fee). Instant deposit 0.5%–1.75% (min $0.25); standard deposit is free. Sending funded by a credit card is 3%.",
+    source: "https://cash.app/help/us/en-us/6521-cash-app-for-business-fees",
+    verifiedOn: "2026-06-10",
+  },
+};
+
+/* ===========================================================================
    ETSY — seller fees
    Listing fee ($0.20) and transaction fee (6.5%) are global; payment
    processing varies by country. Source: Etsy Fees & Payments Policy + Help.

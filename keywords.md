@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-10
 
-Totals: 7 pages · 3278 keywords
+Totals: 12 pages · 3430 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -2584,6 +2584,74 @@ Totals: 7 pages · 3278 keywords
 | square reader fees for japan | [Square Fee Calculator](/square-fee-calculator) | country | tool | M | built |
 | square fee calculator uk for japan | [Square Fee Calculator](/square-fee-calculator) | country | tool | M | built |
 | what percentage does square take for japan | [Square Fee Calculator](/square-fee-calculator) | country | tool | M | built |
+| venmo fee calculator | [Venmo Fee Calculator](/venmo-fee-calculator) | primary | tool | M | built |
+| venmo fees calculator | [Venmo Fee Calculator](/venmo-fee-calculator) | secondary | tool | M | built |
+| venmo business fees | [Venmo Fee Calculator](/venmo-fee-calculator) | secondary | tool | M | built |
+| venmo goods and services fee | [Venmo Fee Calculator](/venmo-fee-calculator) | secondary | tool | M | built |
+| venmo transaction fees | [Venmo Fee Calculator](/venmo-fee-calculator) | secondary | tool | M | built |
+| calculate venmo fees | [Venmo Fee Calculator](/venmo-fee-calculator) | secondary | tool | M | built |
+| venmo seller fees | [Venmo Fee Calculator](/venmo-fee-calculator) | secondary | tool | M | built |
+| venmo instant transfer fee | [Venmo Fee Calculator](/venmo-fee-calculator) | secondary | tool | M | built |
+| how much does venmo charge | [Venmo Fee Calculator](/venmo-fee-calculator) | secondary | tool | M | built |
+| venmo fees on $100 | [Venmo Fee Calculator](/venmo-fee-calculator) | long-tail | tool | M | built |
+| venmo business fee calculator | [Venmo Fee Calculator](/venmo-fee-calculator) | long-tail | tool | M | built |
+| venmo goods and services fee calculator | [Venmo Fee Calculator](/venmo-fee-calculator) | long-tail | tool | M | built |
+| venmo 1.9% + $0.10 calculator | [Venmo Fee Calculator](/venmo-fee-calculator) | long-tail | tool | M | built |
+| how much does venmo charge for business | [Venmo Fee Calculator](/venmo-fee-calculator) | long-tail | tool | M | built |
+| venmo instant transfer fee calculator | [Venmo Fee Calculator](/venmo-fee-calculator) | long-tail | tool | M | built |
+| venmo seller fee on $100 | [Venmo Fee Calculator](/venmo-fee-calculator) | long-tail | tool | M | built |
+| does venmo charge a fee to receive money | [Venmo Fee Calculator](/venmo-fee-calculator) | long-tail | tool | M | built |
+| venmo fee calculator for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo fees calculator for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo business fees for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo goods and services fee for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo transaction fees for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| calculate venmo fees for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo seller fees for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo instant transfer fee for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| how much does venmo charge for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo fees on $100 for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo business fee calculator for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo goods and services fee calculator for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo 1.9% + $0.10 calculator for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| how much does venmo charge for business for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo instant transfer fee calculator for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| venmo seller fee on $100 for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| does venmo charge a fee to receive money for usa | [Venmo Fee Calculator](/venmo-fee-calculator) | country | tool | M | built |
+| cash app fee calculator | [Cash App Fee Calculator](/cashapp-fee-calculator) | primary | tool | M | built |
+| cashapp fee calculator | [Cash App Fee Calculator](/cashapp-fee-calculator) | secondary | tool | M | built |
+| cash app business fees | [Cash App Fee Calculator](/cashapp-fee-calculator) | secondary | tool | M | built |
+| cash app transaction fees | [Cash App Fee Calculator](/cashapp-fee-calculator) | secondary | tool | M | built |
+| calculate cash app fees | [Cash App Fee Calculator](/cashapp-fee-calculator) | secondary | tool | M | built |
+| cash app fees calculator | [Cash App Fee Calculator](/cashapp-fee-calculator) | secondary | tool | M | built |
+| cash app instant deposit fee | [Cash App Fee Calculator](/cashapp-fee-calculator) | secondary | tool | M | built |
+| how much does cash app charge | [Cash App Fee Calculator](/cashapp-fee-calculator) | secondary | tool | M | built |
+| cash app 2.75% calculator | [Cash App Fee Calculator](/cashapp-fee-calculator) | secondary | tool | M | built |
+| cash app fees on $100 | [Cash App Fee Calculator](/cashapp-fee-calculator) | long-tail | tool | M | built |
+| cash app business fee calculator | [Cash App Fee Calculator](/cashapp-fee-calculator) | long-tail | tool | M | built |
+| how much does cash app charge for business | [Cash App Fee Calculator](/cashapp-fee-calculator) | long-tail | tool | M | built |
+| cash app instant deposit fee calculator | [Cash App Fee Calculator](/cashapp-fee-calculator) | long-tail | tool | M | built |
+| cash app credit card fee | [Cash App Fee Calculator](/cashapp-fee-calculator) | long-tail | tool | M | built |
+| cash app fee on $1000 | [Cash App Fee Calculator](/cashapp-fee-calculator) | long-tail | tool | M | built |
+| does cash app charge a fee to receive money | [Cash App Fee Calculator](/cashapp-fee-calculator) | long-tail | tool | M | built |
+| cash app for business fee 2.75 | [Cash App Fee Calculator](/cashapp-fee-calculator) | long-tail | tool | M | built |
+| cash app fee calculator for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cashapp fee calculator for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app business fees for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app transaction fees for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| calculate cash app fees for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app fees calculator for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app instant deposit fee for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| how much does cash app charge for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app 2.75% calculator for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app fees on $100 for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app business fee calculator for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| how much does cash app charge for business for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app instant deposit fee calculator for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app credit card fee for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app fee on $1000 for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| does cash app charge a fee to receive money for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| cash app for business fee 2.75 for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
 | stripe vs paypal fees | [Stripe vs PayPal Fee Calculator](/stripe-vs-paypal-fee-calculator) | primary | tool | M | built |
 | stripe vs paypal fee calculator | [Stripe vs PayPal Fee Calculator](/stripe-vs-paypal-fee-calculator) | secondary | tool | M | built |
 | paypal vs stripe fees | [Stripe vs PayPal Fee Calculator](/stripe-vs-paypal-fee-calculator) | secondary | tool | M | built |
@@ -3286,3 +3354,87 @@ Totals: 7 pages · 3278 keywords
 | square vs paypal processing fees for japan | [Square vs PayPal Fee Calculator](/square-vs-paypal-fee-calculator) | country | tool | M | built |
 | difference between square and paypal fees for japan | [Square vs PayPal Fee Calculator](/square-vs-paypal-fee-calculator) | country | tool | M | built |
 | square vs paypal for invoices for japan | [Square vs PayPal Fee Calculator](/square-vs-paypal-fee-calculator) | country | tool | M | built |
+| paypal vs venmo fees | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | primary | tool | M | built |
+| paypal vs venmo fee calculator | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| venmo vs paypal fees | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| paypal or venmo cheaper | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| paypal vs venmo for business | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| paypal vs venmo business fees | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| is venmo cheaper than paypal | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| paypal vs venmo comparison | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| paypal vs venmo fees on $100 | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| which is cheaper paypal or venmo | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| paypal vs venmo for selling | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| paypal goods and services vs venmo | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| venmo or paypal for small business fees | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| difference between paypal and venmo fees | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| paypal vs venmo fees for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| paypal vs venmo fee calculator for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| venmo vs paypal fees for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| paypal or venmo cheaper for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| paypal vs venmo for business for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| paypal vs venmo business fees for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| is venmo cheaper than paypal for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| paypal vs venmo comparison for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| paypal vs venmo fees on $100 for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| which is cheaper paypal or venmo for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| paypal vs venmo for selling for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| paypal goods and services vs venmo for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| venmo or paypal for small business fees for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| difference between paypal and venmo fees for usa | [PayPal vs Venmo Fee Calculator](/paypal-vs-venmo-fee-calculator) | country | tool | M | built |
+| cash app vs paypal fees | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | primary | tool | M | built |
+| cash app vs paypal fee calculator | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| paypal vs cash app fees | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| cash app or paypal cheaper | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| cash app vs paypal for business | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| is cash app cheaper than paypal | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| cashapp vs paypal fees | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| cash app vs paypal comparison | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| cash app vs paypal fees on $100 | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| which is cheaper cash app or paypal | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| cash app vs paypal for selling | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| cash app business vs paypal goods and services | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| cash app or paypal for small business fees | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| difference between cash app and paypal fees | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| cash app vs paypal fees for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cash app vs paypal fee calculator for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| paypal vs cash app fees for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cash app or paypal cheaper for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cash app vs paypal for business for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| is cash app cheaper than paypal for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cashapp vs paypal fees for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cash app vs paypal comparison for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cash app vs paypal fees on $100 for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| which is cheaper cash app or paypal for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cash app vs paypal for selling for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cash app business vs paypal goods and services for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cash app or paypal for small business fees for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| difference between cash app and paypal fees for usa | [Cash App vs PayPal Fee Calculator](/cashapp-vs-paypal-fee-calculator) | country | tool | M | built |
+| cash app vs venmo fees | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | primary | tool | M | built |
+| cash app vs venmo fee calculator | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| venmo vs cash app fees | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| cash app or venmo cheaper | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| cash app vs venmo for business | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| is venmo cheaper than cash app | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| cashapp vs venmo fees | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| cash app vs venmo comparison | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | secondary | tool | M | built |
+| cash app vs venmo fees on $100 | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| which is cheaper cash app or venmo | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| cash app vs venmo for selling | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| cash app business vs venmo business | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| cash app or venmo for small business fees | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| difference between cash app and venmo fees | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | long-tail | tool | M | built |
+| cash app vs venmo fees for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| cash app vs venmo fee calculator for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| venmo vs cash app fees for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| cash app or venmo cheaper for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| cash app vs venmo for business for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| is venmo cheaper than cash app for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| cashapp vs venmo fees for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| cash app vs venmo comparison for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| cash app vs venmo fees on $100 for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| which is cheaper cash app or venmo for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| cash app vs venmo for selling for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| cash app business vs venmo business for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| cash app or venmo for small business fees for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| difference between cash app and venmo fees for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |

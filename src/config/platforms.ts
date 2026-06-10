@@ -21,6 +21,8 @@ export const platforms: Record<string, Platform> = {
   // Deep navy (distinct from PayPal's azure) for Square, which has no strong
   // colour identity beyond black — recognition only.
   square: { id: "square", name: "Square", color: "#1351D8", colorDark: "#5C9DFF" },
+  venmo: { id: "venmo", name: "Venmo", color: "#008CFF", colorDark: "#4DA8FF" },
+  cashapp: { id: "cashapp", name: "Cash App", color: "#00A82D", colorDark: "#00D632" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

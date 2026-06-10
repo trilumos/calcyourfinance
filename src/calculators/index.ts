@@ -9,18 +9,28 @@ import { stripeFeeCalculator } from "./stripe-fee-calculator/config";
 import { paypalFeeCalculator } from "./paypal-fee-calculator/config";
 import { etsyFeeCalculator } from "./etsy-fee-calculator/config";
 import { squareFeeCalculator } from "./square-fee-calculator/config";
+import { venmoFeeCalculator } from "./venmo-fee-calculator/config";
+import { cashappFeeCalculator } from "./cashapp-fee-calculator/config";
 import { stripeVsPaypalCalculator } from "./stripe-vs-paypal-fee-calculator/config";
 import { stripeVsSquareCalculator } from "./stripe-vs-square-fee-calculator/config";
 import { squareVsPaypalCalculator } from "./square-vs-paypal-fee-calculator/config";
+import { paypalVsVenmoCalculator } from "./paypal-vs-venmo-fee-calculator/config";
+import { cashappVsPaypalCalculator } from "./cashapp-vs-paypal-fee-calculator/config";
+import { cashappVsVenmoCalculator } from "./cashapp-vs-venmo-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
   paypalFeeCalculator,
   etsyFeeCalculator,
   squareFeeCalculator,
+  venmoFeeCalculator,
+  cashappFeeCalculator,
   stripeVsPaypalCalculator,
   stripeVsSquareCalculator,
   squareVsPaypalCalculator,
+  paypalVsVenmoCalculator,
+  cashappVsPaypalCalculator,
+  cashappVsVenmoCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

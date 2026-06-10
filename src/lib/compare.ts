@@ -9,6 +9,7 @@
  * A difference that rounds to zero is a tie (no misleading "cheaper by $0.00").
  */
 import { roundMoney } from "./money";
+import { computeFlatFee, type FlatFeeBreakdown, type FlatFeeInput } from "./flatFee";
 
 export type CompareMode = "charge" | "net";
 export type Winner = "a" | "b" | "tie";
@@ -36,4 +37,31 @@ export function decideComparison(a: Side, b: Side, mode: CompareMode): Verdict {
   else winner = aMetric > bMetric ? "a" : "b";
 
   return { winner, savings };
+}
+
+/** A flat-fee platform's rate params (everything computeFlatFee needs but the amount/mode). */
+export type FlatParams = Omit<FlatFeeInput, "amount" | "mode">;
+
+export interface FlatComparison {
+  a: FlatFeeBreakdown;
+  b: FlatFeeBreakdown;
+  winner: Winner;
+  savings: number;
+}
+
+/**
+ * Compare two flat-rate platforms on the same amount: compute each with
+ * computeFlatFee, then decide the winner. Used by the flat-processor
+ * comparisons (PayPal vs Venmo, Cash App vs PayPal, Cash App vs Venmo, …).
+ */
+export function compareFlat(
+  amount: number,
+  mode: CompareMode,
+  a: FlatParams,
+  b: FlatParams,
+): FlatComparison {
+  const ra = computeFlatFee({ amount, mode, ...a });
+  const rb = computeFlatFee({ amount, mode, ...b });
+  const { winner, savings } = decideComparison(ra, rb, mode);
+  return { a: ra, b: rb, winner, savings };
 }
