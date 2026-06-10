@@ -7,7 +7,7 @@
  */
 import type { CalculatorConfig, ComputeCtx, InputValues } from "../calculators/_types";
 import { CATEGORY_META } from "../calculators/_types";
-import { relatedCalculators } from "../calculators";
+import { relatedCalculators, comparisonsForPlatform } from "../calculators";
 import { SITE } from "../config/site";
 import { getPlatform } from "../config/platforms";
 import { formatCurrency, formatNumber, formatPercent } from "../lib/money";
@@ -60,6 +60,20 @@ const seoBlocks = config.seoContent
 const accentStyle = platform
   ? `--accent-l:${platform.color};--accent-d:${platform.colorDark ?? platform.color}`
   : undefined;
+
+// "Compare with other platforms" cross-links: only on single calculators whose
+// platform appears in one or more comparison pages. Each link names the OTHER
+// platform in the pair (auto-derived from comparisonOf).
+const comparisons =
+  config.kind === "single" && config.platform
+    ? comparisonsForPlatform(config.platform).map((c) => {
+        const otherKey = (c.comparisonOf ?? []).find((p) => p !== config.platform);
+        return {
+          slug: c.slug,
+          otherName: getPlatform(otherKey)?.name ?? otherKey ?? "another platform",
+        };
+      })
+    : [];
 ---
 
 <article class="py-4 pb-12">
@@ -109,6 +123,35 @@ const accentStyle = platform
         initialCountry={initialCountry}
       />
     </section>
+
+    {
+      comparisons.length > 0 && platform && (
+        <section
+          class="calc-accent mb-6"
+          aria-label={`Compare ${platform.name} with other platforms`}
+          style={accentStyle}
+        >
+          <div class="card flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div class="min-w-0">
+              <p class="eyebrow">Compare</p>
+              <p class="mt-1 text-[15px] font-medium text-ink">
+                Wondering if another platform is cheaper? Put{" "}
+                <span translate="no">{platform.name}</span> head-to-head.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {comparisons.map((c) => (
+                <a href={`/${c.slug}`} class="btn btn-secondary whitespace-nowrap">
+                  <span translate="no">{platform.name}</span> vs{" "}
+                  <span translate="no">{c.otherName}</span>
+                  <span aria-hidden="true"> →</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
 
     <AdSlot slot="in-content" />
 

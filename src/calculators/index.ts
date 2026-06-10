@@ -42,3 +42,15 @@ export function relatedCalculators(config: CalculatorConfig): CalculatorConfig[]
 export function activeCategories(): Category[] {
   return [...new Set(calculators.map((c) => c.category))];
 }
+
+/**
+ * Comparison pages that feature a given platform (e.g. "stripe" →
+ * Stripe vs PayPal, Stripe vs Square). Drives the "compare with other
+ * platforms" cross-link on each single calculator. Auto-derived from
+ * `comparisonOf`, so adding a comparison surfaces the link automatically.
+ */
+export function comparisonsForPlatform(platform: string): CalculatorConfig[] {
+  return calculators.filter(
+    (c) => c.kind === "comparison" && (c.comparisonOf ?? []).includes(platform),
+  );
+}
