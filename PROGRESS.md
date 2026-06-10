@@ -4,6 +4,43 @@ Living log of what's shipped and what's next (PLAN §11).
 
 ---
 
+## 2026-06-09 — SEO hardening (Google Search Central audit) + named YMYL author
+
+### Done
+- **Researched current Google Search Central guidance** (2024–2026: Search Essentials,
+  helpful-content-now-core, E-E-A-T/YMYL, spam policies, structured-data gallery, Core Web
+  Vitals/INP) and **audited the whole site** against it. Net: on-page SEO was already strong
+  (unique content, cited+dated rates, SSR'd numbers, clean schema + internal links, no
+  thin/scaled-content risk); gaps were a few missing signals + off-page actions.
+- **Code wins shipped:**
+  - **Google Search Console verification** wired (`SITE.verification.google`; emits the meta
+    tag when set) — the key enabler for submitting the sitemap + requesting indexing.
+  - **`WebSite` JSON-LD** added (controls the site-name display). Deliberately **no
+    SearchAction** (Google deprecated the sitelinks search box, Nov 2024) and **no HowTo**
+    (deprecated 2023) — research overruled the audit's suggestions on both.
+  - **Named author (E-E-A-T):** replaced the "Editorial team" placeholder with **Deep Kakadiya
+    — Founder & developer, Trilumos**. Emitted as a schema.org `Person` (with LinkedIn +
+    trilumos.in `sameAs`, `worksFor` Trilumos), set as Organization `founder`, added
+    `parentOrganization` (Trilumos), attached `author` to every calculator's WebApplication,
+    and rendered a visible **"Written & verified by Deep Kakadiya"** byline on each calculator
+    + profile links on `/about`. (Resolves PLAN §13 open item #1.)
+  - **Honest per-page sitemap `lastmod`** (each calc uses its real `lastUpdated`; home/hubs use
+    the latest calc date; legal pages use the effective date) — was one build timestamp for all.
+  - **og:image width/height** (1200×630) + optional **twitter:site/creator** (`SITE.social.twitter`).
+  - Organization schema enriched with `description`.
+- **Verified:** 34 tests pass; `astro build` clean (14 pages); author Person/founder/
+  parentOrganization + visible byline confirmed in built HTML; sitemap shows real dates;
+  no SearchAction present.
+
+### Next (non-code — needs the owner)
+- **Verify in Google Search Console** (paste token into `SITE.verification.google`), submit
+  `sitemap.xml`, Request Indexing on the 4 calculator pages.
+- **Backlinks** — on-page is maxed; authority now comes from external links.
+- Standing risk: if we ever generate **per-country pages** (not just keyword rows), each must
+  carry materially distinct data to stay clear of scaled-content abuse.
+
+---
+
 ## 2026-06-09 — First comparison calculator: Stripe vs PayPal (+ comparison engine)
 
 ### Done (PLAN §2 1D — comparison calculators)

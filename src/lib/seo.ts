@@ -26,6 +26,19 @@ export function ogImageUrl(slug: string): string {
 
 /* ---- JSON-LD ------------------------------------------------------------- */
 
+/** The named, real author/maintainer as a schema.org Person (E-E-A-T). */
+export function authorPerson() {
+  return {
+    "@type": "Person",
+    name: SITE.author.name,
+    url: absUrl(SITE.author.url),
+    jobTitle: SITE.author.role,
+    description: SITE.author.bio,
+    ...(SITE.author.sameAs.length ? { sameAs: SITE.author.sameAs } : {}),
+    worksFor: { "@type": "Organization", name: SITE.organization.parent.name, url: SITE.organization.parent.url },
+  };
+}
+
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
@@ -33,7 +46,30 @@ export function organizationSchema() {
     name: SITE.organization.name,
     url: SITE.url,
     logo: absUrl(SITE.organization.logo),
+    description: SITE.description,
+    founder: authorPerson(),
+    parentOrganization: {
+      "@type": "Organization",
+      name: SITE.organization.parent.name,
+      url: SITE.organization.parent.url,
+    },
     ...(SITE.organization.sameAs.length ? { sameAs: SITE.organization.sameAs } : {}),
+  };
+}
+
+/**
+ * WebSite schema — the documented lever for the site name Google shows in
+ * results (Search Central "Site names"). `name` is the preferred display name;
+ * `alternateName` offers a fallback. Intentionally NO SearchAction: Google
+ * deprecated the sitelinks search box (Nov 2024), so that markup does nothing.
+ */
+export function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE.name,
+    alternateName: SITE.domain,
+    url: SITE.url,
   };
 }
 
@@ -53,6 +89,7 @@ export function softwareAppSchema(config: CalculatorConfig) {
       price: "0",
       priceCurrency: "USD",
     },
+    author: authorPerson(),
     publisher: { "@type": "Organization", name: SITE.organization.name, url: SITE.url },
   };
 }

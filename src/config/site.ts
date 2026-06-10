@@ -17,15 +17,33 @@ export const SITE = {
   organization: {
     name: "CalcYourFinance",
     logo: "/og/logo.png",
-    sameAs: [] as string[], // social profile URLs once created
+    sameAs: [] as string[], // CalcYourFinance's own social profiles, once created
+    // Parent studio/entity behind the site.
+    parent: { name: "Trilumos", url: "https://trilumos.in" },
   },
 
-  // Visible author/methodology owner for YMYL trust. PLACEHOLDER — confirm.
+  // Search Console / site verification. Paste the token from the meta-tag
+  // verification method (the value of `content=`), not the whole tag. Empty = off.
+  verification: {
+    google: "", // e.g. "AbCdEf123..." from <meta name="google-site-verification" content="...">
+  },
+
+  // Social handle (without @). Drives twitter:site / twitter:creator. Empty = off.
+  social: {
+    twitter: "", // e.g. "calcyourfinance"
+  },
+
+  // Visible author/methodology owner for YMYL trust (E-E-A-T). Named, real
+  // person + corroborating profile links (sameAs) so Google can verify the entity.
   author: {
-    name: "CalcYourFinance Editorial",
-    role: "Finance & e-commerce tools team",
-    bio: "We build and verify finance calculators, citing every formula and platform fee schedule with a last-verified date.",
+    name: "Deep Kakadiya",
+    role: "Founder & developer, Trilumos",
+    bio: "Deep Kakadiya is a software engineer and the founder of Trilumos, the studio behind CalcYourFinance. He designs, builds and maintains every calculator on the site — sourcing each platform's fees directly from its official pricing pages, encoding the math as unit-tested functions, and stamping every rate with the date it was last verified so the numbers stay accurate and accountable.",
     url: "/about",
+    sameAs: [
+      "https://www.linkedin.com/in/deep-kakadiya-5b258024b/",
+      "https://trilumos.in",
+    ] as string[],
   },
 
   // YMYL disclaimer rendered in the footer of every page.

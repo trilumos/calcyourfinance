@@ -34,7 +34,13 @@ import { SITE } from "../config/site";
       </p>
 
       <h2>Who's behind it</h2>
-      <p>{SITE.author.name} — {SITE.author.role}. {SITE.author.bio}</p>
+      <p><strong>{SITE.author.name}</strong> — {SITE.author.role}. {SITE.author.bio}</p>
+      <p>
+        Find {SITE.author.name.split(" ")[0]} on{" "}
+        <a href="https://www.linkedin.com/in/deep-kakadiya-5b258024b/" rel="noopener" target="_blank">LinkedIn</a>,
+        or learn more about the studio at{" "}
+        <a href="https://trilumos.in" rel="noopener" target="_blank">trilumos.in</a>.
+      </p>
 
       <h2>Important</h2>
       <p class="rounded-md border-l-[3px] border-l-link bg-canvas-soft p-4 text-body">{SITE.disclaimer}</p>

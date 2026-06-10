@@ -9,7 +9,7 @@ import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
 
 import { SITE } from "../config/site";
-import { organizationSchema, absUrl } from "../lib/seo";
+import { organizationSchema, websiteSchema, absUrl } from "../lib/seo";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 
@@ -32,7 +32,8 @@ const {
 } = Astro.props;
 
 const canonical = absUrl(canonicalPath);
-const allSchemas = [organizationSchema(), ...schemas];
+const allSchemas = [organizationSchema(), websiteSchema(), ...schemas];
+const twitterHandle = SITE.social.twitter ? `@${SITE.social.twitter}` : "";
 ---
 
 <!doctype html>
@@ -68,6 +69,11 @@ const allSchemas = [organizationSchema(), ...schemas];
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {
+      SITE.verification.google && (
+        <meta name="google-site-verification" content={SITE.verification.google} />
+      )
+    }
 
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
@@ -79,6 +85,8 @@ const allSchemas = [organizationSchema(), ...schemas];
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={SITE.locale} />
 
     <!-- Twitter -->
@@ -86,6 +94,8 @@ const allSchemas = [organizationSchema(), ...schemas];
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    {twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
+    {twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}
 
     <!-- JSON-LD -->
     {

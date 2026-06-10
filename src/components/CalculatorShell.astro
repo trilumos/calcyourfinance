@@ -8,6 +8,7 @@
 import type { CalculatorConfig, ComputeCtx, InputValues } from "../calculators/_types";
 import { CATEGORY_META } from "../calculators/_types";
 import { relatedCalculators } from "../calculators";
+import { SITE } from "../config/site";
 import { getPlatform } from "../config/platforms";
 import { formatCurrency, formatNumber, formatPercent } from "../lib/money";
 
@@ -167,7 +168,12 @@ const accentStyle = platform
             ))
           }
         </ul>
-        <p class="mt-4 font-mono text-[13px] text-mute">Last updated {config.lastUpdated}.</p>
+        <p class="mt-4 text-[13px] text-mute">
+          Written &amp; verified by{" "}
+          <a href={SITE.author.url} class="font-medium text-body underline-offset-2 hover:underline">{SITE.author.name}</a>,
+          {" "}{SITE.author.role}.
+          <span class="font-mono"> Last updated {config.lastUpdated}.</span>
+        </p>
       </section>
     </div>
   </div>
