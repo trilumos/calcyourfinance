@@ -103,8 +103,9 @@ export const reverbFeeCalculator: CalculatorConfig = {
     });
 
     const hasCost = (Number(values.itemCost) || 0) > 0;
-    const capNote = r.sellingFee >= reverbFees.sellingFeeCap
-      ? `Capped at $${reverbFees.sellingFeeCap} (would be ${ctx.formatCurrency(r.revenue * (reverbFees.sellingPercent / 100))} without cap)`
+    const uncappedSellingFee = r.revenue * (reverbFees.sellingPercent / 100);
+    const capNote = uncappedSellingFee > reverbFees.sellingFeeCap
+      ? `Selling fee capped at $${reverbFees.sellingFeeCap} (would be ${ctx.formatCurrency(uncappedSellingFee)} without the cap)`
       : undefined;
 
     return {
