@@ -29,6 +29,9 @@ export const platforms: Record<string, Platform> = {
   paytm: { id: "paytm", name: "Paytm", color: "#0097D7", colorDark: "#3FD0FF" },
   paddle: { id: "paddle", name: "Paddle", color: "#A87900", colorDark: "#F2C94C" },
   lemonsqueezy: { id: "lemonsqueezy", name: "Lemon Squeezy", color: "#B08900", colorDark: "#FDE047" },
+  // Deep burnt-orange — distinct from Etsy (#E0571B) and Payoneer (#F24E00).
+  // Reverb's own brand palette leans toward a warm, darker orange-red.
+  reverb: { id: "reverb", name: "Reverb", color: "#C2470A", colorDark: "#F06A2B" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

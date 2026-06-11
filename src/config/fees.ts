@@ -594,6 +594,50 @@ export const paypalIntlSend = {
 };
 
 /* ===========================================================================
+   REVERB — seller fees (music-gear marketplace, US-only Reverb Payments)
+   Selling fee: 5% of (item price + shipping), min $0.50, capped at $500/order.
+   Processing fee (standard seller):   3.19% + $0.49 per transaction.
+   Processing fee (Preferred Seller):  2.99% + $0.49 per transaction.
+   The $500 cap applies to the SELLING FEE only; processing is not capped.
+   Sources:
+     https://help.reverb.com/hc/en-us/articles/40917652290843
+     https://help.reverb.com/hc/en-us/articles/41988469262107
+   =========================================================================== */
+export interface ReverbFees {
+  /** Selling fee % on (item + shipping). */
+  sellingPercent: number;
+  /** Per-order minimum on the selling fee. */
+  sellingFeeMin: number;
+  /** Per-order cap on the selling fee (not on processing). */
+  sellingFeeCap: number;
+  /** Payment processing % (standard Reverb Payments seller). */
+  processingPercent: number;
+  /** Payment processing % (Reverb Preferred Seller program). */
+  preferredProcessingPercent: number;
+  /** Fixed per-transaction processing fee (same for standard and preferred). */
+  processingFixed: number;
+  currency: string;
+  source: string;
+  preferredSource: string;
+  verifiedOn: string;
+}
+
+export const REVERB_VERIFIED = "2026-06-11";
+
+export const reverbFees: ReverbFees = {
+  sellingPercent: 5,
+  sellingFeeMin: 0.5,
+  sellingFeeCap: 500,
+  processingPercent: 3.19,
+  preferredProcessingPercent: 2.99,
+  processingFixed: 0.49,
+  currency: "USD",
+  source: "https://help.reverb.com/hc/en-us/articles/40917652290843-What-fees-will-I-pay-for-selling-on-Reverb",
+  preferredSource: "https://help.reverb.com/hc/en-us/articles/41988469262107-What-are-my-fees-as-a-Reverb-Preferred-Seller",
+  verifiedOn: REVERB_VERIFIED,
+};
+
+/* ===========================================================================
    ETSY — seller fees
    Listing fee ($0.20) and transaction fee (6.5%) are global; payment
    processing varies by country. Source: Etsy Fees & Payments Policy + Help.

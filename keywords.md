@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-11
 
-Totals: 20 pages · 3575 keywords
+Totals: 21 pages · 3601 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -3583,3 +3583,29 @@ Totals: 20 pages · 3575 keywords
 | wise vs paypal for freelancers | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
 | paypal vs wise international fees | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
 | wise vs paypal which is cheaper | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| reverb fee calculator | [Reverb Fee Calculator](/reverb-fee-calculator) | primary | tool | E | built |
+| reverb fees calculator | [Reverb Fee Calculator](/reverb-fee-calculator) | secondary | tool | E | built |
+| reverb selling fees | [Reverb Fee Calculator](/reverb-fee-calculator) | secondary | tool | E | built |
+| reverb seller fees | [Reverb Fee Calculator](/reverb-fee-calculator) | secondary | tool | E | built |
+| reverb fee calculator guitar | [Reverb Fee Calculator](/reverb-fee-calculator) | secondary | tool | E | built |
+| reverb fee calculator music gear | [Reverb Fee Calculator](/reverb-fee-calculator) | secondary | tool | E | built |
+| calculate reverb fees | [Reverb Fee Calculator](/reverb-fee-calculator) | secondary | tool | E | built |
+| reverb charges calculator | [Reverb Fee Calculator](/reverb-fee-calculator) | secondary | tool | E | built |
+| reverb payout calculator | [Reverb Fee Calculator](/reverb-fee-calculator) | secondary | tool | E | built |
+| reverb profit calculator | [Reverb Fee Calculator](/reverb-fee-calculator) | secondary | tool | E | built |
+| how much does reverb charge | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| what percentage does reverb take | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb fees on $1000 | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb fees on $500 | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb preferred seller fees | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb fee cap $500 | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb payment processing fee | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb selling fee percentage | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb fee calculator uk | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb fee calculator canada | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb take rate | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb commission percentage | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| how to calculate reverb fees | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb vs ebay fees music gear | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| how to net a target amount on reverb | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| reverb fees for selling guitar | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
