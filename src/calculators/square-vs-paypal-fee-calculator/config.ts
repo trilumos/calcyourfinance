@@ -73,13 +73,13 @@ export const squareVsPaypalCalculator: CalculatorConfig = {
       id: "txType",
       label: "PayPal product",
       type: "select",
-      default: "checkout",
+      default: "goods",
       options: [
-        { value: "checkout", label: "PayPal Checkout / standard online rate" },
-        { value: "goods", label: "Goods & Services (receive money)" },
+        { value: "goods", label: "Goods & Services (standard rate)" },
+        { value: "checkout", label: "PayPal Checkout / branded card rate" },
         { value: "micro", label: "Micropayments (small sales)" },
       ],
-      help: "Square has one online rate; PayPal's depends on the product. We compare against the product you pick.",
+      help: "Square has one online rate; PayPal's depends on the product. We default to Goods & Services (the standard rate most sellers pay) — switch to Checkout or Micropayments if that's what you use.",
     },
     {
       id: "international",
@@ -163,15 +163,15 @@ export const squareVsPaypalCalculator: CalculatorConfig = {
   },
 
   howItWorks:
-    "Square and PayPal both charge a percentage of the sale plus a fixed fee, so the fair comparison is on the same amount, country and kind of transaction. This tool runs both at once — Square on its online rate, PayPal on the product you choose — and shows what you keep on each, then names the cheaper option and the exact gap.\n\nIn the US, Square's free-plan online rate is 3.3% + $0.30 while PayPal Checkout is 3.49% + $0.49, so Square usually wins a standard online sale. But PayPal's micropayments plan (4.99% + $0.09) has a tiny fixed fee, so on very small sales PayPal can win — pick the PayPal product above to compare the right one.\n\nForeign or cross-border cards add a surcharge on both sides, and you can switch to reverse mode to find what to charge so you keep a target amount. Square also has lower in-person rates; this comparison uses Square's online rate to match PayPal's online products.",
+    "Square and PayPal both charge a percentage of the sale plus a fixed fee, so the fair comparison is on the same amount, country and kind of transaction. This tool runs both at once — Square on its online rate, PayPal on the product you choose — and shows what you keep on each, then names the cheaper option and the exact gap.\n\nIn the US, Square's free-plan online rate is 3.3% + $0.30 while PayPal's standard Goods & Services rate is 2.99% + $0.49. They're close: PayPal's lower percentage edges ahead on larger sales, while Square's lower fixed fee wins on small ones (the crossover is around $60). PayPal Checkout (3.49% + $0.49) is pricier, so Square beats that one — pick the PayPal product above to compare the right one.\n\nForeign or cross-border cards add a surcharge on both sides, and you can switch to reverse mode to find what to charge so you keep a target amount. Square also has lower in-person rates; this comparison uses Square's online rate to match PayPal's online products.",
 
   seoContent: `Square and PayPal are both household names for taking payments, but they're built around different needs — and their fees reflect that. This Square vs PayPal fee calculator settles the cost question: enter an amount, pick your country and the PayPal product you use, and it computes both processors' fees at once, shows what you keep on each, and names the cheaper option and the exact difference.
 
 ## Comparing the right products
 PayPal prices by product — Checkout (the branded online button), Goods & Services (receiving money), and a micropayments plan for very small sales — each with its own percentage and fixed fee. Square publishes online, in-person and keyed rates. To compare fairly, this tool puts Square's online rate against the PayPal product you select. That choice matters: PayPal Checkout and PayPal micropayments can give opposite verdicts against the same Square rate, so picking the product you actually use is what makes the answer trustworthy.
 
-## Why the fixed fee decides small sales
-Both processors charge a percentage plus a fixed fee. In the US, Square's online rate is 3.3% + $0.30 and PayPal Checkout is 3.49% + $0.49, so on a typical sale Square keeps more. But PayPal's micropayments plan carries just a $0.09 fixed fee, so on low-value sales — think tips, small digital goods, or a $3 item — PayPal micropayments can beat Square even though its percentage is much higher. Because the calculator shows each platform's effective rate (the total fee as a percentage of the sale), you can see exactly where the crossover happens for your order sizes.
+## Why the fixed fee decides the winner
+Both processors charge a percentage plus a fixed fee, and against PayPal's standard Goods & Services rate the two are remarkably close. Square is 3.3% + $0.30; PayPal Goods & Services is 2.99% + $0.49. PayPal's percentage is lower but its fixed fee is higher, so Square's smaller $0.30 fixed fee wins on small sales while PayPal's lower 2.99% wins on larger ones — the crossover sits around $60, and on a $100 sale PayPal edges it by about $0.12. (Against PayPal Checkout at 3.49%, Square wins outright; PayPal's micropayments plan, with its tiny $0.09 fixed fee, beats Square on very small sales.) Because the calculator shows each platform's effective rate, you can see exactly where the crossover happens for your order sizes — and the PayPal product you pick changes the answer, so choose the one you actually use.
 
 ## Country differences and foreign cards
 Neither processor charges one flat rate worldwide. Square operates in eight countries with distinct per-country rates, and PayPal's commercial rate varies by country too. Cards from another country add a surcharge on both — Square adds a foreign-card surcharge on its online rate, and PayPal adds a cross-border fee — and the amounts differ, which can change the winner. Select your country and toggle the foreign-card option to fold those costs in. In Ireland, Square adds VAT on top of its fee, which the calculator reflects.
@@ -183,24 +183,24 @@ If you quote a fixed take-home figure, switch to reverse mode. Each platform gro
 Fees are only part of the story. PayPal offers instant brand recognition at checkout and buyer trust, which can lift conversion; Square is excellent if you also sell in person and want a free point-of-sale app and hardware, with no monthly fee. Square's online tools are simpler than Stripe's but cover most small-business needs, while PayPal is ubiquitous and easy for customers who already have an account. Use this calculator to settle the cost comparison with your real numbers, then weigh checkout experience, payout speed and the way you actually sell. These are standard published rates; negotiated or higher-volume pricing can differ, so confirm in each dashboard before deciding.`,
 
   workedExample: {
-    scenario: "You charge a US customer $100. We compare Square's online rate against PayPal Checkout.",
+    scenario: "You charge a US customer $100. We compare Square's online rate against PayPal's standard Goods & Services rate.",
     steps: [
       { label: "Square fee (3.3% + $0.30)", value: "$3.60" },
       { label: "Square — you keep", value: "$96.40" },
-      { label: "PayPal Checkout fee (3.49% + $0.49)", value: "$3.98" },
-      { label: "PayPal — you keep", value: "$96.02" },
+      { label: "PayPal Goods & Services fee (2.99% + $0.49)", value: "$3.48" },
+      { label: "PayPal — you keep", value: "$96.52" },
     ],
-    result: "Square is cheaper by $0.38 on $100",
+    result: "PayPal is cheaper by $0.12 on $100",
   },
 
   faqs: [
     {
       q: "Is Square or PayPal cheaper?",
-      a: "For a standard online sale in the US, Square's 3.3% + $0.30 beats PayPal Checkout's 3.49% + $0.49. But PayPal's micropayments plan (4.99% + $0.09) can win on very small sales because of its tiny fixed fee. Pick the PayPal product and enter your amount above for the exact answer.",
+      a: "It's close and depends on the amount. Against PayPal's standard Goods & Services rate (2.99% + $0.49), Square's lower fixed fee wins on small sales while PayPal's lower percentage wins on larger ones — the crossover is around $60, so on $100 PayPal edges it by about $0.12. Against PayPal Checkout (3.49%), Square wins. Pick the PayPal product and enter your amount for the exact answer.",
     },
     {
       q: "What are Square vs PayPal fees on $100?",
-      a: "On a $100 US sale, Square online charges 3.3% + $0.30 = $3.60 (you keep $96.40) and PayPal Checkout charges 3.49% + $0.49 = $3.98 (you keep $96.02), so Square keeps $0.38 more. PayPal Goods & Services (2.99% + $0.49 = $3.48) is closer.",
+      a: "On a $100 US sale, Square charges 3.3% + $0.30 = $3.60 (you keep $96.40) and PayPal Goods & Services charges 2.99% + $0.49 = $3.48 (you keep $96.52) — PayPal keeps $0.12 more. Against PayPal Checkout (3.49% + $0.49 = $3.98), Square wins by $0.38.",
     },
     {
       q: "Why does the PayPal rate change the result so much?",

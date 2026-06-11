@@ -78,13 +78,13 @@ export const stripeVsPaypalCalculator: CalculatorConfig = {
       id: "txType",
       label: "PayPal product",
       type: "select",
-      default: "checkout",
+      default: "goods",
       options: [
-        { value: "checkout", label: "PayPal Checkout / standard online rate" },
-        { value: "goods", label: "Goods & Services (receive money)" },
+        { value: "goods", label: "Goods & Services (standard rate)" },
+        { value: "checkout", label: "PayPal Checkout / branded card rate" },
         { value: "micro", label: "Micropayments (small sales)" },
       ],
-      help: "Stripe has one online rate; PayPal's depends on the product. We compare against the product you pick (US only has a separate Goods & Services rate).",
+      help: "Stripe has one online rate; PayPal's depends on the product. We default to Goods & Services (the standard rate most sellers pay) — switch to Checkout or Micropayments if that's what you use.",
     },
     {
       id: "international",
@@ -202,14 +202,14 @@ Online sellers deciding which checkout to offer, freelancers choosing how to inv
 
   workedExample: {
     scenario:
-      "You charge a US customer $100 and they pay with a standard US card. We compare Stripe's online rate against PayPal Checkout.",
+      "You charge a US customer $100 and they pay with a standard US card. We compare Stripe's online rate against PayPal's standard Goods & Services rate.",
     steps: [
       { label: "Stripe fee (2.9% + $0.30)", value: "$3.20" },
       { label: "Stripe — you keep", value: "$96.80" },
-      { label: "PayPal Checkout fee (3.49% + $0.49)", value: "$3.98" },
-      { label: "PayPal — you keep", value: "$96.02" },
+      { label: "PayPal Goods & Services fee (2.99% + $0.49)", value: "$3.48" },
+      { label: "PayPal — you keep", value: "$96.52" },
     ],
-    result: "Stripe is cheaper by $0.78 on $100",
+    result: "Stripe is cheaper by $0.28 on $100",
   },
 
   faqs: [

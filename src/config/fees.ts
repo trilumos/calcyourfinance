@@ -528,6 +528,72 @@ export const payoneerReceiving: PayoneerMethod[] = [
 ];
 
 /* ===========================================================================
+   RAZORPAY & PAYTM — India payment gateways (platform fee + 18% GST)
+   The % is a PLATFORM fee charged even on zero-MDR UPI/RuPay (Razorpay), or 0%
+   on UPI for Paytm's small-merchant tier. GST (18%) applies on the fee, not the
+   transaction. Source: official pricing pages. fixed fee is ₹0 for all methods.
+   =========================================================================== */
+export interface MethodRate {
+  id: string;
+  label: string;
+  percent: number;
+}
+export const INDIA_GST_PERCENT = 18;
+
+export const RAZORPAY_SOURCE = "https://razorpay.com/pricing/";
+export const razorpayMethods: MethodRate[] = [
+  { id: "domestic", label: "Domestic cards / UPI / netbanking / wallets", percent: 2 },
+  { id: "corporate", label: "Corporate / business cards", percent: 2.15 },
+  { id: "intl", label: "International / Amex / Diners cards", percent: 3 },
+];
+
+export const PAYTM_SOURCE = "https://business.paytm.com/pricing";
+export const paytmMethods: MethodRate[] = [
+  { id: "upi", label: "UPI / RuPay debit", percent: 0 },
+  { id: "debit", label: "Visa / Mastercard debit", percent: 0.4 },
+  { id: "credit", label: "Credit cards", percent: 1.99 },
+  { id: "amex", label: "American Express", percent: 2.75 },
+  { id: "diners", label: "Diners / JCB / UnionPay", percent: 3.5 },
+  { id: "intl", label: "International cards", percent: 2.99 },
+];
+
+/* ===========================================================================
+   PADDLE & LEMON SQUEEZY — Merchant of Record (SaaS / digital products)
+   The fee INCLUDES payment processing + sales-tax/VAT compliance (do not add a
+   separate processor fee). Both are 5% + $0.50; Lemon Squeezy adds +1.5% on
+   international cards. Source: official pricing pages.
+   =========================================================================== */
+export const MOR_VERIFIED = "2026-06-11";
+export const paddleFees = {
+  percent: 5,
+  fixed: 0.5,
+  source: "https://www.paddle.com/pricing",
+  verifiedOn: MOR_VERIFIED,
+};
+export const lemonSqueezyFees = {
+  percent: 5,
+  fixed: 0.5,
+  intlSurchargePercent: 1.5, // non-US cards
+  source: "https://docs.lemonsqueezy.com/help/getting-started/fees",
+  verifiedOn: MOR_VERIFIED,
+};
+
+/* ===========================================================================
+   PAYPAL — international consumer send (for the Wise vs PayPal comparison)
+   5% transfer fee (min $0.99, max $4.99 — effectively flat $4.99 over ~$100)
+   PLUS a ~4% currency-conversion markup hidden in a worse exchange rate (vs
+   Wise's mid-market rate). Source: paypal.com consumer fees.
+   =========================================================================== */
+export const paypalIntlSend = {
+  sendFeePercent: 5,
+  sendFeeMin: 0.99,
+  sendFeeMax: 4.99,
+  fxMarkupPercent: 4, // recipient gets a different currency → 4% (not 3%)
+  source: "https://www.paypal.com/us/digital-wallet/paypal-consumer-fees",
+  verifiedOn: "2026-06-11",
+};
+
+/* ===========================================================================
    ETSY — seller fees
    Listing fee ($0.20) and transaction fee (6.5%) are global; payment
    processing varies by country. Source: Etsy Fees & Payments Policy + Help.

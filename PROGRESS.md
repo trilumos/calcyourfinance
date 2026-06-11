@@ -4,6 +4,48 @@ Living log of what's shipped and what's next (PLAN §11).
 
 ---
 
+## 2026-06-11 — Wise vs PayPal + Phase C (Razorpay, Paytm, Paddle, Lemon Squeezy) + PayPal fix
+
+### PayPal default-product fix (fairness/consistency)
+- Standardised the PayPal product default in **stripe-vs-paypal** and **square-vs-paypal** from
+  Checkout (3.49%, PayPal's priciest) → **Goods & Services (2.99%, the standard rate)**, matching
+  the standalone PayPal calc and the other comparisons. Updated worked examples, howItWorks and
+  FAQs. Net effect: stripe-vs-paypal verdict $0.78 → **$0.28**; square-vs-paypal **flips** — on
+  $100 PayPal G&S now edges Square by **$0.12** (was "Square by $0.38"); content revised to the
+  honest "it's close, crossover ~$60" framing. Selector still offers Checkout/Micropayments.
+
+### Wise vs PayPal (the hard comparison)
+- **`/wise-vs-paypal-fee-calculator`** — international transfers. PayPal modelled from official
+  consumer fees: **5% transfer fee capped $4.99 + a 4% FX markup** hidden in a worse rate; Wise =
+  explicit fee at mid-market. Compares **total cost** (rate-free). On $1,000: Wise ~$9.87 vs PayPal
+  ~$44.99 → Wise saves **$35.12**. Honest flip: on tiny transfers (<~$60) Wise's fixed fee loses to
+  PayPal. TDD `compareWisePaypal` (4 tests, the cap + flip cases). Per keyword research, aimed at the
+  **fees long-tail** (head "wise vs paypal" is a Wise.com + affiliate wall).
+
+### Phase C — India gateways + Merchant-of-Record (all reuse computeFlatFee, no new formula files)
+- **`/razorpay-fee-calculator`** (India) — 2% domestic / 2.15% corporate / 3% intl + **18% GST**;
+  per-method; honest "UPI is NOT free on Razorpay (platform fee applies)".
+- **`/paytm-fee-calculator`** (India) — per-method (UPI/RuPay **free**, debit 0.4%, credit 1.99%,
+  Amex 2.75%, Diners 3.5%, intl 2.99%) + 18% GST; the free-UPI-vs-Razorpay hook.
+- **`/paddle-fee-calculator`** — MoR **5% + $0.50** (processing + global tax included; don't add a
+  processor fee).
+- **`/lemon-squeezy-fee-calculator`** — MoR 5% + 50¢ + **1.5% international** toggle; notes the
+  Stripe acquisition.
+- **`/paddle-vs-lemon-squeezy-fee-calculator`** — identical base → **domestic is a tie**; LS's +1.5%
+  international makes Paddle win (the honest angle most articles miss).
+
+### Verified
+- 74 tests pass (was 70; +4 Wise-vs-PayPal); `astro build` clean (**30 pages**, was 24);
+  `npm run keywords` → **3,575** (20 pages); 21 OG images. SSR confirmed on all 6 new pages + both
+  PayPal-fix verdicts. New platform accents: Razorpay, Paytm, Paddle, Lemon Squeezy.
+
+### Status
+Payment-fees category is now **20 calculators** (8 single + … ) covering the locked 1A set. 1A
+backlog only: PhonePe, Braintree, BNPL (Klarna/Afterpay) — all deferred as low-demand/awkward-model.
+Next phases (PLAN §2): Phase 2 freelance/business, Phase 3 personal-finance, Phase 4 head terms.
+
+---
+
 ## 2026-06-11 — Phase B start (Wise, Payoneer) + homepage SEO rebuild + keyword research
 
 ### Keyword research (per standing rule — Ahrefs-style, est. volume/competition/CPC)

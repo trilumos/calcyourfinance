@@ -13,12 +13,18 @@ import { venmoFeeCalculator } from "./venmo-fee-calculator/config";
 import { cashappFeeCalculator } from "./cashapp-fee-calculator/config";
 import { wiseFeeCalculator } from "./wise-fee-calculator/config";
 import { payoneerFeeCalculator } from "./payoneer-fee-calculator/config";
+import { razorpayFeeCalculator } from "./razorpay-fee-calculator/config";
+import { paytmFeeCalculator } from "./paytm-fee-calculator/config";
+import { paddleFeeCalculator } from "./paddle-fee-calculator/config";
+import { lemonSqueezyFeeCalculator } from "./lemon-squeezy-fee-calculator/config";
 import { stripeVsPaypalCalculator } from "./stripe-vs-paypal-fee-calculator/config";
 import { stripeVsSquareCalculator } from "./stripe-vs-square-fee-calculator/config";
 import { squareVsPaypalCalculator } from "./square-vs-paypal-fee-calculator/config";
 import { paypalVsVenmoCalculator } from "./paypal-vs-venmo-fee-calculator/config";
 import { cashappVsPaypalCalculator } from "./cashapp-vs-paypal-fee-calculator/config";
 import { cashappVsVenmoCalculator } from "./cashapp-vs-venmo-fee-calculator/config";
+import { paddleVsLemonSqueezyCalculator } from "./paddle-vs-lemon-squeezy-fee-calculator/config";
+import { wiseVsPaypalCalculator } from "./wise-vs-paypal-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -29,12 +35,18 @@ export const calculators: CalculatorConfig[] = [
   cashappFeeCalculator,
   wiseFeeCalculator,
   payoneerFeeCalculator,
+  razorpayFeeCalculator,
+  paytmFeeCalculator,
+  paddleFeeCalculator,
+  lemonSqueezyFeeCalculator,
   stripeVsPaypalCalculator,
   stripeVsSquareCalculator,
   squareVsPaypalCalculator,
   paypalVsVenmoCalculator,
   cashappVsPaypalCalculator,
   cashappVsVenmoCalculator,
+  paddleVsLemonSqueezyCalculator,
+  wiseVsPaypalCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

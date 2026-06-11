@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-11
 
-Totals: 14 pages · 3462 keywords
+Totals: 20 pages · 3575 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -2684,6 +2684,94 @@ Totals: 14 pages · 3462 keywords
 | payoneer currency conversion fee | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
 | payoneer fee to receive money | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
 | payoneer annual fee | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
+| razorpay fee calculator | [Razorpay Fee Calculator](/razorpay-fee-calculator) | primary | tool | M | built |
+| razorpay charges calculator | [Razorpay Fee Calculator](/razorpay-fee-calculator) | secondary | tool | M | built |
+| razorpay charges | [Razorpay Fee Calculator](/razorpay-fee-calculator) | secondary | tool | M | built |
+| razorpay fees | [Razorpay Fee Calculator](/razorpay-fee-calculator) | secondary | tool | M | built |
+| razorpay transaction charges | [Razorpay Fee Calculator](/razorpay-fee-calculator) | secondary | tool | M | built |
+| razorpay charges per transaction | [Razorpay Fee Calculator](/razorpay-fee-calculator) | secondary | tool | M | built |
+| razorpay fees calculator with gst | [Razorpay Fee Calculator](/razorpay-fee-calculator) | secondary | tool | M | built |
+| how much does razorpay charge | [Razorpay Fee Calculator](/razorpay-fee-calculator) | secondary | tool | M | built |
+| razorpay charges on 1000 | [Razorpay Fee Calculator](/razorpay-fee-calculator) | long-tail | tool | M | built |
+| razorpay charges on 1 lakh | [Razorpay Fee Calculator](/razorpay-fee-calculator) | long-tail | tool | M | built |
+| razorpay upi transaction charges | [Razorpay Fee Calculator](/razorpay-fee-calculator) | long-tail | tool | M | built |
+| razorpay net amount received calculator | [Razorpay Fee Calculator](/razorpay-fee-calculator) | long-tail | tool | M | built |
+| razorpay 2% fee calculator | [Razorpay Fee Calculator](/razorpay-fee-calculator) | long-tail | tool | M | built |
+| razorpay international transaction charges | [Razorpay Fee Calculator](/razorpay-fee-calculator) | long-tail | tool | M | built |
+| razorpay gst on fees | [Razorpay Fee Calculator](/razorpay-fee-calculator) | long-tail | tool | M | built |
+| razorpay settlement amount calculator | [Razorpay Fee Calculator](/razorpay-fee-calculator) | long-tail | tool | M | built |
+| razorpay fee calculator for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay charges calculator for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay charges for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay fees for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay transaction charges for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay charges per transaction for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay fees calculator with gst for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| how much does razorpay charge for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay charges on 1000 for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay charges on 1 lakh for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay upi transaction charges for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay net amount received calculator for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay 2% fee calculator for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay international transaction charges for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay gst on fees for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| razorpay settlement amount calculator for india | [Razorpay Fee Calculator](/razorpay-fee-calculator) | country | tool | M | built |
+| paytm payment gateway fees calculator | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | primary | tool | M | built |
+| paytm fee calculator | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | secondary | tool | M | built |
+| paytm payment gateway charges | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | secondary | tool | M | built |
+| paytm merchant charges | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | secondary | tool | M | built |
+| paytm payment gateway charges per transaction | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | secondary | tool | M | built |
+| paytm charges calculator | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | secondary | tool | M | built |
+| how much does paytm charge merchants | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | secondary | tool | M | built |
+| paytm payment gateway charges percentage | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | long-tail | tool | M | built |
+| paytm merchant charges for credit card | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | long-tail | tool | M | built |
+| paytm merchant charges for upi | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | long-tail | tool | M | built |
+| paytm vs razorpay charges | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | long-tail | tool | M | built |
+| paytm gateway charges on 1000 | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | long-tail | tool | M | built |
+| is paytm upi free for merchants | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | long-tail | tool | M | built |
+| paytm international transaction charges | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | long-tail | tool | M | built |
+| paytm payment gateway fees calculator for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm fee calculator for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm payment gateway charges for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm merchant charges for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm payment gateway charges per transaction for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm charges calculator for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| how much does paytm charge merchants for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm payment gateway charges percentage for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm merchant charges for credit card for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm merchant charges for upi for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm vs razorpay charges for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm gateway charges on 1000 for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| is paytm upi free for merchants for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paytm international transaction charges for india | [Paytm Payment Gateway Fee Calculator](/paytm-fee-calculator) | country | tool | M | built |
+| paddle fee calculator | [Paddle Fee Calculator](/paddle-fee-calculator) | primary | tool | M | built |
+| paddle fees | [Paddle Fee Calculator](/paddle-fee-calculator) | secondary | tool | M | built |
+| paddle pricing | [Paddle Fee Calculator](/paddle-fee-calculator) | secondary | tool | M | built |
+| paddle merchant of record fees | [Paddle Fee Calculator](/paddle-fee-calculator) | secondary | tool | M | built |
+| paddle transaction fees | [Paddle Fee Calculator](/paddle-fee-calculator) | secondary | tool | M | built |
+| how much does paddle charge | [Paddle Fee Calculator](/paddle-fee-calculator) | secondary | tool | M | built |
+| paddle saas fees | [Paddle Fee Calculator](/paddle-fee-calculator) | secondary | tool | M | built |
+| paddle 5% + 50 cents calculator | [Paddle Fee Calculator](/paddle-fee-calculator) | long-tail | tool | M | built |
+| paddle fee calculator with vat | [Paddle Fee Calculator](/paddle-fee-calculator) | long-tail | tool | M | built |
+| paddle vs lemon squeezy fees | [Paddle Fee Calculator](/paddle-fee-calculator) | long-tail | tool | M | built |
+| paddle subscription fees | [Paddle Fee Calculator](/paddle-fee-calculator) | long-tail | tool | M | built |
+| paddle fees on $100 | [Paddle Fee Calculator](/paddle-fee-calculator) | long-tail | tool | M | built |
+| paddle net payout calculator | [Paddle Fee Calculator](/paddle-fee-calculator) | long-tail | tool | M | built |
+| paddle fees for digital products | [Paddle Fee Calculator](/paddle-fee-calculator) | long-tail | tool | M | built |
+| lemon squeezy fee calculator | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | primary | tool | M | built |
+| lemon squeezy fees | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| lemon squeezy pricing | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| lemonsqueezy fees | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| how much does lemon squeezy charge | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| lemon squeezy transaction fees | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| lemon squeezy merchant of record fees | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| lemon squeezy fee calculator with international fees | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| lemon squeezy net payout calculator | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| lemon squeezy vs paddle fees | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| lemon squeezy vs stripe fees | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| lemon squeezy fees on $100 | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| lemon squeezy 5% + 50 cents calculator | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| lemon squeezy fees for digital products | [Lemon Squeezy Fee Calculator](/lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
 | stripe vs paypal fees | [Stripe vs PayPal Fee Calculator](/stripe-vs-paypal-fee-calculator) | primary | tool | M | built |
 | stripe vs paypal fee calculator | [Stripe vs PayPal Fee Calculator](/stripe-vs-paypal-fee-calculator) | secondary | tool | M | built |
 | paypal vs stripe fees | [Stripe vs PayPal Fee Calculator](/stripe-vs-paypal-fee-calculator) | secondary | tool | M | built |
@@ -3470,3 +3558,28 @@ Totals: 14 pages · 3462 keywords
 | cash app business vs venmo business for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
 | cash app or venmo for small business fees for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
 | difference between cash app and venmo fees for usa | [Cash App vs Venmo Fee Calculator](/cashapp-vs-venmo-fee-calculator) | country | tool | M | built |
+| paddle vs lemon squeezy | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | primary | tool | M | built |
+| paddle vs lemon squeezy fees | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| lemon squeezy vs paddle | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| paddle vs lemon squeezy pricing | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| paddle or lemon squeezy | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| lemon squeezy vs paddle fees | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | secondary | tool | M | built |
+| paddle vs lemon squeezy for solo developers | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| paddle vs lemon squeezy international fees | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| paddle or lemon squeezy cheaper | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| lemon squeezy vs paddle merchant of record | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| paddle vs lemon squeezy fees on $100 | [Paddle vs Lemon Squeezy Fee Calculator](/paddle-vs-lemon-squeezy-fee-calculator) | long-tail | tool | M | built |
+| wise vs paypal fees | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | primary | tool | M | built |
+| wise vs paypal | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| paypal vs wise | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| wise vs paypal international transfer | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| is wise cheaper than paypal | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| paypal vs wise fees | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| wise or paypal cheaper | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | secondary | tool | M | built |
+| wise vs paypal fees on $1000 | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| wise vs paypal exchange rate markup | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| how much cheaper is wise than paypal | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| wise vs paypal for sending money abroad | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| wise vs paypal for freelancers | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| paypal vs wise international fees | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
+| wise vs paypal which is cheaper | [Wise vs PayPal Fee Calculator](/wise-vs-paypal-fee-calculator) | long-tail | tool | M | built |
