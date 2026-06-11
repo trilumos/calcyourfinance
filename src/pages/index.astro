@@ -27,10 +27,14 @@ const accentStyle = (platformId?: string) => {
   const p = getPlatform(platformId);
   return p ? `--accent-l:${p.color};--accent-d:${p.colorDark ?? p.color}` : undefined;
 };
-// The platforms a comparison features, as accent dots.
-const comparisonPlatforms = (slug: string) => {
+// A two-colour split for the comparison cards' left bar: the two platforms'
+// brand colours, top half then bottom half.
+const comparisonGradient = (slug: string) => {
   const cfg = calculators.find((c) => c.slug === slug);
-  return (cfg?.comparisonOf ?? []).map((id) => getPlatform(id)).filter((p): p is NonNullable<typeof p> => Boolean(p));
+  const ps = (cfg?.comparisonOf ?? []).map((id) => getPlatform(id)).filter((p): p is NonNullable<typeof p> => Boolean(p));
+  const a = ps[0]?.color ?? "#888888";
+  const b = ps[1]?.color ?? a;
+  return `linear-gradient(180deg, ${a} 0 50%, ${b} 50% 100%)`;
 };
 
 const homeFaqs = [
@@ -145,10 +149,13 @@ const faqLd = {
           <li>
             <a
               href={`/${c.slug}`}
-              class="calc-accent card group flex items-center gap-3 p-4 no-underline transition hover:border-hairline-strong hover:shadow-float"
-              style={accentStyle(c.platform)}
+              class="card group relative flex items-center gap-3 overflow-hidden p-4 pl-5 no-underline transition hover:shadow-float"
             >
-              <span class="size-2.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              <span
+                class="calc-accent absolute inset-y-0 left-0 w-[3px] bg-accent"
+                style={accentStyle(c.platform)}
+                aria-hidden="true"
+              />
               <span class="min-w-0 flex-1">
                 <span class="block truncate text-[14px] font-medium text-ink">{c.title}</span>
                 <span class="block font-mono text-[10px] uppercase tracking-wide text-mute">
@@ -174,17 +181,13 @@ const faqLd = {
             <li>
               <a
                 href={`/${c.slug}`}
-                class="card group flex items-center gap-3 p-4 no-underline transition hover:border-hairline-strong hover:shadow-float"
+                class="card group relative flex items-center gap-3 overflow-hidden p-4 pl-5 no-underline transition hover:shadow-float"
               >
-                <span class="flex shrink-0 items-center -space-x-1">
-                  {comparisonPlatforms(c.slug).map((p) => (
-                    <span
-                      class="calc-accent size-2.5 rounded-full bg-accent ring-2 ring-canvas"
-                      style={`--accent-l:${p.color};--accent-d:${p.colorDark ?? p.color}`}
-                      aria-hidden="true"
-                    />
-                  ))}
-                </span>
+                <span
+                  class="absolute inset-y-0 left-0 w-[3px]"
+                  style={`background:${comparisonGradient(c.slug)}`}
+                  aria-hidden="true"
+                />
                 <span class="min-w-0 flex-1">
                   <span class="block truncate text-[14px] font-medium text-ink">
                     {c.title.replace(" Fee Calculator", "")}
