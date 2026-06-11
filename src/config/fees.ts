@@ -471,6 +471,63 @@ export const cashappFees: WalletFeesByCountry = {
 };
 
 /* ===========================================================================
+   WISE (ex-TransferWise) — international transfers
+   total fee = fixed + (% × send amount), charged in the SOURCE currency, on
+   top of the MID-MARKET rate (Wise adds no FX markup). The fixed fee tracks the
+   funding/source currency (USD ≈ $7, GBP ≈ £0.6–1.1, EUR ≈ €1–1.5). We model
+   the FEE (stable); the exchange rate is live, so we don't hardcode it.
+   Source: Wise public comparison API + wise.com/pricing.
+   =========================================================================== */
+export interface WiseCorridor {
+  from: string; // source (sending) currency
+  to: string; // target (receiving) currency
+  pct: number; // variable % on the send amount
+  fixed: number; // fixed fee in the SOURCE currency
+}
+export const WISE_VERIFIED = "2026-06-11";
+export const WISE_SOURCE = "https://wise.com/us/pricing/";
+
+/** Keyed "FROM-TO". Standard bank-funded (ACH/SEPA/Faster Payments) transfers. */
+export const wiseCorridors: Record<string, WiseCorridor> = {
+  "USD-EUR": { from: "USD", to: "EUR", pct: 0.289, fixed: 6.98 },
+  "USD-GBP": { from: "USD", to: "GBP", pct: 0.329, fixed: 7.0 },
+  "USD-INR": { from: "USD", to: "INR", pct: 0.418, fixed: 7.08 },
+  "USD-AUD": { from: "USD", to: "AUD", pct: 0.28, fixed: 7.14 },
+  "USD-CAD": { from: "USD", to: "CAD", pct: 0.279, fixed: 7.36 },
+  "USD-PHP": { from: "USD", to: "PHP", pct: 0.567, fixed: 6.98 },
+  "USD-MXN": { from: "USD", to: "MXN", pct: 0.498, fixed: 7.1 },
+  "GBP-EUR": { from: "GBP", to: "EUR", pct: 0.329, fixed: 0.59 },
+  "GBP-USD": { from: "GBP", to: "USD", pct: 0.359, fixed: 1.09 },
+  "EUR-USD": { from: "EUR", to: "USD", pct: 0.468, fixed: 1.53 },
+  "EUR-GBP": { from: "EUR", to: "GBP", pct: 0.478, fixed: 0.99 },
+};
+
+/* ===========================================================================
+   PAYONEER — receiving money (freelancers / sellers)
+   Receiving fee varies by HOW the client pays; an optional 0.5% balance
+   conversion. Withdrawal to bank (flat 1.50 same-currency, or a 1.2–4% band
+   with conversion) is explained in copy, not modeled (not published per route).
+   Source: payoneer.com/about/pricing. Annual fee $29.95 if low activity.
+   =========================================================================== */
+export interface PayoneerMethod {
+  id: string;
+  label: string;
+  percent: number;
+  fixed: number;
+}
+export const PAYONEER_VERIFIED = "2026-06-11";
+export const PAYONEER_SOURCE = "https://www.payoneer.com/about/pricing/";
+export const PAYONEER_CONVERSION_PERCENT = 0.5;
+
+export const payoneerReceiving: PayoneerMethod[] = [
+  { id: "card", label: "Client pays by card or PayPal", percent: 3.99, fixed: 0.49 },
+  { id: "ach", label: "Client pays by ACH bank debit (US)", percent: 1, fixed: 0 },
+  { id: "bank", label: "Client bank transfer / different currency", percent: 1, fixed: 0 },
+  { id: "local", label: "Local-currency account or marketplace", percent: 0, fixed: 0 },
+  { id: "p2p", label: "From another Payoneer account", percent: 0, fixed: 0 },
+];
+
+/* ===========================================================================
    ETSY — seller fees
    Listing fee ($0.20) and transaction fee (6.5%) are global; payment
    processing varies by country. Source: Etsy Fees & Payments Policy + Help.

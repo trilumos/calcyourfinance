@@ -4,6 +4,53 @@ Living log of what's shipped and what's next (PLAN §11).
 
 ---
 
+## 2026-06-11 — Phase B start (Wise, Payoneer) + homepage SEO rebuild + keyword research
+
+### Keyword research (per standing rule — Ahrefs-style, est. volume/competition/CPC)
+- Phase B: all 3 clear demand. **Wise** easiest (indie-calculator SERP, `wise fees` 5–12k/mo);
+  **Payoneer** clears (`payoneer fees` 6–15k/mo); **Wise vs PayPal** highest demand but hardest
+  (editorial authority page 1) → deferred. Exact volumes are estimates (paid tools gated);
+  difficulty is SERP-observed (reliable). Heavy freelancer-corridor (India/PH/PK) demand.
+- Homepage: **do NOT chase "finance calculator"** (authority wall: calculator.net/Bankrate/
+  NerdWallet + wrong intent). Target **`fee calculator` + `seller fee calculator` + the payment-fee
+  cluster**; feature high-CPC `credit card / payment fee calculator` for RPM. Homepage = hub.
+
+### Done — Wise & Payoneer (PLAN 1A)
+- **`/wise-fee-calculator`** — international transfers. Model from Wise's pricing/API: fee =
+  fixed + (% × send amount) in the source currency, 11 corridors (USD→EUR/GBP/INR/AUD/CAD/PHP/MXN,
+  GBP→EUR/USD, EUR→USD/GBP). Headlines the **fee** (stable); deliberately does NOT hardcode the
+  live FX rate (mid-market, no markup — stated as Wise's selling point). Route dropdown; custom
+  per-currency formatting via new `lib/money.ts` `formatByCurrency`.
+- **`/payoneer-fee-calculator`** — receiving money. Method-based receiving fee (card 3.99% + $0.49,
+  ACH/bank 1%, marketplace/local/P2P free) + optional 0.5% conversion, computed exactly. Withdrawal
+  (flat $1.50 same-currency vs 1.2–4% band) and $29.95 annual fee **explained, not faked** (range
+  not published per route — avoids false precision).
+- **TDD:** `computeWiseFee` (4) + `computePayoneerFee` (5), RED-first. Platform accents added
+  (Wise green, Payoneer orange). Registered; cross-linked.
+
+### Done — homepage rebuild (SEO)
+- Rewrote `src/pages/index.astro`: retargeted title/meta to the **fee-calculator cluster** (was
+  "finance & e-commerce calculators"); mission-led hero (growing library, every needed calculator);
+  **all 14 calculators** listed + linked grouped by category + a comparisons group (internal links
+  + crawlability, was just 6 featured + hubs); kept "why trust"; added a **~600-word About/mission
+  section** (H2/H3) and a **7-question homepage FAQ with FAQPage JSON-LD**; author E-E-A-T link.
+  Removed the stale Stripe/PayPal/Etsy-only framing.
+
+### Verified
+- 70 tests pass (was 61); `astro build` clean (24 pages, was 22); `npm run keywords` → 3,462
+  (14 pages); 15 OG images. SSR confirmed: Wise fee/route, Payoneer net, homepage title/FAQ-LD/
+  full calculator index/mission/author.
+
+### Next
+- **Wise vs PayPal** — deferred; needs PayPal's international send + FX-markup (~3–4%) modeled
+  accurately, then build via the comparison engine.
+- **PayPal default-product fix** (still pending user OK): standardize comparison default from
+  Checkout 3.49% → Goods & Services 2.99% for fairness/consistency.
+- **Phase C:** Razorpay, Paytm (UPI-free + 18% GST), Paddle, Lemon Squeezy. Backlog: PhonePe,
+  Braintree, BNPL.
+
+---
+
 ## 2026-06-10 — Payment-fees scope locked + Phase A (Cash App, Venmo + 3 comparisons) + cross-links
 
 ### Scope decision (PLAN §2 1A)

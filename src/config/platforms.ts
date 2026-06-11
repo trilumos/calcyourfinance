@@ -23,6 +23,8 @@ export const platforms: Record<string, Platform> = {
   square: { id: "square", name: "Square", color: "#1351D8", colorDark: "#5C9DFF" },
   venmo: { id: "venmo", name: "Venmo", color: "#008CFF", colorDark: "#4DA8FF" },
   cashapp: { id: "cashapp", name: "Cash App", color: "#00A82D", colorDark: "#00D632" },
+  wise: { id: "wise", name: "Wise", color: "#137A52", colorDark: "#63D9A6" },
+  payoneer: { id: "payoneer", name: "Payoneer", color: "#F24E00", colorDark: "#FF8A4D" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

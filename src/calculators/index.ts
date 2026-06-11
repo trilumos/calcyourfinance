@@ -11,6 +11,8 @@ import { etsyFeeCalculator } from "./etsy-fee-calculator/config";
 import { squareFeeCalculator } from "./square-fee-calculator/config";
 import { venmoFeeCalculator } from "./venmo-fee-calculator/config";
 import { cashappFeeCalculator } from "./cashapp-fee-calculator/config";
+import { wiseFeeCalculator } from "./wise-fee-calculator/config";
+import { payoneerFeeCalculator } from "./payoneer-fee-calculator/config";
 import { stripeVsPaypalCalculator } from "./stripe-vs-paypal-fee-calculator/config";
 import { stripeVsSquareCalculator } from "./stripe-vs-square-fee-calculator/config";
 import { squareVsPaypalCalculator } from "./square-vs-paypal-fee-calculator/config";
@@ -25,6 +27,8 @@ export const calculators: CalculatorConfig[] = [
   squareFeeCalculator,
   venmoFeeCalculator,
   cashappFeeCalculator,
+  wiseFeeCalculator,
+  payoneerFeeCalculator,
   stripeVsPaypalCalculator,
   stripeVsSquareCalculator,
   squareVsPaypalCalculator,

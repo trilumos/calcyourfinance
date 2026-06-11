@@ -36,6 +36,19 @@ export function formatPercent(value: number, dp = 2): string {
   return `${roundTo(value, dp)}%`;
 }
 
+/** Format by ISO currency code directly (for tools not keyed to a country, e.g. Wise corridors). */
+export function formatByCurrency(value: number, currency: string, locale = "en-US"): string {
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency,
+      maximumFractionDigits: 2,
+    }).format(value);
+  } catch {
+    return `${roundMoney(value)} ${currency}`;
+  }
+}
+
 /** Format a plain number with locale grouping. */
 export function formatNumber(value: number, country: CountryCode | string, dp = 0): string {
   const c = getCountry(country);

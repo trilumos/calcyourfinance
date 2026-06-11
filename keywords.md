@@ -2,9 +2,9 @@
 
 > **AUTO-GENERATED** by `npm run keywords` from each calculator's `keywords` field.
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
-> Last generated: 2026-06-10
+> Last generated: 2026-06-11
 
-Totals: 12 pages · 3430 keywords
+Totals: 14 pages · 3462 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -2652,6 +2652,38 @@ Totals: 12 pages · 3430 keywords
 | cash app fee on $1000 for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
 | does cash app charge a fee to receive money for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
 | cash app for business fee 2.75 for usa | [Cash App Fee Calculator](/cashapp-fee-calculator) | country | tool | M | built |
+| wise fee calculator | [Wise Fee Calculator](/wise-fee-calculator) | primary | tool | M | built |
+| wise fees | [Wise Fee Calculator](/wise-fee-calculator) | secondary | tool | M | built |
+| wise transfer fee | [Wise Fee Calculator](/wise-fee-calculator) | secondary | tool | M | built |
+| wise calculator | [Wise Fee Calculator](/wise-fee-calculator) | secondary | tool | M | built |
+| transferwise fees | [Wise Fee Calculator](/wise-fee-calculator) | secondary | tool | M | built |
+| wise fee | [Wise Fee Calculator](/wise-fee-calculator) | secondary | tool | M | built |
+| wise international transfer fee | [Wise Fee Calculator](/wise-fee-calculator) | secondary | tool | M | built |
+| how much does wise charge | [Wise Fee Calculator](/wise-fee-calculator) | secondary | tool | M | built |
+| wise fees usd to eur | [Wise Fee Calculator](/wise-fee-calculator) | long-tail | tool | M | built |
+| wise fee usd to inr | [Wise Fee Calculator](/wise-fee-calculator) | long-tail | tool | M | built |
+| wise transfer fee calculator | [Wise Fee Calculator](/wise-fee-calculator) | long-tail | tool | M | built |
+| wise fees for sending money | [Wise Fee Calculator](/wise-fee-calculator) | long-tail | tool | M | built |
+| wise gbp to eur fee | [Wise Fee Calculator](/wise-fee-calculator) | long-tail | tool | M | built |
+| wise vs bank transfer fee | [Wise Fee Calculator](/wise-fee-calculator) | long-tail | tool | M | built |
+| wise mid-market rate fee | [Wise Fee Calculator](/wise-fee-calculator) | long-tail | tool | M | built |
+| wise fee to send $1000 | [Wise Fee Calculator](/wise-fee-calculator) | long-tail | tool | M | built |
+| payoneer fee calculator | [Payoneer Fee Calculator](/payoneer-fee-calculator) | primary | tool | M | built |
+| payoneer fees | [Payoneer Fee Calculator](/payoneer-fee-calculator) | secondary | tool | M | built |
+| payoneer charges | [Payoneer Fee Calculator](/payoneer-fee-calculator) | secondary | tool | M | built |
+| payoneer withdrawal fee | [Payoneer Fee Calculator](/payoneer-fee-calculator) | secondary | tool | M | built |
+| payoneer calculator | [Payoneer Fee Calculator](/payoneer-fee-calculator) | secondary | tool | M | built |
+| payoneer fee | [Payoneer Fee Calculator](/payoneer-fee-calculator) | secondary | tool | M | built |
+| how much does payoneer charge | [Payoneer Fee Calculator](/payoneer-fee-calculator) | secondary | tool | M | built |
+| payoneer receiving fee | [Payoneer Fee Calculator](/payoneer-fee-calculator) | secondary | tool | M | built |
+| payoneer fees for freelancers | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
+| payoneer withdrawal fee to bank | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
+| payoneer 1% fee | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
+| payoneer card payment fee | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
+| payoneer fees on $1000 | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
+| payoneer currency conversion fee | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
+| payoneer fee to receive money | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
+| payoneer annual fee | [Payoneer Fee Calculator](/payoneer-fee-calculator) | long-tail | tool | M | built |
 | stripe vs paypal fees | [Stripe vs PayPal Fee Calculator](/stripe-vs-paypal-fee-calculator) | primary | tool | M | built |
 | stripe vs paypal fee calculator | [Stripe vs PayPal Fee Calculator](/stripe-vs-paypal-fee-calculator) | secondary | tool | M | built |
 | paypal vs stripe fees | [Stripe vs PayPal Fee Calculator](/stripe-vs-paypal-fee-calculator) | secondary | tool | M | built |
