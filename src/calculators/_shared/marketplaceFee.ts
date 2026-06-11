@@ -3,6 +3,10 @@
  * flat-fee platform (selling % ± fixed, optional cap/floor, optional
  * flat-fee-under-threshold, optional payment processing, optional profit).
  * Platforms with a plan/level choice pass the chosen rate in via config.
+ *
+ * Rounding: each money component is rounded to cents first, then the totals are
+ * summed from those rounded components, so a breakdown shown to the user always
+ * adds up exactly (no "rows don't match the total" off-by-a-cent).
  */
 import { roundMoney, roundTo } from "../../lib/money";
 
@@ -49,8 +53,9 @@ export function computeMarketplaceFee(input: MarketplaceFeeInput): MarketplaceFe
     processingFixed = 0,
   } = input;
 
-  const price = Number.isFinite(itemPrice) ? itemPrice : 0;
-  const ship = Number.isFinite(shipping) ? shipping : 0;
+  const price = Math.max(0, Number.isFinite(itemPrice) ? itemPrice : 0);
+  const ship = Math.max(0, Number.isFinite(shipping) ? shipping : 0);
+  const cost = Number.isFinite(itemCost) ? itemCost : 0;
   const revenue = price + ship;
 
   const zero: MarketplaceFeeBreakdown = {
@@ -70,17 +75,23 @@ export function computeMarketplaceFee(input: MarketplaceFeeInput): MarketplaceFe
   }
 
   const processingFee = revenue * (processingPercent / 100) + processingFixed;
-  const totalFees = sellingFee + processingFee;
-  const payout = revenue - totalFees;
-  const profit = payout - itemCost;
+
+  // Round components first, then derive totals from the rounded parts so the
+  // breakdown the user sees always sums exactly.
+  const revenueR = roundMoney(revenue);
+  const sellingFeeR = roundMoney(sellingFee);
+  const processingFeeR = roundMoney(processingFee);
+  const totalFeesR = roundMoney(sellingFeeR + processingFeeR);
+  const payoutR = roundMoney(revenueR - totalFeesR);
+  const profitR = roundMoney(payoutR - cost);
 
   return {
-    revenue: roundMoney(revenue),
-    sellingFee: roundMoney(sellingFee),
-    processingFee: roundMoney(processingFee),
-    totalFees: roundMoney(totalFees),
-    payout: roundMoney(payout),
-    profit: roundMoney(profit),
-    takeRatePercent: roundTo((totalFees / revenue) * 100, 2),
+    revenue: revenueR,
+    sellingFee: sellingFeeR,
+    processingFee: processingFeeR,
+    totalFees: totalFeesR,
+    payout: payoutR,
+    profit: profitR,
+    takeRatePercent: roundTo((totalFeesR / revenueR) * 100, 2),
   };
 }

@@ -68,6 +68,18 @@ describe("computeMarketplaceFee", () => {
     expect(r.profit).toBe(17.83);
   });
 
+  it("non-finite itemCost is treated as zero (profit stays a number)", () => {
+    const r = computeMarketplaceFee({ itemPrice: 100, sellingPercent: 10, itemCost: NaN });
+    expect(r.payout).toBe(90);
+    expect(r.profit).toBe(90);
+  });
+
+  it("feeMin and feeCap together: floor binds, cap is headroom", () => {
+    const r = computeMarketplaceFee({ itemPrice: 20, sellingPercent: 10, feeMin: 3, feeCap: 5 });
+    expect(r.sellingFee).toBe(3); // raw 2.00 → floored to 3 → under cap 5
+    expect(r.payout).toBe(17);
+  });
+
   it("zero revenue returns zeros", () => {
     const r = computeMarketplaceFee({ itemPrice: 0, sellingPercent: 10 });
     expect(r.payout).toBe(0);
