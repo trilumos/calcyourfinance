@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FAQ from "../components/FAQ.astro";
 import { SITE } from "../config/site";
-import { calculators, activeCategories } from "../calculators";
+import { calculators } from "../calculators";
 import { CATEGORY_META } from "../calculators/_types";
 import { getPlatform } from "../config/platforms";
 
@@ -22,11 +22,16 @@ const featured = featuredOrder
   .map((slug) => calculators.find((c) => c.slug === slug))
   .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
-// All single calculators, grouped by category (for the full index + internal links).
-const singleGroups = activeCategories().map((cat) => ({
-  meta: CATEGORY_META[cat],
-  items: singles.filter((c) => c.category === cat),
-}));
+// Theme-aware accent style for a platform's recognition dot.
+const accentStyle = (platformId?: string) => {
+  const p = getPlatform(platformId);
+  return p ? `--accent-l:${p.color};--accent-d:${p.colorDark ?? p.color}` : undefined;
+};
+// The platforms a comparison features, as accent dots.
+const comparisonPlatforms = (slug: string) => {
+  const cfg = calculators.find((c) => c.slug === slug);
+  return (cfg?.comparisonOf ?? []).map((id) => getPlatform(id)).filter((p): p is NonNullable<typeof p> => Boolean(p));
+};
 
 const homeFaqs = [
   {
@@ -133,41 +138,65 @@ const faqLd = {
   <section id="all-calculators" class="container mx-auto max-w-[64rem] scroll-mt-20 px-4 py-12">
     <p class="eyebrow">All calculators</p>
     <h2 class="mb-6 mt-1">Every tool, in one place.</h2>
-    <div class="grid gap-8 sm:grid-cols-2">
+
+    <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr))]">
       {
-        singleGroups.map((g) => (
-          <div>
-            <h3 class="mb-2 text-[15px] font-semibold text-ink">
-              <a href={`/${g.meta.slug}`} class="no-underline hover:underline">{g.meta.label}</a>
-            </h3>
-            <p class="mb-3 text-[13px] text-mute">{g.meta.blurb}</p>
-            <ul class="m-0 grid list-none gap-1.5 p-0">
-              {g.items.map((c) => (
-                <li>
-                  <a href={`/${c.slug}`} class="text-[14px] text-body underline-offset-2 hover:text-ink hover:underline">
-                    {c.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+        singles.map((c) => (
+          <li>
+            <a
+              href={`/${c.slug}`}
+              class="calc-accent card group flex items-center gap-3 p-4 no-underline transition hover:border-hairline-strong hover:shadow-float"
+              style={accentStyle(c.platform)}
+            >
+              <span class="size-2.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+              <span class="min-w-0 flex-1">
+                <span class="block truncate text-[14px] font-medium text-ink">{c.title}</span>
+                <span class="block font-mono text-[10px] uppercase tracking-wide text-mute">
+                  {CATEGORY_META[c.category].label}
+                </span>
+              </span>
+              <span class="shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
+            </a>
+          </li>
         ))
       }
-      <div>
-        <h3 class="mb-2 text-[15px] font-semibold text-ink">Platform comparisons</h3>
-        <p class="mb-3 text-[13px] text-mute">
-          Two platforms side by side on the same sale — see which is cheaper and by how much.
-        </p>
-        <ul class="m-0 grid list-none gap-1.5 p-0">
-          {comparisons.map((c) => (
+    </ul>
+
+    <div class="mt-10">
+      <p class="eyebrow">Comparisons</p>
+      <h3 class="mb-1 mt-1 text-[17px] font-semibold text-ink">Two platforms, head to head.</h3>
+      <p class="mb-4 max-w-[40rem] text-[14px] text-body">
+        Put two platforms side by side on the same sale and see which is cheaper, and by exactly how much.
+      </p>
+      <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr))]">
+        {
+          comparisons.map((c) => (
             <li>
-              <a href={`/${c.slug}`} class="text-[14px] text-body underline-offset-2 hover:text-ink hover:underline">
-                {c.title.replace(" Fee Calculator", "")}
+              <a
+                href={`/${c.slug}`}
+                class="card group flex items-center gap-3 p-4 no-underline transition hover:border-hairline-strong hover:shadow-float"
+              >
+                <span class="flex shrink-0 items-center -space-x-1">
+                  {comparisonPlatforms(c.slug).map((p) => (
+                    <span
+                      class="calc-accent size-2.5 rounded-full bg-accent ring-2 ring-canvas"
+                      style={`--accent-l:${p.color};--accent-d:${p.colorDark ?? p.color}`}
+                      aria-hidden="true"
+                    />
+                  ))}
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="block truncate text-[14px] font-medium text-ink">
+                    {c.title.replace(" Fee Calculator", "")}
+                  </span>
+                  <span class="block font-mono text-[10px] uppercase tracking-wide text-mute">Comparison</span>
+                </span>
+                <span class="shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
               </a>
             </li>
-          ))}
-        </ul>
-      </div>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
