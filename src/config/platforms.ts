@@ -32,6 +32,9 @@ export const platforms: Record<string, Platform> = {
   // Deep burnt-orange — distinct from Etsy (#E0571B) and Payoneer (#F24E00).
   // Reverb's own brand palette leans toward a warm, darker orange-red.
   reverb: { id: "reverb", name: "Reverb", color: "#C2470A", colorDark: "#F06A2B" },
+  // Printful's brand is near-black with a charcoal/teal identity. Using a dark
+  // teal that is distinct from Wise (#137A52) — recognition only, no logo.
+  printful: { id: "printful", name: "Printful", color: "#0D6B74", colorDark: "#1DB8C8" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-11
 
-Totals: 21 pages · 3601 keywords
+Totals: 22 pages · 3624 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -3609,3 +3609,26 @@ Totals: 21 pages · 3601 keywords
 | reverb vs ebay fees music gear | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
 | how to net a target amount on reverb | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
 | reverb fees for selling guitar | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| printful profit calculator | [Printful Profit Calculator](/printful-profit-calculator) | primary | tool | M | built |
+| printful fee calculator | [Printful Profit Calculator](/printful-profit-calculator) | secondary | tool | M | built |
+| printful pricing calculator | [Printful Profit Calculator](/printful-profit-calculator) | secondary | tool | M | built |
+| printful profit margin | [Printful Profit Calculator](/printful-profit-calculator) | secondary | tool | M | built |
+| printful margin calculator | [Printful Profit Calculator](/printful-profit-calculator) | secondary | tool | M | built |
+| printful calculator | [Printful Profit Calculator](/printful-profit-calculator) | secondary | tool | M | built |
+| printful profit per item | [Printful Profit Calculator](/printful-profit-calculator) | secondary | tool | M | built |
+| how much profit on printful | [Printful Profit Calculator](/printful-profit-calculator) | secondary | tool | M | built |
+| printful profit calculator uk | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful profit calculator canada | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful profit calculator australia | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful shipping cost calculator | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful base cost calculator | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| how to calculate profit on printful | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful t shirt profit margin | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful etsy profit calculator | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful shopify profit calculator | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful how much do i keep | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful seller profit | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful fulfillment cost calculator | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| how much does printful cost per item | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| printful vs printify profit | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
+| is printful worth it profit margin | [Printful Profit Calculator](/printful-profit-calculator) | long-tail | tool | M | built |
