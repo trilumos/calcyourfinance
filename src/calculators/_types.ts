@@ -211,6 +211,16 @@ export interface CalculatorConfig {
   /** For kind:"comparison" — platform keys being compared. */
   comparisonOf?: string[];
 
+  /**
+   * For kind:"comparison" — a short "how to use this comparison" panel shown
+   * right under the tool: one usage paragraph + page-specific assumptions and
+   * constraints (what's compared, supported countries, caveats).
+   */
+  comparisonGuide?: {
+    howToUse: string;
+    notes: string[];
+  };
+
   howItWorks: string; // markdown-ish plain text (paragraphs split on \n\n)
   /**
    * Long-form on-page SEO copy (≥600 words) about the tool. Paragraphs split

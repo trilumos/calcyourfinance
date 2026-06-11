@@ -14,6 +14,17 @@ export const cashappVsPaypalCalculator: CalculatorConfig = {
   category: "payment-fees",
   comparisonOf: ["cashapp", "paypal"],
 
+  comparisonGuide: {
+    howToUse:
+      "Enter the payment amount. The banner names which keeps you more and by how much; each card shows the fee and effective rate. Switch to “I want to keep this amount” to work backwards from a target take-home.",
+    notes: [
+      "Compares a Cash App for Business account (flat 2.75%, no fixed fee) against PayPal Goods & Services (2.99% + $0.49).",
+      "US only — both are US-only services for commercial payments.",
+      "Cash App's instant-deposit and credit-card rates, and PayPal's other products, differ — see each single calculator.",
+      "Standard published rates; estimates only, not financial advice.",
+    ],
+  },
+
   title: "Cash App vs PayPal Fee Calculator",
   metaDescription:
     "Compare Cash App and PayPal fees side by side on any amount and see which keeps you more. Cash App business (2.75%) vs PayPal Goods & Services, with a reverse mode. US.",

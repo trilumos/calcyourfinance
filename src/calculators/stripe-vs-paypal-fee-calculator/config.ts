@@ -19,6 +19,17 @@ export const stripeVsPaypalCalculator: CalculatorConfig = {
   category: "payment-fees",
   comparisonOf: ["stripe", "paypal"],
 
+  comparisonGuide: {
+    howToUse:
+      "Enter a sale amount and pick your country. The banner names which platform keeps you more and by how much; each card shows the fee and effective rate. Choose the PayPal product to match how you get paid, add the international-card or currency-conversion surcharges if they apply, or switch to “I want to keep this amount” to work backwards from a target take-home.",
+    notes: [
+      "Compares Stripe's standard online card rate against PayPal Goods & Services (2.99% + $0.49) by default — the rate most sellers pay. Switch the PayPal product to Checkout (3.49%) or Micropayments if that's what you use.",
+      "Covers 22 countries — the rate, currency and worked example update when you change country.",
+      "The toggles add each platform's international-card surcharge and currency-conversion fee; reverse mode grosses each platform up independently.",
+      "Standard published pay-as-you-go rates — high-volume or negotiated pricing differs. Estimates only, not financial advice.",
+    ],
+  },
+
   title: "Stripe vs PayPal Fee Calculator",
   metaDescription:
     "Compare Stripe and PayPal fees side by side on any amount across 22 countries. See which is cheaper, what you keep on each, with international, currency-conversion and reverse modes.",

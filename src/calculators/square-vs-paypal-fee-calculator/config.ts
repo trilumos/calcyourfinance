@@ -16,6 +16,17 @@ export const squareVsPaypalCalculator: CalculatorConfig = {
   category: "payment-fees",
   comparisonOf: ["square", "paypal"],
 
+  comparisonGuide: {
+    howToUse:
+      "Enter a sale amount and pick your country. The banner shows which keeps you more; each card shows the fee and effective rate. Choose the PayPal product, add a foreign card if it applies, or switch to “I want to keep this amount” to work backwards from a target take-home.",
+    notes: [
+      "Compares Square's standard online rate against PayPal Goods & Services (2.99% + $0.49) by default — switch the PayPal product to Checkout or Micropayments if needed.",
+      "It's close: Square's lower fixed fee wins on small sales, PayPal's lower percentage on larger ones (the crossover is around $60).",
+      "Covers the 8 countries Square operates in; foreign-card surcharges and Irish VAT are applied where relevant. This uses Square's online rate — its lower in-person rates aren't compared here.",
+      "Standard published rates; estimates only, not financial advice.",
+    ],
+  },
+
   title: "Square vs PayPal Fee Calculator",
   metaDescription:
     "Compare Square and PayPal fees side by side on any amount, across the countries both support. See which is cheaper, what you keep on each, with foreign-card and reverse modes.",

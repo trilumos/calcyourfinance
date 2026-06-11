@@ -16,6 +16,17 @@ export const stripeVsSquareCalculator: CalculatorConfig = {
   category: "payment-fees",
   comparisonOf: ["stripe", "square"],
 
+  comparisonGuide: {
+    howToUse:
+      "Enter an online sale amount and pick your country. The banner names the cheaper platform and the gap; each card shows the fee and effective rate. Add a foreign card if it applies, or switch to “I want to keep this amount” to work backwards from a target take-home.",
+    notes: [
+      "Compares both platforms on their standard online card rate (apples-to-apples). Square also has lower in-person and keyed rates — those aren't compared here.",
+      "The winner genuinely flips by country: Stripe wins in the US, Square edges it in the UK.",
+      "Covers the 8 countries Square operates in; foreign-card surcharges and Irish VAT are applied where relevant.",
+      "Square's online rate is its free-plan rate. Standard published rates; estimates only, not financial advice.",
+    ],
+  },
+
   title: "Stripe vs Square Fee Calculator",
   metaDescription:
     "Compare Stripe and Square processing fees side by side on any amount, across the countries both support. See which is cheaper, what you keep on each, with foreign-card and reverse modes.",

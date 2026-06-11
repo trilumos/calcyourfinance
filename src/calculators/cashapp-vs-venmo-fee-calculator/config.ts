@@ -14,6 +14,17 @@ export const cashappVsVenmoCalculator: CalculatorConfig = {
   category: "payment-fees",
   comparisonOf: ["cashapp", "venmo"],
 
+  comparisonGuide: {
+    howToUse:
+      "Enter the payment amount. The banner names which keeps you more and by how much; each card shows the fee and effective rate. Switch to “I want to keep this amount” to work backwards from a target take-home.",
+    notes: [
+      "Compares a Cash App for Business account (2.75%) against a Venmo business profile (1.9% + $0.10) — the standard business receiving rate for each.",
+      "US only — both are US-only services for commercial payments.",
+      "Venmo usually wins on its lower percentage; Cash App's no-fixed-fee structure only narrows the gap on very small sales.",
+      "Standard published rates; estimates only, not financial advice.",
+    ],
+  },
+
   title: "Cash App vs Venmo Fee Calculator",
   metaDescription:
     "Compare Cash App and Venmo fees side by side on any amount and see which keeps you more. Cash App business (2.75%) vs a Venmo business profile (1.9% + $0.10), with a reverse mode. US.",

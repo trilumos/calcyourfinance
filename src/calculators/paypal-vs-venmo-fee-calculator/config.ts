@@ -14,6 +14,17 @@ export const paypalVsVenmoCalculator: CalculatorConfig = {
   category: "payment-fees",
   comparisonOf: ["paypal", "venmo"],
 
+  comparisonGuide: {
+    howToUse:
+      "Enter the payment amount. The banner names which keeps you more and by how much; each card shows the fee and effective rate. Switch to “I want to keep this amount” to work backwards from a target take-home.",
+    notes: [
+      "Compares PayPal Goods & Services (2.99% + $0.49) against a Venmo business profile (1.9% + $0.10) — the standard ways each charges to receive money.",
+      "US only — both are US-only services for commercial payments.",
+      "Venmo's personal-account Goods & Services rate (2.99%) and PayPal's other products differ — see each single calculator for those.",
+      "Standard published rates; estimates only, not financial advice.",
+    ],
+  },
+
   title: "PayPal vs Venmo Fee Calculator",
   metaDescription:
     "Compare PayPal and Venmo fees side by side on any amount and see which keeps you more. PayPal Goods & Services vs a Venmo business profile, with a reverse mode. US.",

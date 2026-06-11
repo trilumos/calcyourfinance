@@ -14,6 +14,17 @@ export const paddleVsLemonSqueezyCalculator: CalculatorConfig = {
   category: "payment-fees",
   comparisonOf: ["paddle", "lemonsqueezy"],
 
+  comparisonGuide: {
+    howToUse:
+      "Enter the sale price. By default both are 5% + $0.50, so a domestic sale is a tie — toggle “international card” to see Lemon Squeezy's +1.5% surcharge push Paddle ahead. Each card shows the fee and effective rate.",
+    notes: [
+      "Both are merchants of record at 5% + $0.50, so the fee already includes payment processing AND global sales-tax/VAT — don't add a separate processor fee.",
+      "On a domestic (US-card) sale they're identical (a tie). The difference is Lemon Squeezy's +1.5% on international cards.",
+      "Lemon Squeezy also has feature surcharges (subscriptions, PayPal, abandoned-cart, affiliates) not modelled here; Paddle routes sub-$10 products to custom pricing.",
+      "Standard published rates; estimates only, not financial advice.",
+    ],
+  },
+
   title: "Paddle vs Lemon Squeezy Fee Calculator",
   metaDescription:
     "Compare Paddle and Lemon Squeezy fees side by side. Both merchants of record charge 5% + $0.50 — identical on domestic sales, but Lemon Squeezy adds 1.5% on international cards. See the gap.",

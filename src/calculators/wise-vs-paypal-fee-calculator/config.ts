@@ -20,6 +20,17 @@ export const wiseVsPaypalCalculator: CalculatorConfig = {
   category: "payment-fees",
   comparisonOf: ["wise", "paypal"],
 
+  comparisonGuide: {
+    howToUse:
+      "Pick your route (send → receive) and the amount you're sending. The banner names the cheaper service and the saving; each card shows the total cost and effective rate. The figures are the cost of sending — the recipient's exact amount depends on the live exchange rate at the moment you transfer.",
+    notes: [
+      "Compares total cost, not a live exchange rate: Wise's explicit fee at the mid-market rate vs PayPal's 5% transfer fee (capped $4.99) plus a ~4% markup hidden in a worse rate.",
+      "Models a consumer cross-border send (friends & family), standard bank-funded. Card funding and PayPal's business/goods flows cost more.",
+      "On small transfers (under roughly $60) Wise's fixed fee can make PayPal cheaper — the tool shows that flip honestly.",
+      "Exchange rates move constantly and PayPal can vary its FX spread; estimates only — check the live rate when you send.",
+    ],
+  },
+
   title: "Wise vs PayPal Fee Calculator",
   metaDescription:
     "Compare Wise and PayPal fees for sending money abroad on any amount. See the real cost of each — Wise's mid-market rate vs PayPal's ~4% exchange-rate markup — and exactly how much you save.",
