@@ -44,7 +44,19 @@ export type CountryCode =
   | "AT"
   | "AE"
   | "PH"
-  | "ZA";
+  | "ZA"
+  | "PL"
+  | "TR"
+  | "KR"
+  | "SA"
+  | "ID"
+  | "NG"
+  | "PK"
+  | "BD"
+  | "UA"
+  | "CZ"
+  | "HU"
+  | "RO";
 
 export const COUNTRIES: Record<CountryCode, Country> = {
   US: { code: "US", name: "United States", currency: "USD", locale: "en-US", tier: 1 },
@@ -75,6 +87,18 @@ export const COUNTRIES: Record<CountryCode, Country> = {
   AE: { code: "AE", name: "United Arab Emirates", currency: "AED", locale: "en-AE", tier: 2 },
   PH: { code: "PH", name: "Philippines", currency: "PHP", locale: "en-PH", tier: 2 },
   ZA: { code: "ZA", name: "South Africa", currency: "ZAR", locale: "en-ZA", tier: 2 },
+  PL: { code: "PL", name: "Poland", currency: "PLN", locale: "pl-PL", tier: 2 },
+  TR: { code: "TR", name: "Turkey", currency: "TRY", locale: "tr-TR", tier: 2 },
+  KR: { code: "KR", name: "South Korea", currency: "KRW", locale: "ko-KR", tier: 2 },
+  SA: { code: "SA", name: "Saudi Arabia", currency: "SAR", locale: "ar-SA", tier: 2 },
+  ID: { code: "ID", name: "Indonesia", currency: "IDR", locale: "id-ID", tier: 2 },
+  NG: { code: "NG", name: "Nigeria", currency: "NGN", locale: "en-NG", tier: 2 },
+  PK: { code: "PK", name: "Pakistan", currency: "PKR", locale: "en-PK", tier: 2 },
+  BD: { code: "BD", name: "Bangladesh", currency: "BDT", locale: "bn-BD", tier: 2 },
+  UA: { code: "UA", name: "Ukraine", currency: "UAH", locale: "uk-UA", tier: 2 },
+  CZ: { code: "CZ", name: "Czech Republic", currency: "CZK", locale: "cs-CZ", tier: 2 },
+  HU: { code: "HU", name: "Hungary", currency: "HUF", locale: "hu-HU", tier: 2 },
+  RO: { code: "RO", name: "Romania", currency: "RON", locale: "ro-RO", tier: 2 },
 };
 
 /**
@@ -108,6 +132,18 @@ export const COUNTRY_SEARCH_NAME: Record<CountryCode, string> = {
   AE: "uae",
   PH: "philippines",
   ZA: "south africa",
+  PL: "poland",
+  TR: "turkey",
+  KR: "south korea",
+  SA: "saudi arabia",
+  ID: "indonesia",
+  NG: "nigeria",
+  PK: "pakistan",
+  BD: "bangladesh",
+  UA: "ukraine",
+  CZ: "czech republic",
+  HU: "hungary",
+  RO: "romania",
 };
 
 /** Resolve a country's display + currency metadata, defaulting safely to US. */
