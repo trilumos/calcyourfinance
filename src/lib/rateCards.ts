@@ -5,7 +5,7 @@
  */
 import { getCountry, type CountryCode } from "./countries";
 import { roundTo } from "./money";
-import { stripeFees, etsyFees, paypalFees, squareFees } from "../config/fees";
+import { stripeFees, etsyFees, paypalFees, squareFees, ebayFees } from "../config/fees";
 import type { RateCard } from "../calculators/_types";
 
 /** Format a fixed fee in a country's own currency (e.g. "$0.30", "£0.20"). */
@@ -92,6 +92,40 @@ export function squareRateCards(codes: CountryCode[]): RateCard[] {
           label: SQUARE_LABEL[v.id] ?? v.label,
           value: pctPlusFixed(v.percent, v.fixed, code),
         })),
+        note: noteParts.join(" · ") || undefined,
+      };
+    })
+    .filter((c): c is RateCard => c !== null);
+}
+
+export function ebayRateCards(codes: CountryCode[]): RateCard[] {
+  return codes
+    .map((code): RateCard | null => {
+      const f = ebayFees[code];
+      if (!f) return null;
+      const most = f.categories[0];
+      const tier =
+        most.tierPercent != null && most.tierBreakpoint != null
+          ? ` (to ${fixed(most.tierBreakpoint, code)}), then ${most.tierPercent}%`
+          : "";
+      const rows = [
+        { label: "Most categories", value: `${most.percent}%${tier}` },
+        {
+          label: "Per-order fee",
+          value: `${fixed(f.perOrder.low, code)} / ${fixed(f.perOrder.high, code)}`,
+        },
+        { label: "International", value: `+${f.internationalPercent}%` },
+      ];
+      if (f.regulatoryPercent) rows.push({ label: "Regulatory fee", value: `${f.regulatoryPercent}%` });
+      if (f.fvfCap) rows.push({ label: "Fee cap / item", value: fixed(f.fvfCap, code) });
+
+      const noteParts: string[] = [];
+      if (f.privateSellerFree) noteParts.push("Private sellers pay £0 (buyer pays Buyer Protection)");
+      if (f.taxOnFeePercent) noteParts.push(`+${f.taxOnFeePercent}% ${f.taxLabel ?? "VAT"} on fees`);
+      return {
+        code,
+        name: getCountry(code).name,
+        rows,
         note: noteParts.join(" · ") || undefined,
       };
     })

@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-11
 
-Totals: 22 pages · 3624 keywords
+Totals: 23 pages · 3754 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -3609,6 +3609,136 @@ Totals: 22 pages · 3624 keywords
 | reverb vs ebay fees music gear | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
 | how to net a target amount on reverb | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
 | reverb fees for selling guitar | [Reverb Fee Calculator](/reverb-fee-calculator) | long-tail | tool | E | built |
+| ebay fee calculator | [eBay Fee Calculator](/ebay-fee-calculator) | primary | tool | M | built |
+| ebay fees calculator | [eBay Fee Calculator](/ebay-fee-calculator) | secondary | tool | M | built |
+| ebay seller fees | [eBay Fee Calculator](/ebay-fee-calculator) | secondary | tool | M | built |
+| ebay final value fee calculator | [eBay Fee Calculator](/ebay-fee-calculator) | secondary | tool | M | built |
+| ebay selling fees calculator | [eBay Fee Calculator](/ebay-fee-calculator) | secondary | tool | M | built |
+| calculate ebay fees | [eBay Fee Calculator](/ebay-fee-calculator) | secondary | tool | M | built |
+| ebay fee calculator usa | [eBay Fee Calculator](/ebay-fee-calculator) | secondary | tool | M | built |
+| ebay profit calculator | [eBay Fee Calculator](/ebay-fee-calculator) | secondary | tool | M | built |
+| ebay payout calculator | [eBay Fee Calculator](/ebay-fee-calculator) | secondary | tool | M | built |
+| ebay final value fee | [eBay Fee Calculator](/ebay-fee-calculator) | secondary | tool | M | built |
+| how much does ebay take | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| what percentage does ebay take | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay fees on $100 | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay fees on $1000 | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay business seller fees | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay private seller fees | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay final value fee 2026 | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay international fee calculator | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay fee calculator uk | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay fee calculator australia | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay fee calculator canada | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay seller fees by category | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay fee calculator with shipping | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| how to calculate ebay fees | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay high value item fee | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay buyer protection fee | [eBay Fee Calculator](/ebay-fee-calculator) | long-tail | tool | M | built |
+| ebay fee calculator for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees calculator for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay seller fees for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee calculator for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay selling fees calculator for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| calculate ebay fees for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator usa for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay profit calculator for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay payout calculator for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| how much does ebay take for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| what percentage does ebay take for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees on $100 for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees on $1000 for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay business seller fees for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay private seller fees for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee 2026 for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay international fee calculator for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator uk for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator australia for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator canada for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay seller fees by category for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator with shipping for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| how to calculate ebay fees for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay high value item fee for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay buyer protection fee for usa | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees calculator for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay seller fees for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee calculator for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay selling fees calculator for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| calculate ebay fees for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator usa for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay profit calculator for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay payout calculator for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| how much does ebay take for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| what percentage does ebay take for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees on $100 for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees on $1000 for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay business seller fees for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay private seller fees for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee 2026 for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay international fee calculator for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator uk for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator australia for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator canada for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay seller fees by category for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator with shipping for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| how to calculate ebay fees for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay high value item fee for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay buyer protection fee for uk | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees calculator for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay seller fees for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee calculator for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay selling fees calculator for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| calculate ebay fees for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator usa for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay profit calculator for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay payout calculator for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| how much does ebay take for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| what percentage does ebay take for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees on $100 for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees on $1000 for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay business seller fees for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay private seller fees for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee 2026 for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay international fee calculator for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator uk for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator australia for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator canada for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay seller fees by category for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator with shipping for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| how to calculate ebay fees for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay high value item fee for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay buyer protection fee for australia | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees calculator for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay seller fees for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee calculator for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay selling fees calculator for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| calculate ebay fees for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator usa for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay profit calculator for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay payout calculator for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| how much does ebay take for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| what percentage does ebay take for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees on $100 for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fees on $1000 for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay business seller fees for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay private seller fees for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay final value fee 2026 for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay international fee calculator for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator uk for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator australia for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator canada for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay seller fees by category for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay fee calculator with shipping for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| how to calculate ebay fees for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay high value item fee for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
+| ebay buyer protection fee for canada | [eBay Fee Calculator](/ebay-fee-calculator) | country | tool | M | built |
 | printful profit calculator | [Printful Profit Calculator](/printful-profit-calculator) | primary | tool | M | built |
 | printful fee calculator | [Printful Profit Calculator](/printful-profit-calculator) | secondary | tool | M | built |
 | printful pricing calculator | [Printful Profit Calculator](/printful-profit-calculator) | secondary | tool | M | built |

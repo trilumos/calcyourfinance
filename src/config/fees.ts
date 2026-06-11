@@ -638,6 +638,174 @@ export const reverbFees: ReverbFees = {
 };
 
 /* ===========================================================================
+   EBAY — seller final value fees (country-aware, category-tiered)
+   ───────────────────────────────────────────────────────────────────────────
+   eBay's "final value fee" (FVF) is a category-dependent % of the WHOLE sale
+   (item + shipping/handling + tax) PLUS a fixed per-order fee. Most categories
+   are TIERED: a headline rate up to a breakpoint, a much lower rate on the
+   portion above it. Extras: an international fee when the buyer is registered
+   abroad, a regulatory operating fee (UK/EU), and (UK) 20% VAT on the fees.
+
+   PRIVATE vs BUSINESS: the UK (since Oct 2024) and Germany (since Mar 2023)
+   abolished SELLING fees for PRIVATE sellers — the BUYER pays a separate Buyer
+   Protection fee instead. Business sellers still pay the full FVF. Markets with
+   privateSellerFree:true must show a private seller £0 seller fees.
+
+   COUNTRY SET — we ship ONLY countries whose current rate card we could verify
+   on 2026-06-11 (US, GB, AU, CA). Germany (mid-2026 category overhaul to flat
+   5%/7% recommerce rates) and the other EU markets (fragmented per-category
+   data) are intentionally EXCLUDED rather than ship a guessed number.
+
+   Sources (per entry below):
+     US: https://www.ebay.com/help/selling/fees-credits-invoices/selling-fees?id=4822
+         + https://www.ebay.com/help/selling/fees-credits-invoices/international-fees-ebay-global-sellers?id=5224
+     GB: https://www.ebay.co.uk/help/selling/fees-credits-invoices/fees-business-sellers-activated-managed-payments?id=4809
+         + https://www.ebay.co.uk/help/buying/paying-items/buyer-protection-fee?id=5594 (private)
+     AU: https://www.ebay.com.au/help/selling/fees-credits-invoices/selling-fees-managed-payments-sellers-without-ebay-store?id=4822
+     CA: https://www.ebay.ca/help/selling/fees-credits-invoices/selling-fees-managed-payments-sellers?id=4822
+   eBay's own US worked example cross-check: 13.6% × $210.50 + $0.40 = $29.03. ✓
+   =========================================================================== */
+export const EBAY_VERIFIED = "2026-06-11";
+
+export interface EbayCategory {
+  /** stable id for the category <select> */
+  id: string;
+  label: string;
+  /** Headline final value fee % (applied up to `tierBreakpoint`). */
+  percent: number;
+  /** Rate on the portion of the sale ABOVE the breakpoint (high-value tier). */
+  tierPercent?: number;
+  /** Breakpoint where the rate drops to `tierPercent` (in the local currency). */
+  tierBreakpoint?: number;
+  /** Optional note shown on the category (e.g. price condition). */
+  note?: string;
+}
+
+export interface EbayFees {
+  currency: string;
+  /** Per-order fixed fee: `low` for orders ≤ `threshold`, else `high`. */
+  perOrder: { low: number; high: number; threshold: number };
+  /** Extra % of the sale total for internationally-registered buyers. */
+  internationalPercent: number;
+  /** Regulatory operating fee % of the sale total (UK/EU). */
+  regulatoryPercent?: number;
+  /** Tax levied ON eBay's fees (UK VAT 20%). Omit where fees are tax-inclusive. */
+  taxOnFeePercent?: number;
+  taxLabel?: string;
+  /** Optional per-item ceiling on the FVF (e.g. AU A$440). */
+  fvfCap?: number;
+  /** Whether PRIVATE sellers pay no selling fees in this market (UK, DE). */
+  privateSellerFree?: boolean;
+  categories: EbayCategory[]; // [0] = "most categories" default
+  notes?: string;
+  source: string;
+  intlSource?: string;
+  privateSource?: string;
+  verifiedOn: string;
+}
+export type EbayFeesByCountry = Partial<Record<CountryCode, EbayFees>>;
+
+const EBAY_US_SRC =
+  "https://www.ebay.com/help/selling/fees-credits-invoices/selling-fees?id=4822";
+const EBAY_INTL_SRC =
+  "https://www.ebay.com/help/selling/fees-credits-invoices/international-fees-ebay-global-sellers?id=5224";
+
+export const ebayFees: EbayFeesByCountry = {
+  // ── United States ──────────────────────────────────────────────────────
+  // Most categories 13.6% up to $7,500, 2.35% above; per-order $0.30 (≤$10)
+  // / $0.40 (>$10); international +1.65% of the sale total.
+  US: {
+    currency: "USD",
+    perOrder: { low: 0.3, high: 0.4, threshold: 10 },
+    internationalPercent: 1.65,
+    categories: [
+      { id: "most", label: "Most categories", percent: 13.6, tierPercent: 2.35, tierBreakpoint: 7500 },
+      { id: "books", label: "Books, DVDs, Music, Movies & TV", percent: 15.3, tierPercent: 2.35, tierBreakpoint: 7500 },
+      { id: "coins", label: "Coins & Paper Money (most)", percent: 13.25, tierPercent: 2.35, tierBreakpoint: 7500 },
+      { id: "cards", label: "Trading Cards (most)", percent: 13.25, tierPercent: 2.35, tierBreakpoint: 7500 },
+      { id: "guitars", label: "Guitars & Basses", percent: 6.7, tierPercent: 2.35, tierBreakpoint: 7500 },
+      { id: "bullion", label: "Bullion", percent: 13.6, tierPercent: 7, tierBreakpoint: 7500 },
+      { id: "jewelry", label: "Jewelry & Watches", percent: 15, tierPercent: 9, tierBreakpoint: 5000 },
+      { id: "handbags", label: "Women's Handbags", percent: 15, tierPercent: 9, tierBreakpoint: 2000 },
+      { id: "sneakers", label: "Sneakers selling for $150+", percent: 8, note: "Flat 8% on athletic shoes priced $150 or more; no per-order fee." },
+      { id: "nft", label: "NFTs", percent: 5, note: "Flat 5%." },
+    ],
+    notes:
+      "Most categories 13.6% on the total sale up to $7,500, then 2.35% on the portion above. Per-order fee $0.30 for orders $10 or less, $0.40 over $10. International fee +1.65% when the buyer is registered outside the US. Sneakers $150+ are a flat 8% with no per-order fee.",
+    source: EBAY_US_SRC,
+    intlSource: EBAY_INTL_SRC,
+    verifiedOn: EBAY_VERIFIED,
+  },
+
+  // ── United Kingdom ─────────────────────────────────────────────────────
+  // PRIVATE sellers: £0 selling fees since Oct 2024 — buyer pays a separate
+  // Buyer Protection fee. BUSINESS sellers: category FVF + 0.35% regulatory
+  // operating fee + £0.30/£0.40 per-order + 20% VAT ON the fees. Most
+  // categories sit around 12.9% (clothing/most general goods).
+  GB: {
+    currency: "GBP",
+    perOrder: { low: 0.3, high: 0.4, threshold: 10 },
+    internationalPercent: 2, // representative rest-of-world rate; EU/N.Europe lower
+    regulatoryPercent: 0.35,
+    taxOnFeePercent: 20,
+    taxLabel: "VAT",
+    privateSellerFree: true,
+    categories: [
+      { id: "most", label: "Most categories", percent: 12.9 },
+      { id: "clothing", label: "Clothes, Shoes & Accessories", percent: 12.9 },
+      { id: "tech", label: "Computers / Cameras (banded)", percent: 6.9, tierPercent: 3, tierBreakpoint: 1000 },
+      { id: "jewellery", label: "Jewellery (banded)", percent: 14.9, tierPercent: 4, tierBreakpoint: 1000 },
+    ],
+    notes:
+      "UK PRIVATE sellers pay £0 selling fees (since Oct 2024) — buyers pay a separate Buyer Protection fee instead. BUSINESS sellers pay a category final value fee (most categories ~12.9% on item + postage), plus a 0.35% regulatory operating fee, a £0.30/£0.40 per-order fee, and 20% VAT on top of those fees (reclaimable if VAT-registered). Some categories are 'banded' (a higher rate up to a threshold, a lower rate above). Most categories have a £250 per-item FVF cap (not modelled).",
+    source:
+      "https://www.ebay.co.uk/help/selling/fees-credits-invoices/fees-business-sellers-activated-managed-payments?id=4809",
+    intlSource: EBAY_INTL_SRC,
+    privateSource: "https://www.ebay.co.uk/help/buying/paying-items/buyer-protection-fee?id=5594",
+    verifiedOn: EBAY_VERIFIED,
+  },
+
+  // ── Australia ──────────────────────────────────────────────────────────
+  // Most categories 13.4% up to A$4,000, 2.4% above; per-item cap A$440;
+  // per-order $0.30/$0.40; international +3% (incl GST, from 12 May 2026).
+  // Selling fees are GST-INCLUSIVE (10% already baked in), so no VAT add-on.
+  AU: {
+    currency: "AUD",
+    perOrder: { low: 0.3, high: 0.4, threshold: 10 },
+    internationalPercent: 3,
+    fvfCap: 440,
+    categories: [
+      { id: "most", label: "Most categories", percent: 13.4, tierPercent: 2.4, tierBreakpoint: 4000 },
+    ],
+    notes:
+      "Most categories 13.4% on the total sale up to A$4,000, then 2.4% above, capped at A$440 per item. Per-order fee $0.30 ($10 or less) / $0.40 (over $10). International fee +3% (incl. GST) when the buyer is registered outside Australia. Fees are GST-inclusive (10% GST is already included in the rates).",
+    source:
+      "https://www.ebay.com.au/help/selling/fees-credits-invoices/selling-fees-managed-payments-sellers-without-ebay-store?id=4822",
+    intlSource: EBAY_INTL_SRC,
+    verifiedOn: EBAY_VERIFIED,
+  },
+
+  // ── Canada ─────────────────────────────────────────────────────────────
+  // Mirrors the US structure: most categories 13.6% up to CAD 7,500, 2.35%
+  // above; per-order $0.30/$0.40. International fee applies when selling abroad.
+  CA: {
+    currency: "CAD",
+    perOrder: { low: 0.3, high: 0.4, threshold: 10 },
+    internationalPercent: 1.65,
+    categories: [
+      { id: "most", label: "Most categories", percent: 13.6, tierPercent: 2.35, tierBreakpoint: 7500 },
+      { id: "books", label: "Books, DVDs, Music, Movies & TV", percent: 14.95, tierPercent: 2.35, tierBreakpoint: 7500 },
+      { id: "guitars", label: "Guitars & Basses", percent: 6.35, tierPercent: 2.35, tierBreakpoint: 7500 },
+    ],
+    notes:
+      "Most categories 13.6% on the total sale up to CAD 7,500, then 2.35% above. Per-order fee $0.30 (orders $10 or less) / $0.40 (over $10). An international fee applies when the buyer is registered outside Canada.",
+    source: "https://www.ebay.ca/help/selling/fees-credits-invoices/selling-fees-managed-payments-sellers?id=4822",
+    intlSource: EBAY_INTL_SRC,
+    verifiedOn: EBAY_VERIFIED,
+  },
+};
+
+/* ===========================================================================
    ETSY — seller fees
    Listing fee ($0.20) and transaction fee (6.5%) are global; payment
    processing varies by country. Source: Etsy Fees & Payments Policy + Help.

@@ -26,6 +26,7 @@ import { cashappVsVenmoCalculator } from "./cashapp-vs-venmo-fee-calculator/conf
 import { paddleVsLemonSqueezyCalculator } from "./paddle-vs-lemon-squeezy-fee-calculator/config";
 import { wiseVsPaypalCalculator } from "./wise-vs-paypal-fee-calculator/config";
 import { reverbFeeCalculator } from "./reverb-fee-calculator/config";
+import { ebayFeeCalculator } from "./ebay-fee-calculator/config";
 import { printfulProfitCalculator } from "./printful-profit-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
@@ -50,6 +51,7 @@ export const calculators: CalculatorConfig[] = [
   paddleVsLemonSqueezyCalculator,
   wiseVsPaypalCalculator,
   reverbFeeCalculator,
+  ebayFeeCalculator,
   printfulProfitCalculator,
 ];
 
