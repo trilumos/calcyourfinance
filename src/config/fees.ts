@@ -1233,6 +1233,108 @@ export const stockxFees: StockXFees = {
   verifiedOn: STOCKX_VERIFIED,
 };
 
+/* ===========================================================================
+   TIKTOK SHOP — seller referral (commission) fees
+   ───────────────────────────────────────────────────────────────────────────
+   TikTok Shop charges ONE fee per order to sellers: a REFERRAL FEE (their term
+   for what other platforms call a commission or selling fee). There is no
+   separate per-order payment-processing fee charged to sellers — the referral
+   fee is all-inclusive for sellers.
+
+   UNITED STATES
+     Standard referral fee: 6% of (order value + platform discount − tax).
+     Effective April 1, 2024 (raised from the early-access ~2% promotional rate).
+     Category exceptions (effective October 31, 2024):
+       Precious Jewelry subcategories (Diamond, Gold, Jade, Platinum/Carat Gold,
+         Ruby/Sapphire/Emerald): 5%
+       Pre-Owned subcategories (Bags, Collectible Trading Cards, Luggage & Travel,
+         Watches, Footwear, Refurbished Phones & Electronics, Fashion Accessories,
+         Menswear, Womenswear, Collectible Coins & Paper Money, Collectible Figures,
+         Collectible Comic Books): 5% (3% on any portion above $10,000)
+     New seller promotional rate: 3% for the first 30 days after first sale
+       (requires at least 1 sale within 60 days of onboarding to qualify).
+     Refund Administration Fee: 20% of the referral fee on refunded orders,
+       capped at $5 per SKU (effective May 15, 2025). NOT modelled as a
+       per-sale deduction (it applies to refunds, not completed sales).
+
+   UNITED KINGDOM
+     Standard commission fee: 9% (VAT-inclusive), established by September 2024.
+     Applied to: (Net sales + Customer-paid shipping fee + Platform discount)
+       minus refund amounts.
+     No separate payment-processing fee for sellers.
+
+   COUNTRIES EXCLUDED from this calculator:
+     SEA (Indonesia, Malaysia, Thailand, Vietnam, Singapore, Philippines):
+       TikTok Shop launched but published rates are highly promotional (0–2%)
+       with transition timelines not yet confirmed beyond 2026.
+     EU (Germany, France, Spain, Italy, Ireland): moved to 9% in Jan 2026 but
+       the commission page was not publicly accessible without a seller account
+       during verification on 2026-06-12.
+
+   Sources:
+     https://seller-us.tiktok.com/university/essay?knowledge_id=5982454398175018
+       (TikTok Shop Referral Fee Updates — 2024, US)
+     https://seller-us.tiktok.com/university/essay?knowledge_id=5988482086864682
+       (TikTok Shop Referral Fees in 2024 by Category, US)
+     https://seller-uk.tiktok.com/university/essay?knowledge_id=3337893683398432
+       (TikTok Shop UK Commission Rate Policy)
+   =========================================================================== */
+
+export interface TikTokShopFees {
+  /** Standard referral/commission fee % on the order total. */
+  referralPercent: number;
+  /**
+   * Reduced referral fee % for special categories (precious jewelry, pre-owned).
+   * Only populated for markets that publish a category discount.
+   */
+  reducedPercent?: number;
+  /**
+   * New-seller promotional referral fee % for the first `promodays` days.
+   * Only US publishes a confirmed promo rate.
+   */
+  promoPercent?: number;
+  /** Duration of the new-seller promotional rate (days). */
+  promoDays?: number;
+  currency: string;
+  notes?: string;
+  source: string;
+  verifiedOn: string;
+}
+
+export type TikTokShopFeesByCountry = Partial<Record<CountryCode, TikTokShopFees>>;
+
+export const TIKTOK_SHOP_VERIFIED = "2026-06-12";
+
+export const tiktokShopFees: TikTokShopFeesByCountry = {
+  // ── United States ──────────────────────────────────────────────────────
+  // Standard 6% referral fee since Apr 1, 2024. 5% for precious jewelry and
+  // pre-owned subcategories (effective Oct 31, 2024). New sellers pay 3% for
+  // the first 30 days after their first sale.
+  US: {
+    referralPercent: 6,
+    reducedPercent: 5,
+    promoPercent: 3,
+    promoDays: 30,
+    currency: "USD",
+    notes:
+      "Standard 6% referral fee effective April 1, 2024. Precious jewelry (Diamond, Gold, Jade, Platinum/Carat Gold, Ruby/Sapphire/Emerald) and pre-owned subcategories are 5% effective October 31, 2024. New sellers pay 3% for the first 30 days after their first sale (requires 1 sale within 60 days of onboarding). No separate payment-processing fee charged to sellers — the referral fee is all-inclusive. A Refund Administration Fee of 20% of the referral fee (capped at $5 per SKU) applies to refunded orders but is not a per-sale charge.",
+    source: "https://seller-us.tiktok.com/university/essay?knowledge_id=5982454398175018",
+    verifiedOn: TIKTOK_SHOP_VERIFIED,
+  },
+
+  // ── United Kingdom ─────────────────────────────────────────────────────
+  // Standard 9% commission fee (VAT-inclusive) since ~September 2024.
+  // No category-level reduced rate published. No separate processing fee.
+  GB: {
+    referralPercent: 9,
+    currency: "GBP",
+    notes:
+      "Standard 9% commission fee (VAT-inclusive). Applied to (net sales + customer-paid shipping + platform discount − refunds). No separate payment-processing fee charged to sellers. New-seller introductory rates were offered historically but are not a published standing promotional structure.",
+    source: "https://seller-uk.tiktok.com/university/essay?knowledge_id=3337893683398432",
+    verifiedOn: TIKTOK_SHOP_VERIFIED,
+  },
+};
+
 export const depopFeesUS: DepopFees = {
   sellingPercent: 0,
   processingPercent: 3.3,

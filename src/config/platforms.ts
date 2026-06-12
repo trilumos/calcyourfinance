@@ -62,6 +62,13 @@ export const platforms: Record<string, Platform> = {
   // vivid #00A86B for dark mode — clearly distinct from Wise (#137A52 / #63D9A6),
   // Cash App (#00A82D / #00D632), Printful (#0D6B74), and Vinted (#00878F).
   stockx: { id: "stockx", name: "StockX", color: "#005A38", colorDark: "#00A86B" },
+  // TikTok's two brand colours are cyan #25F4EE and magenta #FE2C55 on black.
+  // The magenta is chosen as the accent (more recognisable, higher contrast on
+  // near-white). Tuned to #CC2244 for light-mode legibility (the raw #FE2C55
+  // is too light at small sizes on white). For dark mode, the saturated #FE2C55
+  // is used directly. Clearly distinct from all existing reds/pinks:
+  // Mercari #C0392B, Depop #E52000, Poshmark #8B1A38, Etsy #E0571B.
+  tiktokshop: { id: "tiktokshop", name: "TikTok Shop", color: "#CC2244", colorDark: "#FE2C55" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

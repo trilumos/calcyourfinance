@@ -5,7 +5,7 @@
  */
 import { getCountry, type CountryCode } from "./countries";
 import { roundTo } from "./money";
-import { stripeFees, etsyFees, paypalFees, squareFees, ebayFees, poshmarkFees, vintedFees } from "../config/fees";
+import { stripeFees, etsyFees, paypalFees, squareFees, ebayFees, poshmarkFees, vintedFees, tiktokShopFees } from "../config/fees";
 import type { RateCard } from "../calculators/_types";
 
 /** Format a fixed fee in a country's own currency (e.g. "$0.30", "£0.20"). */
@@ -180,6 +180,33 @@ export function vintedRateCards(codes: CountryCode[]): RateCard[] {
         note: f.dynamic
           ? "Fee is dynamic on this market — shown rate is representative."
           : undefined,
+      };
+    })
+    .filter((c): c is RateCard => c !== null);
+}
+
+export function tiktokShopRateCards(codes: CountryCode[]): RateCard[] {
+  return codes
+    .map((code): RateCard | null => {
+      const f = tiktokShopFees[code];
+      if (!f) return null;
+      const rows: RateCard["rows"] = [
+        { label: "Standard commission", value: `${f.referralPercent}%` },
+      ];
+      if (f.reducedPercent != null) {
+        rows.push({ label: "Precious jewelry / pre-owned", value: `${f.reducedPercent}%` });
+      }
+      if (f.promoPercent != null && f.promoDays != null) {
+        rows.push({ label: `New seller (first ${f.promoDays} days)`, value: `${f.promoPercent}%` });
+      }
+      const noteParts: string[] = [];
+      noteParts.push("No separate payment-processing fee");
+      if (code === "GB") noteParts.push("VAT-inclusive");
+      return {
+        code,
+        name: getCountry(code).name,
+        rows,
+        note: noteParts.join(" · "),
       };
     })
     .filter((c): c is RateCard => c !== null);

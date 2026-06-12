@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-12
 
-Totals: 28 pages · 4205 keywords
+Totals: 29 pages · 4280 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4213,3 +4213,78 @@ Totals: 28 pages · 4205 keywords
 | stockx take rate | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
 | stockx seller program fees | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
 | stockx vs goat fees | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop fee calculator | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | primary | tool | M | built |
+| tiktok shop fees calculator | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | secondary | tool | M | built |
+| tiktok shop seller fees | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | secondary | tool | M | built |
+| tiktok shop commission | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | secondary | tool | M | built |
+| tiktok shop referral fee | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | secondary | tool | M | built |
+| tiktok shop selling fees | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | secondary | tool | M | built |
+| tiktok shop fee calculator uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | secondary | tool | M | built |
+| tiktok shop fees on $100 | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | secondary | tool | M | built |
+| tiktok shop payout calculator | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | secondary | tool | M | built |
+| tiktok shop profit calculator | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | secondary | tool | M | built |
+| how much does tiktok shop take | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| what percentage does tiktok shop take | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop commission 2026 | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop referral fee percentage | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop new seller promo rate | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop fees uk 2026 | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop 6 percent fee | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop 9 percent fee uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| how to calculate tiktok shop fees | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop seller fee percentage | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop fees explained | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop take rate | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| does tiktok shop charge payment processing fee | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop fee jewelry category | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop seller profit after fees | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | long-tail | tool | M | built |
+| tiktok shop fee calculator for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fees calculator for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop seller fees for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop commission for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop referral fee for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop selling fees for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fee calculator uk for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fees on $100 for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop payout calculator for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop profit calculator for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| how much does tiktok shop take for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| what percentage does tiktok shop take for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop commission 2026 for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop referral fee percentage for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop new seller promo rate for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fees uk 2026 for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop 6 percent fee for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop 9 percent fee uk for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| how to calculate tiktok shop fees for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop seller fee percentage for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fees explained for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop take rate for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| does tiktok shop charge payment processing fee for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fee jewelry category for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop seller profit after fees for usa | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fee calculator for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fees calculator for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop seller fees for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop commission for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop referral fee for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop selling fees for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fee calculator uk for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fees on $100 for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop payout calculator for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop profit calculator for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| how much does tiktok shop take for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| what percentage does tiktok shop take for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop commission 2026 for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop referral fee percentage for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop new seller promo rate for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fees uk 2026 for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop 6 percent fee for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop 9 percent fee uk for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| how to calculate tiktok shop fees for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop seller fee percentage for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fees explained for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop take rate for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| does tiktok shop charge payment processing fee for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop fee jewelry category for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |
+| tiktok shop seller profit after fees for uk | [TikTok Shop Fee Calculator](/tiktok-shop-fee-calculator) | country | tool | M | built |

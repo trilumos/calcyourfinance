@@ -33,6 +33,7 @@ import { mercariFeeCalculator } from "./mercari-fee-calculator/config";
 import { depopFeeCalculator } from "./depop-fee-calculator/config";
 import { vintedFeeCalculator } from "./vinted-fee-calculator/config";
 import { stockxFeeCalculator } from "./stockx-fee-calculator/config";
+import { tiktokShopFeeCalculator } from "./tiktok-shop-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -63,6 +64,7 @@ export const calculators: CalculatorConfig[] = [
   depopFeeCalculator,
   vintedFeeCalculator,
   stockxFeeCalculator,
+  tiktokShopFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */
