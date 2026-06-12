@@ -1335,6 +1335,101 @@ export const tiktokShopFees: TikTokShopFeesByCountry = {
   },
 };
 
+/* ===========================================================================
+   WHATNOT — live-auction marketplace seller fees
+   ───────────────────────────────────────────────────────────────────────────
+   Whatnot charges sellers TWO fees per completed sale:
+
+   1. Commission (on the ITEM PRICE only — shipping and taxes excluded):
+      US / CA / AU (standard): 8%
+      UK / EU (standard):      6.67% + VAT (= ~8% inc. 20% UK VAT)
+      Electronics (US/CA/AU):  5%
+      Coins & Money (all):     4% (+ VAT in UK/EU)
+
+   2. Payment processing fee (on the TOTAL ORDER VALUE — item + shipping + tax):
+      US / CA / AU:  2.9% + $0.30 (USD/CAD/AUD)
+      UK / EU:       2.42% + £0.25 / €0.25
+
+   The standard 8% (US/CA/AU) or 6.67%+VAT (UK/EU) covers most categories.
+   Category promotions (electronics 5%, coins 4%) and high-value promos
+   (0% above $1,500 on certain categories) exist but are not modelled as
+   the primary calculator — the standard rate is used. Sellers are advised
+   to check the Help Center for the latest promotions.
+
+   Premier Shop program: 10% reduction in commission (e.g. 8% → 7.2%).
+
+   Note on UK VAT: the UK commission is quoted VAT-exclusive on the fee
+   schedule (6.67% + VAT at 20% = effectively ~8%). We store the VAT-exclusive
+   rate and surface the note in copy.
+
+   Sources:
+     https://help.whatnot.com/hc/en-us/articles/4847069165965
+     https://crosslist.com/blog/whatnot-fees-for-sellers (secondary verification)
+   =========================================================================== */
+export interface WhatnotFees {
+  /** Commission % on the item's final sale price (VAT-exclusive for UK). */
+  commissionPercent: number;
+  /** If true, the commissionPercent is VAT-exclusive (UK/EU). */
+  vatOnCommission?: boolean;
+  /** VAT rate applied to the commission (e.g. 20 for UK). */
+  vatPercent?: number;
+  /** Payment processing % on total order value (item + shipping + tax). */
+  processingPercent: number;
+  /** Fixed per-transaction processing fee (local currency). */
+  processingFixed: number;
+  currency: string;
+  source: string;
+  verifiedOn: string;
+}
+export type WhatnotFeesByCountry = Partial<Record<CountryCode, WhatnotFees>>;
+
+export const WHATNOT_VERIFIED = "2026-06-12";
+
+export const whatnotFees: WhatnotFeesByCountry = {
+  // ── United States ──────────────────────────────────────────────────────
+  // 8% commission on item price; 2.9% + $0.30 processing on full order.
+  US: {
+    commissionPercent: 8,
+    processingPercent: 2.9,
+    processingFixed: 0.30,
+    currency: "USD",
+    source: "https://help.whatnot.com/hc/en-us/articles/4847069165965-Whatnot-Seller-Fees-and-Commissions-Schedule",
+    verifiedOn: WHATNOT_VERIFIED,
+  },
+  // ── United Kingdom ─────────────────────────────────────────────────────
+  // 6.67% + 20% UK VAT on commission (= ~8% inc. VAT); 2.42% + £0.25 processing.
+  GB: {
+    commissionPercent: 6.67,
+    vatOnCommission: true,
+    vatPercent: 20,
+    processingPercent: 2.42,
+    processingFixed: 0.25,
+    currency: "GBP",
+    source: "https://help.whatnot.com/hc/en-us/articles/4847069165965-Whatnot-Seller-Fees-and-Commissions-Schedule",
+    verifiedOn: WHATNOT_VERIFIED,
+  },
+  // ── Canada ─────────────────────────────────────────────────────────────
+  // Same rate structure as US: 8% commission + 2.9% + $0.30 processing.
+  CA: {
+    commissionPercent: 8,
+    processingPercent: 2.9,
+    processingFixed: 0.30,
+    currency: "CAD",
+    source: "https://help.whatnot.com/hc/en-us/articles/4847069165965-Whatnot-Seller-Fees-and-Commissions-Schedule",
+    verifiedOn: WHATNOT_VERIFIED,
+  },
+  // ── Australia ──────────────────────────────────────────────────────────
+  // Same rate structure as US: 8% commission + 2.9% + $0.30 processing.
+  AU: {
+    commissionPercent: 8,
+    processingPercent: 2.9,
+    processingFixed: 0.30,
+    currency: "AUD",
+    source: "https://help.whatnot.com/hc/en-us/articles/4847069165965-Whatnot-Seller-Fees-and-Commissions-Schedule",
+    verifiedOn: WHATNOT_VERIFIED,
+  },
+};
+
 export const depopFeesUS: DepopFees = {
   sellingPercent: 0,
   processingPercent: 3.3,

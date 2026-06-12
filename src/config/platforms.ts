@@ -69,6 +69,12 @@ export const platforms: Record<string, Platform> = {
   // is used directly. Clearly distinct from all existing reds/pinks:
   // Mercari #C0392B, Depop #E52000, Poshmark #8B1A38, Etsy #E0571B.
   tiktokshop: { id: "tiktokshop", name: "TikTok Shop", color: "#CC2244", colorDark: "#FE2C55" },
+  // Whatnot's brand uses a vivid yellow/gold (#FFDE00). The pure yellow is too
+  // light for text contrast on near-white, so we use a tuned darker gold
+  // #C89A00 for light mode (sufficient contrast) and bright #FFDE00 for dark.
+  // Clearly distinct from Paddle's amber (#A87900) and Lemon Squeezy's gold
+  // (#B08900) — recognition only, no logo.
+  whatnot: { id: "whatnot", name: "Whatnot", color: "#C89A00", colorDark: "#FFDE00" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {
