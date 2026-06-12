@@ -42,6 +42,10 @@ export const platforms: Record<string, Platform> = {
   // is distinct from Etsy's orange (#E0571B) and all other accents — recognition
   // only, no logo.
   poshmark: { id: "poshmark", name: "Poshmark", color: "#8B1A38", colorDark: "#D95B7F" },
+  // Mercari's brand uses a deep red-coral. Tuned to be distinct from Etsy's
+  // orange (#E0571B), Reverb's burnt-orange (#C2470A), and Poshmark's rose
+  // (#8B1A38) — recognition only, no logo.
+  mercari: { id: "mercari", name: "Mercari", color: "#C0392B", colorDark: "#FF6B5B" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

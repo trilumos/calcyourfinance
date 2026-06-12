@@ -930,3 +930,55 @@ export const etsyFees: EtsyFeesByCountry = {
     source: "https://www.etsy.com/in-en/sell",
   },
 };
+
+/* ===========================================================================
+   MERCARI — marketplace seller & buyer fees
+   ───────────────────────────────────────────────────────────────────────────
+   US (mercari.com) — current structure effective January 6, 2025:
+     SELLER: 10% flat selling fee on (item price + buyer-paid shipping).
+             No separate payment processing fee (eliminated Jan 6, 2025).
+     BUYER:  3.6% Buyer Protection fee on (item price + buyer-paid shipping).
+             No payment processing fee (was $0.50 + 2.9%, removed Jan 6, 2025).
+   NOTE: Between Mar 27, 2024 – Jan 5, 2025 Mercari ran a zero-seller-fee
+   experiment; the 10% seller fee was reinstated on Jan 6, 2025.
+
+   Japan (jp.mercari.com) — current:
+     SELLER: 10% selling fee on the sale price.
+     No separate buyer fee (buyer pays item price + optional payment surcharge
+     for convenience store / ATM payments — not modelled here).
+
+   Sources:
+     https://www.mercari.com/us/help_center/article/169/  (Fees on Mercari US)
+     https://www.mercari.com/us/help_center/article/2517/ (Fee structure change history)
+     https://www.mercari.com/us/help_center/article/2518/ (FAQ — new fee structure)
+     https://help.jp.mercari.com/guide/articles/65/       (Mercari Japan fees)
+   =========================================================================== */
+export interface MercariFees {
+  /** Seller selling fee % on (item price + buyer-paid shipping). */
+  sellingPercent: number;
+  /**
+   * Buyer Protection fee % (US only) — informational; does NOT reduce seller
+   * payout. Displayed as "what the buyer pays on top of your listed price."
+   */
+  buyerProtectionPercent?: number;
+  currency: string;
+  source: string;
+  verifiedOn: string;
+}
+
+export const MERCARI_VERIFIED = "2026-06-12";
+
+export const mercariFeesUS: MercariFees = {
+  sellingPercent: 10,
+  buyerProtectionPercent: 3.6,
+  currency: "USD",
+  source: "https://www.mercari.com/us/help_center/article/169/",
+  verifiedOn: MERCARI_VERIFIED,
+};
+
+export const mercariFeesJP: MercariFees = {
+  sellingPercent: 10,
+  currency: "JPY",
+  source: "https://help.jp.mercari.com/guide/articles/65/",
+  verifiedOn: MERCARI_VERIFIED,
+};
