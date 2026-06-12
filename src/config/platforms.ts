@@ -46,6 +46,12 @@ export const platforms: Record<string, Platform> = {
   // orange (#E0571B), Reverb's burnt-orange (#C2470A), and Poshmark's rose
   // (#8B1A38) — recognition only, no logo.
   mercari: { id: "mercari", name: "Mercari", color: "#C0392B", colorDark: "#FF6B5B" },
+  // Depop's brand is a bold electric red (#FF2300). Tuned to #E52000 for
+  // light-mode contrast on near-white — still clearly a vivid red but avoids
+  // the harshness of pure #FF2300. Distinct from Mercari's coral (#C0392B),
+  // Poshmark's rose (#8B1A38), Etsy's orange (#E0571B), and Reverb's
+  // burnt-orange (#C2470A) — recognition only, no logo.
+  depop: { id: "depop", name: "Depop", color: "#E52000", colorDark: "#FF4D2E" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

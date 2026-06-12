@@ -30,6 +30,7 @@ import { ebayFeeCalculator } from "./ebay-fee-calculator/config";
 import { printfulProfitCalculator } from "./printful-profit-calculator/config";
 import { poshmarkFeeCalculator } from "./poshmark-fee-calculator/config";
 import { mercariFeeCalculator } from "./mercari-fee-calculator/config";
+import { depopFeeCalculator } from "./depop-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -57,6 +58,7 @@ export const calculators: CalculatorConfig[] = [
   printfulProfitCalculator,
   poshmarkFeeCalculator,
   mercariFeeCalculator,
+  depopFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

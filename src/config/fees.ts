@@ -982,3 +982,105 @@ export const mercariFeesJP: MercariFees = {
   source: "https://help.jp.mercari.com/guide/articles/65/",
   verifiedOn: MERCARI_VERIFIED,
 };
+
+/* ===========================================================================
+   DEPOP — marketplace seller & buyer fees (fashion resale, Gen-Z)
+   ───────────────────────────────────────────────────────────────────────────
+   Depop has TWO distinct fee regimes depending on where the seller is based:
+
+   US sellers  (USD sales, US-located):
+     SELLER: 0% selling fee — removed July 15, 2024 for USD/US sellers.
+             Payment processing fee: 3.3% + $0.45 (Depop Payments, US).
+     BUYER:  Marketplace fee of up to 5% of item price + up to $1 fixed
+             (added at checkout by Depop; does NOT reduce seller payout).
+             Effective from July 18, 2024.
+
+   UK sellers  (GBP sales, UK-located):
+     SELLER: 0% selling fee — removed March 20, 2024 (new listings from
+             that date). Payment processing fee: 2.9% + £0.30 (Depop Payments).
+     BUYER:  Marketplace fee of up to 5% of item price + up to £1 fixed
+             (added at checkout by Depop; does NOT reduce seller payout).
+             Effective from April 15, 2024.
+
+   Rest of world (all other countries / non-USD/GBP sales):
+     SELLER: 10% flat selling fee on item price (and self-arranged shipping
+             if not using Depop's prepaid label). Payment processing via
+             PayPal (rates vary by country and account type).
+     BUYER:  No separate Buyer Marketplace fee (known for US/UK only).
+
+   NOTE: The 10% seller fee previously applied globally (including US and
+   UK). The US zero-fee change took effect July 15, 2024; the UK change took
+   effect March 20, 2024. International sellers (outside US/UK) still pay 10%.
+
+   Sources:
+     https://news.depop.com/company-news/depop-removes-selling-fees-in-the-united-states-evolves-fee-structure/
+     https://news.depop.com/company-news/evolving-our-fee-structure-with-zero-selling-fees-on-depop/
+     https://depophelp.zendesk.com/hc/en-gb/articles/360001791127-Seller-fees-and-charges
+     https://crosslist.com/blog/depop-seller-fees  (secondary, verified numbers)
+   =========================================================================== */
+export interface DepopFees {
+  /** Seller selling fee % on item price (0 for US/UK; 10 for rest-of-world). */
+  sellingPercent: number;
+  /** Payment processing fee % on total transaction (item + shipping + tax). */
+  processingPercent: number;
+  /** Payment processing fixed fee per transaction. */
+  processingFixed: number;
+  /**
+   * Buyer Marketplace fee % — informational; does NOT reduce seller payout.
+   * Depop adds this to the item price at buyer checkout. US/UK only.
+   */
+  buyerMarketplacePercent?: number;
+  /**
+   * Buyer Marketplace fee fixed cap per transaction (in local currency).
+   * The buyer fee is "up to X% + up to $Y/£Y" — we model the maximums for
+   * a conservative / realistic buyer-total display.
+   */
+  buyerMarketplaceFixedMax?: number;
+  currency: string;
+  notes?: string;
+  source: string;
+  verifiedOn: string;
+}
+
+export const DEPOP_VERIFIED = "2026-06-12";
+
+export const depopFeesUS: DepopFees = {
+  sellingPercent: 0,
+  processingPercent: 3.3,
+  processingFixed: 0.45,
+  buyerMarketplacePercent: 5,
+  buyerMarketplaceFixedMax: 1,
+  currency: "USD",
+  notes:
+    "US sellers pay 0% selling fee (removed July 15, 2024). Depop Payments processing: 3.3% + $0.45 on the total transaction. Buyers pay a marketplace fee of up to 5% of item price + up to $1 fixed at checkout (effective July 18, 2024) — this does NOT reduce the seller's payout.",
+  source:
+    "https://news.depop.com/company-news/depop-removes-selling-fees-in-the-united-states-evolves-fee-structure/",
+  verifiedOn: DEPOP_VERIFIED,
+};
+
+export const depopFeesGB: DepopFees = {
+  sellingPercent: 0,
+  processingPercent: 2.9,
+  processingFixed: 0.3,
+  buyerMarketplacePercent: 5,
+  buyerMarketplaceFixedMax: 1,
+  currency: "GBP",
+  notes:
+    "UK sellers pay 0% selling fee (removed March 20, 2024 for new listings). Depop Payments processing: 2.9% + £0.30 on the total transaction. Buyers pay a marketplace fee of up to 5% of item price + up to £1 fixed at checkout (effective April 15, 2024) — this does NOT reduce the seller's payout.",
+  source:
+    "https://news.depop.com/company-news/evolving-our-fee-structure-with-zero-selling-fees-on-depop/",
+  verifiedOn: DEPOP_VERIFIED,
+};
+
+/** Rest of world: 10% seller fee + PayPal processing (variable; not modelled here). */
+export const depopFeesROW: DepopFees = {
+  sellingPercent: 10,
+  processingPercent: 0, // PayPal rates vary widely; modelled separately in copy
+  processingFixed: 0,
+  currency: "USD", // placeholder — ROW sellers sell in their local currency
+  notes:
+    "Sellers outside the US and UK still pay a 10% selling fee on item price (and self-arranged shipping if no Depop label). Payment processing is via PayPal and varies by country. No buyer Marketplace fee is documented for ROW markets.",
+  source:
+    "https://depophelp.zendesk.com/hc/en-gb/articles/360001791127-Seller-fees-and-charges",
+  verifiedOn: DEPOP_VERIFIED,
+};

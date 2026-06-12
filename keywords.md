@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-12
 
-Totals: 25 pages · 3907 keywords
+Totals: 26 pages · 3929 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -3915,3 +3915,25 @@ Totals: 25 pages · 3907 keywords
 | mercari vs poshmark fees for japan | [Mercari Fee Calculator](/mercari-fee-calculator) | country | tool | M | built |
 | mercari vs ebay fees for japan | [Mercari Fee Calculator](/mercari-fee-calculator) | country | tool | M | built |
 | mercari fee calculator uk for japan | [Mercari Fee Calculator](/mercari-fee-calculator) | country | tool | M | built |
+| depop fee calculator | [Depop Fee Calculator](/depop-fee-calculator) | primary | tool | M | built |
+| depop fees calculator | [Depop Fee Calculator](/depop-fee-calculator) | secondary | tool | M | built |
+| depop seller fees | [Depop Fee Calculator](/depop-fee-calculator) | secondary | tool | M | built |
+| depop selling fees | [Depop Fee Calculator](/depop-fee-calculator) | secondary | tool | M | built |
+| depop fee calculator 2026 | [Depop Fee Calculator](/depop-fee-calculator) | secondary | tool | M | built |
+| depop payout calculator | [Depop Fee Calculator](/depop-fee-calculator) | secondary | tool | M | built |
+| depop profit calculator | [Depop Fee Calculator](/depop-fee-calculator) | secondary | tool | M | built |
+| calculate depop fees | [Depop Fee Calculator](/depop-fee-calculator) | secondary | tool | M | built |
+| depop earnings calculator | [Depop Fee Calculator](/depop-fee-calculator) | secondary | tool | M | built |
+| how much does depop take | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop fees on $50 | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop fee calculator uk | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| does depop charge fees | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| does depop still charge a 10% fee | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop seller fee percentage | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop marketplace fee | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop buyer fee | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop zero seller fee | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop processing fee | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop fee change 2024 | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop vs poshmark fees | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
+| depop vs mercari fees | [Depop Fee Calculator](/depop-fee-calculator) | long-tail | tool | M | built |
