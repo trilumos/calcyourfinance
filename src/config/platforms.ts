@@ -57,6 +57,11 @@ export const platforms: Record<string, Platform> = {
   // (#00878F for light, #2EC8D2 for dark) — clearly distinct from Printful,
   // Wise (#137A52 / #63D9A6), and Cash App (#00A82D) — recognition only.
   vinted: { id: "vinted", name: "Vinted", color: "#00878F", colorDark: "#2EC8D2" },
+  // StockX's brand green is #006340 (dark forest green). Tuned to a slightly
+  // brighter #005A38 for light mode (sufficient contrast on near-white), and a
+  // vivid #00A86B for dark mode — clearly distinct from Wise (#137A52 / #63D9A6),
+  // Cash App (#00A82D / #00D632), Printful (#0D6B74), and Vinted (#00878F).
+  stockx: { id: "stockx", name: "StockX", color: "#005A38", colorDark: "#00A86B" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

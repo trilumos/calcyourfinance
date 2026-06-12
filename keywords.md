@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-12
 
-Totals: 27 pages · 4182 keywords
+Totals: 28 pages · 4205 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4190,3 +4190,26 @@ Totals: 27 pages · 4182 keywords
 | vinted vs depop fees for poland | [Vinted Fee Calculator](/vinted-fee-calculator) | country | tool | M | built |
 | vinted vs poshmark fees for poland | [Vinted Fee Calculator](/vinted-fee-calculator) | country | tool | M | built |
 | vinted profit calculator for poland | [Vinted Fee Calculator](/vinted-fee-calculator) | country | tool | M | built |
+| stockx fee calculator | [StockX Fee Calculator](/stockx-fee-calculator) | primary | tool | M | built |
+| stockx seller fees | [StockX Fee Calculator](/stockx-fee-calculator) | secondary | tool | M | built |
+| stockx fees calculator | [StockX Fee Calculator](/stockx-fee-calculator) | secondary | tool | M | built |
+| stockx selling fees | [StockX Fee Calculator](/stockx-fee-calculator) | secondary | tool | M | built |
+| stockx payout calculator | [StockX Fee Calculator](/stockx-fee-calculator) | secondary | tool | M | built |
+| stockx profit calculator | [StockX Fee Calculator](/stockx-fee-calculator) | secondary | tool | M | built |
+| calculate stockx fees | [StockX Fee Calculator](/stockx-fee-calculator) | secondary | tool | M | built |
+| stockx charges calculator | [StockX Fee Calculator](/stockx-fee-calculator) | secondary | tool | M | built |
+| how much does stockx take | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| what percentage does stockx take | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx fees on $200 | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx fees on $100 | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx seller level fees | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx transaction fee percentage | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx payment processing fee | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx level 1 fees | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx level 2 fees | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx fee calculator sneakers | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx fee calculator streetwear | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| how to calculate stockx payout | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx take rate | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx seller program fees | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |
+| stockx vs goat fees | [StockX Fee Calculator](/stockx-fee-calculator) | long-tail | tool | M | built |

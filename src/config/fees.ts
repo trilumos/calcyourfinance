@@ -1154,6 +1154,85 @@ export const vintedFees: VintedFeesByCountry = {
   },
 };
 
+/* ===========================================================================
+   STOCKX — seller fees (sneaker/streetwear/collectibles authentication marketplace)
+   ───────────────────────────────────────────────────────────────────────────
+   StockX charges the SELLER two fees on every completed sale:
+
+   1. Transaction fee — depends on the seller's LEVEL (quarterly performance):
+      Level 1 (default / new): 9%
+      Level 2 (≥12 quarterly sales or $1,500 quarterly revenue): 8.5%
+      Level 3 (≥40 quarterly sales or $5,000 quarterly revenue): 8.0%
+      Level 4 (≥200 quarterly sales or $25,000 quarterly revenue): 7.5%
+      Level 5 (≥800 quarterly sales or $100,000 quarterly revenue): 7.0%
+
+   2. Payment processing fee: 3% (flat, all levels)
+
+   Regional minimum total fee (transaction component floored):
+      USD $5.00 | CAD $7.00 | EUR €5.00 | GBP £4.50 | AUD $7.50 | JPY ¥800
+      HKD $45.00 | SGD $7.00 | KRW ₩7,500 | CHF $4.50 | MXN $100 | NZD $16.00
+
+   Fees apply to the final sale price. StockX provides a prepaid outbound shipping
+   label — the shipping cost ($5 USD for standard non-Flex sales as of March 1, 2026)
+   is deducted from the seller's payout separately (not modelled as a calculator fee;
+   noted in copy).
+
+   Seller levels reset quarterly (Jan–Mar, Apr–Jun, Jul–Sep, Oct–Dec). Sellers
+   retain their achieved level through the current quarter plus the following quarter.
+
+   Effective dates: the fee table above was in effect from the launch of the Seller
+   Program through to the March 1, 2026 update. The Flex fulfillment fee ($5 USD) was
+   removed on March 1, 2026; Flex transaction fees now match the standard rates above.
+
+   Sources:
+     https://stockx.com/help/articles/what-are-stockxs-fees-for-sellers
+     https://stockx.com/help/articles/What-is-the-StockX-Seller-Program-What-are-Seller-Levels
+     https://stockx.com/news/updates-to-the-stockx-seller-program/
+   =========================================================================== */
+
+export interface StockXLevel {
+  id: string;
+  label: string;
+  /** Quarterly sales count required to reach/maintain this level (or 0 for L1). */
+  quarterlySales: number;
+  /** Quarterly revenue threshold (USD) — either sales count OR revenue qualifies. */
+  quarterlyRevenue: number;
+  /** Transaction fee % applied to the final sale price. */
+  transactionPercent: number;
+}
+
+export interface StockXFees {
+  levels: StockXLevel[];
+  /** Payment processing fee % (all levels, applied to final sale price). */
+  processingPercent: number;
+  /** Minimum transaction fee per sale in USD (other currencies have their own min). */
+  feeMinUSD: number;
+  currency: string;
+  source: string;
+  levelSource: string;
+  newsSource: string;
+  verifiedOn: string;
+}
+
+export const STOCKX_VERIFIED = "2026-06-12";
+
+export const stockxFees: StockXFees = {
+  levels: [
+    { id: "level1", label: "Level 1 (new seller)",           quarterlySales: 0,   quarterlyRevenue: 0,      transactionPercent: 9   },
+    { id: "level2", label: "Level 2 (12 sales / $1,500)",    quarterlySales: 12,  quarterlyRevenue: 1500,   transactionPercent: 8.5 },
+    { id: "level3", label: "Level 3 (40 sales / $5,000)",    quarterlySales: 40,  quarterlyRevenue: 5000,   transactionPercent: 8   },
+    { id: "level4", label: "Level 4 (200 sales / $25,000)",  quarterlySales: 200, quarterlyRevenue: 25000,  transactionPercent: 7.5 },
+    { id: "level5", label: "Level 5 (800 sales / $100,000)", quarterlySales: 800, quarterlyRevenue: 100000, transactionPercent: 7   },
+  ],
+  processingPercent: 3,
+  feeMinUSD: 5,
+  currency: "USD",
+  source: "https://stockx.com/help/articles/what-are-stockxs-fees-for-sellers",
+  levelSource: "https://stockx.com/help/articles/What-is-the-StockX-Seller-Program-What-are-Seller-Levels",
+  newsSource: "https://stockx.com/news/updates-to-the-stockx-seller-program/",
+  verifiedOn: STOCKX_VERIFIED,
+};
+
 export const depopFeesUS: DepopFees = {
   sellingPercent: 0,
   processingPercent: 3.3,
