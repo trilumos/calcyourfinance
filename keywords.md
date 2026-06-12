@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-12
 
-Totals: 30 pages · 4395 keywords
+Totals: 31 pages · 4414 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4403,3 +4403,22 @@ Totals: 30 pages · 4395 keywords
 | whatnot fees australia for australia | [Whatnot Fee Calculator](/whatnot-fee-calculator) | country | tool | E | built |
 | whatnot vs ebay fees for australia | [Whatnot Fee Calculator](/whatnot-fee-calculator) | country | tool | E | built |
 | whatnot vs mercari fees for australia | [Whatnot Fee Calculator](/whatnot-fee-calculator) | country | tool | E | built |
+| facebook marketplace fee calculator | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | primary | tool | M | built |
+| facebook marketplace fees calculator | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | secondary | tool | M | built |
+| facebook marketplace selling fees | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | secondary | tool | M | built |
+| facebook marketplace seller fees | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | secondary | tool | M | built |
+| facebook marketplace fee 2026 | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | secondary | tool | M | built |
+| facebook marketplace payout calculator | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | secondary | tool | M | built |
+| facebook marketplace profit calculator | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | secondary | tool | M | built |
+| facebook shop fees | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | secondary | tool | M | built |
+| instagram shop fees | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | secondary | tool | M | built |
+| how much does facebook marketplace charge | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |
+| does facebook marketplace charge fees | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |
+| facebook marketplace fees on $100 | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |
+| facebook marketplace 10% fee | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |
+| facebook marketplace selling fee shipped | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |
+| facebook marketplace local pickup fee | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |
+| facebook marketplace fee percentage | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |
+| instagram shop selling fees | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |
+| facebook marketplace vs ebay fees | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |
+| facebook marketplace fee calculator shipped | [Facebook Marketplace Fee Calculator](/facebook-marketplace-fee-calculator) | long-tail | tool | M | built |

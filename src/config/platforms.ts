@@ -75,6 +75,11 @@ export const platforms: Record<string, Platform> = {
   // Clearly distinct from Paddle's amber (#A87900) and Lemon Squeezy's gold
   // (#B08900) — recognition only, no logo.
   whatnot: { id: "whatnot", name: "Whatnot", color: "#C89A00", colorDark: "#FFDE00" },
+  // Facebook/Meta's brand blue is #1877F2. Tuned to #1665D8 for light-mode
+  // contrast on near-white (slightly darker). Clearly distinct from PayPal
+  // (#0070E0), Square (#1351D8), eBay (#0064D2), Venmo (#008CFF), and
+  // Razorpay (#2D6CDF) — recognition only, no logo.
+  facebook: { id: "facebook", name: "Facebook Marketplace", color: "#1665D8", colorDark: "#4D9BFF" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

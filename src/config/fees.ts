@@ -1430,6 +1430,55 @@ export const whatnotFees: WhatnotFeesByCountry = {
   },
 };
 
+/* ===========================================================================
+   FACEBOOK MARKETPLACE — selling fees for shipped orders (US)
+   ───────────────────────────────────────────────────────────────────────────
+   Facebook Marketplace charges sellers only on SHIPPED orders that use
+   Facebook's checkout. LOCAL PICKUP orders are FREE (no selling fee).
+
+   Fee model (effective April 15, 2024 — doubled from previous 5%/$0.40):
+     Shipped order ≥ $8:  10% of the sale price
+     Shipped order < $8:  $0.80 flat minimum fee
+
+   The 10% covers payment processing, customer support, and Purchase
+   Protection — there is NO separate processing fee on top.
+
+   The fee applies per shipment (not per item), charged on the item price.
+   Instagram Shop uses the same fee structure under Meta Checkout.
+
+   LOCAL PICKUP: sellers pay $0 — no checkout fee whatsoever.
+
+   Sources:
+     https://www.facebook.com/business/help/223030991929920
+     https://litcommerce.com/blog/facebook-marketplace-fees/  (secondary)
+     https://www.accio.com/blog/facebook-marketplace-selling-fees-all-you-need-to-know (secondary)
+   =========================================================================== */
+export interface FacebookFees {
+  /** Selling fee % for shipped orders at or above the threshold. */
+  shippedPercent: number;
+  /** Minimum flat fee per shipment for orders strictly below the threshold. */
+  shippedMinFee: number;
+  /** Price threshold below which the minimum flat fee applies (exclusive). */
+  threshold: number;
+  /** Local pickup fee — always 0. */
+  localPickupFee: number;
+  currency: string;
+  source: string;
+  verifiedOn: string;
+}
+
+export const FACEBOOK_VERIFIED = "2026-06-12";
+
+export const facebookFees: FacebookFees = {
+  shippedPercent: 10,
+  shippedMinFee: 0.80,
+  threshold: 8,
+  localPickupFee: 0,
+  currency: "USD",
+  source: "https://www.facebook.com/business/help/223030991929920",
+  verifiedOn: FACEBOOK_VERIFIED,
+};
+
 export const depopFeesUS: DepopFees = {
   sellingPercent: 0,
   processingPercent: 3.3,
