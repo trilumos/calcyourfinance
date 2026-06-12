@@ -38,6 +38,10 @@ export const platforms: Record<string, Platform> = {
   // Printful's brand is near-black with a charcoal/teal identity. Using a dark
   // teal that is distinct from Wise (#137A52) — recognition only, no logo.
   printful: { id: "printful", name: "Printful", color: "#0D6B74", colorDark: "#1DB8C8" },
+  // Poshmark's brand is a bold rose/magenta-maroon. Tuned to a dark rose that
+  // is distinct from Etsy's orange (#E0571B) and all other accents — recognition
+  // only, no logo.
+  poshmark: { id: "poshmark", name: "Poshmark", color: "#8B1A38", colorDark: "#D95B7F" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

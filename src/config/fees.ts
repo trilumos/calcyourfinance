@@ -594,6 +594,59 @@ export const paypalIntlSend = {
 };
 
 /* ===========================================================================
+   POSHMARK — seller fees (fashion resale marketplace)
+   ───────────────────────────────────────────────────────────────────────────
+   Fee model: flat fee for sales STRICTLY BELOW the threshold; percentage (of
+   sale price only — buyer pays shipping separately) for sales AT OR ABOVE the
+   threshold. No separate payment-processing fee; the % is all-inclusive.
+
+   Active markets as of 2026-06-12: US and Canada only.
+   Australia and India shut down on 2023-11-02.
+
+   US:  sales < $15  → $2.95 flat;  $15+  → 20%   (USD)
+   CA:  sales < C$20 → C$3.95 flat; C$20+ → 20%   (CAD)
+
+   Sources:
+     https://support.poshmark.com/s/article/297755057  (US)
+     https://poshmark.ca/fee_policy                    (CA)
+   =========================================================================== */
+export interface PoshmarkFees {
+  /** Flat fee for sales strictly below `threshold` (in local currency). */
+  flatFee: number;
+  /** Sales threshold (exclusive): at this price and above, use `percent`. */
+  threshold: number;
+  /** Selling % applied to the sale price for sales >= threshold. */
+  percent: number;
+  currency: string;
+  source: string;
+  verifiedOn: string;
+}
+export type PoshmarkFeesByCountry = Partial<Record<CountryCode, PoshmarkFees>>;
+
+export const POSHMARK_VERIFIED = "2026-06-12";
+
+export const poshmarkFees: PoshmarkFeesByCountry = {
+  US: {
+    flatFee: 2.95,
+    threshold: 15,
+    percent: 20,
+    currency: "USD",
+    source: "https://support.poshmark.com/s/article/297755057",
+    verifiedOn: POSHMARK_VERIFIED,
+  },
+  CA: {
+    flatFee: 3.95,
+    threshold: 20,
+    percent: 20,
+    currency: "CAD",
+    source: "https://poshmark.ca/fee_policy",
+    verifiedOn: POSHMARK_VERIFIED,
+  },
+  // AU: closed 2023-11-02 (https://techcrunch.com/2023/10/19/poshmark-is-shutting-down-in-australia-india-and-the-uk)
+  // IN: closed 2023-11-02 (same announcement)
+};
+
+/* ===========================================================================
    REVERB — seller fees (music-gear marketplace, US-only Reverb Payments)
    Selling fee: 5% of (item price + shipping), min $0.50, capped at $500/order.
    Processing fee (standard seller):   3.19% + $0.49 per transaction.

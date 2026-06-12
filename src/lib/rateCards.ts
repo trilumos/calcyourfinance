@@ -5,7 +5,7 @@
  */
 import { getCountry, type CountryCode } from "./countries";
 import { roundTo } from "./money";
-import { stripeFees, etsyFees, paypalFees, squareFees, ebayFees } from "../config/fees";
+import { stripeFees, etsyFees, paypalFees, squareFees, ebayFees, poshmarkFees } from "../config/fees";
 import type { RateCard } from "../calculators/_types";
 
 /** Format a fixed fee in a country's own currency (e.g. "$0.30", "£0.20"). */
@@ -127,6 +127,30 @@ export function ebayRateCards(codes: CountryCode[]): RateCard[] {
         name: getCountry(code).name,
         rows,
         note: noteParts.join(" · ") || undefined,
+      };
+    })
+    .filter((c): c is RateCard => c !== null);
+}
+
+export function poshmarkRateCards(codes: CountryCode[]): RateCard[] {
+  return codes
+    .map((code): RateCard | null => {
+      const f = poshmarkFees[code];
+      if (!f) return null;
+      return {
+        code,
+        name: getCountry(code).name,
+        rows: [
+          {
+            label: `Under ${fixed(f.threshold, code)}`,
+            value: `${fixed(f.flatFee, code)} flat`,
+          },
+          {
+            label: `${fixed(f.threshold, code)} and above`,
+            value: `${f.percent}%`,
+          },
+        ],
+        note: "Fee on sale price only; buyer pays shipping separately.",
       };
     })
     .filter((c): c is RateCard => c !== null);
