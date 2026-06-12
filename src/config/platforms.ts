@@ -52,6 +52,11 @@ export const platforms: Record<string, Platform> = {
   // Poshmark's rose (#8B1A38), Etsy's orange (#E0571B), and Reverb's
   // burnt-orange (#C2470A) — recognition only, no logo.
   depop: { id: "depop", name: "Depop", color: "#E52000", colorDark: "#FF4D2E" },
+  // Vinted's brand uses a teal-green (#007782). Printful already uses #0D6B74
+  // (dark teal), so Vinted's accent is tuned to a lighter, brighter teal-green
+  // (#00878F for light, #2EC8D2 for dark) — clearly distinct from Printful,
+  // Wise (#137A52 / #63D9A6), and Cash App (#00A82D) — recognition only.
+  vinted: { id: "vinted", name: "Vinted", color: "#00878F", colorDark: "#2EC8D2" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

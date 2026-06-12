@@ -5,7 +5,7 @@
  */
 import { getCountry, type CountryCode } from "./countries";
 import { roundTo } from "./money";
-import { stripeFees, etsyFees, paypalFees, squareFees, ebayFees, poshmarkFees } from "../config/fees";
+import { stripeFees, etsyFees, paypalFees, squareFees, ebayFees, poshmarkFees, vintedFees } from "../config/fees";
 import type { RateCard } from "../calculators/_types";
 
 /** Format a fixed fee in a country's own currency (e.g. "$0.30", "£0.20"). */
@@ -151,6 +151,35 @@ export function poshmarkRateCards(codes: CountryCode[]): RateCard[] {
           },
         ],
         note: "Fee on sale price only; buyer pays shipping separately.",
+      };
+    })
+    .filter((c): c is RateCard => c !== null);
+}
+
+export function vintedRateCards(codes: CountryCode[]): RateCard[] {
+  return codes
+    .map((code): RateCard | null => {
+      const f = vintedFees[code];
+      if (!f) return null;
+      const standardRate = `${pctPlusFixed(f.buyerProtectionPercent, f.buyerProtectionFixed, code)}`;
+      const rows = [
+        { label: "Seller fee", value: "None — sellers keep 100%" },
+        {
+          label: `Buyer Protection (under ${fixed(f.highValueThreshold, code)})`,
+          value: standardRate,
+        },
+        {
+          label: `Buyer Protection (${fixed(f.highValueThreshold, code)} and above)`,
+          value: `${f.highValuePercent}%`,
+        },
+      ];
+      return {
+        code,
+        name: getCountry(code).name,
+        rows,
+        note: f.dynamic
+          ? "Fee is dynamic on this market — shown rate is representative."
+          : undefined,
       };
     })
     .filter((c): c is RateCard => c !== null);

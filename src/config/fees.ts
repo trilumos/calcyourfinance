@@ -1044,6 +1044,116 @@ export interface DepopFees {
 
 export const DEPOP_VERIFIED = "2026-06-12";
 
+/* ===========================================================================
+   VINTED — buyer protection fee (platform-fee marketplace)
+   ───────────────────────────────────────────────────────────────────────────
+   Vinted charges SELLERS ZERO fees. Sellers keep 100% of their listed price.
+   The BUYER pays a "Buyer Protection fee" at checkout — this is ADDED to the
+   item price and does NOT reduce the seller's payout.
+
+   Buyer Protection fee formula:
+     Standard tier (item < highValueThreshold):
+       buyerFee = buyerProtectionFixed + buyerProtectionPercent% × itemPrice
+     High-value tier (item ≥ highValueThreshold):
+       buyerFee = highValuePercent% × itemPrice  (no fixed fee)
+
+   EUR markets (FR, DE, NL, BE, ES, IT, AT, IE):
+     Standard: €0.70 + 5%   for items < €500
+     High-value: 2%          for items ≥ €500
+     Source: https://www.vinted.com/pricelist
+
+   GB (UK):
+     Vinted's official UK pricelist describes the fee as "usually 3% to 8% +
+     £0.30 to £0.80" — the fee is dynamic/algorithmic and is displayed at
+     checkout per item. We model the REPRESENTATIVE rate of 5% + £0.70
+     (matching the EUR equivalent published for other markets) with the same
+     high-value tier structure. The actual fee a buyer sees may differ.
+     Source: https://www.vinted.co.uk/pricelist
+
+   PL (Poland):
+     Standard: PLN 2.90 + 5%  for items < PLN 2,500 (~EUR 500 equivalent)
+     High-value: 2%             for items ≥ PLN 2,500
+     Source: https://www.newsendip.com/vinted-fine-1-2-million-in-poland-for-a-lack-of-transparency-on-its-platform/
+             (confirmed in UOKiK penalty case, 2024)
+
+   EXCLUDED markets (not included because exact rates could not be verified
+   against an official source):
+     CZ: CZK rate not confirmed; Vinted.cz help page was inaccessible.
+     LT: Vinted.lt returned HTTP 403 during verification.
+     LU: No standalone pricelist found; likely same EUR formula.
+   =========================================================================== */
+
+export interface VintedFees {
+  /** Buyer Protection % for standard-tier items (below highValueThreshold). */
+  buyerProtectionPercent: number;
+  /** Fixed fee (local currency) added to standard-tier buyer fee. */
+  buyerProtectionFixed: number;
+  /** Item price at/above which the high-value (lower) tier applies. */
+  highValueThreshold: number;
+  /** Buyer Protection % for high-value items (no fixed fee at this tier). */
+  highValuePercent: number;
+  currency: string;
+  /**
+   * If true, the fee formula is dynamic/algorithmic (like GB). The stored
+   * values are representative; actual fees shown at Vinted checkout may differ.
+   */
+  dynamic?: boolean;
+  notes?: string;
+  source: string;
+  verifiedOn: string;
+}
+export type VintedFeesByCountry = Partial<Record<CountryCode, VintedFees>>;
+
+export const VINTED_VERIFIED = "2026-06-12";
+
+const VINTED_EUR_SRC = "https://www.vinted.com/pricelist";
+
+/** Standard EUR market config (FR, DE, NL, BE, ES, IT, AT, IE). */
+const vintedEurFees = (_cc: string): VintedFees => ({
+  buyerProtectionPercent: 5,
+  buyerProtectionFixed: 0.7,
+  highValueThreshold: 500,
+  highValuePercent: 2,
+  currency: "EUR",
+  source: VINTED_EUR_SRC,
+  verifiedOn: VINTED_VERIFIED,
+});
+
+export const vintedFees: VintedFeesByCountry = {
+  GB: {
+    buyerProtectionPercent: 5,
+    buyerProtectionFixed: 0.7,
+    highValueThreshold: 500,
+    highValuePercent: 2,
+    currency: "GBP",
+    dynamic: true,
+    notes:
+      'Vinted UK\'s official pricelist states the fee is "usually 3% to 8% + £0.30 to £0.80" — the fee is dynamic and varies by item. This calculator shows a representative rate of 5% + £0.70 (matching the published EUR equivalent). The actual Buyer Protection fee is always clearly displayed at Vinted checkout before purchase.',
+    source: "https://www.vinted.co.uk/pricelist",
+    verifiedOn: VINTED_VERIFIED,
+  },
+  FR: vintedEurFees("fr"),
+  DE: vintedEurFees("de"),
+  NL: vintedEurFees("nl"),
+  BE: vintedEurFees("be"),
+  ES: vintedEurFees("es"),
+  IT: vintedEurFees("it"),
+  AT: vintedEurFees("at"),
+  IE: vintedEurFees("ie"),
+  PL: {
+    buyerProtectionPercent: 5,
+    buyerProtectionFixed: 2.9,
+    highValueThreshold: 2500,
+    highValuePercent: 2,
+    currency: "PLN",
+    notes:
+      "PLN 2.90 + 5% for items below PLN 2,500; 2% for items at or above PLN 2,500 (approx. EUR 500 equivalent). Confirmed from UOKiK transparency case (2024).",
+    source:
+      "https://www.newsendip.com/vinted-fine-1-2-million-in-poland-for-a-lack-of-transparency-on-its-platform/",
+    verifiedOn: VINTED_VERIFIED,
+  },
+};
+
 export const depopFeesUS: DepopFees = {
   sellingPercent: 0,
   processingPercent: 3.3,
