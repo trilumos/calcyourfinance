@@ -133,24 +133,26 @@ describe("computeEbayFee — private sellers (zero-fee markets)", () => {
     expect(r.payout).toBe(105);
   });
 
-  it("still charges a business seller in the same market", () => {
+  it("still charges a business seller in the same market (UK most-category 10.9%)", () => {
     const r = computeEbayFee({
       itemPrice: 100,
       shipping: 0,
-      fvfPercent: 12.9,
+      fvfPercent: 10.9,
       perOrderFee: 0.4,
       regulatoryPercent: 0.35,
       taxOnFeePercent: 20,
       sellerType: "business",
       privateSellerFree: true,
     });
-    // FVF 12.90 + per-order 0.40 + reg 0.35 = 13.65 in fees, +20% VAT on fees
-    expect(r.finalValueFee).toBe(12.9);
+    // FVF 10.90 + per-order 0.40 + reg 0.35 = 11.65 in taxable fees, +20% VAT on fees
+    expect(r.finalValueFee).toBe(10.9);
     expect(r.fixedFee).toBe(0.4);
     expect(r.regulatoryFee).toBe(0.35);
-    // VAT on fees = 20% × (12.90 + 0.40 + 0.35) = 20% × 13.65 = 2.73
-    expect(r.taxOnFee).toBe(2.73);
-    expect(r.totalFees).toBe(16.38);
+    // VAT on fees = 20% × (10.90 + 0.40 + 0.35) = 20% × 11.65 = 2.33
+    expect(r.taxOnFee).toBe(2.33);
+    // total = 10.90 + 0.40 + 0.35 + 2.33 = 13.98
+    expect(r.totalFees).toBe(13.98);
+    expect(r.payout).toBe(86.02);
   });
 });
 

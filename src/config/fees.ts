@@ -751,13 +751,16 @@ export const ebayFees: EbayFeesByCountry = {
     taxLabel: "VAT",
     privateSellerFree: true,
     categories: [
-      { id: "most", label: "Most categories", percent: 12.9 },
-      { id: "clothing", label: "Clothes, Shoes & Accessories", percent: 12.9 },
-      { id: "tech", label: "Computers / Cameras (banded)", percent: 6.9, tierPercent: 3, tierBreakpoint: 1000 },
-      { id: "jewellery", label: "Jewellery (banded)", percent: 14.9, tierPercent: 4, tierBreakpoint: 1000 },
+      { id: "most",       label: "Most categories (home, garden, toys, sporting goods…)", percent: 10.9 },
+      { id: "clothing",   label: "Clothes, Shoes & Accessories", percent: 11.9 },
+      { id: "industrial", label: "Business, Office & Industrial", percent: 12.5 },
+      { id: "other",      label: "Pet Supplies / Crafts / Event Tickets / Everything Else", percent: 12.9 },
+      { id: "media",      label: "Books, Music, Films & Media", percent: 9.9 },
+      { id: "tech",       label: "Computers, Cameras, Mobiles & Sound (banded)", percent: 6.9, tierPercent: 3, tierBreakpoint: 1000 },
+      { id: "jewellery",  label: "Jewellery & Watches (banded)", percent: 14.9, tierPercent: 4, tierBreakpoint: 1000 },
     ],
     notes:
-      "UK PRIVATE sellers pay £0 selling fees (since Oct 2024) — buyers pay a separate Buyer Protection fee instead. BUSINESS sellers pay a category final value fee (most categories ~12.9% on item + postage), plus a 0.35% regulatory operating fee, a £0.30/£0.40 per-order fee, and 20% VAT on top of those fees (reclaimable if VAT-registered). Some categories are 'banded' (a higher rate up to a threshold, a lower rate above). Most categories have a £250 per-item FVF cap (not modelled).",
+      "UK PRIVATE sellers pay £0 selling fees (since Oct 2024) — buyers pay a separate Buyer Protection fee instead. BUSINESS sellers pay a category final value fee (most categories 10.9% on item + postage; clothing 11.9%; tech/cameras 6.9% banded; jewellery 14.9% banded), plus a 0.35% regulatory operating fee, a £0.30/£0.40 per-order fee, and 20% VAT on top of those fees (reclaimable if VAT-registered). Some categories are 'banded' (a higher rate up to a threshold, a lower rate above). Most categories have a £250 per-item FVF cap (not modelled).",
     source:
       "https://www.ebay.co.uk/help/selling/fees-credits-invoices/fees-business-sellers-activated-managed-payments?id=4809",
     intlSource: EBAY_INTL_SRC,
