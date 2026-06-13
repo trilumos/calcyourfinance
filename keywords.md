@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-13
 
-Totals: 33 pages · 4461 keywords
+Totals: 34 pages · 4480 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4469,3 +4469,22 @@ Totals: 33 pages · 4461 keywords
 | how much does ko-fi take from donations | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
 | ko-fi fee on shop sales | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
 | ko-fi creator fee | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| buy me a coffee fee calculator | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | primary | tool | M | built |
+| buy me a coffee fees | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | secondary | tool | M | built |
+| buy me a coffee fees calculator | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | secondary | tool | M | built |
+| bmac fees | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | secondary | tool | M | built |
+| how much does buy me a coffee take | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | secondary | tool | M | built |
+| buy me a coffee fee percentage | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | secondary | tool | M | built |
+| buy me a coffee payout calculator | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | secondary | tool | M | built |
+| buy me a coffee platform fee | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | secondary | tool | M | built |
+| buy me a coffee 5% fee | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| buy me a coffee stripe fee | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| bmac fee calculator | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| buy me a coffee creator fees | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| how much does bmac charge | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| buy me a coffee membership fees | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| buy me a coffee vs ko-fi fees | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| buy me a coffee vs patreon fees | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| does buy me a coffee charge fees | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| buy me a coffee processing fee | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| buy me a coffee take rate | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |

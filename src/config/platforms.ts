@@ -94,6 +94,12 @@ export const platforms: Record<string, Platform> = {
   // brighter #FF6B6B. Distinct from Mercari (#C0392B), Depop (#E52000),
   // Poshmark (#8B1A38), TikTok (#CC2244) and Etsy (#E0571B) — recognition only.
   kofi: { id: "kofi", name: "Ko-fi", color: "#D94040", colorDark: "#FF6B6B" },
+  // Buy Me a Coffee's brand is a vivid yellow (#FFDD00). Pure yellow lacks
+  // contrast on near-white, so we tune to #B89A00 for light mode (dark gold
+  // with sufficient contrast). Distinct from Paddle (#A87900), Lemon Squeezy
+  // (#B08900), and Whatnot (#C89A00) — all existing golds/ambers. Dark mode
+  // uses #FFD700 (bright gold, readable on dark) — recognition only, no logo.
+  bmac: { id: "bmac", name: "Buy Me a Coffee", color: "#B89A00", colorDark: "#FFD700" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

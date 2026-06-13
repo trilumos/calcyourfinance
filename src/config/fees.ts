@@ -1844,3 +1844,49 @@ export const kofiFees: KofiFees = {
   goldSource: "https://help.ko-fi.com/hc/en-us/articles/360005506873-What-is-Ko-fi-Gold",
   verifiedOn: KOFI_VERIFIED,
 };
+
+/* ===========================================================================
+   BUY ME A COFFEE (BMaC) — creator-support platform fees
+   ───────────────────────────────────────────────────────────────────────────
+   Platform fee:  5% flat on all transactions (one-time, memberships, extras).
+   No monthly fee for creators.
+
+   Payment processing (Stripe — all payments go through Stripe Connect):
+     Base Stripe processing:   2.9% + $0.30 per transaction
+     Stripe payout fee:        0.5%  (charged for payouts to creators)
+     Combined standard:        3.4% + $0.30
+     International surcharge:  +1.0% (non-US cards)
+     Subscription surcharge:   +0.5% (recurring/membership payments — Stripe Billing)
+
+   Sources:
+     https://help.buymeacoffee.com/en/articles/8105744-how-to-calculate-charges-on-your-payment
+     https://help.buymeacoffee.com/en/articles/10182730-what-is-buy-me-a-coffee-and-how-does-it-work
+   =========================================================================== */
+export const BMAC_VERIFIED = "2026-06-13";
+
+export interface BmacFees {
+  /** BMaC platform fee % on all transactions. */
+  platformPercent: number;
+  /** Combined Stripe processing % (2.9% base + 0.5% payout). */
+  processingPercent: number;
+  /** Fixed Stripe processing fee per transaction (USD). */
+  processingFixed: number;
+  /** Extra % for non-US (international) card payments. */
+  intlSurchargePercent: number;
+  /** Extra % for recurring/subscription/membership payments (Stripe Billing). */
+  subscriptionSurchargePercent: number;
+  currency: string;
+  source: string;
+  verifiedOn: string;
+}
+
+export const bmacFees: BmacFees = {
+  platformPercent: 5,
+  processingPercent: 3.4,    // Stripe 2.9% + Stripe payout 0.5%
+  processingFixed: 0.3,
+  intlSurchargePercent: 1.0,
+  subscriptionSurchargePercent: 0.5,
+  currency: "USD",
+  source: "https://help.buymeacoffee.com/en/articles/8105744-how-to-calculate-charges-on-your-payment",
+  verifiedOn: BMAC_VERIFIED,
+};
