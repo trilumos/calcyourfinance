@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-13
 
-Totals: 32 pages · 4439 keywords
+Totals: 33 pages · 4461 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4447,3 +4447,25 @@ Totals: 32 pages · 4439 keywords
 | walmart marketplace no monthly fee | [Walmart Marketplace Seller Fee Calculator](/walmart-seller-fee-calculator) | long-tail | tool | M | built |
 | walmart vs amazon seller fees | [Walmart Marketplace Seller Fee Calculator](/walmart-seller-fee-calculator) | long-tail | tool | M | built |
 | walmart wfs fees | [Walmart Marketplace Seller Fee Calculator](/walmart-seller-fee-calculator) | long-tail | tool | M | built |
+| ko-fi fee calculator | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | primary | tool | M | built |
+| ko-fi fees calculator | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | secondary | tool | M | built |
+| ko-fi fees | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | secondary | tool | M | built |
+| ko-fi fee percentage | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | secondary | tool | M | built |
+| does ko-fi take a cut | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | secondary | tool | M | built |
+| how much does ko-fi take | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | secondary | tool | M | built |
+| ko-fi gold worth it | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | secondary | tool | M | built |
+| ko-fi payout calculator | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | secondary | tool | M | built |
+| ko-fi profit calculator | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | secondary | tool | M | built |
+| ko-fi platform fee | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi free plan fees | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi gold plan fees | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi shop fees | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi membership fees | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi commission fees | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi tips fee | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi stripe processing fee | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi vs patreon fees | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi gold is it worth it | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| how much does ko-fi take from donations | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi fee on shop sales | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |
+| ko-fi creator fee | [Ko-fi Fee Calculator](/ko-fi-fee-calculator) | long-tail | tool | M | built |

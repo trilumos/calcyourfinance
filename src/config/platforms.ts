@@ -88,6 +88,12 @@ export const platforms: Record<string, Platform> = {
   // near-white), distinct from all existing blues. Dark mode uses #0071DC
   // directly (the actual brand hex, vivid on dark) — recognition only, no logo.
   walmart: { id: "walmart", name: "Walmart Marketplace", color: "#005BBB", colorDark: "#0071DC" },
+  // Ko-fi's brand is a warm coral-red (#FF5E5B). The raw hex is too light for
+  // text contrast on near-white at small sizes, so we tune to #D94040 for light
+  // mode (sufficient contrast, still clearly warm-red). Dark mode uses a
+  // brighter #FF6B6B. Distinct from Mercari (#C0392B), Depop (#E52000),
+  // Poshmark (#8B1A38), TikTok (#CC2244) and Etsy (#E0571B) — recognition only.
+  kofi: { id: "kofi", name: "Ko-fi", color: "#D94040", colorDark: "#FF6B6B" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

@@ -1791,3 +1791,56 @@ export const depopFeesROW: DepopFees = {
     "https://depophelp.zendesk.com/hc/en-gb/articles/360001791127-Seller-fees-and-charges",
   verifiedOn: DEPOP_VERIFIED,
 };
+
+/* ===========================================================================
+   KO-FI — creator-support platform fees
+   ───────────────────────────────────────────────────────────────────────────
+   Ko-fi Free plan:
+     Tips / donations:                  0% platform fee
+     Shop sales / memberships / commissions: 5% platform fee
+   Ko-fi Gold ($12/month):
+     All income types:                  0% platform fee
+
+   Payment processing (Stripe or PayPal — creator's own account):
+     Standard US rate: 2.9% + $0.30 per transaction. Ko-fi does NOT process
+     payments itself; creators connect their own Stripe/PayPal account and the
+     processor charges them directly. No Ko-fi processing surcharge.
+
+   Sources:
+     https://help.ko-fi.com/hc/en-us/articles/360002506494-Does-Ko-fi-take-a-fee
+     https://ko-fi.com/pricing
+     https://help.ko-fi.com/hc/en-us/articles/360005506873-What-is-Ko-fi-Gold
+   =========================================================================== */
+export const KOFI_VERIFIED = "2026-06-13";
+
+export interface KofiFees {
+  /** Ko-fi platform fee % on tips/donations (Free plan). */
+  tipsPercent: number;
+  /** Ko-fi platform fee % on shop sales, memberships, commissions (Free plan). */
+  shopPercent: number;
+  /** Ko-fi Gold platform fee % on all income types. */
+  goldPercent: number;
+  /** Ko-fi Gold monthly cost (USD). */
+  goldMonthlyCost: number;
+  /** Standard payment processor % (Stripe/PayPal US domestic). */
+  processingPercent: number;
+  /** Standard payment processor fixed fee per transaction (USD). */
+  processingFixed: number;
+  currency: string;
+  source: string;
+  goldSource: string;
+  verifiedOn: string;
+}
+
+export const kofiFees: KofiFees = {
+  tipsPercent: 0,
+  shopPercent: 5,
+  goldPercent: 0,
+  goldMonthlyCost: 12,
+  processingPercent: 2.9,
+  processingFixed: 0.3,
+  currency: "USD",
+  source: "https://help.ko-fi.com/hc/en-us/articles/360002506494-Does-Ko-fi-take-a-fee",
+  goldSource: "https://help.ko-fi.com/hc/en-us/articles/360005506873-What-is-Ko-fi-Gold",
+  verifiedOn: KOFI_VERIFIED,
+};
