@@ -80,6 +80,14 @@ export const platforms: Record<string, Platform> = {
   // (#0070E0), Square (#1351D8), eBay (#0064D2), Venmo (#008CFF), and
   // Razorpay (#2D6CDF) — recognition only, no logo.
   facebook: { id: "facebook", name: "Facebook Marketplace", color: "#1665D8", colorDark: "#4D9BFF" },
+  // Walmart's brand blue is #0071DC (the "Walmart blue" from the spark logo).
+  // All existing blues: PayPal #0070E0, Square #1351D8, eBay #0064D2,
+  // Venmo #008CFF, Razorpay #2D6CDF, Facebook #1665D8, Paytm #0097D7.
+  // Walmart blue is very close to PayPal; we use a slightly saturated
+  // deeper blue #005BBB for light-mode legibility (sufficient contrast on
+  // near-white), distinct from all existing blues. Dark mode uses #0071DC
+  // directly (the actual brand hex, vivid on dark) — recognition only, no logo.
+  walmart: { id: "walmart", name: "Walmart Marketplace", color: "#005BBB", colorDark: "#0071DC" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

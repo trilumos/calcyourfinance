@@ -36,6 +36,7 @@ import { stockxFeeCalculator } from "./stockx-fee-calculator/config";
 import { tiktokShopFeeCalculator } from "./tiktok-shop-fee-calculator/config";
 import { whatnotFeeCalculator } from "./whatnot-fee-calculator/config";
 import { facebookMarketplaceFeeCalculator } from "./facebook-marketplace-fee-calculator/config";
+import { walmartSellerFeeCalculator } from "./walmart-seller-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -69,6 +70,7 @@ export const calculators: CalculatorConfig[] = [
   tiktokShopFeeCalculator,
   whatnotFeeCalculator,
   facebookMarketplaceFeeCalculator,
+  walmartSellerFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

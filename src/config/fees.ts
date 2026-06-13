@@ -1479,6 +1479,278 @@ export const facebookFees: FacebookFees = {
   verifiedOn: FACEBOOK_VERIFIED,
 };
 
+/* ===========================================================================
+   WALMART MARKETPLACE — seller referral fees (US, USD only)
+   ───────────────────────────────────────────────────────────────────────────
+   Walmart Marketplace charges sellers a REFERRAL FEE (their term for the
+   commission) on every completed sale. There is NO monthly subscription fee,
+   no setup fee, and no per-listing fee — fees are only deducted when a sale
+   is made.
+
+   FEE BASIS: The referral fee is calculated on the TOTAL SALES PRICE, which
+   Walmart defines as: item price + shipping and handling + gift wrap and any
+   other charges paid by the buyer. There is NO minimum referral fee per item.
+
+   FULFILLMENT: Walmart Fulfillment Services (WFS) is an optional, separate
+   fulfilment program with its own cost schedule. WFS fees are NOT included
+   in this calculator — only the referral fee is modelled here.
+
+   RATE MECHANIC: Two distinct tiering styles exist:
+     "switch"   — the ENTIRE item gets one flat rate based on which price
+                  band the total falls into (like a tax bracket boundary flip).
+                  e.g. Apparel ≤$15 → 5%; $15–$20 → 10%; >$20 → 15%.
+     "marginal" — the PORTION of the price above the breakpoint is charged
+                  the lower rate (true bracket math, like income tax).
+                  e.g. Compact Appliances: first $300 at 12%, remainder at 8%.
+
+   Source: https://marketplace.walmart.com/pricing/
+   Verified: 2026-06-13
+   =========================================================================== */
+
+export type WalmartRateMechanic = "flat" | "switch" | "marginal";
+
+export interface WalmartCategory {
+  /** stable id used by the calculator's category <select> */
+  id: string;
+  /** Human-readable label shown in the select dropdown. */
+  label: string;
+  /** Primary referral fee % (applied up to `tier1Threshold` or to all). */
+  percent: number;
+  /**
+   * For "switch": items priced strictly above this → second tier rate.
+   *   - If a second threshold exists, `percent2` applies between the two thresholds.
+   * For "marginal": the portion above this threshold → `percent2`.
+   * Omit for plain flat-rate categories.
+   */
+  tier1Threshold?: number;
+  /** Rate for the second band (required when tier1Threshold is set). */
+  percent2?: number;
+  /** For "switch" three-band categories (e.g. Apparel): items strictly above this → `percent3`. */
+  tier2Threshold?: number;
+  /** Rate for the third band (required when tier2Threshold is set). */
+  percent3?: number;
+  /**
+   * "flat"     — single rate for all prices (default).
+   * "switch"   — entire item is taxed at one rate based on which price band it falls in.
+   * "marginal" — lower rate applies only to the PORTION above the threshold.
+   */
+  mechanic: WalmartRateMechanic;
+  /** Optional display note (e.g. special sub-category exception). */
+  note?: string;
+}
+
+export interface WalmartFees {
+  currency: string;
+  categories: WalmartCategory[];
+  source: string;
+  verifiedOn: string;
+}
+
+export const WALMART_VERIFIED = "2026-06-13";
+export const WALMART_SOURCE = "https://marketplace.walmart.com/pricing/";
+
+export const walmartFees: WalmartFees = {
+  currency: "USD",
+  source: WALMART_SOURCE,
+  verifiedOn: WALMART_VERIFIED,
+  categories: [
+    // ── Flat rate — single % regardless of price ──────────────────────────
+    {
+      id: "most",
+      label: "Most categories (default)",
+      percent: 15,
+      mechanic: "flat",
+      note: "Applies to most categories not listed separately (e.g. Home, Kitchen, Toys, Books, Music, Pet Supplies, Tools & Home Improvement, Luggage, Shoes, Software, Video & DVD).",
+    },
+    {
+      id: "appliances_major",
+      label: "Appliances — Major",
+      percent: 8,
+      mechanic: "flat",
+    },
+    {
+      id: "automotive",
+      label: "Automotive & Powersports",
+      percent: 12,
+      mechanic: "flat",
+    },
+    {
+      id: "camera_photo",
+      label: "Camera & Photo",
+      percent: 8,
+      mechanic: "flat",
+    },
+    {
+      id: "collectibles",
+      label: "Collectibles (approved sellers)",
+      percent: 8,
+      mechanic: "flat",
+    },
+    {
+      id: "consumer_electronics",
+      label: "Consumer Electronics",
+      percent: 8,
+      mechanic: "flat",
+    },
+    {
+      id: "industrial",
+      label: "Industrial & Scientific Supplies",
+      percent: 12,
+      mechanic: "flat",
+    },
+    {
+      id: "musical_instruments",
+      label: "Musical Instruments",
+      percent: 12,
+      mechanic: "flat",
+    },
+    {
+      id: "base_power_tools",
+      label: "Base Power Tools",
+      percent: 12,
+      mechanic: "flat",
+    },
+    {
+      id: "personal_computers",
+      label: "Personal Computers",
+      percent: 6,
+      mechanic: "flat",
+    },
+    {
+      id: "plumbing_hvac",
+      label: "Plumbing, Heating, Cooling & Ventilation",
+      percent: 10,
+      mechanic: "flat",
+    },
+    {
+      id: "tires_wheels",
+      label: "Tires & Wheels",
+      percent: 10,
+      mechanic: "flat",
+    },
+    {
+      id: "video_game_consoles",
+      label: "Video Game Consoles",
+      percent: 8,
+      mechanic: "flat",
+    },
+
+    // ── Switch (entire item gets one rate based on total price band) ──────
+    // Apparel: ≤$15 → 5%; $15–$20 → 10%; >$20 → 15%
+    {
+      id: "apparel",
+      label: "Apparel & Accessories",
+      percent: 5,
+      tier1Threshold: 15,
+      percent2: 10,
+      tier2Threshold: 20,
+      percent3: 15,
+      mechanic: "switch",
+      note: "Items ≤$15: 5%; items $15–$20: 10%; items >$20: 15%.",
+    },
+    // Baby: ≤$10 → 8%; >$10 → 15%
+    {
+      id: "baby",
+      label: "Baby Products",
+      percent: 8,
+      tier1Threshold: 10,
+      percent2: 15,
+      mechanic: "switch",
+      note: "Items ≤$10: 8%; items >$10: 15%.",
+    },
+    // Beauty / Health: ≤$10 → 8%; >$10 → 15%
+    {
+      id: "beauty_health",
+      label: "Beauty, Health & Personal Care",
+      percent: 8,
+      tier1Threshold: 10,
+      percent2: 15,
+      mechanic: "switch",
+      note: "Items ≤$10: 8%; items >$10: 15%.",
+    },
+    // Grocery: ≤$15 → 8%; >$15 → 15%
+    {
+      id: "grocery",
+      label: "Grocery",
+      percent: 8,
+      tier1Threshold: 15,
+      percent2: 15,
+      mechanic: "switch",
+      note: "Items ≤$15: 8%; items >$15: 15%.",
+    },
+    // Outdoor Power Tools: ≤$500 → 15%; >$500 → 8%
+    {
+      id: "outdoor_power_tools",
+      label: "Outdoor Power Tools",
+      percent: 15,
+      tier1Threshold: 500,
+      percent2: 8,
+      mechanic: "switch",
+      note: "Items ≤$500: 15%; items >$500: 8%.",
+    },
+    // Outdoors & Sports: 15% standard (8% for trail monitors, binoculars, etc.)
+    {
+      id: "outdoors_sports",
+      label: "Outdoors & Sports",
+      percent: 15,
+      mechanic: "flat",
+      note: "Standard 15%; select optics subcategories (trail monitors, binoculars, telescopes, spotting scopes, night vision) are 8%.",
+    },
+
+    // ── Marginal (lower rate on PORTION above the breakpoint) ────────────
+    // Compact Appliances: first $300 → 12%; remainder → 8%
+    {
+      id: "appliances_compact",
+      label: "Appliances — Compact",
+      percent: 12,
+      tier1Threshold: 300,
+      percent2: 8,
+      mechanic: "marginal",
+      note: "12% on the portion of price ≤$300; 8% on the portion above $300.",
+    },
+    // Electronics Accessories: first $100 → 15%; remainder → 8%
+    {
+      id: "electronics_accessories",
+      label: "Electronics Accessories",
+      percent: 15,
+      tier1Threshold: 100,
+      percent2: 8,
+      mechanic: "marginal",
+      note: "15% on the portion of price ≤$100; 8% on the portion above $100.",
+    },
+    // Indoor & Outdoor Furniture: first $200 → 15%; remainder → 10%
+    {
+      id: "furniture",
+      label: "Indoor & Outdoor Furniture",
+      percent: 15,
+      tier1Threshold: 200,
+      percent2: 10,
+      mechanic: "marginal",
+      note: "15% on the portion of price ≤$200; 10% on the portion above $200.",
+    },
+    // Jewelry & Precious Metals: first $250 → 20%; remainder → 5%
+    {
+      id: "jewelry",
+      label: "Jewelry & Precious Metals",
+      percent: 20,
+      tier1Threshold: 250,
+      percent2: 5,
+      mechanic: "marginal",
+      note: "20% on the portion of price ≤$250; 5% on the portion above $250.",
+    },
+    // Watches: first $1,500 → 15%; remainder → 3%
+    {
+      id: "watches",
+      label: "Watches",
+      percent: 15,
+      tier1Threshold: 1500,
+      percent2: 3,
+      mechanic: "marginal",
+      note: "15% on the portion of price ≤$1,500; 3% on the portion above $1,500.",
+    },
+  ],
+};
+
 export const depopFeesUS: DepopFees = {
   sellingPercent: 0,
   processingPercent: 3.3,
