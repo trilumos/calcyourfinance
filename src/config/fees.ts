@@ -1890,3 +1890,53 @@ export const bmacFees: BmacFees = {
   source: "https://help.buymeacoffee.com/en/articles/8105744-how-to-calculate-charges-on-your-payment",
   verifiedOn: BMAC_VERIFIED,
 };
+
+/* ===========================================================================
+   SUBSTACK — newsletter/subscription platform fees
+   ───────────────────────────────────────────────────────────────────────────
+   Platform fee:  10% of all paid subscription revenue (monthly or annual).
+   No monthly platform fee; no volume discounts; same rate for all writers.
+
+   Payment processing (Stripe, all subscriptions):
+     Stripe base processing:   2.9% + $0.30 per transaction
+     Stripe Billing (recurring billing fee, added July 2024): 0.7%
+     Combined processing:      3.6% + $0.30 per payment
+
+   Annual vs monthly: the fixed $0.30 fires once on the full annual payment
+   vs 12× for monthly — a meaningful saving at the per-subscriber level.
+
+   Sources:
+     https://support.substack.com/hc/en-us/articles/360037607131-How-much-does-Substack-cost
+     https://substack.com/going-paid
+     https://stripe.com/billing/pricing  (Stripe Billing 0.7% recurring fee)
+   =========================================================================== */
+export const SUBSTACK_VERIFIED = "2026-06-13";
+
+export interface SubstackFees {
+  /** Substack platform fee % on all paid subscriptions. */
+  platformPercent: number;
+  /**
+   * Combined Stripe processing % per subscription payment:
+   * 2.9% standard + 0.7% Stripe Billing recurring fee.
+   */
+  processingPercent: number;
+  /** Fixed Stripe processing fee per payment (USD). */
+  processingFixed: number;
+  /** Stripe Billing recurring billing component (for display/reference). */
+  billingPercent: number;
+  currency: string;
+  source: string;
+  billingSource: string;
+  verifiedOn: string;
+}
+
+export const substackFees: SubstackFees = {
+  platformPercent: 10,
+  processingPercent: 3.6,   // Stripe 2.9% + Stripe Billing 0.7%
+  processingFixed: 0.3,
+  billingPercent: 0.7,
+  currency: "USD",
+  source: "https://support.substack.com/hc/en-us/articles/360037607131-How-much-does-Substack-cost",
+  billingSource: "https://stripe.com/billing/pricing",
+  verifiedOn: SUBSTACK_VERIFIED,
+};

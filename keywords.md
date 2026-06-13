@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-13
 
-Totals: 34 pages · 4480 keywords
+Totals: 35 pages · 4500 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4488,3 +4488,23 @@ Totals: 34 pages · 4480 keywords
 | does buy me a coffee charge fees | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
 | buy me a coffee processing fee | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
 | buy me a coffee take rate | [Buy Me a Coffee Fee Calculator](/buy-me-a-coffee-fee-calculator) | long-tail | tool | M | built |
+| substack fee calculator | [Substack Fee Calculator](/substack-fee-calculator) | primary | tool | M | built |
+| substack fees | [Substack Fee Calculator](/substack-fee-calculator) | secondary | tool | M | built |
+| substack fees calculator | [Substack Fee Calculator](/substack-fee-calculator) | secondary | tool | M | built |
+| how much does substack take | [Substack Fee Calculator](/substack-fee-calculator) | secondary | tool | M | built |
+| substack revenue calculator | [Substack Fee Calculator](/substack-fee-calculator) | secondary | tool | M | built |
+| substack platform fee | [Substack Fee Calculator](/substack-fee-calculator) | secondary | tool | M | built |
+| substack subscription fees | [Substack Fee Calculator](/substack-fee-calculator) | secondary | tool | M | built |
+| substack writer fees | [Substack Fee Calculator](/substack-fee-calculator) | secondary | tool | M | built |
+| substack 10% fee | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| substack stripe fee | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| substack vs patreon fees | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| substack vs beehiiv fees | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| substack earnings calculator | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| substack payout calculator | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| how much does substack charge creators | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| substack fee percentage 2026 | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| substack monthly vs annual fees | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| substack creator take rate | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| does substack take a cut | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| substack recurring billing fee | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |

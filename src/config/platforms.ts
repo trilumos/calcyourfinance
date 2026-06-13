@@ -100,6 +100,13 @@ export const platforms: Record<string, Platform> = {
   // (#B08900), and Whatnot (#C89A00) — all existing golds/ambers. Dark mode
   // uses #FFD700 (bright gold, readable on dark) — recognition only, no logo.
   bmac: { id: "bmac", name: "Buy Me a Coffee", color: "#B89A00", colorDark: "#FFD700" },
+  // Substack's brand uses a warm orange (#FF6719). The Etsy accent is #E0571B
+  // (darker orange-red), Payoneer is #F24E00 (vivid orange), and Reverb is
+  // #C2470A (burnt-orange). Substack's orange is lighter/more vibrant. We tune
+  // to #D95C0A for light-mode contrast on near-white — clearly orange but
+  // distinct from all existing warm tones. Dark mode uses #FF7A2F for brightness
+  // — recognition only, no logo.
+  substack: { id: "substack", name: "Substack", color: "#D95C0A", colorDark: "#FF7A2F" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

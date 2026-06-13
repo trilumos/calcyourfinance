@@ -39,6 +39,7 @@ import { facebookMarketplaceFeeCalculator } from "./facebook-marketplace-fee-cal
 import { walmartSellerFeeCalculator } from "./walmart-seller-fee-calculator/config";
 import { kofiFeeCalculator } from "./ko-fi-fee-calculator/config";
 import { bmacFeeCalculator } from "./buy-me-a-coffee-fee-calculator/config";
+import { substackFeeCalculator } from "./substack-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -75,6 +76,7 @@ export const calculators: CalculatorConfig[] = [
   walmartSellerFeeCalculator,
   kofiFeeCalculator,
   bmacFeeCalculator,
+  substackFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */
