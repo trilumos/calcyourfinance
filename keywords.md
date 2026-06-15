@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-15
 
-Totals: 41 pages · 4635 keywords
+Totals: 42 pages · 4665 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4643,3 +4643,33 @@ Totals: 41 pages · 4635 keywords
 | kajabi fee calculator 2026 | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
 | kajabi payments vs stripe fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
 | kajabi processing fee | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| fiverr fee calculator | [Fiverr Fee Calculator](/fiverr-fee-calculator) | primary | tool | M | built |
+| fiverr fees calculator | [Fiverr Fee Calculator](/fiverr-fee-calculator) | secondary | tool | M | built |
+| fiverr fees | [Fiverr Fee Calculator](/fiverr-fee-calculator) | secondary | tool | M | built |
+| fiverr seller fees | [Fiverr Fee Calculator](/fiverr-fee-calculator) | secondary | tool | M | built |
+| fiverr 20% calculator | [Fiverr Fee Calculator](/fiverr-fee-calculator) | secondary | tool | M | built |
+| fiverr commission calculator | [Fiverr Fee Calculator](/fiverr-fee-calculator) | secondary | tool | M | built |
+| calculate fiverr fees | [Fiverr Fee Calculator](/fiverr-fee-calculator) | secondary | tool | M | built |
+| fiverr payout calculator | [Fiverr Fee Calculator](/fiverr-fee-calculator) | secondary | tool | M | built |
+| fiverr earnings calculator | [Fiverr Fee Calculator](/fiverr-fee-calculator) | secondary | tool | M | built |
+| how much does fiverr take | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| how much does fiverr take from sellers | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| what percentage does fiverr take | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr 20 percent fee | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr buyer service fee | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr small order fee | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr fees on $100 | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr fees on $50 | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| how much does fiverr charge buyers | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr fee breakdown | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr net payout calculator | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr service fee percentage | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr seller commission 2026 | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| how to calculate fiverr earnings | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr fee calculator philippines | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr fee calculator pakistan | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr fee calculator india | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr fee calculator bangladesh | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr fee calculator nigeria | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr fee calculator ukraine | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| fiverr freelancer fee calculator | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |

@@ -2344,3 +2344,54 @@ export const bandcampFees: BandcampFees = {
     "https://get.bandcamp.help/en/articles/15263218-how-much-are-payment-processor-fees-for-digital-sales",
   verifiedOn: BANDCAMP_VERIFIED,
 };
+
+/* ===========================================================================
+   FIVERR — freelance marketplace platform fees
+   ───────────────────────────────────────────────────────────────────────────
+   SELLER (freelancer) FEES:
+     Service fee: 20% flat commission on every completed order, including tips.
+     No volume tiers, no seller-level discounts. Sellers always keep 80%.
+
+   BUYER FEES (what clients pay on top of the order price):
+     Service fee:     5.5% of the order total (all orders)
+     Small order fee: $3 fixed — charged on orders under $100 USD
+
+   History note: before June 2023, the small order fee was $2 on orders
+   under $50. Changed June 2023 to $3 on orders under $100. Unchanged since.
+
+   Withdrawal fees (NOT modelled per-order):
+     Bank transfer:  $1 per withdrawal
+     Revenue Card:   $3 per withdrawal
+     PayPal:         Free (PayPal's own conversion fees may apply)
+
+   Sources:
+     https://help.fiverr.com/hc/en-us/articles/360011028477 (seller fees)
+     https://help.fiverr.com/hc/en-us/articles/360010359797 (buyer service fee)
+   =========================================================================== */
+export const FIVERR_VERIFIED = "2026-06-15";
+
+export interface FiverrFees {
+  /** Fiverr's commission on every seller order (including tips). 20%. */
+  sellerCommissionPercent: number;
+  /** Buyer service fee charged on all orders. 5.5%. */
+  buyerServicePercent: number;
+  /** Fixed small-order fee charged to buyers on orders below the threshold. $3. */
+  buyerSmallOrderFee: number;
+  /** Order total threshold (USD) below which the small-order fee applies. $100. */
+  buyerSmallOrderThreshold: number;
+  currency: string;
+  sellerSource: string;
+  buyerSource: string;
+  verifiedOn: string;
+}
+
+export const fiverrFees: FiverrFees = {
+  sellerCommissionPercent: 20,
+  buyerServicePercent: 5.5,
+  buyerSmallOrderFee: 3,
+  buyerSmallOrderThreshold: 100,
+  currency: "USD",
+  sellerSource: "https://help.fiverr.com/hc/en-us/articles/360011028477",
+  buyerSource: "https://help.fiverr.com/hc/en-us/articles/360010359797",
+  verifiedOn: FIVERR_VERIFIED,
+};

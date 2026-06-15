@@ -152,6 +152,15 @@ export const platforms: Record<string, Platform> = {
   // Wise (#137A52 / #63D9A6), Printful (#0D6B74), Vinted (#00878F / #2EC8D2),
   // Cash App (#00A82D), and StockX (#005A38) — recognition only, no logo.
   teachable: { id: "teachable", name: "Teachable", color: "#1A9E8E", colorDark: "#2EC9B8" },
+  // Fiverr's brand green is #1DBF73 (vivid mid-green). The raw hex is too light
+  // for text contrast on near-white at small sizes. We tune to #0D9E5A for light
+  // mode — a deeper, richer green that passes WCAG AA on white. Dark mode uses
+  // #1DBF73 directly (the actual brand hex, vivid on dark). Distinct from:
+  // Wise #137A52 (darker, blue-shifted), Cash App #00A82D (more yellow-green),
+  // StockX #005A38 (dark forest), Teachable #1A9E8E (teal), Vinted #00878F
+  // (blue-teal). Fiverr's accent is the brightest, most vivid mid-green in the
+  // palette — recognition only, no logo.
+  fiverr: { id: "fiverr", name: "Fiverr", color: "#0D9E5A", colorDark: "#1DBF73" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {
