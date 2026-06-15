@@ -1940,3 +1940,68 @@ export const substackFees: SubstackFees = {
   billingSource: "https://stripe.com/billing/pricing",
   verifiedOn: SUBSTACK_VERIFIED,
 };
+
+/* ===========================================================================
+   GUMROAD — creator/digital-product platform fees
+   ───────────────────────────────────────────────────────────────────────────
+   Gumroad operates as Merchant of Record (since January 1, 2025) and charges
+   a FLAT FEE MODEL with no monthly subscription fee, no volume tiers:
+
+   DIRECT SALES (customer buys from your profile or a link you share):
+     Platform fee:   10% of the sale price + $0.50 per transaction
+     Processing:     Stripe standard (2.9% + $0.30) charged SEPARATELY on top
+     Total on $100:  10% + $0.50 + 2.9% + $0.30 = $13.70 total fees → $86.30 net
+
+   GUMROAD DISCOVER SALES (customer finds the product via Gumroad's built-in
+   marketplace/discovery engine at gumroad.com):
+     Fee:            30% FLAT, ALL-INCLUSIVE (processing is included)
+     No separate Stripe fee is added — the 30% covers everything.
+     Total on $100:  $30.00 → $70.00 net
+
+   There is NO monthly subscription fee. There are no plan tiers or volume
+   discounts. The fee structure changed over time: before 2021 Gumroad had
+   a tiered 3.5–8.5% model. In 2021 it moved to the current flat 10% + $0.50
+   structure. The 30% Discover fee has been in place since the Discover
+   marketplace launched.
+
+   Sources:
+     https://gumroad.com/help/article/66-gumroads-fees  (official help page)
+     https://help.gumroad.com/article/66-gumroadfees   (alternate URL, same content)
+   =========================================================================== */
+export const GUMROAD_VERIFIED = "2026-06-15";
+
+export interface GumroadFees {
+  /**
+   * Gumroad platform fee % on direct sales (on top of Stripe processing).
+   * This is the Gumroad cut only; Stripe processing is charged separately.
+   */
+  directPercent: number;
+  /** Fixed per-transaction fee on direct sales (Gumroad component, not Stripe). */
+  directFixed: number;
+  /**
+   * Stripe payment processing % applied on direct sales (2.9% standard US rate).
+   * Separate from the Gumroad directPercent.
+   */
+  directProcessingPercent: number;
+  /** Stripe fixed processing fee per direct sale ($0.30 standard US). */
+  directProcessingFixed: number;
+  /**
+   * Gumroad Discover fee % — INCLUSIVE of all processing (30% covers everything).
+   * No separate Stripe fee is charged on Discover sales.
+   */
+  discoverPercent: number;
+  currency: string;
+  source: string;
+  verifiedOn: string;
+}
+
+export const gumroadFees: GumroadFees = {
+  directPercent: 10,
+  directFixed: 0.50,
+  directProcessingPercent: 2.9,
+  directProcessingFixed: 0.30,
+  discoverPercent: 30,
+  currency: "USD",
+  source: "https://gumroad.com/help/article/66-gumroads-fees",
+  verifiedOn: GUMROAD_VERIFIED,
+};

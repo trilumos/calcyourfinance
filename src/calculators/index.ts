@@ -40,6 +40,7 @@ import { walmartSellerFeeCalculator } from "./walmart-seller-fee-calculator/conf
 import { kofiFeeCalculator } from "./ko-fi-fee-calculator/config";
 import { bmacFeeCalculator } from "./buy-me-a-coffee-fee-calculator/config";
 import { substackFeeCalculator } from "./substack-fee-calculator/config";
+import { gumroadFeeCalculator } from "./gumroad-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -77,6 +78,7 @@ export const calculators: CalculatorConfig[] = [
   kofiFeeCalculator,
   bmacFeeCalculator,
   substackFeeCalculator,
+  gumroadFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

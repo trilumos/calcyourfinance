@@ -107,6 +107,12 @@ export const platforms: Record<string, Platform> = {
   // distinct from all existing warm tones. Dark mode uses #FF7A2F for brightness
   // — recognition only, no logo.
   substack: { id: "substack", name: "Substack", color: "#D95C0A", colorDark: "#FF7A2F" },
+  // Gumroad's brand pink is #FF90E8 (vivid pastel pink) — too light for contrast
+  // on near-white. We tune to a deeper magenta-pink #B5299A for light mode
+  // (sufficient contrast on near-white while retaining the brand feel). Dark mode
+  // uses #E85FD0 (bright pink, readable on dark). Distinct from Poshmark's rose
+  // (#8B1A38) and TikTok's magenta (#CC2244) — recognition only, no logo.
+  gumroad: { id: "gumroad", name: "Gumroad", color: "#B5299A", colorDark: "#E85FD0" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

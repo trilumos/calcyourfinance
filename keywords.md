@@ -2,9 +2,9 @@
 
 > **AUTO-GENERATED** by `npm run keywords` from each calculator's `keywords` field.
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
-> Last generated: 2026-06-13
+> Last generated: 2026-06-15
 
-Totals: 35 pages · 4500 keywords
+Totals: 36 pages · 4524 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4508,3 +4508,27 @@ Totals: 35 pages · 4500 keywords
 | substack creator take rate | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
 | does substack take a cut | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
 | substack recurring billing fee | [Substack Fee Calculator](/substack-fee-calculator) | long-tail | tool | M | built |
+| gumroad fee calculator | [Gumroad Fee Calculator](/gumroad-fee-calculator) | primary | tool | M | built |
+| gumroad fees calculator | [Gumroad Fee Calculator](/gumroad-fee-calculator) | secondary | tool | M | built |
+| gumroad fees | [Gumroad Fee Calculator](/gumroad-fee-calculator) | secondary | tool | M | built |
+| how much does gumroad take | [Gumroad Fee Calculator](/gumroad-fee-calculator) | secondary | tool | M | built |
+| gumroad selling fees | [Gumroad Fee Calculator](/gumroad-fee-calculator) | secondary | tool | M | built |
+| gumroad transaction fee | [Gumroad Fee Calculator](/gumroad-fee-calculator) | secondary | tool | M | built |
+| gumroad payout calculator | [Gumroad Fee Calculator](/gumroad-fee-calculator) | secondary | tool | M | built |
+| gumroad profit calculator | [Gumroad Fee Calculator](/gumroad-fee-calculator) | secondary | tool | M | built |
+| gumroad fee percentage | [Gumroad Fee Calculator](/gumroad-fee-calculator) | secondary | tool | M | built |
+| gumroad fees on $100 | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad discover fee | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad 10 percent fee | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad vs patreon fees | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad vs ko-fi fees | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad vs substack fees | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad vs gumroad discover | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| does gumroad still charge processing fees | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad flat fee explained | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad creator fees 2026 | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| how much does gumroad charge per sale | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad take rate | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad fee structure history | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad no monthly fee | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| gumroad stripe processing fee | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
