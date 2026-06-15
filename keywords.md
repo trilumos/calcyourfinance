@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-15
 
-Totals: 36 pages · 4524 keywords
+Totals: 37 pages · 4547 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4532,3 +4532,26 @@ Totals: 36 pages · 4524 keywords
 | gumroad fee structure history | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
 | gumroad no monthly fee | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
 | gumroad stripe processing fee | [Gumroad Fee Calculator](/gumroad-fee-calculator) | long-tail | tool | M | built |
+| patreon fee calculator | [Patreon Fee Calculator](/patreon-fee-calculator) | primary | tool | M | built |
+| patreon fees | [Patreon Fee Calculator](/patreon-fee-calculator) | secondary | tool | M | built |
+| how much does patreon take | [Patreon Fee Calculator](/patreon-fee-calculator) | secondary | tool | M | built |
+| patreon cut calculator | [Patreon Fee Calculator](/patreon-fee-calculator) | secondary | tool | M | built |
+| patreon earnings calculator | [Patreon Fee Calculator](/patreon-fee-calculator) | secondary | tool | M | built |
+| patreon fee calculator | [Patreon Fee Calculator](/patreon-fee-calculator) | secondary | tool | M | built |
+| patreon creator fees | [Patreon Fee Calculator](/patreon-fee-calculator) | secondary | tool | M | built |
+| patreon platform fee | [Patreon Fee Calculator](/patreon-fee-calculator) | secondary | tool | M | built |
+| patreon 10% fee calculator | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon lite pro premium fee comparison | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon payment processing fee | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon micropayment fee | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon vs substack fees | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon vs ko-fi fees | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon payout calculator | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| how much does patreon take from creators | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon fee calculator for uk | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon fee calculator for india | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon fee calculator for canada | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon fee calculator for australia | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon new plan fee 2025 2026 | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon legacy plan fees | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| patreon creator take rate | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |

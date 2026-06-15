@@ -2005,3 +2005,79 @@ export const gumroadFees: GumroadFees = {
   source: "https://gumroad.com/help/article/66-gumroads-fees",
   verifiedOn: GUMROAD_VERIFIED,
 };
+
+/* ===========================================================================
+   PATREON — creator membership platform fees
+   ───────────────────────────────────────────────────────────────────────────
+   PLATFORM FEE (% of processed membership + one-time purchase revenue):
+
+   New plan (creators who published their page after August 4, 2025):
+     10% flat platform fee. Patreon consolidated its Pro/Premium tiers into a
+     single standard plan for all new creators at this date.
+
+   Legacy plans (creators who published before August 4, 2025 — unchanged):
+     Lite plan:    5%
+     Pro plan:     8%
+     Premium plan: 12%
+   Legacy creators keep their existing rate unless they unpublish and
+   republish, at which point they roll onto the standard 10% plan.
+
+   PAYMENT PROCESSING (Patreon-operated, applied per transaction):
+     Standard rate (pledge/tier price > $3 USD):  2.9% + $0.30
+     Micropayment rate (pledge/tier price ≤ $3 USD): 5.0% + $0.10
+   The micropayment rate has a lower fixed component, which makes it more
+   fair for very small pledge amounts where $0.30 would be a large fraction.
+   A 2.5% currency conversion fee applies to cross-currency payments
+   (not modelled here — USD-only calculator).
+
+   PAYOUT FEES: no Patreon payout fee for standard bank/Stripe payouts to
+   US creators. PayPal payouts may carry PayPal's own fees — not modelled.
+
+   Sources:
+     https://support.patreon.com/hc/en-us/articles/11111747095181-Creator-fees-overview
+     https://support.patreon.com/hc/en-us/articles/36426991446797-A-standard-platform-fee-for-new-creators-effective-after-August-4-2025
+     https://support.patreon.com/hc/en-us/articles/360024952552-Patreon-Creator-Plans
+   =========================================================================== */
+export const PATREON_VERIFIED = "2026-06-15";
+
+export interface PatreonFees {
+  /** New plan platform fee % (for creators who published after Aug 4 2025). */
+  newPlanPercent: number;
+  /** Legacy Lite plan platform fee %. */
+  litePlanPercent: number;
+  /** Legacy Pro plan platform fee %. */
+  proPlanPercent: number;
+  /** Legacy Premium plan platform fee %. */
+  premiumPlanPercent: number;
+  /** Standard payment processing % — for pledges/tiers priced above $3 USD. */
+  standardProcessingPercent: number;
+  /** Standard payment processing fixed fee per transaction (USD). */
+  standardProcessingFixed: number;
+  /** Micropayment processing % — for pledges/tiers priced at $3 USD or less. */
+  microProcessingPercent: number;
+  /** Micropayment processing fixed fee per transaction (USD). */
+  microProcessingFixed: number;
+  /** Pledge threshold (USD) at or below which the micropayment rate applies. */
+  microThreshold: number;
+  currency: string;
+  source: string;
+  newPlanSource: string;
+  verifiedOn: string;
+}
+
+export const patreonFees: PatreonFees = {
+  newPlanPercent: 10,
+  litePlanPercent: 5,
+  proPlanPercent: 8,
+  premiumPlanPercent: 12,
+  standardProcessingPercent: 2.9,
+  standardProcessingFixed: 0.30,
+  microProcessingPercent: 5.0,
+  microProcessingFixed: 0.10,
+  microThreshold: 3,
+  currency: "USD",
+  source: "https://support.patreon.com/hc/en-us/articles/11111747095181-Creator-fees-overview",
+  newPlanSource:
+    "https://support.patreon.com/hc/en-us/articles/36426991446797-A-standard-platform-fee-for-new-creators-effective-after-August-4-2025",
+  verifiedOn: PATREON_VERIFIED,
+};

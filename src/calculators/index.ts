@@ -41,6 +41,7 @@ import { kofiFeeCalculator } from "./ko-fi-fee-calculator/config";
 import { bmacFeeCalculator } from "./buy-me-a-coffee-fee-calculator/config";
 import { substackFeeCalculator } from "./substack-fee-calculator/config";
 import { gumroadFeeCalculator } from "./gumroad-fee-calculator/config";
+import { patreonFeeCalculator } from "./patreon-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -79,6 +80,7 @@ export const calculators: CalculatorConfig[] = [
   bmacFeeCalculator,
   substackFeeCalculator,
   gumroadFeeCalculator,
+  patreonFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

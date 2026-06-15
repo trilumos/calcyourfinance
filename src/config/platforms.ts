@@ -113,6 +113,13 @@ export const platforms: Record<string, Platform> = {
   // uses #E85FD0 (bright pink, readable on dark). Distinct from Poshmark's rose
   // (#8B1A38) and TikTok's magenta (#CC2244) — recognition only, no logo.
   gumroad: { id: "gumroad", name: "Gumroad", color: "#B5299A", colorDark: "#E85FD0" },
+  // Patreon's brand coral-red is #FF424D. The raw hex is too vivid/light for text
+  // contrast on near-white at small sizes. We tune to #D93040 for light mode
+  // (sufficient contrast, clearly warm coral-red). Dark mode uses #FF5A63
+  // (bright coral, readable on dark). Distinct from Mercari (#C0392B / #FF6B5B),
+  // Depop (#E52000 / #FF4D2E), Ko-fi (#D94040 / #FF6B6B), TikTok (#CC2244),
+  // and Etsy (#E0571B) — recognition only, no logo.
+  patreon: { id: "patreon", name: "Patreon", color: "#D93040", colorDark: "#FF5A63" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {
