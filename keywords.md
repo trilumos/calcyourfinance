@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-15
 
-Totals: 42 pages · 4665 keywords
+Totals: 43 pages · 4695 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4673,3 +4673,33 @@ Totals: 42 pages · 4665 keywords
 | fiverr fee calculator nigeria | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
 | fiverr fee calculator ukraine | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
 | fiverr freelancer fee calculator | [Fiverr Fee Calculator](/fiverr-fee-calculator) | long-tail | tool | M | built |
+| upwork fee calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | primary | tool | M | built |
+| upwork fees calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | secondary | tool | M | built |
+| upwork fees | [Upwork Fee Calculator](/upwork-fee-calculator) | secondary | tool | M | built |
+| upwork service fee | [Upwork Fee Calculator](/upwork-fee-calculator) | secondary | tool | M | built |
+| upwork 10% fee | [Upwork Fee Calculator](/upwork-fee-calculator) | secondary | tool | M | built |
+| upwork freelancer fees | [Upwork Fee Calculator](/upwork-fee-calculator) | secondary | tool | M | built |
+| upwork commission calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | secondary | tool | M | built |
+| calculate upwork fees | [Upwork Fee Calculator](/upwork-fee-calculator) | secondary | tool | M | built |
+| upwork payout calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | secondary | tool | M | built |
+| how much does upwork take | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| how much does upwork charge freelancers | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| what percentage does upwork take | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork service fee percentage 2026 | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork variable fee 2025 | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork fee change 2025 | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork 10 percent fee calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork 15 percent fee calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork earnings calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork net pay calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork freelancer take home pay | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork fee breakdown | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork service fee 0-15 percent | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork fee philippines | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork fee pakistan | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork fee india | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork fee bangladesh | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork fee nigeria | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork fee ukraine | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork freelancer fee calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| upwork vs fiverr fees comparison | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |

@@ -161,6 +161,16 @@ export const platforms: Record<string, Platform> = {
   // (blue-teal). Fiverr's accent is the brightest, most vivid mid-green in the
   // palette — recognition only, no logo.
   fiverr: { id: "fiverr", name: "Fiverr", color: "#0D9E5A", colorDark: "#1DBF73" },
+  // Upwork's brand green is #14A800 (pure, deep lawn green). Compared to Fiverr
+  // (#0D9E5A / #1DBF73, which is a saturated mid-green shifted slightly teal),
+  // Upwork's green is more purely yellow-green with no blue component. We use
+  // #0E8C00 for light mode (slightly deeper for AA contrast on near-white — the
+  // raw #14A800 is borderline). Dark mode uses #14A800 directly (the brand hex,
+  // vibrant on dark). Clearly distinct from Fiverr (teal-shifted),
+  // Cash App #00A82D (blue-shifted), Wise #137A52 (dark teal-green),
+  // StockX #005A38 (near-black forest green), and Teachable #1A9E8E (teal).
+  // Recognition only, no logo.
+  upwork: { id: "upwork", name: "Upwork", color: "#0E8C00", colorDark: "#14A800" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

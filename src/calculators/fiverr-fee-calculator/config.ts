@@ -259,10 +259,10 @@ The 20% commission is the same worldwide — there are no country-specific disco
   ],
 
   related: [
+    "upwork-fee-calculator",
     "paypal-fee-calculator",
     "stripe-fee-calculator",
     "wise-fee-calculator",
-    "payoneer-fee-calculator",
   ],
 
   sources: [

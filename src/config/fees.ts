@@ -2395,3 +2395,74 @@ export const fiverrFees: FiverrFees = {
   buyerSource: "https://help.fiverr.com/hc/en-us/articles/360010359797",
   verifiedOn: FIVERR_VERIFIED,
 };
+
+/* ===========================================================================
+   UPWORK — freelance marketplace platform fees
+   ───────────────────────────────────────────────────────────────────────────
+   FREELANCER SERVICE FEE HISTORY:
+     Pre-2023:    Sliding scale — 20% (first $500/client), 10% ($500–$10k),
+                  5% (above $10k). Rewarded volume with one client.
+     2023–Apr 2025: Flat 10% on all contracts.
+     May 1, 2025 (current): Variable per-contract fee, 0%–15%.
+       – Rate is set by Upwork's algorithm at proposal/offer stage and
+         locked for the contract's lifetime.
+       – Factors include skill demand, market supply, project type,
+         and client relationship. Upwork does NOT publish the formula.
+       – Freelancers see the exact % before submitting a proposal.
+       – Typical range in practice: 10–15% for most categories;
+         5–10% for scarce/high-demand skills; rarely 0%.
+       – Contracts started before May 1, 2025 are grandfathered.
+
+   CLIENT MARKETPLACE FEE:
+     5% on all payments to freelancers (Basic/most common plan).
+     Upwork Business Plus ($49.99/mo): 10% marketplace fee, initiation
+     fees waived. Contract initiation fee: $0.99–$14.99 per new contract
+     (waived on some plans and promotions). Not modelled per-order.
+
+   OTHER FEES (NOT modelled per-order):
+     Connects:          $0.15 each; proposals cost 4–16 Connects.
+     Wire withdrawal:   $30 per wire.
+     Currency conversion: up to 2%.
+     Freelancer Plus:   $14.99–$19.99/month membership.
+
+   DEFAULT for calculator: 10% (historical midpoint and most commonly
+   cited "typical" rate; user can adjust to their actual contract rate).
+
+   Sources:
+     https://support.upwork.com/hc/en-us/articles/211062538
+     https://www.upwork.com/i/pricing/
+   =========================================================================== */
+export const UPWORK_VERIFIED = "2026-06-15";
+
+export interface UpworkFees {
+  /**
+   * Default freelancer service fee % to pre-fill the calculator.
+   * 10% — the historical midpoint and most common rate observed in practice
+   * after the May 2025 variable-fee change.
+   */
+  defaultServiceFeePercent: number;
+  /** Minimum possible freelancer service fee % under the variable model. */
+  minServiceFeePercent: number;
+  /** Maximum possible freelancer service fee % under the variable model. */
+  maxServiceFeePercent: number;
+  /**
+   * Client marketplace fee % charged on top of the freelancer's earnings.
+   * 5% on Basic (most common) plan.
+   */
+  clientMarketplaceFeePercent: number;
+  currency: string;
+  source: string;
+  pricingSource: string;
+  verifiedOn: string;
+}
+
+export const upworkFees: UpworkFees = {
+  defaultServiceFeePercent: 10,
+  minServiceFeePercent: 0,
+  maxServiceFeePercent: 15,
+  clientMarketplaceFeePercent: 5,
+  currency: "USD",
+  source: "https://support.upwork.com/hc/en-us/articles/211062538",
+  pricingSource: "https://www.upwork.com/i/pricing/",
+  verifiedOn: UPWORK_VERIFIED,
+};
