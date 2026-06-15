@@ -129,6 +129,15 @@ export const platforms: Record<string, Platform> = {
   // darker than Venmo). Dark mode uses #3DB8D8 (bright sky-teal, readable on
   // dark) — recognition only, no logo.
   bandcamp: { id: "bandcamp", name: "Bandcamp", color: "#2E7D99", colorDark: "#3DB8D8" },
+  // Kajabi's brand uses a deep navy blue (#1B1B52 / #003366 in some contexts) with
+  // a secondary accent of gold (#D4A017). The dominant brand impression is the deep
+  // blue. Existing blues: PayPal #0070E0, Square #1351D8, eBay #0064D2, Venmo
+  // #008CFF, Razorpay #2D6CDF, Facebook #1665D8, Walmart #005BBB, Paytm #0097D7.
+  // We use a deep cobalt-navy #1A3A6B for light mode (clearly distinct from the
+  // brighter blues above — darker and more desaturated). Dark mode uses #4A80C8
+  // (mid blue, readable on dark, distinct from all existing dark-mode blues).
+  // Recognition only, no logo.
+  kajabi: { id: "kajabi", name: "Kajabi", color: "#1A3A6B", colorDark: "#4A80C8" },
   // Podia's brand uses a vivid purple-violet (#6C63FF). The raw purple is
   // reasonably saturated but slightly too light for reliable text contrast on
   // near-white at small sizes. We tune to #5346D6 for light mode (darker,

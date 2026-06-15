@@ -45,6 +45,7 @@ import { patreonFeeCalculator } from "./patreon-fee-calculator/config";
 import { bandcampFeeCalculator } from "./bandcamp-fee-calculator/config";
 import { teachableFeeCalculator } from "./teachable-fee-calculator/config";
 import { podiaFeeCalculator } from "./podia-fee-calculator/config";
+import { kajabiFeeCalculator } from "./kajabi-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -87,6 +88,7 @@ export const calculators: CalculatorConfig[] = [
   bandcampFeeCalculator,
   teachableFeeCalculator,
   podiaFeeCalculator,
+  kajabiFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

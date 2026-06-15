@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-15
 
-Totals: 40 pages · 4613 keywords
+Totals: 41 pages · 4635 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4621,3 +4621,25 @@ Totals: 40 pages · 4613 keywords
 | podia fee on $100 course | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
 | podia earthquaker plan fees | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
 | podia shaker plan fees | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| kajabi fee calculator | [Kajabi Fee Calculator](/kajabi-fee-calculator) | primary | tool | M | built |
+| kajabi transaction fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | secondary | tool | M | built |
+| does kajabi charge transaction fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | secondary | tool | M | built |
+| kajabi pricing calculator | [Kajabi Fee Calculator](/kajabi-fee-calculator) | secondary | tool | M | built |
+| kajabi cost | [Kajabi Fee Calculator](/kajabi-fee-calculator) | secondary | tool | M | built |
+| kajabi fee percentage | [Kajabi Fee Calculator](/kajabi-fee-calculator) | secondary | tool | M | built |
+| kajabi payout calculator | [Kajabi Fee Calculator](/kajabi-fee-calculator) | secondary | tool | M | built |
+| how much does kajabi take | [Kajabi Fee Calculator](/kajabi-fee-calculator) | secondary | tool | M | built |
+| kajabi 0% transaction fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi no transaction fee | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi payments fee | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi starter plan fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi growth plan fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi pro plan fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi vs teachable fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi vs podia fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi break even calculator | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| how many sales to justify kajabi | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi monthly plan cost calculator | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi fee calculator 2026 | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi payments vs stripe fees | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |
+| kajabi processing fee | [Kajabi Fee Calculator](/kajabi-fee-calculator) | long-tail | tool | M | built |

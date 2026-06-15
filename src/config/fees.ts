@@ -2083,6 +2083,81 @@ export const patreonFees: PatreonFees = {
 };
 
 /* ===========================================================================
+   KAJABI — online course + digital product platform fees
+   ───────────────────────────────────────────────────────────────────────────
+   Kajabi charges ZERO platform transaction fees on ALL plans.
+   Revenue is processed through Kajabi Payments (built on Stripe under the hood),
+   with processing rates that decrease slightly on higher plans.
+
+   PLANS (monthly billing; ~20% discount on annual billing):
+     Starter: $89/mo  (or $71/mo annual) — Kajabi Payments: 2.9% + $0.30
+     Basic:   $179/mo (or $143/mo annual) — Kajabi Payments: 2.9% + $0.30
+     Growth:  $249/mo (or $199/mo annual) — Kajabi Payments: 2.8% + $0.30
+     Pro:     $499/mo (or $399/mo annual) — Kajabi Payments: 2.7% + $0.30
+
+   Plan names and prices reflect the Q4 2025 pricing update effective
+   January 13, 2026. Previous plan names were Kickstarter, Basic, Growth, Pro.
+
+   THIRD-PARTY PROCESSOR SURCHARGE (if NOT using Kajabi Payments):
+   Sellers who use Stripe or PayPal directly instead of Kajabi Payments are
+   charged an additional platform surcharge per transaction:
+     Starter: +5%, Basic: +2%, Growth: +1%, Pro: +0.5%
+   PayPal is exempt from this surcharge (not modelled in per-sale calculator).
+
+   Additional Kajabi Payments fees (US, informational — not modelled per-sale):
+     International cards:          +1.5%
+     Subscriptions/payment plans:  +0.7%
+     ACH Direct Debit:             0.8% (capped at $5)
+     Dispute fee:                  $15 per dispute
+
+   Sources:
+     https://kajabi.com/pricing
+     https://help.kajabi.com/hc/en-us/articles/23370972909851-Kajabi-Payments-Fees-United-States
+     https://www.kajabi.com/updates/2025-pricing-updates
+   =========================================================================== */
+export const KAJABI_VERIFIED = "2026-06-15";
+
+export interface KajabiPlan {
+  /** stable id for the plan <select> */
+  id: string;
+  label: string;
+  /** Platform transaction fee % — always 0% on all Kajabi plans. */
+  transactionPercent: 0;
+  /** Kajabi Payments processing % (US domestic cards). */
+  processingPercent: number;
+  /** Kajabi Payments processing fixed fee per transaction (USD). */
+  processingFixed: number;
+  /** Approximate monthly cost in USD (mo-to-mo; for informational display). */
+  monthlyCostUSD: number;
+  /**
+   * Surcharge % added if the seller uses a third-party processor (e.g. Stripe
+   * directly) instead of Kajabi Payments. Informational only.
+   */
+  thirdPartyPercent: number;
+}
+
+export interface KajabiFees {
+  plans: KajabiPlan[];
+  currency: string;
+  source: string;
+  paymentsSource: string;
+  verifiedOn: string;
+}
+
+export const kajabiFees: KajabiFees = {
+  plans: [
+    { id: "starter", label: "Starter ($89/mo)",  transactionPercent: 0, processingPercent: 2.9, processingFixed: 0.30, monthlyCostUSD: 89,  thirdPartyPercent: 5   },
+    { id: "basic",   label: "Basic ($179/mo)",   transactionPercent: 0, processingPercent: 2.9, processingFixed: 0.30, monthlyCostUSD: 179, thirdPartyPercent: 2   },
+    { id: "growth",  label: "Growth ($249/mo)",  transactionPercent: 0, processingPercent: 2.8, processingFixed: 0.30, monthlyCostUSD: 249, thirdPartyPercent: 1   },
+    { id: "pro",     label: "Pro ($499/mo)",     transactionPercent: 0, processingPercent: 2.7, processingFixed: 0.30, monthlyCostUSD: 499, thirdPartyPercent: 0.5 },
+  ],
+  currency: "USD",
+  source: "https://kajabi.com/pricing",
+  paymentsSource: "https://help.kajabi.com/hc/en-us/articles/23370972909851-Kajabi-Payments-Fees-United-States",
+  verifiedOn: KAJABI_VERIFIED,
+};
+
+/* ===========================================================================
    PODIA — online course + digital product platform fees
    ───────────────────────────────────────────────────────────────────────────
    Podia charges a PER-SALE TRANSACTION FEE on the Mover plan only.
