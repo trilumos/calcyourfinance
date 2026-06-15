@@ -120,6 +120,15 @@ export const platforms: Record<string, Platform> = {
   // Depop (#E52000 / #FF4D2E), Ko-fi (#D94040 / #FF6B6B), TikTok (#CC2244),
   // and Etsy (#E0571B) — recognition only, no logo.
   patreon: { id: "patreon", name: "Patreon", color: "#D93040", colorDark: "#FF5A63" },
+  // Bandcamp's brand uses a teal-blue palette around #1DA0C3 / #629AA9.
+  // Existing teals/blues: Printful #0D6B74 (dark teal), Vinted #00878F (mid
+  // teal), Wise #137A52 (teal-green), Paytm #0097D7 (sky blue), PayPal
+  // #0070E0, Square #1351D8, eBay #0064D2, Facebook #1665D8, Walmart #005BBB,
+  // Razorpay #2D6CDF, Venmo #008CFF. We choose a muted steel-teal #2E7D99 for
+  // light mode (distinct from all above — cooler than Paytm, greener than PayPal,
+  // darker than Venmo). Dark mode uses #3DB8D8 (bright sky-teal, readable on
+  // dark) — recognition only, no logo.
+  bandcamp: { id: "bandcamp", name: "Bandcamp", color: "#2E7D99", colorDark: "#3DB8D8" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-15
 
-Totals: 37 pages · 4547 keywords
+Totals: 38 pages · 4570 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4555,3 +4555,26 @@ Totals: 37 pages · 4547 keywords
 | patreon new plan fee 2025 2026 | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
 | patreon legacy plan fees | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
 | patreon creator take rate | [Patreon Fee Calculator](/patreon-fee-calculator) | long-tail | tool | M | built |
+| bandcamp fee calculator | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | primary | tool | M | built |
+| bandcamp fees | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | secondary | tool | M | built |
+| how much does bandcamp take | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | secondary | tool | M | built |
+| bandcamp revenue share | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | secondary | tool | M | built |
+| bandcamp cut calculator | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | secondary | tool | M | built |
+| bandcamp payout calculator | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | secondary | tool | M | built |
+| bandcamp selling fees | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | secondary | tool | M | built |
+| bandcamp creator fees | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | secondary | tool | M | built |
+| bandcamp friday fees | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp fee percentage | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp 15 percent fee | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp 10 percent fee | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp digital vs physical fees | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp merch fees | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| how much does bandcamp take from digital sales | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp vs gumroad fees | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp vs patreon fees | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp fee calculator 2026 | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp revenue share explained | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp fee after 5000 | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| does bandcamp waive fees on bandcamp friday | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp processing fee | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| bandcamp artist payout | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |

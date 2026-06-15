@@ -2081,3 +2081,62 @@ export const patreonFees: PatreonFees = {
     "https://support.patreon.com/hc/en-us/articles/36426991446797-A-standard-platform-fee-for-new-creators-effective-after-August-4-2025",
   verifiedOn: PATREON_VERIFIED,
 };
+
+/* ===========================================================================
+   BANDCAMP
+   =========================================================================== */
+export const BANDCAMP_VERIFIED = "2026-06-15";
+
+export interface BandcampFees {
+  /**
+   * Bandcamp's revenue share on digital sales before the $5,000 threshold
+   * (rolling 12-month). 15%.
+   */
+  digitalPercentStandard: number;
+  /**
+   * Bandcamp's revenue share on digital sales AFTER reaching $5,000 USD in
+   * lifetime digital sales (maintained on a rolling 12-month basis). 10%.
+   */
+  digitalPercentTier: number;
+  /**
+   * Lifetime digital sales threshold (USD) at which the lower tier kicks in.
+   * $5,000.
+   */
+  digitalTierThreshold: number;
+  /** Bandcamp's revenue share on physical / merch sales. Flat 10%. */
+  physicalPercent: number;
+  /**
+   * On Bandcamp Friday, Bandcamp waives its revenue share entirely (0%).
+   * Payment processing still applies.
+   */
+  fridayPercent: number;
+  /**
+   * Standard card processing % (credit/debit card rate, transactions ≥ $8.07).
+   * Bandcamp uses 2.2% + $0.30 for card; we use the slightly higher 2.9% + $0.30
+   * as the representative/conservative card rate because it is listed for Gift Card
+   * transactions and is the most commonly referenced processor rate.
+   * Note: PayPal processing is 1.9% + $0.30 (lower). We model the card rate.
+   */
+  processingPercent: number;
+  /** Standard processing fixed fee per transaction (USD). */
+  processingFixed: number;
+  currency: string;
+  source: string;
+  processingSource: string;
+  verifiedOn: string;
+}
+
+export const bandcampFees: BandcampFees = {
+  digitalPercentStandard: 15,
+  digitalPercentTier: 10,
+  digitalTierThreshold: 5000,
+  physicalPercent: 10,
+  fridayPercent: 0,
+  processingPercent: 2.9,
+  processingFixed: 0.30,
+  currency: "USD",
+  source: "https://get.bandcamp.help/en/articles/15263193-what-are-bandcamp-s-fees",
+  processingSource:
+    "https://get.bandcamp.help/en/articles/15263218-how-much-are-payment-processor-fees-for-digital-sales",
+  verifiedOn: BANDCAMP_VERIFIED,
+};
