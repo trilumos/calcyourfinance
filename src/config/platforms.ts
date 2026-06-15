@@ -179,6 +179,16 @@ export const platforms: Record<string, Platform> = {
   // muted and grey-green than Fiverr/Upwork, lighter than StockX). Dark mode uses
   // #4FA46A (the on-brand Printify green, vivid on dark) — recognition only, no logo.
   printify: { id: "printify", name: "Printify", color: "#2E7D4F", colorDark: "#4FA46A" },
+  // Teespring/Spring's brand palette uses a warm coral-red to orange in some contexts
+  // but is primarily identified by a clean navy/dark brand in 2024. Looking at the
+  // Spring logo and UI, the dominant identifiable brand color is a warm coral-orange
+  // (#F4623A in older Teespring branding). Existing warm oranges: Etsy #E0571B,
+  // Payoneer #F24E00, Reverb #C2470A, Substack #D95C0A. Spring's old coral sits
+  // between Etsy orange and Substack. We use #C45020 for light mode — a dark burnt
+  // coral, distinct from Etsy (#E0571B, more saturated red), Substack (#D95C0A,
+  // darker/browner), and Reverb (#C2470A, more brown). Dark mode uses #F4714A
+  // (bright coral-orange, readable on dark) — recognition only, no logo.
+  teespring: { id: "teespring", name: "Spring (Teespring)", color: "#C45020", colorDark: "#F4714A" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

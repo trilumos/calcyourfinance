@@ -2510,3 +2510,52 @@ export const printifyPremium: PrintifyPremium = {
   source: "https://printify.com/pricing/",
   verifiedOn: PRINTIFY_VERIFIED,
 };
+
+/* ===========================================================================
+   SPRING (formerly Teespring) — print-on-demand creator platform (profit calc)
+   ───────────────────────────────────────────────────────────────────────────
+   Spring charges NO platform commission on sales. The service fee is included
+   in the base cost of each product shown in the Spring launcher.
+
+   Profit = retail price − base cost (seller enters the base cost from the
+   Spring product launcher; it varies by product and may decrease with volume).
+
+   Volume discounts: Spring gives lower base costs based on the seller's
+   previous-month sales volume — applied automatically, no configuration needed.
+
+   Shipping: charged to buyers directly by Spring at checkout. Not a
+   per-sale deduction from the seller's earnings.
+
+   Sources:
+     https://spring4creators.zendesk.com/hc/en-us/articles/17959394635149
+       (How Much Products Cost — official Spring help article)
+     https://spring4creators.zendesk.com/hc/en-us/articles/12423741560589
+       (How Spring Works — official Spring help article)
+   =========================================================================== */
+export const TEESPRING_VERIFIED = "2026-06-15";
+
+/**
+ * Spring (Teespring) platform note.
+ * No numeric fee rate to store — Spring's fee is baked into each product's
+ * base cost which is product-specific and user-entered. This object stores
+ * source attribution and verification date for the profit calculator.
+ */
+export interface TeespringInfo {
+  /** Spring charges no separate commission on sales — 0%. */
+  platformCommissionPercent: 0;
+  /** Spring's fee is included in the product base cost shown in the launcher. */
+  feeModel: "base-cost-inclusive";
+  source: string;
+  howItWorksSource: string;
+  verifiedOn: string;
+}
+
+export const teespringInfo: TeespringInfo = {
+  platformCommissionPercent: 0,
+  feeModel: "base-cost-inclusive",
+  source:
+    "https://spring4creators.zendesk.com/hc/en-us/articles/17959394635149-How-Much-Products-Cost",
+  howItWorksSource:
+    "https://spring4creators.zendesk.com/hc/en-us/articles/12423741560589-How-Spring-works",
+  verifiedOn: TEESPRING_VERIFIED,
+};

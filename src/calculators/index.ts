@@ -49,6 +49,7 @@ import { kajabiFeeCalculator } from "./kajabi-fee-calculator/config";
 import { fiverrFeeCalculator } from "./fiverr-fee-calculator/config";
 import { upworkFeeCalculator } from "./upwork-fee-calculator/config";
 import { printifyProfitCalculator } from "./printify-profit-calculator/config";
+import { teespringProfitCalculator } from "./teespring-profit-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -95,6 +96,7 @@ export const calculators: CalculatorConfig[] = [
   fiverrFeeCalculator,
   upworkFeeCalculator,
   printifyProfitCalculator,
+  teespringProfitCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

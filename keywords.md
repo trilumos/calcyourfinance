@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-15
 
-Totals: 44 pages · 4721 keywords
+Totals: 45 pages · 4744 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4729,3 +4729,26 @@ Totals: 44 pages · 4721 keywords
 | printify vs printful profit | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
 | is printify worth it profit margin | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
 | printify premium discount calculator | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| teespring profit calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | primary | tool | M | built |
+| spring profit calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | secondary | tool | M | built |
+| teespring fees | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | secondary | tool | M | built |
+| how much does teespring pay | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | secondary | tool | M | built |
+| spring creator earnings | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | secondary | tool | M | built |
+| teespring profit margin | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | secondary | tool | M | built |
+| teespring pricing calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | secondary | tool | M | built |
+| spring fee calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | secondary | tool | M | built |
+| teespring profit calculator uk | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| teespring profit calculator canada | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| teespring profit calculator australia | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| teespring profit calculator india | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| teespring profit calculator germany | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| how much profit can you make on teespring | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| spring print on demand profit margin | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| teespring base cost calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| teespring how much do i keep | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| teespring seller earnings calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| spring vs teespring profit | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| how does spring profit work | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| teespring t shirt profit margin | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| spring creator profit calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| teespring commission fee calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
