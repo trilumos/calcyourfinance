@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-15
 
-Totals: 39 pages · 4592 keywords
+Totals: 40 pages · 4613 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4600,3 +4600,24 @@ Totals: 39 pages · 4592 keywords
 | teachable fee on $100 course | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
 | teachable growth plan fees | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
 | teachable custom plan fees | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| podia fee calculator | [Podia Fee Calculator](/podia-fee-calculator) | primary | tool | M | built |
+| podia transaction fees | [Podia Fee Calculator](/podia-fee-calculator) | secondary | tool | M | built |
+| podia pricing | [Podia Fee Calculator](/podia-fee-calculator) | secondary | tool | M | built |
+| how much does podia take | [Podia Fee Calculator](/podia-fee-calculator) | secondary | tool | M | built |
+| podia fee percentage | [Podia Fee Calculator](/podia-fee-calculator) | secondary | tool | M | built |
+| podia course fees | [Podia Fee Calculator](/podia-fee-calculator) | secondary | tool | M | built |
+| podia seller fees | [Podia Fee Calculator](/podia-fee-calculator) | secondary | tool | M | built |
+| podia payout calculator | [Podia Fee Calculator](/podia-fee-calculator) | secondary | tool | M | built |
+| podia 5% transaction fee | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia mover plan fees | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia shaker vs mover fees | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia 0% transaction fee plan | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia vs teachable fees | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia vs kajabi fees | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia payment processing fee | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| how much does podia charge per sale | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia fee calculator 2026 | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia creator take rate | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia fee on $100 course | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia earthquaker plan fees | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |
+| podia shaker plan fees | [Podia Fee Calculator](/podia-fee-calculator) | long-tail | tool | M | built |

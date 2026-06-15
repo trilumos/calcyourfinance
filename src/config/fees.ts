@@ -2083,6 +2083,70 @@ export const patreonFees: PatreonFees = {
 };
 
 /* ===========================================================================
+   PODIA — online course + digital product platform fees
+   ───────────────────────────────────────────────────────────────────────────
+   Podia charges a PER-SALE TRANSACTION FEE on the Mover plan only.
+   Shaker and Earthquaker plans have 0% transaction fees.
+   Payment processing (Stripe, 2.9% + $0.30) is SEPARATE on ALL plans.
+
+   PLANS (monthly billing; ~15% discount on annual billing):
+     Mover:       $39/mo  (or $33/mo annual) — 5% transaction fee per sale
+     Shaker:      $89/mo  (or $75/mo annual) — 0% transaction fee per sale
+     Earthquaker: $179/mo (or $150/mo annual) — 0% transaction fee per sale
+
+   PAYMENT PROCESSING (Stripe, separate on all plans):
+     Standard rate (US domestic cards): 2.9% + $0.30 per transaction
+     Stripe/PayPal standard rates vary by country; the 5% Podia fee on Mover
+     is deducted first, then the processor fee is applied on the remainder.
+
+   Note: the transaction fee (sellingPercent) is Podia's platform cut, charged
+   BEFORE the processor fee is applied. Monthly plan costs are NOT per-sale fees
+   and are not included in the per-sale calculator math.
+
+   Sources:
+     https://podia.com/pricing
+     https://help.podia.com/en/articles/11371138-understanding-podia-transaction-fees
+     https://help.podia.com/en/articles/11370888-podia-plans-pricing-faqs
+   =========================================================================== */
+export const PODIA_VERIFIED = "2026-06-15";
+
+export interface PodiaPlan {
+  /** stable id for the plan <select> */
+  id: string;
+  label: string;
+  /** Podia transaction fee % on each sale (Podia's platform cut). */
+  transactionPercent: number;
+  /** Approximate monthly cost in USD (for informational display). */
+  monthlyCostUSD: number;
+}
+
+export interface PodiaFees {
+  plans: PodiaPlan[];
+  /** Standard Stripe processing % per transaction (US domestic cards). */
+  processingPercent: number;
+  /** Standard Stripe processing fixed fee per transaction (USD). */
+  processingFixed: number;
+  currency: string;
+  source: string;
+  transactionFeeSource: string;
+  verifiedOn: string;
+}
+
+export const podiaFees: PodiaFees = {
+  plans: [
+    { id: "mover",       label: "Mover ($39/mo)",       transactionPercent: 5, monthlyCostUSD: 39  },
+    { id: "shaker",      label: "Shaker ($89/mo)",      transactionPercent: 0, monthlyCostUSD: 89  },
+    { id: "earthquaker", label: "Earthquaker ($179/mo)", transactionPercent: 0, monthlyCostUSD: 179 },
+  ],
+  processingPercent: 2.9,
+  processingFixed: 0.30,
+  currency: "USD",
+  source: "https://podia.com/pricing",
+  transactionFeeSource: "https://help.podia.com/en/articles/11371138-understanding-podia-transaction-fees",
+  verifiedOn: PODIA_VERIFIED,
+};
+
+/* ===========================================================================
    TEACHABLE — online course platform transaction fees
    ───────────────────────────────────────────────────────────────────────────
    Teachable charges a PER-SALE TRANSACTION FEE on the Starter plan only.

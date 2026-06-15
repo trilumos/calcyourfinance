@@ -129,6 +129,13 @@ export const platforms: Record<string, Platform> = {
   // darker than Venmo). Dark mode uses #3DB8D8 (bright sky-teal, readable on
   // dark) — recognition only, no logo.
   bandcamp: { id: "bandcamp", name: "Bandcamp", color: "#2E7D99", colorDark: "#3DB8D8" },
+  // Podia's brand uses a vivid purple-violet (#6C63FF). The raw purple is
+  // reasonably saturated but slightly too light for reliable text contrast on
+  // near-white at small sizes. We tune to #5346D6 for light mode (darker,
+  // WCAG AA compliant on white). Dark mode uses #8A84FF (bright violet, readable
+  // on dark). Distinct from Stripe's purple (#635BFF / #8B85FF) — lighter and
+  // more blue-purple — and all other existing accents. Recognition only, no logo.
+  podia: { id: "podia", name: "Podia", color: "#5346D6", colorDark: "#8A84FF" },
   // Teachable's brand uses a vivid teal-green (#35D0BA / #37D5BE). The raw teal
   // is too light for text contrast on near-white at small sizes. We tune to
   // #1A9E8E for light mode (darker teal-green, sufficient contrast on white).
