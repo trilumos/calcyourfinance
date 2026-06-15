@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-15
 
-Totals: 38 pages · 4570 keywords
+Totals: 39 pages · 4592 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4578,3 +4578,25 @@ Totals: 38 pages · 4570 keywords
 | does bandcamp waive fees on bandcamp friday | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
 | bandcamp processing fee | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
 | bandcamp artist payout | [Bandcamp Fee Calculator](/bandcamp-fee-calculator) | long-tail | tool | M | built |
+| teachable fee calculator | [Teachable Fee Calculator](/teachable-fee-calculator) | primary | tool | M | built |
+| teachable transaction fees | [Teachable Fee Calculator](/teachable-fee-calculator) | secondary | tool | M | built |
+| how much does teachable take | [Teachable Fee Calculator](/teachable-fee-calculator) | secondary | tool | M | built |
+| teachable pricing fees | [Teachable Fee Calculator](/teachable-fee-calculator) | secondary | tool | M | built |
+| teachable fee percentage | [Teachable Fee Calculator](/teachable-fee-calculator) | secondary | tool | M | built |
+| teachable course fees | [Teachable Fee Calculator](/teachable-fee-calculator) | secondary | tool | M | built |
+| teachable seller fees | [Teachable Fee Calculator](/teachable-fee-calculator) | secondary | tool | M | built |
+| teachable payout calculator | [Teachable Fee Calculator](/teachable-fee-calculator) | secondary | tool | M | built |
+| teachable 7.5% transaction fee | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable starter plan fees | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable builder vs starter fees | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable 0% transaction fee plan | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable vs kajabi fees | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable vs podia fees | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable vs thinkific fees | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable payment processing fee | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| how much does teachable charge per sale | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable fee calculator 2026 | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable creator take rate | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable fee on $100 course | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable growth plan fees | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |
+| teachable custom plan fees | [Teachable Fee Calculator](/teachable-fee-calculator) | long-tail | tool | M | built |

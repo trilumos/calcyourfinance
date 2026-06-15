@@ -2083,6 +2083,71 @@ export const patreonFees: PatreonFees = {
 };
 
 /* ===========================================================================
+   TEACHABLE — online course platform transaction fees
+   ───────────────────────────────────────────────────────────────────────────
+   Teachable charges a PER-SALE TRANSACTION FEE on the Starter plan only.
+   Higher plans (Builder, Growth, Custom) have 0% transaction fees.
+   Payment processing (Stripe US domestic) is SEPARATE on ALL plans.
+
+   PLANS (monthly billing; ~25% discount on annual billing):
+     Starter:  $39/mo  — 7.5% transaction fee per sale
+     Builder:  $89/mo  — 0%   transaction fee per sale
+     Growth:   $189/mo — 0%   transaction fee per sale
+     Custom:   contact — 0%   transaction fee per sale
+
+   PAYMENT PROCESSING (Stripe, separate on all plans):
+     US cards:            2.9% + $0.30 per transaction
+     International cards: 3.9% + $0.30 per transaction
+
+   Note: the transaction fee (sellingPercent) is Teachable's platform cut;
+   it is charged on top of Stripe payment processing. The monthly plan cost
+   is NOT a per-sale fee and is not included in the per-sale calculator math.
+
+   Sources:
+     https://teachable.com/pricing
+     https://support.teachable.com/hc/en-us/articles/4407133671963-Teachable-Transaction-Fees
+   =========================================================================== */
+export const TEACHABLE_VERIFIED = "2026-06-15";
+
+export interface TeachablePlan {
+  /** stable id for the plan <select> */
+  id: string;
+  label: string;
+  /** Platform transaction fee % on each sale (Teachable's cut). */
+  transactionPercent: number;
+  /** Approximate monthly cost in USD (for informational display). */
+  monthlyCostUSD: number;
+}
+
+export interface TeachableFees {
+  plans: TeachablePlan[];
+  /** Standard US domestic Stripe processing % per transaction. */
+  processingPercent: number;
+  /** Standard US domestic Stripe processing fixed fee per transaction (USD). */
+  processingFixed: number;
+  /** International card Stripe processing % (US sellers, non-US cards). */
+  intlProcessingPercent: number;
+  currency: string;
+  source: string;
+  verifiedOn: string;
+}
+
+export const teachableFees: TeachableFees = {
+  plans: [
+    { id: "starter", label: "Starter ($39/mo)",  transactionPercent: 7.5, monthlyCostUSD: 39  },
+    { id: "builder", label: "Builder ($89/mo)",  transactionPercent: 0,   monthlyCostUSD: 89  },
+    { id: "growth",  label: "Growth ($189/mo)",  transactionPercent: 0,   monthlyCostUSD: 189 },
+    { id: "custom",  label: "Custom (enterprise)", transactionPercent: 0,  monthlyCostUSD: 0  },
+  ],
+  processingPercent: 2.9,
+  processingFixed: 0.30,
+  intlProcessingPercent: 3.9,
+  currency: "USD",
+  source: "https://teachable.com/pricing",
+  verifiedOn: TEACHABLE_VERIFIED,
+};
+
+/* ===========================================================================
    BANDCAMP
    =========================================================================== */
 export const BANDCAMP_VERIFIED = "2026-06-15";

@@ -43,6 +43,7 @@ import { substackFeeCalculator } from "./substack-fee-calculator/config";
 import { gumroadFeeCalculator } from "./gumroad-fee-calculator/config";
 import { patreonFeeCalculator } from "./patreon-fee-calculator/config";
 import { bandcampFeeCalculator } from "./bandcamp-fee-calculator/config";
+import { teachableFeeCalculator } from "./teachable-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -83,6 +84,7 @@ export const calculators: CalculatorConfig[] = [
   gumroadFeeCalculator,
   patreonFeeCalculator,
   bandcampFeeCalculator,
+  teachableFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

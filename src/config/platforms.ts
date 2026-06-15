@@ -129,6 +129,13 @@ export const platforms: Record<string, Platform> = {
   // darker than Venmo). Dark mode uses #3DB8D8 (bright sky-teal, readable on
   // dark) — recognition only, no logo.
   bandcamp: { id: "bandcamp", name: "Bandcamp", color: "#2E7D99", colorDark: "#3DB8D8" },
+  // Teachable's brand uses a vivid teal-green (#35D0BA / #37D5BE). The raw teal
+  // is too light for text contrast on near-white at small sizes. We tune to
+  // #1A9E8E for light mode (darker teal-green, sufficient contrast on white).
+  // Dark mode uses #2EC9B8 (bright teal, readable on dark). Distinct from
+  // Wise (#137A52 / #63D9A6), Printful (#0D6B74), Vinted (#00878F / #2EC8D2),
+  // Cash App (#00A82D), and StockX (#005A38) — recognition only, no logo.
+  teachable: { id: "teachable", name: "Teachable", color: "#1A9E8E", colorDark: "#2EC9B8" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {
