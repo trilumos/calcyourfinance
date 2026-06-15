@@ -171,6 +171,14 @@ export const platforms: Record<string, Platform> = {
   // StockX #005A38 (near-black forest green), and Teachable #1A9E8E (teal).
   // Recognition only, no logo.
   upwork: { id: "upwork", name: "Upwork", color: "#0E8C00", colorDark: "#14A800" },
+  // Printify's brand uses a deep forest green (#4FA46A / #1D8348 range). Existing
+  // greens: Wise #137A52 (dark teal-green), Cash App #00A82D (yellow-green), StockX
+  // #005A38 (near-black forest), Vinted #00878F (blue-teal), Teachable #1A9E8E
+  // (teal), Fiverr #0D9E5A (bright mid-green), Upwork #0E8C00 (lawn-green). We
+  // use a medium forest green #2E7D4F for light mode (distinct from all — more
+  // muted and grey-green than Fiverr/Upwork, lighter than StockX). Dark mode uses
+  // #4FA46A (the on-brand Printify green, vivid on dark) — recognition only, no logo.
+  printify: { id: "printify", name: "Printify", color: "#2E7D4F", colorDark: "#4FA46A" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

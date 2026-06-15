@@ -48,6 +48,7 @@ import { podiaFeeCalculator } from "./podia-fee-calculator/config";
 import { kajabiFeeCalculator } from "./kajabi-fee-calculator/config";
 import { fiverrFeeCalculator } from "./fiverr-fee-calculator/config";
 import { upworkFeeCalculator } from "./upwork-fee-calculator/config";
+import { printifyProfitCalculator } from "./printify-profit-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -93,6 +94,7 @@ export const calculators: CalculatorConfig[] = [
   kajabiFeeCalculator,
   fiverrFeeCalculator,
   upworkFeeCalculator,
+  printifyProfitCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

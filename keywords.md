@@ -4,7 +4,7 @@
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
 > Last generated: 2026-06-15
 
-Totals: 43 pages · 4695 keywords
+Totals: 44 pages · 4721 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4703,3 +4703,29 @@ Totals: 43 pages · 4695 keywords
 | upwork fee ukraine | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
 | upwork freelancer fee calculator | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
 | upwork vs fiverr fees comparison | [Upwork Fee Calculator](/upwork-fee-calculator) | long-tail | tool | M | built |
+| printify profit calculator | [Printify Profit Calculator](/printify-profit-calculator) | primary | tool | M | built |
+| printify fee calculator | [Printify Profit Calculator](/printify-profit-calculator) | secondary | tool | M | built |
+| printify profit margin | [Printify Profit Calculator](/printify-profit-calculator) | secondary | tool | M | built |
+| printify pricing calculator | [Printify Profit Calculator](/printify-profit-calculator) | secondary | tool | M | built |
+| printify calculator | [Printify Profit Calculator](/printify-profit-calculator) | secondary | tool | M | built |
+| how much profit on printify | [Printify Profit Calculator](/printify-profit-calculator) | secondary | tool | M | built |
+| printify margin calculator | [Printify Profit Calculator](/printify-profit-calculator) | secondary | tool | M | built |
+| printify profit per item | [Printify Profit Calculator](/printify-profit-calculator) | secondary | tool | M | built |
+| printify profit calculator uk | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify profit calculator canada | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify profit calculator australia | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify profit calculator india | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify profit calculator germany | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify shipping cost calculator | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify base cost calculator | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| how to calculate profit on printify | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify t shirt profit margin | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify etsy profit calculator | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify shopify profit calculator | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify how much do i keep | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify seller profit | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify fulfillment cost calculator | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| how much does printify cost per item | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify vs printful profit | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| is printify worth it profit margin | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |
+| printify premium discount calculator | [Printify Profit Calculator](/printify-profit-calculator) | long-tail | tool | M | built |

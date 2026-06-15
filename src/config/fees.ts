@@ -2466,3 +2466,47 @@ export const upworkFees: UpworkFees = {
   pricingSource: "https://www.upwork.com/i/pricing/",
   verifiedOn: UPWORK_VERIFIED,
 };
+
+/* ===========================================================================
+   PRINTIFY — print-on-demand platform (profit calculator)
+   ───────────────────────────────────────────────────────────────────────────
+   Printify charges NO platform commission on sales. Sellers pay only:
+     - A per-item base/product cost (varies by product + print provider)
+     - A per-order shipping cost (varies by product, weight, destination)
+   There is no per-sale platform fee on the free plan.
+
+   Profit = (retail price + shipping charged to customer)
+            − (base/product cost + shipping cost)
+
+   PRINTIFY PREMIUM ($39/month, or $24.99/month billed annually):
+     Gives up to 33% discount on product base costs. No per-sale fee changes.
+     The monthly fee is a fixed cost, not per-sale — not modelled in the
+     per-item calculator. Sellers enter the discounted base cost directly.
+
+   Base costs are NOT hardcoded here because they are product- and
+   print-provider-specific — sellers must enter them from their dashboard.
+
+   Sources:
+     https://printify.com/pricing/
+     https://printify.com/how-it-works/
+   =========================================================================== */
+export const PRINTIFY_VERIFIED = "2026-06-15";
+
+export interface PrintifyPremium {
+  /** Maximum % discount on product base costs for Premium subscribers. */
+  maxProductDiscountPercent: number;
+  /** Monthly cost (USD, month-to-month billing). */
+  monthlyUSD: number;
+  /** Effective monthly cost on annual billing (USD). */
+  annualMonthlyUSD: number;
+  source: string;
+  verifiedOn: string;
+}
+
+export const printifyPremium: PrintifyPremium = {
+  maxProductDiscountPercent: 33,
+  monthlyUSD: 39,
+  annualMonthlyUSD: 24.99,
+  source: "https://printify.com/pricing/",
+  verifiedOn: PRINTIFY_VERIFIED,
+};
