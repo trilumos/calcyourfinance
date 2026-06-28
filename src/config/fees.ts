@@ -2559,3 +2559,70 @@ export const teespringInfo: TeespringInfo = {
     "https://spring4creators.zendesk.com/hc/en-us/articles/12423741560589-How-Spring-works",
   verifiedOn: TEESPRING_VERIFIED,
 };
+
+/* ===========================================================================
+   REDBUBBLE — print-on-demand artist marketplace (profit / earnings calc)
+   ───────────────────────────────────────────────────────────────────────────
+   Redbubble earnings model:
+     Retail price = base price × (1 + markup %)
+     Gross artist earnings = base price × markup %
+   Default markup: 20 % (Redbubble-recommended; artists can raise/lower it).
+
+   Account tier fees (effective September 1, 2025):
+     Standard  — 50 % platform fee on gross monthly earnings
+     Premium   — 20 % platform fee on gross monthly earnings
+     Pro       — 0 % (exempt; consistently high-sales artists)
+   Monthly fee cap: $150 per payment period (Standard & Premium).
+
+   Excess markup fee (Standard & Premium only):
+     50 % on any earnings from markup above the 20 % threshold.
+     earningsAboveThreshold = base × max(0, markup − 20) / 100
+     excessMarkupFee = 50 % × earningsAboveThreshold
+
+   Sources:
+     https://help.redbubble.com/hc/en-us/articles/202270799-How-is-my-payment-calculated
+     https://blog.redbubble.com/2025/08/artist-account-tiers-and-fees/
+     https://blog.redbubble.com/2025/08/excess-markup-fee-explained/
+     https://help.redbubble.com/hc/en-us/articles/4412593541908-What-are-Redbubble-s-account-fees
+   =========================================================================== */
+export const REDBUBBLE_VERIFIED = "2026-06-15";
+
+export interface RedbubbleInfo {
+  /** Default markup % recommended by Redbubble (and the excess-fee threshold). */
+  defaultMarkupPercent: 20;
+  /** Markup threshold above which the excess markup fee applies. */
+  excessMarkupThresholdPercent: 20;
+  /** Rate of the excess markup fee on earnings above the threshold. */
+  excessMarkupFeeRate: 0.5;
+  /** Platform fee rates per account tier (fraction of gross earnings). */
+  tierFees: {
+    standard: 0.5;
+    premium: 0.2;
+    pro: 0;
+  };
+  /** Maximum combined monthly fee (USD) for Standard and Premium tiers. */
+  monthlyFeeCap: 150;
+  source: string;
+  tierSource: string;
+  excessFeeSource: string;
+  verifiedOn: string;
+}
+
+export const redbubbleInfo: RedbubbleInfo = {
+  defaultMarkupPercent: 20,
+  excessMarkupThresholdPercent: 20,
+  excessMarkupFeeRate: 0.5,
+  tierFees: {
+    standard: 0.5,
+    premium: 0.2,
+    pro: 0,
+  },
+  monthlyFeeCap: 150,
+  source:
+    "https://help.redbubble.com/hc/en-us/articles/202270799-How-is-my-payment-calculated",
+  tierSource:
+    "https://blog.redbubble.com/2025/08/artist-account-tiers-and-fees/",
+  excessFeeSource:
+    "https://blog.redbubble.com/2025/08/excess-markup-fee-explained/",
+  verifiedOn: REDBUBBLE_VERIFIED,
+};

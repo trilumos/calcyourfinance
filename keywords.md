@@ -2,9 +2,9 @@
 
 > **AUTO-GENERATED** by `npm run keywords` from each calculator's `keywords` field.
 > Do not hand-edit. The whole-site list = the sum of every page's cluster (PLAN §11).
-> Last generated: 2026-06-15
+> Last generated: 2026-06-28
 
-Totals: 45 pages · 4744 keywords
+Totals: 46 pages · 4769 keywords
 
 | keyword | page | role | intent | competition | status |
 | --- | --- | --- | --- | --- | --- |
@@ -4752,3 +4752,28 @@ Totals: 45 pages · 4744 keywords
 | teespring t shirt profit margin | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
 | spring creator profit calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
 | teespring commission fee calculator | [Teespring Profit Calculator (Spring)](/teespring-profit-calculator) | long-tail | tool | M | built |
+| redbubble profit calculator | [Redbubble Profit Calculator](/redbubble-profit-calculator) | primary | tool | M | built |
+| redbubble margin calculator | [Redbubble Profit Calculator](/redbubble-profit-calculator) | secondary | tool | M | built |
+| redbubble earnings calculator | [Redbubble Profit Calculator](/redbubble-profit-calculator) | secondary | tool | M | built |
+| how much does redbubble pay | [Redbubble Profit Calculator](/redbubble-profit-calculator) | secondary | tool | M | built |
+| redbubble markup | [Redbubble Profit Calculator](/redbubble-profit-calculator) | secondary | tool | M | built |
+| redbubble fees | [Redbubble Profit Calculator](/redbubble-profit-calculator) | secondary | tool | M | built |
+| redbubble artist earnings | [Redbubble Profit Calculator](/redbubble-profit-calculator) | secondary | tool | M | built |
+| redbubble markup percentage | [Redbubble Profit Calculator](/redbubble-profit-calculator) | secondary | tool | M | built |
+| redbubble profit calculator uk | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble profit calculator canada | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble profit calculator australia | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble profit calculator india | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble profit calculator germany | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble how much do i earn per sale | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble 20 percent markup earnings | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble platform fee calculator | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble standard premium pro tier fee | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble excess markup fee calculator | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble base price markup calculator | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble artist margin calculator | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| how to calculate redbubble earnings | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble net earnings after fees | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| is redbubble worth it profit | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble vs printful profit | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |
+| redbubble how much do artists keep | [Redbubble Profit Calculator](/redbubble-profit-calculator) | long-tail | tool | M | built |

@@ -189,6 +189,16 @@ export const platforms: Record<string, Platform> = {
   // darker/browner), and Reverb (#C2470A, more brown). Dark mode uses #F4714A
   // (bright coral-orange, readable on dark) — recognition only, no logo.
   teespring: { id: "teespring", name: "Spring (Teespring)", color: "#C45020", colorDark: "#F4714A" },
+  // Redbubble's brand uses a distinctive teal (#00A8A9 / #009BA4 range). Existing
+  // teals/blue-greens: Printful #0D6B74 (dark teal), Vinted #00878F (mid teal),
+  // Teachable #1A9E8E (teal-green), Bandcamp #2E7D99 (steel-teal), Wise #137A52
+  // (teal-green). Redbubble's teal is brighter/lighter than all existing teals.
+  // We tune to #007D80 for light mode (darker than Redbubble's raw #00A8A9 for
+  // AA contrast on near-white; clearly blue-teal, not green-shifted like Vinted
+  // #00878F or Printful #0D6B74). Dark mode uses #00C4C6 (bright aqua-teal, vivid
+  // on dark, distinct from Vinted's #2EC8D2 which is more blue/cyan-shifted).
+  // Recognition only, no logo.
+  redbubble: { id: "redbubble", name: "Redbubble", color: "#007D80", colorDark: "#00C4C6" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {
