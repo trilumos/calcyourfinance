@@ -42,6 +42,40 @@ interface Option {
   search?: string;
 }
 
+/** ISO codes whose currency is the euro — fall back to the "EU" bloc option. */
+const EUROZONE = new Set([
+  "AT", "BE", "CY", "DE", "EE", "ES", "FI", "FR", "GR", "HR",
+  "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PT", "SI", "SK",
+]);
+
+/** The browser locale's region (e.g. "en-IN" → "IN"), or null. */
+function localeRegion(): string | null {
+  try {
+    const lang =
+      (typeof navigator !== "undefined" &&
+        (navigator.languages?.[0] || navigator.language)) ||
+      "";
+    if (!lang) return null;
+    const region = new Intl.Locale(lang).region;
+    return region ? region.toUpperCase() : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Map a detected ISO-3166 country to a CountryCode this calculator supports. */
+function resolveCountry(
+  detected: string | null | undefined,
+  supported: CountryCode[],
+): CountryCode | null {
+  if (!detected) return null;
+  const code = detected.toUpperCase();
+  const set = new Set<string>(supported);
+  if (set.has(code)) return code as CountryCode;
+  if (set.has("EU") && EUROZONE.has(code)) return "EU";
+  return null;
+}
+
 function makeCtx(country: CountryCode): ComputeCtx {
   return {
     country,
@@ -68,6 +102,14 @@ export default function CalculatorIsland({
   const [country, setCountry] = useState<CountryCode>(initialCountry);
   const [compute, setCompute] = useState<ComputeFn | null>(null);
   const [result, setResult] = useState<CalcOutput>(initialResult);
+
+  // Refs so the async geo-detection recomputes with the latest state and
+  // never overrides a country the user has actively changed.
+  const valuesRef = useRef(values);
+  valuesRef.current = values;
+  const countryRef = useRef(country);
+  countryRef.current = country;
+  const explicitRef = useRef(false);
 
   const countryOptions = useMemo<Option[]>(
     () =>
@@ -122,9 +164,68 @@ export default function CalculatorIsland({
 
   function onCountry(code: string) {
     const cc = code as CountryCode;
+    explicitRef.current = true; // user picked a country — never auto-override
+    try {
+      localStorage.setItem("cyf-country", cc);
+    } catch {
+      /* ignore (private mode / storage disabled) */
+    }
     setCountry(cc);
     void recompute(values, cc);
   }
+
+  // Auto-default the currency/region to the visitor's location. This runs
+  // CLIENT-SIDE ONLY after hydration — the SSR'd `initialCountry` stays in the
+  // static HTML (consistent for Googlebot + no-JS), there is no per-country URL
+  // redirect, and an explicit prior choice always wins.
+  useEffect(() => {
+    if (!countryCodes || countryCodes.length <= 1) return;
+    const supported = new Set<string>(countryCodes);
+
+    // 1. An explicit prior choice (saved on any calculator) wins outright.
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem("cyf-country");
+    } catch {
+      /* ignore */
+    }
+    if (stored && supported.has(stored)) {
+      explicitRef.current = true;
+      if (stored !== countryRef.current) {
+        setCountry(stored as CountryCode);
+        void recompute(valuesRef.current, stored as CountryCode);
+      }
+      return;
+    }
+
+    // 2. Instant guess from the browser locale (no network).
+    const guess = resolveCountry(localeRegion(), countryCodes);
+    if (guess && guess !== countryRef.current) {
+      setCountry(guess);
+      void recompute(valuesRef.current, guess);
+    }
+
+    // 3. Authoritative refine from Cloudflare's edge geo (IP-based, no API key).
+    let cancelled = false;
+    fetch("/cdn-cgi/trace")
+      .then((r) => (r.ok ? r.text() : ""))
+      .then((txt) => {
+        if (cancelled || explicitRef.current || !txt) return;
+        const m = txt.match(/(?:^|\n)loc=([A-Za-z]{2})/);
+        const ip = resolveCountry(m?.[1], countryCodes);
+        if (ip && ip !== countryRef.current) {
+          setCountry(ip);
+          void recompute(valuesRef.current, ip);
+        }
+      })
+      .catch(() => {
+        /* offline / non-Cloudflare host — keep the default */
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div class="grid gap-4 md:grid-cols-2 md:items-start" data-slug={slug}>
