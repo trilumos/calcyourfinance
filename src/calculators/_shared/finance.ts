@@ -191,3 +191,133 @@ export function compoundFutureValue(input: CompoundFVInput): CompoundFVResult {
 
   return { futureValue, totalContributions, totalPrincipal, interest };
 }
+
+/* ---- SIP future value (Systematic Investment Plan) ----------------------- */
+
+export interface SipFutureValueResult {
+  /** Total corpus at the end of the investment period. */
+  futureValue: number;
+  /** Total amount invested: monthlyInvestment × months. */
+  totalInvested: number;
+  /** futureValue − totalInvested (estimated market returns). */
+  estimatedReturns: number;
+}
+
+/**
+ * SIP future value — annuity-due (beginning-of-period) monthly investment.
+ *
+ * Formula: FV = P × [((1+i)^n − 1) / i] × (1+i)
+ *   where i = annualReturnPercent / 12 / 100  (monthly rate)
+ *         n = months (total number of monthly investments)
+ *
+ * When i = 0 (zero-rate): FV = P × n.
+ *
+ * The annuity-due model is used because SIP contributions are typically
+ * debited at the start of each month.
+ *
+ * All money values are rounded to cents (roundMoney).
+ *
+ * @param monthlyInvestment   Fixed monthly SIP amount (P).
+ * @param annualReturnPercent Expected annual return as a percentage (e.g. 12 for 12%).
+ * @param months              Investment horizon in months (n).
+ */
+export function sipFutureValue(
+  monthlyInvestment: number,
+  annualReturnPercent: number,
+  months: number,
+): SipFutureValueResult {
+  const P = isFinite(monthlyInvestment) && monthlyInvestment > 0 ? monthlyInvestment : 0;
+  const r = isFinite(annualReturnPercent) && annualReturnPercent >= 0 ? annualReturnPercent : 0;
+  const n = isFinite(months) && months > 0 ? Math.round(months) : 0;
+
+  const totalInvested = roundMoney(P * n);
+
+  if (P === 0 || n === 0) {
+    return { futureValue: 0, totalInvested: 0, estimatedReturns: 0 };
+  }
+
+  const i = r / 12 / 100; // monthly periodic rate
+
+  let futureValue: number;
+  if (i === 0) {
+    futureValue = roundMoney(P * n);
+  } else {
+    const growth = Math.pow(1 + i, n);
+    // Annuity-due: PMT × [((1+i)^n − 1) / i] × (1+i)
+    futureValue = roundMoney(P * ((growth - 1) / i) * (1 + i));
+  }
+
+  const estimatedReturns = roundMoney(futureValue - totalInvested);
+
+  return { futureValue, totalInvested, estimatedReturns };
+}
+
+/* ---- RD maturity (Recurring Deposit — Indian quarterly compounding) ------- */
+
+export interface RdMaturityResult {
+  /** Maturity amount (total deposited + interest earned). */
+  maturity: number;
+  /** Total of all monthly deposits: monthlyDeposit × months. */
+  totalDeposited: number;
+  /** maturity − totalDeposited (interest earned). */
+  interestEarned: number;
+}
+
+/**
+ * RD maturity value — per-installment quarterly compounding (Indian bank convention).
+ *
+ * Each monthly deposit R earns quarterly-compounded interest from the day it is
+ * deposited until maturity. Deposit made in month k (1-indexed) earns for
+ * (n − k + 1) months = (n − k + 1) / 3 quarters.
+ *
+ *   Maturity = Σ(k=1..n) R × (1 + r_q)^((n − k + 1) / 3)
+ *   where r_q = annualRatePercent / 4 / 100  (quarterly rate)
+ *
+ * This is mathematically equivalent to the standard Indian bank RD formula:
+ *   M = R × [(1+i)^Q − 1] / [1 − (1+i)^(−1/3)]
+ *   where i = r_q and Q = n/3 (total quarters).
+ *
+ * Compounding assumption: quarterly (the RBI / Indian banking standard for RDs).
+ * Verified against bankbazaar.com RD calculator (5000/mo, 7%, 60 mo → ₹3,59,663.95).
+ *
+ * When annualRatePercent = 0: maturity = monthlyDeposit × months.
+ *
+ * All money values are rounded to cents (roundMoney).
+ *
+ * @param monthlyDeposit      Fixed monthly deposit amount (R).
+ * @param annualRatePercent   Annual interest rate as a percentage (e.g. 7 for 7%).
+ * @param months              Tenure in months (n).
+ */
+export function rdMaturity(
+  monthlyDeposit: number,
+  annualRatePercent: number,
+  months: number,
+): RdMaturityResult {
+  const R = isFinite(monthlyDeposit) && monthlyDeposit > 0 ? monthlyDeposit : 0;
+  const r = isFinite(annualRatePercent) && annualRatePercent >= 0 ? annualRatePercent : 0;
+  const n = isFinite(months) && months > 0 ? Math.round(months) : 0;
+
+  const totalDeposited = roundMoney(R * n);
+
+  if (R === 0 || n === 0) {
+    return { maturity: 0, totalDeposited: 0, interestEarned: 0 };
+  }
+
+  if (r === 0) {
+    return { maturity: totalDeposited, totalDeposited, interestEarned: 0 };
+  }
+
+  const i_q = r / 4 / 100; // quarterly rate
+
+  let rawMaturity = 0;
+  for (let k = 1; k <= n; k++) {
+    const remainingMonths = n - k + 1;
+    const quarters = remainingMonths / 3; // may be fractional
+    rawMaturity += R * Math.pow(1 + i_q, quarters);
+  }
+
+  const maturity = roundMoney(rawMaturity);
+  const interestEarned = roundMoney(maturity - totalDeposited);
+
+  return { maturity, totalDeposited, interestEarned };
+}

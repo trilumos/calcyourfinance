@@ -5,7 +5,13 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { simpleInterest, compoundFutureValue, emi } from "./finance";
+import {
+  simpleInterest,
+  compoundFutureValue,
+  emi,
+  sipFutureValue,
+  rdMaturity,
+} from "./finance";
 
 describe("simpleInterest", () => {
   it("computes interest and total correctly — standard case", () => {
@@ -51,7 +57,7 @@ describe("simpleInterest", () => {
 describe("compoundFutureValue", () => {
   it("standard case — no contributions, monthly compounding, 10 years at 8%", () => {
     // A = 10000 * (1 + 0.08/12)^(12*10)
-    // Raw: 22196.40234544711 → roundMoney → 22196.40
+    // Raw: 22196.40234544711 -> roundMoney -> 22196.40
     const result = compoundFutureValue({
       principal: 10000,
       ratePercent: 8,
@@ -67,7 +73,7 @@ describe("compoundFutureValue", () => {
   it("monthly contributions, 12% rate, 1 year — end-of-period (ordinary annuity)", () => {
     // principal=0, PMT=1000, i=0.01, N=12
     // FV = 1000 * ((1.01^12 - 1) / 0.01)
-    // Raw: 12682.503013196976 → roundMoney → 12682.50
+    // Raw: 12682.503013196976 -> roundMoney -> 12682.50
     const result = compoundFutureValue({
       principal: 0,
       ratePercent: 12,
@@ -99,7 +105,7 @@ describe("compoundFutureValue", () => {
   it("annuity-due (contributions at start of period) yields higher FV", () => {
     // FV_due = FV_ordinary * (1 + i)
     // For principal=0, PMT=1000, i=0.01, N=12:
-    // FV_ordinary raw ≈ 12682.50; FV_due = 12682.50 * 1.01 = 12809.3253... → 12809.33
+    // FV_ordinary raw ~= 12682.50; FV_due = 12682.50 * 1.01 = 12809.3253... -> 12809.33
     const ordinary = compoundFutureValue({
       principal: 0,
       ratePercent: 12,
@@ -117,7 +123,7 @@ describe("compoundFutureValue", () => {
       annuityDue: true,
     });
     expect(due.futureValue).toBeGreaterThan(ordinary.futureValue);
-    // Annuity-due exact: 12682.503013196976 * 1.01 = 12809.328043328946 → 12809.33
+    // Annuity-due exact: 12682.503013196976 * 1.01 = 12809.328043328946 -> 12809.33
     expect(due.futureValue).toBe(12809.33);
   });
 
@@ -168,7 +174,7 @@ describe("compoundFutureValue", () => {
 
   it("quarterly compounding at 6% for 3 years", () => {
     // A = 2000 * (1 + 0.06/4)^(4*3) = 2000 * (1.015)^12
-    // (1.015)^12 = 1.195618171... → A = 2391.2363... → 2391.24
+    // (1.015)^12 = 1.195618171... -> A = 2391.2363... -> 2391.24
     const result = compoundFutureValue({
       principal: 2000,
       ratePercent: 6,
@@ -184,7 +190,7 @@ describe("emi", () => {
     // i = 9 / 12 / 100 = 0.0075
     // (1.0075)^240 = 6.009151524472612
     // EMI = 1000000 * 0.0075 * 6.009151... / (6.009151... - 1)
-    //     = 7507.76... / 5.009151... raw = 8997.259558... → roundMoney → 8997.26
+    //     = 7507.76... / 5.009151... raw = 8997.259558... -> roundMoney -> 8997.26
     // totalPayment = 8997.26 * 240 = 2159342.40
     // totalInterest = 2159342.40 - 1000000 = 1159342.40
     const result = emi(1000000, 9, 240);
@@ -194,7 +200,7 @@ describe("emi", () => {
   });
 
   it("zero rate — principal divided equally across months", () => {
-    // emi(12000, 0, 12) → emi = 12000/12 = 1000, totalPayment = 12000, totalInterest = 0
+    // emi(12000, 0, 12) -> emi = 12000/12 = 1000, totalPayment = 12000, totalInterest = 0
     const result = emi(12000, 0, 12);
     expect(result.emi).toBe(1000);
     expect(result.totalPayment).toBe(12000);
@@ -204,7 +210,7 @@ describe("emi", () => {
   it("short personal loan — 10000 at 12% for 12 months", () => {
     // i = 0.01, (1.01)^12 = 1.12682503013197
     // EMI raw = 10000 * 0.01 * 1.12682503... / (1.12682503... - 1)
-    //         = 112.682503... / 0.12682503... = 888.4878... → 888.49
+    //         = 112.682503... / 0.12682503... = 888.4878... -> 888.49
     // totalPayment = 888.49 * 12 = 10661.88
     // totalInterest = 10661.88 - 10000 = 661.88
     const result = emi(10000, 12, 12);
@@ -224,5 +230,88 @@ describe("emi", () => {
     const result = emi(NaN, 9, 240);
     expect(result.emi).toBe(0);
     expect(result.totalInterest).toBe(0);
+  });
+});
+
+describe("sipFutureValue", () => {
+  it("standard SIP -- Rs 10,000/mo at 12% annual for 10 years (120 months)", () => {
+    // Annuity-due monthly: FV = P * [((1+i)^n - 1) / i] * (1+i)
+    // i = 0.12/12 = 0.01, n = 120
+    // (1.01)^120 = 3.30038689...
+    // FV = 10000 * [(3.30038689 - 1) / 0.01] * 1.01
+    //    = 10000 * 230.038689 * 1.01 = 10000 * 232.339076... = 2,323,390.76
+    // totalInvested = 10000 * 120 = 1,200,000
+    // estimatedReturns = 2,323,390.76 - 1,200,000 = 1,123,390.76
+    const result = sipFutureValue(10000, 12, 120);
+    expect(result.futureValue).toBe(2323390.76);
+    expect(result.totalInvested).toBe(1200000);
+    expect(result.estimatedReturns).toBe(1123390.76);
+  });
+
+  it("zero rate -- future value equals total invested (P x n)", () => {
+    // i = 0, so FV = P * n
+    const result = sipFutureValue(1000, 0, 24);
+    expect(result.futureValue).toBe(24000);
+    expect(result.totalInvested).toBe(24000);
+    expect(result.estimatedReturns).toBe(0);
+  });
+
+  it("zero monthly investment -- all values are zero", () => {
+    const result = sipFutureValue(0, 12, 120);
+    expect(result.futureValue).toBe(0);
+    expect(result.totalInvested).toBe(0);
+    expect(result.estimatedReturns).toBe(0);
+  });
+
+  it("short period -- Rs 5,000/mo at 8% for 12 months", () => {
+    // i = 0.08/12, n = 12, annuity-due: FV = 5000 * [((1+i)^12 - 1) / i] * (1+i)
+    const i = 0.08 / 12;
+    const n = 12;
+    const raw = 5000 * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+    const expected = Math.round((raw + Number.EPSILON) * 100) / 100;
+    const result = sipFutureValue(5000, 8, 12);
+    expect(result.futureValue).toBe(expected);
+    expect(result.totalInvested).toBe(60000);
+  });
+});
+
+describe("rdMaturity", () => {
+  it("standard RD -- Rs 5,000/mo at 7% annual for 60 months (5 years)", () => {
+    // Per-installment quarterly compounding (Indian bank convention).
+    // Each monthly deposit k grows for (n-k+1)/3 quarters at i_q = 7%/4 = 1.75%.
+    // Maturity = sum(k=1..60) 5000 * (1.0175)^((61-k)/3) = 359,663.95
+    // Cross-verified against Indian simplified formula:
+    //   M = R * [(1+i)^Q - 1] / [1-(1+i)^(-1/3)], i=1.75%, Q=20 quarters
+    //   which gives the same result (359,663.95).
+    // totalDeposited = 300,000; interestEarned = 59,663.95
+    const result = rdMaturity(5000, 7, 60);
+    expect(result.maturity).toBe(359663.95);
+    expect(result.totalDeposited).toBe(300000);
+    expect(result.interestEarned).toBe(59663.95);
+  });
+
+  it("zero rate -- maturity equals total deposited", () => {
+    const result = rdMaturity(1000, 0, 12);
+    expect(result.maturity).toBe(12000);
+    expect(result.totalDeposited).toBe(12000);
+    expect(result.interestEarned).toBe(0);
+  });
+
+  it("zero deposit -- all values are zero", () => {
+    const result = rdMaturity(0, 7, 60);
+    expect(result.maturity).toBe(0);
+    expect(result.totalDeposited).toBe(0);
+    expect(result.interestEarned).toBe(0);
+  });
+
+  it("short RD -- Rs 1,000/mo at 6% for 3 months (manual check)", () => {
+    // Month 1: grows 3 months (1 quarter)   -> 1000 * (1.015)^1     = 1015.00
+    // Month 2: grows 2 months (2/3 quarter) -> 1000 * (1.015)^(2/3) ~= 1009.975
+    // Month 3: grows 1 month  (1/3 quarter) -> 1000 * (1.015)^(1/3) ~= 1004.975
+    // Total = 3029.95
+    const result = rdMaturity(1000, 6, 3);
+    expect(result.maturity).toBe(3029.95);
+    expect(result.totalDeposited).toBe(3000);
+    expect(result.interestEarned).toBe(29.95);
   });
 });

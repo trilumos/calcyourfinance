@@ -30,6 +30,8 @@ import { interestCalculator } from "./interest-calculator/config";
 import { emiCalculator } from "./emi-calculator/config";
 import { loanCalculator } from "./loan-calculator/config";
 import { fdCalculator } from "./fd-calculator/config";
+import { sipCalculator } from "./sip-calculator/config";
+import { rdCalculator } from "./rd-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -57,6 +59,8 @@ export const calculators: CalculatorConfig[] = [
   emiCalculator,
   loanCalculator,
   fdCalculator,
+  sipCalculator,
+  rdCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */
