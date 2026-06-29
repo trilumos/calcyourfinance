@@ -25,6 +25,8 @@ import { cashappVsPaypalCalculator } from "./cashapp-vs-paypal-fee-calculator/co
 import { cashappVsVenmoCalculator } from "./cashapp-vs-venmo-fee-calculator/config";
 import { paddleVsLemonSqueezyCalculator } from "./paddle-vs-lemon-squeezy-fee-calculator/config";
 import { wiseVsPaypalCalculator } from "./wise-vs-paypal-fee-calculator/config";
+import { compoundInterestCalculator } from "./compound-interest-calculator/config";
+import { interestCalculator } from "./interest-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -47,6 +49,8 @@ export const calculators: CalculatorConfig[] = [
   cashappVsVenmoCalculator,
   paddleVsLemonSqueezyCalculator,
   wiseVsPaypalCalculator,
+  compoundInterestCalculator,
+  interestCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */
