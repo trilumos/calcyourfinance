@@ -5,7 +5,7 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { simpleInterest, compoundFutureValue } from "./finance";
+import { simpleInterest, compoundFutureValue, emi } from "./finance";
 
 describe("simpleInterest", () => {
   it("computes interest and total correctly — standard case", () => {
@@ -176,5 +176,53 @@ describe("compoundFutureValue", () => {
       compoundsPerYear: 4,
     });
     expect(result.futureValue).toBe(2391.24);
+  });
+});
+
+describe("emi", () => {
+  it("standard home-loan case — 10 lakh at 9% for 20 years (240 months)", () => {
+    // i = 9 / 12 / 100 = 0.0075
+    // (1.0075)^240 = 6.009151524472612
+    // EMI = 1000000 * 0.0075 * 6.009151... / (6.009151... - 1)
+    //     = 7507.76... / 5.009151... raw = 8997.259558... → roundMoney → 8997.26
+    // totalPayment = 8997.26 * 240 = 2159342.40
+    // totalInterest = 2159342.40 - 1000000 = 1159342.40
+    const result = emi(1000000, 9, 240);
+    expect(result.emi).toBe(8997.26);
+    expect(result.totalPayment).toBe(2159342.40);
+    expect(result.totalInterest).toBe(1159342.40);
+  });
+
+  it("zero rate — principal divided equally across months", () => {
+    // emi(12000, 0, 12) → emi = 12000/12 = 1000, totalPayment = 12000, totalInterest = 0
+    const result = emi(12000, 0, 12);
+    expect(result.emi).toBe(1000);
+    expect(result.totalPayment).toBe(12000);
+    expect(result.totalInterest).toBe(0);
+  });
+
+  it("short personal loan — 10000 at 12% for 12 months", () => {
+    // i = 0.01, (1.01)^12 = 1.12682503013197
+    // EMI raw = 10000 * 0.01 * 1.12682503... / (1.12682503... - 1)
+    //         = 112.682503... / 0.12682503... = 888.4878... → 888.49
+    // totalPayment = 888.49 * 12 = 10661.88
+    // totalInterest = 10661.88 - 10000 = 661.88
+    const result = emi(10000, 12, 12);
+    expect(result.emi).toBe(888.49);
+    expect(result.totalPayment).toBe(10661.88);
+    expect(result.totalInterest).toBe(661.88);
+  });
+
+  it("returns zero emi for zero principal", () => {
+    const result = emi(0, 9, 240);
+    expect(result.emi).toBe(0);
+    expect(result.totalPayment).toBe(0);
+    expect(result.totalInterest).toBe(0);
+  });
+
+  it("returns zero emi for non-finite / negative inputs (guarded)", () => {
+    const result = emi(NaN, 9, 240);
+    expect(result.emi).toBe(0);
+    expect(result.totalInterest).toBe(0);
   });
 });

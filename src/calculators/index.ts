@@ -27,6 +27,7 @@ import { paddleVsLemonSqueezyCalculator } from "./paddle-vs-lemon-squeezy-fee-ca
 import { wiseVsPaypalCalculator } from "./wise-vs-paypal-fee-calculator/config";
 import { compoundInterestCalculator } from "./compound-interest-calculator/config";
 import { interestCalculator } from "./interest-calculator/config";
+import { emiCalculator } from "./emi-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -51,6 +52,7 @@ export const calculators: CalculatorConfig[] = [
   wiseVsPaypalCalculator,
   compoundInterestCalculator,
   interestCalculator,
+  emiCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

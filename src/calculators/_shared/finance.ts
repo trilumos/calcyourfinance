@@ -73,6 +73,62 @@ export interface CompoundFVResult {
   interest: number;
 }
 
+/* ---- EMI (Equated Monthly Installment / monthly loan payment) ------------ */
+
+export interface EmiResult {
+  /** Monthly instalment, rounded to cents. */
+  emi: number;
+  /** Total amount paid over the loan term (emi × months), rounded to cents. */
+  totalPayment: number;
+  /** Total interest paid (totalPayment − principal), rounded to cents. */
+  totalInterest: number;
+}
+
+/**
+ * EMI = P × i × (1 + i)^n / ((1 + i)^n − 1)
+ * where i = annualRatePercent / 12 / 100  (monthly rate)
+ *       n = months
+ *
+ * When i = 0 (zero-rate loan): EMI = P / n.
+ *
+ * All money values are rounded to cents (roundMoney).
+ * Negative or non-finite principal / months are treated as 0.
+ *
+ * @param principal          Loan amount (P).
+ * @param annualRatePercent  Annual interest rate as a percentage (e.g. 9 for 9%).
+ * @param months             Loan tenure in months (n).
+ */
+export function emi(
+  principal: number,
+  annualRatePercent: number,
+  months: number,
+): EmiResult {
+  const P = isFinite(principal) && principal > 0 ? principal : 0;
+  const r = isFinite(annualRatePercent) && annualRatePercent >= 0 ? annualRatePercent : 0;
+  const n = isFinite(months) && months > 0 ? Math.round(months) : 0;
+
+  if (P === 0 || n === 0) {
+    return { emi: 0, totalPayment: 0, totalInterest: 0 };
+  }
+
+  const i = r / 12 / 100; // monthly periodic rate
+
+  let emiValue: number;
+  if (i === 0) {
+    emiValue = roundMoney(P / n);
+  } else {
+    const pow = Math.pow(1 + i, n);
+    emiValue = roundMoney((P * i * pow) / (pow - 1));
+  }
+
+  const totalPayment = roundMoney(emiValue * n);
+  const totalInterest = roundMoney(totalPayment - P);
+
+  return { emi: emiValue, totalPayment, totalInterest };
+}
+
+/* ---- Compound future value ----------------------------------------------- */
+
 /**
  * Compound future value with optional regular contributions.
  *
