@@ -5,3 +5,19 @@
 # (previously emitted by @astrojs/sitemap) so nothing 404s.
 /sitemap-index.xml  /sitemap.xml  301
 /sitemap-0.xml      /sitemap.xml  301
+
+# Legacy .html URLs from the previous static site → current clean URLs.
+# Preserves the SEO equity of the originally-indexed finance calculator pages
+# (Cloudflare Pages also strips .html automatically; these make it explicit 301s).
+/index.html                          /                               301
+/about.html                          /about                          301
+/compound-interest-calculator.html   /compound-interest-calculator   301
+/interest-calculator.html            /interest-calculator            301
+/emi-calculator.html                 /emi-calculator                 301
+/loan-calculator.html                /loan-calculator                301
+/fd-calculator.html                  /fd-calculator                  301
+/rd-calculator.html                  /rd-calculator                  301
+/sip-calculator.html                 /sip-calculator                 301
+/gst-calculator.html                 /gst-calculator                 301
+/salary-calculator.html              /salary-calculator              301
+/percentage-calculator.html          /percentage-calculator          301
