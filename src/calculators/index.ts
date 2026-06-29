@@ -28,6 +28,8 @@ import { wiseVsPaypalCalculator } from "./wise-vs-paypal-fee-calculator/config";
 import { compoundInterestCalculator } from "./compound-interest-calculator/config";
 import { interestCalculator } from "./interest-calculator/config";
 import { emiCalculator } from "./emi-calculator/config";
+import { loanCalculator } from "./loan-calculator/config";
+import { fdCalculator } from "./fd-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -53,6 +55,8 @@ export const calculators: CalculatorConfig[] = [
   compoundInterestCalculator,
   interestCalculator,
   emiCalculator,
+  loanCalculator,
+  fdCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */
