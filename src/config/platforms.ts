@@ -208,6 +208,8 @@ export const platforms: Record<string, Platform> = {
   // are all RED-oranges; and it is more orange than the golds Whatnot #C89A00,
   // Lemon Squeezy #B08900 and Paddle #A87900. Recognition only, no logo.
   amazon: { id: "amazon", name: "Amazon", color: "#C56A00", colorDark: "#FF9D1C" },
+  shopify: { id: "shopify", name: "Shopify", color: "#5E8E3E", colorDark: "#95BF47" },
+  appstore: { id: "appstore", name: "App Store", color: "#0A6CFF", colorDark: "#4DA6FF" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {

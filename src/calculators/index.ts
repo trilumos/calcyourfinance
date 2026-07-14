@@ -53,6 +53,8 @@ import { teespringProfitCalculator } from "./teespring-profit-calculator/config"
 import { redbubbleProfitCalculator } from "./redbubble-profit-calculator/config";
 import { amazonFbaCalculator } from "./amazon-fba-calculator/config";
 import { amazonSellerFeeCalculator } from "./amazon-seller-fee-calculator/config";
+import { appStoreFeeCalculator } from "./app-store-fee-calculator/config";
+import { shopifyFeeCalculator } from "./shopify-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -103,6 +105,8 @@ export const calculators: CalculatorConfig[] = [
   redbubbleProfitCalculator,
   amazonFbaCalculator,
   amazonSellerFeeCalculator,
+  appStoreFeeCalculator,
+  shopifyFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */
