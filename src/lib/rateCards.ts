@@ -5,7 +5,7 @@
  */
 import { getCountry, type CountryCode } from "./countries";
 import { roundTo } from "./money";
-import { stripeFees, etsyFees, paypalFees, squareFees } from "../config/fees";
+import { stripeFees, etsyFees, paypalFees, squareFees, ebayFees, poshmarkFees, vintedFees, tiktokShopFees } from "../config/fees";
 import type { RateCard } from "../calculators/_types";
 
 /** Format a fixed fee in a country's own currency (e.g. "$0.30", "£0.20"). */
@@ -93,6 +93,120 @@ export function squareRateCards(codes: CountryCode[]): RateCard[] {
           value: pctPlusFixed(v.percent, v.fixed, code),
         })),
         note: noteParts.join(" · ") || undefined,
+      };
+    })
+    .filter((c): c is RateCard => c !== null);
+}
+
+export function ebayRateCards(codes: CountryCode[]): RateCard[] {
+  return codes
+    .map((code): RateCard | null => {
+      const f = ebayFees[code];
+      if (!f) return null;
+      const most = f.categories[0];
+      const tier =
+        most.tierPercent != null && most.tierBreakpoint != null
+          ? ` (to ${fixed(most.tierBreakpoint, code)}), then ${most.tierPercent}%`
+          : "";
+      const rows = [
+        { label: "Most categories", value: `${most.percent}%${tier}` },
+        {
+          label: "Per-order fee",
+          value: `${fixed(f.perOrder.low, code)} / ${fixed(f.perOrder.high, code)}`,
+        },
+        { label: "International", value: `+${f.internationalPercent}%` },
+      ];
+      if (f.regulatoryPercent) rows.push({ label: "Regulatory fee", value: `${f.regulatoryPercent}%` });
+      if (f.fvfCap) rows.push({ label: "Fee cap / item", value: fixed(f.fvfCap, code) });
+
+      const noteParts: string[] = [];
+      if (f.privateSellerFree) noteParts.push("Private sellers pay £0 (buyer pays Buyer Protection)");
+      if (f.taxOnFeePercent) noteParts.push(`+${f.taxOnFeePercent}% ${f.taxLabel ?? "VAT"} on fees`);
+      return {
+        code,
+        name: getCountry(code).name,
+        rows,
+        note: noteParts.join(" · ") || undefined,
+      };
+    })
+    .filter((c): c is RateCard => c !== null);
+}
+
+export function poshmarkRateCards(codes: CountryCode[]): RateCard[] {
+  return codes
+    .map((code): RateCard | null => {
+      const f = poshmarkFees[code];
+      if (!f) return null;
+      return {
+        code,
+        name: getCountry(code).name,
+        rows: [
+          {
+            label: `Under ${fixed(f.threshold, code)}`,
+            value: `${fixed(f.flatFee, code)} flat`,
+          },
+          {
+            label: `${fixed(f.threshold, code)} and above`,
+            value: `${f.percent}%`,
+          },
+        ],
+        note: "Fee on sale price only; buyer pays shipping separately.",
+      };
+    })
+    .filter((c): c is RateCard => c !== null);
+}
+
+export function vintedRateCards(codes: CountryCode[]): RateCard[] {
+  return codes
+    .map((code): RateCard | null => {
+      const f = vintedFees[code];
+      if (!f) return null;
+      const standardRate = `${pctPlusFixed(f.buyerProtectionPercent, f.buyerProtectionFixed, code)}`;
+      const rows = [
+        { label: "Seller fee", value: "None — sellers keep 100%" },
+        {
+          label: `Buyer Protection (under ${fixed(f.highValueThreshold, code)})`,
+          value: standardRate,
+        },
+        {
+          label: `Buyer Protection (${fixed(f.highValueThreshold, code)} and above)`,
+          value: `${f.highValuePercent}%`,
+        },
+      ];
+      return {
+        code,
+        name: getCountry(code).name,
+        rows,
+        note: f.dynamic
+          ? "Fee is dynamic on this market — shown rate is representative."
+          : undefined,
+      };
+    })
+    .filter((c): c is RateCard => c !== null);
+}
+
+export function tiktokShopRateCards(codes: CountryCode[]): RateCard[] {
+  return codes
+    .map((code): RateCard | null => {
+      const f = tiktokShopFees[code];
+      if (!f) return null;
+      const rows: RateCard["rows"] = [
+        { label: "Standard commission", value: `${f.referralPercent}%` },
+      ];
+      if (f.reducedPercent != null) {
+        rows.push({ label: "Precious jewelry / pre-owned", value: `${f.reducedPercent}%` });
+      }
+      if (f.promoPercent != null && f.promoDays != null) {
+        rows.push({ label: `New seller (first ${f.promoDays} days)`, value: `${f.promoPercent}%` });
+      }
+      const noteParts: string[] = [];
+      noteParts.push("No separate payment-processing fee");
+      if (code === "GB") noteParts.push("VAT-inclusive");
+      return {
+        code,
+        name: getCountry(code).name,
+        rows,
+        note: noteParts.join(" · "),
       };
     })
     .filter((c): c is RateCard => c !== null);

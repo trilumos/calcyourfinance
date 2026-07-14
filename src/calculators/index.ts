@@ -35,6 +35,36 @@ import { rdCalculator } from "./rd-calculator/config";
 import { gstCalculator } from "./gst-calculator/config";
 import { salaryCalculator } from "./salary-calculator/config";
 import { percentageCalculator } from "./percentage-calculator/config";
+import { reverbFeeCalculator } from "./reverb-fee-calculator/config";
+import { ebayFeeCalculator } from "./ebay-fee-calculator/config";
+import { printfulProfitCalculator } from "./printful-profit-calculator/config";
+import { poshmarkFeeCalculator } from "./poshmark-fee-calculator/config";
+import { mercariFeeCalculator } from "./mercari-fee-calculator/config";
+import { depopFeeCalculator } from "./depop-fee-calculator/config";
+import { vintedFeeCalculator } from "./vinted-fee-calculator/config";
+import { stockxFeeCalculator } from "./stockx-fee-calculator/config";
+import { tiktokShopFeeCalculator } from "./tiktok-shop-fee-calculator/config";
+import { whatnotFeeCalculator } from "./whatnot-fee-calculator/config";
+import { facebookMarketplaceFeeCalculator } from "./facebook-marketplace-fee-calculator/config";
+import { walmartSellerFeeCalculator } from "./walmart-seller-fee-calculator/config";
+import { kofiFeeCalculator } from "./ko-fi-fee-calculator/config";
+import { bmacFeeCalculator } from "./buy-me-a-coffee-fee-calculator/config";
+import { substackFeeCalculator } from "./substack-fee-calculator/config";
+import { gumroadFeeCalculator } from "./gumroad-fee-calculator/config";
+import { patreonFeeCalculator } from "./patreon-fee-calculator/config";
+import { bandcampFeeCalculator } from "./bandcamp-fee-calculator/config";
+import { teachableFeeCalculator } from "./teachable-fee-calculator/config";
+import { podiaFeeCalculator } from "./podia-fee-calculator/config";
+import { kajabiFeeCalculator } from "./kajabi-fee-calculator/config";
+import { fiverrFeeCalculator } from "./fiverr-fee-calculator/config";
+import { upworkFeeCalculator } from "./upwork-fee-calculator/config";
+import { printifyProfitCalculator } from "./printify-profit-calculator/config";
+import { teespringProfitCalculator } from "./teespring-profit-calculator/config";
+import { redbubbleProfitCalculator } from "./redbubble-profit-calculator/config";
+import { amazonFbaCalculator } from "./amazon-fba-calculator/config";
+import { amazonSellerFeeCalculator } from "./amazon-seller-fee-calculator/config";
+import { appStoreFeeCalculator } from "./app-store-fee-calculator/config";
+import { shopifyFeeCalculator } from "./shopify-fee-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -67,6 +97,36 @@ export const calculators: CalculatorConfig[] = [
   gstCalculator,
   salaryCalculator,
   percentageCalculator,
+  reverbFeeCalculator,
+  ebayFeeCalculator,
+  printfulProfitCalculator,
+  poshmarkFeeCalculator,
+  mercariFeeCalculator,
+  depopFeeCalculator,
+  vintedFeeCalculator,
+  stockxFeeCalculator,
+  tiktokShopFeeCalculator,
+  whatnotFeeCalculator,
+  facebookMarketplaceFeeCalculator,
+  walmartSellerFeeCalculator,
+  kofiFeeCalculator,
+  bmacFeeCalculator,
+  substackFeeCalculator,
+  gumroadFeeCalculator,
+  patreonFeeCalculator,
+  bandcampFeeCalculator,
+  teachableFeeCalculator,
+  podiaFeeCalculator,
+  kajabiFeeCalculator,
+  fiverrFeeCalculator,
+  upworkFeeCalculator,
+  printifyProfitCalculator,
+  teespringProfitCalculator,
+  redbubbleProfitCalculator,
+  amazonFbaCalculator,
+  amazonSellerFeeCalculator,
+  appStoreFeeCalculator,
+  shopifyFeeCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */
