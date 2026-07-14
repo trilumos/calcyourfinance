@@ -87,7 +87,7 @@ export const shopifyFeeCalculator: CalculatorConfig = {
 
     const r = thirdParty
       ? computeMarketplaceFee({ itemPrice: amount, sellingPercent: plan.surcharge, itemCost: cost })
-      : computeMarketplaceFee({ itemPrice: amount, processingPercent: plan.card, processingFixed: CARD_FIXED, itemCost: cost });
+      : computeMarketplaceFee({ itemPrice: amount, sellingPercent: 0, processingPercent: plan.card, processingFixed: CARD_FIXED, itemCost: cost });
 
     const feeLabel = thirdParty
       ? `Shopify surcharge (${ctx.formatPercent(plan.surcharge)})`
