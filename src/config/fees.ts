@@ -2626,3 +2626,227 @@ export const redbubbleInfo: RedbubbleInfo = {
     "https://blog.redbubble.com/2025/08/excess-markup-fee-explained/",
   verifiedOn: REDBUBBLE_VERIFIED,
 };
+
+/* ===========================================================================
+   AMAZON — US seller fees (referral fee + FBA fulfilment fee)
+   ───────────────────────────────────────────────────────────────────────────
+   Two charges most sellers care about:
+
+   1. REFERRAL FEE — a % of the total sales price (item price + shipping the
+      seller charges + gift wrap), by category, with a per-item MINIMUM of
+      $0.30. Most categories are a flat 15%. Some are lower flat rates
+      (Consumer Electronics / Computers / Cell Phone Devices / Video Game
+      Consoles 8%; Automotive & Industrial 12%). A few are PRICE-BANDED — the
+      WHOLE price uses the rate of the band it falls in (Clothing 5/10/17;
+      Baby 8/15; Grocery 8/15). A few are MARGINAL-TIERED — a headline rate up
+      to a breakpoint, a lower rate on the portion above (Jewelry 20% then 5%
+      above $250; Watches 16% then 3% above $1,500; Furniture 15% then 10%
+      above $200). Media categories (Books, Music, Video, DVD, Software, Video
+      Games) add a $1.80 variable closing fee on top of the 15% referral,
+      regardless of fulfilment method.
+
+   2. FBA FULFILMENT FEE — a per-unit pick/pack/ship fee by SIZE TIER
+      (small-standard / large-standard) and unit WEIGHT. As of the Jan 15 2026
+      rate card, standard-size fees are split into three PRICE BANDS by the
+      item's sale price: under $10, $10–$50, over $50. A 3.5% fuel & logistics
+      surcharge applies ON TOP of the base fulfilment fee (effective Apr 17
+      2026; active on today's date). This calculator scopes to STANDARD-SIZE
+      only — oversize/bulky tiers are out of v1.
+
+   Optional: monthly storage fee (standard-size, non-peak Jan–Sep, per cubic
+   foot). The $39.99/mo Professional selling plan is a flat subscription, NOT a
+   per-unit fee, so it is noted in copy but never deducted per sale.
+
+   SCOPE: US only. Amazon publishes different FBA rate cards and currencies for
+   the UK / Germany / Canada; those tables were NOT verified for this release
+   and are intentionally EXCLUDED rather than ship a guessed number.
+
+   The FBA rate card below is the non-peak period (Jan 15 – Oct 14, 2026) and
+   was cross-checked across two independent full reproductions of Amazon's
+   official 2026 US rate card (Goat Consulting + SellerApp), which agreed
+   exactly on every weight × price-band cell.
+
+   Sources:
+     Referral fees:    https://sellercentral.amazon.com/help/hub/reference/GTG4BAWSY39Z98CX
+     FBA 2026 changes: https://sellercentral.amazon.com/help/hub/reference/external/GABBX6GZPA8MSZGW
+   =========================================================================== */
+export const AMAZON_VERIFIED = "2026-07-14";
+
+export interface AmazonReferralCategory {
+  /** stable id for the category <select>. */
+  id: string;
+  label: string;
+  /** Flat referral % (also the base rate for marginal-tier categories). */
+  percent: number;
+  /** Marginal tier: rate on the portion of price ABOVE `tierBreakpoint`. */
+  tierPercent?: number;
+  tierBreakpoint?: number;
+  /**
+   * Whole-price price bands (Clothing, Baby, Grocery). The band whose
+   * `maxPrice` the price is at-or-below sets the rate for the WHOLE price.
+   * The final band omits `maxPrice` (open-ended). When present, `bands`
+   * overrides `percent`/tier fields.
+   */
+  bands?: { maxPrice?: number; percent: number }[];
+  /** Adds the $1.80 media variable closing fee (Books/Music/Video/Software). */
+  media?: boolean;
+  note?: string;
+}
+
+/** One weight band of the FBA standard-size fulfilment fee table. */
+export interface AmazonFbaFeeRow {
+  /** Upper bound of this weight band, in ounces (inclusive). */
+  maxOz: number;
+  /** Per-unit base fee by price band: [under $10, $10–$50, over $50]. */
+  fees: [number, number, number];
+  /**
+   * Open-ended top band only: for weight above `aboveOz`, add `perIntervalFee`
+   * for every `intervalOz` (rounded up). Large-standard 3+ lb: +$0.08 per 4 oz.
+   */
+  aboveOz?: number;
+  intervalOz?: number;
+  perIntervalFee?: number;
+}
+
+export interface AmazonFees {
+  currency: string;
+  /** Per-item minimum referral fee (general categories). */
+  referralMinimum: number;
+  /** Media variable closing fee (Books/Music/Video/DVD/Software/Video Games). */
+  mediaClosingFee: number;
+  /** [0] = "most categories" default. */
+  categories: AmazonReferralCategory[];
+  fba: {
+    /** Price-band boundaries [under-X, X-to-Y]: below [0] = band 0, ≤ [1] = band 1, else band 2. */
+    priceBands: [number, number];
+    /** Fuel & logistics surcharge % on the base fulfilment fee (Apr 17 2026). */
+    fuelSurchargePercent: number;
+    smallStandard: AmazonFbaFeeRow[];
+    largeStandard: AmazonFbaFeeRow[];
+  };
+  /** Optional monthly storage, standard-size, non-peak (Jan–Sep), $/cu ft. */
+  storagePerCubicFoot: number;
+  /** Peak (Oct–Dec) standard-size storage, $/cu ft (shown in copy only). */
+  storagePeakPerCubicFoot: number;
+  /** Professional selling plan monthly subscription (flat, NOT per-unit). */
+  professionalPlanMonthly: number;
+  referralSource: string;
+  fbaSource: string;
+  verifiedOn: string;
+}
+
+export const amazonFees: AmazonFees = {
+  currency: "USD",
+  referralMinimum: 0.3,
+  mediaClosingFee: 1.8,
+  categories: [
+    { id: "most", label: "Most categories (15%)", percent: 15 },
+    { id: "electronics", label: "Consumer Electronics (8%)", percent: 8 },
+    { id: "computers", label: "Computers (8%)", percent: 8 },
+    { id: "cellphone", label: "Cell Phone Devices (8%)", percent: 8 },
+    { id: "consoles", label: "Video Game Consoles (8%)", percent: 8 },
+    { id: "automotive", label: "Automotive & Powersports (12%)", percent: 12 },
+    { id: "industrial", label: "Industrial & Scientific (12%)", percent: 12 },
+    {
+      id: "clothing",
+      label: "Clothing & Accessories (5/10/17%)",
+      percent: 17,
+      bands: [
+        { maxPrice: 15, percent: 5 },
+        { maxPrice: 20, percent: 10 },
+        { percent: 17 },
+      ],
+      note: "5% up to $15, 10% from $15 to $20, 17% above $20 (whole-price rate).",
+    },
+    {
+      id: "baby",
+      label: "Baby Products (8/15%)",
+      percent: 15,
+      bands: [
+        { maxPrice: 10, percent: 8 },
+        { percent: 15 },
+      ],
+      note: "8% up to $10, 15% above $10 (whole-price rate).",
+    },
+    {
+      id: "grocery",
+      label: "Grocery & Gourmet (8/15%)",
+      percent: 15,
+      bands: [
+        { maxPrice: 15, percent: 8 },
+        { percent: 15 },
+      ],
+      note: "8% up to $15, 15% above $15 (whole-price rate).",
+    },
+    {
+      id: "jewelry",
+      label: "Jewelry (20% then 5%)",
+      percent: 20,
+      tierBreakpoint: 250,
+      tierPercent: 5,
+      note: "20% on the first $250, 5% on the portion above $250.",
+    },
+    {
+      id: "watches",
+      label: "Watches (16% then 3%)",
+      percent: 16,
+      tierBreakpoint: 1500,
+      tierPercent: 3,
+      note: "16% on the first $1,500, 3% on the portion above $1,500.",
+    },
+    {
+      id: "furniture",
+      label: "Furniture (15% then 10%)",
+      percent: 15,
+      tierBreakpoint: 200,
+      tierPercent: 10,
+      note: "15% on the first $200, 10% on the portion above $200.",
+    },
+    {
+      id: "media",
+      label: "Books & Media (15% + $1.80)",
+      percent: 15,
+      media: true,
+      note: "15% referral plus a $1.80 variable closing fee per media item.",
+    },
+  ],
+  fba: {
+    priceBands: [10, 50],
+    fuelSurchargePercent: 3.5,
+    // Small-standard: up to 16 oz. Weight in ounce bands. [ <$10, $10–$50, >$50 ]
+    smallStandard: [
+      { maxOz: 2, fees: [2.43, 3.32, 3.58] },
+      { maxOz: 4, fees: [2.49, 3.42, 3.68] },
+      { maxOz: 6, fees: [2.56, 3.45, 3.71] },
+      { maxOz: 8, fees: [2.66, 3.54, 3.8] },
+      { maxOz: 10, fees: [2.77, 3.68, 3.94] },
+      { maxOz: 12, fees: [2.82, 3.78, 4.04] },
+      { maxOz: 14, fees: [2.92, 3.91, 4.17] },
+      { maxOz: 16, fees: [2.95, 3.96, 4.22] },
+    ],
+    // Large-standard: up to 20 lb (320 oz). Top band is open-ended (+$0.08/4oz above 3 lb).
+    largeStandard: [
+      { maxOz: 4, fees: [2.91, 3.73, 3.99] },
+      { maxOz: 8, fees: [3.13, 3.95, 4.21] },
+      { maxOz: 12, fees: [3.38, 4.2, 4.46] },
+      { maxOz: 16, fees: [3.78, 4.6, 4.86] },
+      { maxOz: 20, fees: [4.22, 5.04, 5.3] }, // 1+ to 1.25 lb
+      { maxOz: 24, fees: [4.6, 5.42, 5.68] }, // 1.25+ to 1.5 lb
+      { maxOz: 28, fees: [4.75, 5.57, 5.83] }, // 1.5+ to 1.75 lb
+      { maxOz: 32, fees: [5.0, 5.82, 6.08] }, // 1.75+ to 2 lb
+      { maxOz: 36, fees: [5.1, 5.92, 6.18] }, // 2+ to 2.25 lb
+      { maxOz: 40, fees: [5.28, 6.1, 6.36] }, // 2.25+ to 2.5 lb
+      { maxOz: 44, fees: [5.44, 6.26, 6.52] }, // 2.5+ to 2.75 lb
+      { maxOz: 48, fees: [5.85, 6.67, 6.93] }, // 2.75+ to 3 lb
+      { maxOz: 320, fees: [6.15, 6.97, 7.23], aboveOz: 48, intervalOz: 4, perIntervalFee: 0.08 }, // 3+ to 20 lb
+    ],
+  },
+  storagePerCubicFoot: 0.87,
+  storagePeakPerCubicFoot: 2.4,
+  professionalPlanMonthly: 39.99,
+  referralSource:
+    "https://sellercentral.amazon.com/help/hub/reference/GTG4BAWSY39Z98CX",
+  fbaSource:
+    "https://sellercentral.amazon.com/help/hub/reference/external/GABBX6GZPA8MSZGW",
+  verifiedOn: AMAZON_VERIFIED,
+};

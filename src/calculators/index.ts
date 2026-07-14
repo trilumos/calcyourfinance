@@ -51,6 +51,7 @@ import { upworkFeeCalculator } from "./upwork-fee-calculator/config";
 import { printifyProfitCalculator } from "./printify-profit-calculator/config";
 import { teespringProfitCalculator } from "./teespring-profit-calculator/config";
 import { redbubbleProfitCalculator } from "./redbubble-profit-calculator/config";
+import { amazonFbaCalculator } from "./amazon-fba-calculator/config";
 
 export const calculators: CalculatorConfig[] = [
   stripeFeeCalculator,
@@ -99,6 +100,7 @@ export const calculators: CalculatorConfig[] = [
   printifyProfitCalculator,
   teespringProfitCalculator,
   redbubbleProfitCalculator,
+  amazonFbaCalculator,
 ];
 
 /* ---- Lookups ------------------------------------------------------------- */

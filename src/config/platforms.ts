@@ -199,6 +199,15 @@ export const platforms: Record<string, Platform> = {
   // on dark, distinct from Vinted's #2EC8D2 which is more blue/cyan-shifted).
   // Recognition only, no logo.
   redbubble: { id: "redbubble", name: "Redbubble", color: "#007D80", colorDark: "#00C4C6" },
+  // Amazon's brand accent is the "smile" orange #FF9900. Pure #FF9900 is too
+  // light for text contrast on near-white, so we tune to a deep amber-orange
+  // #C56A00 for light mode (AA on white for the large result number). Dark mode
+  // uses #FF9D1C (bright Amazon orange, vivid on dark). Distinct from all the
+  // existing warm tones — it is a YELLOW-orange (amber), whereas Etsy #E0571B,
+  // Payoneer #F24E00, Reverb #C2470A, Substack #D95C0A and Teespring #C45020
+  // are all RED-oranges; and it is more orange than the golds Whatnot #C89A00,
+  // Lemon Squeezy #B08900 and Paddle #A87900. Recognition only, no logo.
+  amazon: { id: "amazon", name: "Amazon", color: "#C56A00", colorDark: "#FF9D1C" },
 };
 
 export function getPlatform(id: string | undefined): Platform | undefined {
