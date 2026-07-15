@@ -110,6 +110,9 @@ export default function CalculatorIsland({
   const countryRef = useRef(country);
   countryRef.current = country;
   const explicitRef = useRef(false);
+  // Local, no-account memory: remember this calculator's last-used inputs.
+  const inputsKey = `cyf-inputs-${slug}`;
+  const saveTimer = useRef<number | undefined>(undefined);
 
   const countryOptions = useMemo<Option[]>(
     () =>
@@ -160,7 +163,41 @@ export default function CalculatorIsland({
     const next = { ...values, [id]: raw };
     setValues(next);
     void recompute(next, country);
+    // Debounced: remember the last inputs locally so a return visit doesn't retype.
+    window.clearTimeout(saveTimer.current);
+    saveTimer.current = window.setTimeout(() => {
+      try {
+        localStorage.setItem(inputsKey, JSON.stringify(next));
+      } catch {
+        /* ignore (private mode / storage disabled) */
+      }
+    }, 700);
   }
+
+  // Restore this calculator's last-used inputs (local only, no account) so a
+  // return visit doesn't require retyping. Runs once; sets valuesRef first so
+  // the geo-detection effect below recomputes with the restored values.
+  useEffect(() => {
+    let saved: InputValues | null = null;
+    try {
+      const raw = localStorage.getItem(inputsKey);
+      saved = raw ? (JSON.parse(raw) as InputValues) : null;
+    } catch {
+      saved = null;
+    }
+    if (!saved || typeof saved !== "object") return;
+    const ids = new Set(inputs.map((i) => i.id));
+    const savedKeys = Object.keys(saved);
+    const matches =
+      savedKeys.length > 0 &&
+      savedKeys.every((k) => ids.has(k)) &&
+      inputs.every((i) => i.id in (saved as InputValues));
+    if (!matches) return;
+    valuesRef.current = saved;
+    setValues(saved);
+    void recompute(saved, countryRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function onCountry(code: string) {
     const cc = code as CountryCode;

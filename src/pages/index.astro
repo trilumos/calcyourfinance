@@ -5,6 +5,9 @@ import { SITE } from "../config/site";
 import { calculators } from "../calculators";
 import { CATEGORY_META, type Category } from "../calculators/_types";
 import { getPlatform } from "../config/platforms";
+import CalculatorIsland from "../components/CalculatorIsland.tsx";
+import { formatCurrency, formatNumber, formatPercent } from "../lib/money";
+import type { ComputeCtx, InputValues } from "../calculators/_types";
 
 const singles = calculators.filter((c) => c.kind === "single");
 const comparisons = calculators.filter((c) => c.kind === "comparison");
@@ -22,6 +25,31 @@ const featuredOrder = [
 const featured = featuredOrder
   .map((slug) => calculators.find((c) => c.slug === slug))
   .filter((c): c is NonNullable<typeof c> => Boolean(c));
+
+// Interactive "try it here" tabs in the hero — a few popular calculators,
+// computed server-side (numbers in the HTML, SEO-safe) and hydrated per-tab.
+const heroTabOrder: { slug: string; label: string }[] = [
+  { slug: "gst-calculator", label: "GST" },
+  { slug: "emi-calculator", label: "EMI" },
+  { slug: "sip-calculator", label: "SIP" },
+  { slug: "stripe-fee-calculator", label: "Stripe fees" },
+  { slug: "etsy-fee-calculator", label: "Etsy fees" },
+];
+const heroTabs = heroTabOrder
+  .map(({ slug, label }) => {
+    const config = calculators.find((c) => c.slug === slug);
+    if (!config) return null;
+    const initialCountry = config.countries?.default ?? "US";
+    const ctx: ComputeCtx = {
+      country: initialCountry,
+      formatCurrency: (v, opts) => formatCurrency(v, initialCountry, opts),
+      formatPercent: (v, dp) => formatPercent(v, dp),
+      formatNumber: (v, dp) => formatNumber(v, initialCountry, dp),
+    };
+    const defaults: InputValues = Object.fromEntries(config.inputs.map((i) => [i.id, i.default]));
+    return { config, label, initialCountry, initialResult: config.compute(defaults, ctx) };
+  })
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
 
 // Group single calculators by category, in a curated presentation order.
 const CATEGORY_ORDER: Category[] = [
@@ -105,7 +133,7 @@ const faqLd = {
 >
   <!-- Hero -->
   <section class="border-b border-hairline bg-canvas">
-    <div class="container mx-auto max-w-[64rem] px-4 py-16 sm:py-24">
+    <div class="container mx-auto max-w-[64rem] px-4 py-12 sm:py-16">
       <div class="max-w-[48rem]">
         <p class="eyebrow">No signup · Instant · In your currency</p>
         <h1 class="mt-3 text-pretty text-[clamp(2.2rem,1.6rem+2.6vw,3.5rem)]">
@@ -120,8 +148,55 @@ const faqLd = {
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href="#all-calculators" class="btn btn-primary">Browse all calculators</a>
-          <a href="/personal-finance" class="btn btn-secondary">Personal finance tools</a>
+          <a href="#comparisons" class="btn btn-secondary">Compare two platforms</a>
         </div>
+      </div>
+
+      <!-- Try it here: a few popular calculators, live -->
+      <div class="mt-12" data-calc-tabs>
+        <p class="eyebrow mb-2.5">Try one now — no signup</p>
+        <div
+          role="tablist"
+          aria-label="Try a calculator"
+          class="mb-3 flex max-w-full flex-wrap gap-1 rounded-xl border border-hairline bg-canvas-soft p-1"
+        >
+          {
+            heroTabs.map((t, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={`htab-${i}`}
+                aria-controls={`hpanel-${i}`}
+                aria-selected={i === 0 ? "true" : "false"}
+                tabindex={i === 0 ? 0 : -1}
+                class="whitespace-nowrap rounded-lg px-3.5 py-1.5 text-[13px] font-medium text-body transition hover:text-ink aria-selected:bg-canvas aria-selected:text-ink aria-selected:shadow-card"
+              >
+                {t.label}
+              </button>
+            ))
+          }
+        </div>
+        {
+          heroTabs.map((t, i) => (
+            <div
+              role="tabpanel"
+              id={`hpanel-${i}`}
+              aria-labelledby={`htab-${i}`}
+              hidden={i !== 0}
+              class="calc-accent"
+              style={accentStyle(t.config.platform)}
+            >
+              <CalculatorIsland
+                client:visible
+                slug={t.config.slug}
+                inputs={t.config.inputs}
+                initialResult={t.initialResult}
+                countryCodes={t.config.countries?.supported}
+                initialCountry={t.initialCountry}
+              />
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -227,7 +302,7 @@ const faqLd = {
       }
 
       {comparisons.length > 0 && (
-        <div data-calc-group aria-labelledby="grp-comparisons">
+        <div id="comparisons" class="scroll-mt-24" data-calc-group aria-labelledby="grp-comparisons">
           <div class="mb-3">
             <p class="eyebrow">Comparisons</p>
             <h3 id="grp-comparisons" class="mt-0.5 text-[17px] font-semibold text-ink">Two platforms, head to head.</h3>
@@ -358,5 +433,34 @@ const faqLd = {
       input.addEventListener("input", apply);
       apply();
     }
+  </script>
+
+  <script>
+    // Hero "try it here" tabs — reveal the chosen calculator (which hydrates it).
+    (function () {
+      const root = document.querySelector("[data-calc-tabs]");
+      if (!root) return;
+      const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
+      const panels = Array.from(root.querySelectorAll('[role="tabpanel"]'));
+      function select(i, moveFocus) {
+        tabs.forEach((t, j) => {
+          const on = j === i;
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          t.tabIndex = on ? 0 : -1;
+          if (panels[j]) panels[j].hidden = !on;
+        });
+        if (moveFocus && tabs[i]) tabs[i].focus();
+      }
+      tabs.forEach((tab, i) => {
+        tab.addEventListener("click", () => select(i, false));
+        tab.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+            e.preventDefault();
+            const dir = e.key === "ArrowRight" ? 1 : -1;
+            select((i + dir + tabs.length) % tabs.length, true);
+          }
+        });
+      });
+    })();
   </script>
 </BaseLayout>
