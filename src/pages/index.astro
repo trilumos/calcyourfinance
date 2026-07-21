@@ -296,13 +296,13 @@ const faqLd = {
               <span class="tnum shrink-0 font-mono text-[11px] text-body">{g.items.length}</span>
             </div>
             <ul
-              class={`-mx-2 list-none p-0 ${g.wide ? "sm:grid sm:grid-cols-2 sm:gap-x-6" : ""}`}
+              class={`-mx-2 list-none p-0 ${g.wide ? "sm:grid sm:grid-cols-2 sm:gap-x-6 [&>li:nth-last-child(-n+2)]:sm:border-b-0" : ""}`}
             >
               {g.featured.map((c) => (
-                <li>
+                <li class="border-b border-hairline last:border-b-0">
                   <a
                     href={`/${c.slug}`}
-                    class="group -mt-px flex items-center gap-3 border-y border-t-transparent border-b-hairline px-2 py-[0.55rem] no-underline transition hover:border-t-body hover:border-b-body hover:bg-canvas-soft-2"
+                    class="group flex items-center gap-3 rounded-md border border-transparent px-2 py-[0.55rem] no-underline transition hover:border-body hover:bg-canvas-soft-2"
                   >
                     <span class="min-w-0 flex-1 truncate text-[14px] text-ink">{c.title}</span>
                     <span
