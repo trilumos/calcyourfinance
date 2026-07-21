@@ -14,7 +14,12 @@ const { faqs } = Astro.props;
       <div>
         {faqs.map((f) => (
           <details class="group">
-            <summary class="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-md px-2 py-4 font-medium text-ink transition hover:bg-canvas-soft-2">
+            <!-- The FAQ sits on the page body (--canvas-soft), not on a card, so
+                 canvas-soft-2 is only 5 shades away here versus 10 on a card and
+                 reads weaker than the bento rows. Light mode steps one further to
+                 --hairline; dark keeps canvas-soft-2, where the delta is already
+                 the larger of the two (16 vs 9) and darkening would overshoot. -->
+            <summary class="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-md px-2 py-4 font-medium text-ink transition hover:bg-hairline dark:hover:bg-canvas-soft-2">
               {f.q}
               <span class="font-mono text-[20px] leading-none text-mute transition group-open:rotate-45">+</span>
             </summary>
