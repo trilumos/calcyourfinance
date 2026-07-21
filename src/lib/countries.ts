@@ -154,8 +154,14 @@ export function getCountry(code: CountryCode | string | undefined): Country {
 
 /** Ordered list (tier, then alpha) for rendering a selector. */
 export function countriesFor(codes: CountryCode[]): Country[] {
+  // Plain alphabetical, the convention for country selectors everywhere.
+  // Sorting by `tier` first put tier 1 in A–Z order and then restarted the
+  // alphabet at tier 2, which reads as random when you are scanning for one
+  // country. `tier` stays as market metadata (PLAN §2); it just no longer
+  // drives this order — the selector is searchable, so priority ordering buys
+  // nothing and costs predictability.
   return codes
     .map((c) => COUNTRIES[c])
     .filter(Boolean)
-    .sort((a, b) => a.tier - b.tier || a.name.localeCompare(b.name));
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
