@@ -328,3 +328,42 @@ The homepage becomes an **authority hub**, not a list of tools. Order (✓ = don
 
 Global chrome: slim navbar (Logo · ⌘K search · Language · Theme, deliberately **neutral** — no brand
 colour, see §8 rationale) and the ⌘K command palette as primary navigation.
+
+---
+
+## 11. ⚠️ PRE-MERGE GATE — full calculator verification before `v2` → `main`
+
+**Mandatory. Do not merge `v2` into `main` until every box below passes.** The site is live and
+trafficked, and accuracy is the product ([[accuracy-over-code-structure]]) — the whole "source of truth"
+positioning (§0) collapses if a single number is wrong. v2 changed the **shared** calculator component
+(inline region selector, `half` field pairing, toggle layout), so every calculator's inputs must be
+re-checked even though the math itself was untouched.
+
+**Automated**
+- [ ] `npm test` — all formula tests green (706 at time of writing).
+- [ ] `npm run build` — clean, expected page count.
+
+**Rate accuracy (the critical one)**
+- [ ] Re-verify **every** rate in `src/config/fees.ts` (and `config/ai-pricing.ts`) against the
+      platform's **official pricing page**; re-stamp `verifiedOn`.
+- [ ] Flag/refresh anything older than **90 days**; current dates cluster around 2026-06-10 → 07-14.
+- [ ] Confirm each page's rendered "last verified" date matches its config.
+
+**Per-calculator output check (all 60)**
+- [ ] For each calculator: load the page and confirm the SSR'd initial result is arithmetically
+      correct (hand-check against the worked example).
+- [ ] Switch country on country-aware calcs → rate, currency symbol, grouping and worked example all
+      update together.
+- [ ] Reverse/alternate modes still produce correct figures.
+
+**v2 regression risks specifically introduced by the shared-component work**
+- [ ] Calcs **with** a currency input → inline region selector appears and switching it recomputes.
+- [ ] Calcs **without** a currency input → the standalone country selector fallback still renders.
+- [ ] Calcs with **multiple** currency inputs → only the first hosts the region selector; the rest show
+      the static symbol.
+- [ ] `half`-paired fields (EMI tenure/unit, Stripe toggles, Etsy shipping/item-cost) behave and submit
+      correctly; no field lost.
+
+**Presentation**
+- [ ] Light + dark, mobile + desktop spot-check.
+- [ ] `web-design-guidelines` skill run on a calculator page, a hub, and the homepage; findings fixed.
