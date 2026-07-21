@@ -277,6 +277,17 @@ M1-W2; fee-rate changelog page + open rate dataset → M2; email fee-change dige
 tracking, we don't store your numbers" privacy copy; default-dark by system preference (vs the deliberate
 default-light in `DESIGN.md`); privacy-first analytics (Plausible/Umami) vs current GA4; PWA offline.
 
+**Deferred — comparison picker (user idea, 2026-07-21).** A "pick platform A vs platform B → Compare"
+control that routes to the matching comparison page. **Not built yet, deliberately.** Measured today:
+8 platforms appear in comparisons, 8 pairs exist of 28 possible = **29% coverage**, so a naive picker
+would dead-end **71%** of selections. And with only 8 comparisons — all already visible as cards, one
+click away — a picker adds interaction cost to reach the same destinations, which fails the
+"only what contributes" iron rule.
+- **Build it when:** the comparison count reaches roughly 25+, where scanning cards stops being practical.
+- **Required design constraint:** once platform A is chosen, the second selector must offer **only
+  platforms that have an existing comparison with A** (and exclude A itself). That guarantees zero
+  dead ends at any coverage level. Without that constraint, do not ship it.
+
 ---
 
 ## 9. Second audit triage (ChatGPT, 2026-07-21) — `calcyourfinance plan and report.md`

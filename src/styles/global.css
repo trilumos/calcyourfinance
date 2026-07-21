@@ -158,13 +158,16 @@
 
 /* ---- Small, stable component primitives ---------------------------------- */
 @layer components {
-  /* Mono technical eyebrow (DESIGN: caption-mono, uppercase voice). */
+  /* Mono value label (DESIGN: caption-mono, uppercase voice). Only for genuine
+     labels like a result readout's "TOTAL (INCL. GST)" — never as a section
+     kicker above a heading that already says it (DESIGN.md iron rule 1).
+     --body not --mute: #888 on white is 3.54:1 and fails WCAG AA at this size. */
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--mute);
+    color: var(--body);
   }
 
   /* Universal card: hairline ring + subtle stacked shadow. */

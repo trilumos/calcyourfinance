@@ -5,6 +5,7 @@ import { SITE } from "../config/site";
 import { calculators } from "../calculators";
 import { CATEGORY_META, type Category } from "../calculators/_types";
 import { getPlatform } from "../config/platforms";
+import { demandRank } from "../config/demand";
 import CalculatorIsland from "../components/CalculatorIsland.tsx";
 import { formatCurrency, formatNumber, formatPercent } from "../lib/money";
 import type { ComputeCtx, InputValues } from "../calculators/_types";
@@ -49,13 +50,22 @@ const CATEGORY_ORDER: Category[] = [
 ];
 // The homepage shows a curated subset per category and links to the hub for the
 // rest: selective homepage linking concentrates equity on the hubs and keeps every
-// calculator within 2 clicks. Ordered by known search volume, then alphabetically
-// (only ~13 configs carry estVolume, so alphabetical is the stable fallback).
+// calculator within 2 clicks.
 // Bento size hierarchy: a category with many calculators earns a full-width panel
 // (two inner columns) and shows more of them; the rest sit in equal half panels.
+// Ordering: a researched estVolume always wins (real data). Where it's absent —
+// most payment/e-commerce configs, since keyword volumes are gated behind paid
+// tools — fall back to the explicit editorial demand ranking in config/demand.ts,
+// then alphabetical. Never alphabetical-first: people want the big platforms.
 const WIDE_THRESHOLD = 20;
-const byDemand = (a: (typeof singles)[number], b: (typeof singles)[number]) =>
-  (b.keywords.estVolume ?? 0) - (a.keywords.estVolume ?? 0) || a.title.localeCompare(b.title);
+const byDemand = (a: (typeof singles)[number], b: (typeof singles)[number]) => {
+  const va = a.keywords.estVolume ?? 0;
+  const vb = b.keywords.estVolume ?? 0;
+  if (va !== vb) return vb - va;
+  const ra = demandRank(a.category, a.slug);
+  const rb = demandRank(b.category, b.slug);
+  return ra - rb || a.title.localeCompare(b.title);
+};
 const groups = CATEGORY_ORDER.map((cat) => {
   const items = singles.filter((c) => c.category === cat);
   const wide = items.length >= WIDE_THRESHOLD;
@@ -246,9 +256,8 @@ const faqLd = {
   <!-- Featured comparisons: highest-intent, fastest-ranking page type — surfaced early. -->
   {comparisons.length > 0 && (
     <section id="comparisons" class="container mx-auto max-w-[64rem] scroll-mt-20 px-4 py-12" aria-labelledby="cmp-h">
-      <p class="eyebrow">Head to head</p>
       <h2 id="cmp-h" class="mb-1 mt-1">Which platform actually costs less?</h2>
-      <p class="mb-6 max-w-[42rem] text-[14px] text-body">
+      <p class="mb-6 max-w-[42rem] text-[15px] text-body">
         Put two platforms side by side on the same sale and see which is cheaper — and by exactly
         how much, after every fee.
       </p>
@@ -280,9 +289,8 @@ const faqLd = {
        height (8 rows each) plus a search panel that completes the square. Each
        panel links to its hub with keyword-rich anchor text. -->
   <section id="all-calculators" class="container mx-auto max-w-[64rem] scroll-mt-20 px-4 py-12" aria-labelledby="all-h">
-    <p class="eyebrow">All calculators</p>
     <h2 id="all-h" class="mb-1 mt-1">Browse by category.</h2>
-    <p class="mb-6 max-w-[42rem] text-[14px] text-body">
+    <p class="mb-6 max-w-[42rem] text-[15px] text-body">
       {total} calculators across {groups.length} categories. The most-searched in each are below —
       open a category for its full list, or press <kbd class="rounded border border-hairline bg-canvas-soft px-1.5 py-0.5 font-mono text-[11px] text-mute">⌘K</kbd> to search them all.
     </p>
@@ -296,7 +304,7 @@ const faqLd = {
           >
             <div class="mb-3 flex items-baseline justify-between gap-3">
               <h3 id={`grp-${g.cat}`} class="text-[15px] font-semibold text-ink">{g.meta.label}</h3>
-              <span class="tnum shrink-0 font-mono text-[11px] text-mute">{g.items.length}</span>
+              <span class="tnum shrink-0 font-mono text-[11px] text-body">{g.items.length}</span>
             </div>
             <ul
               class={`-mx-2 list-none p-0 ${g.wide ? "sm:grid sm:grid-cols-2 sm:gap-x-6 [&>li:nth-last-child(-n+2)]:sm:border-b-0" : ""}`}
@@ -305,13 +313,8 @@ const faqLd = {
                 <li class="border-b border-hairline last:border-b-0">
                   <a
                     href={`/${c.slug}`}
-                    class="group flex items-center gap-2.5 rounded-md px-2 py-[0.55rem] no-underline transition hover:bg-canvas-soft"
+                    class="group flex items-center gap-3 rounded-md px-2 py-[0.55rem] no-underline transition hover:bg-canvas-soft"
                   >
-                    <span
-                      class="calc-accent size-1.5 shrink-0 rounded-full bg-accent"
-                      style={accentStyle(c.platform)}
-                      aria-hidden="true"
-                    />
                     <span class="min-w-0 flex-1 truncate text-[14px] text-ink">{c.title}</span>
                     <span
                       class="shrink-0 text-[13px] text-mute opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100"
@@ -336,9 +339,8 @@ const faqLd = {
 
   <!-- Why trust + how we verify (merged: the E-E-A-T / information-gain section) -->
   <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="trust-h">
-    <p class="eyebrow">Why trust these numbers</p>
     <h2 id="trust-h" class="mb-1 mt-1">Numbers you can check for yourself.</h2>
-    <p class="mb-6 max-w-[42rem] text-[14px] text-body">
+    <p class="mb-6 max-w-[42rem] text-[15px] text-body">
       Most fee calculators never tell you where their rates came from, or when they were last
       correct. Ours do — on every calculator.
     </p>
@@ -373,9 +375,8 @@ const faqLd = {
 
   <!-- Recently verified: freshness signal, straight from each config's verified date. -->
   <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="fresh-h">
-    <p class="eyebrow">Freshness</p>
     <h2 id="fresh-h" class="mb-1 mt-1">Rates we checked most recently.</h2>
-    <p class="mb-6 max-w-[42rem] text-[14px] text-body">
+    <p class="mb-6 max-w-[42rem] text-[15px] text-body">
       Every calculator shows when its rates were last verified against the official source. Here are
       the latest.
     </p>
@@ -389,13 +390,13 @@ const faqLd = {
             >
               <span class="min-w-0 flex-1">
                 <span class="block truncate text-[14px] font-medium text-ink">{c.title}</span>
-                <span class="block font-mono text-[10px] uppercase tracking-wide text-mute">
+                <span class="block font-mono text-[10px] uppercase tracking-wide text-body">
                   {CATEGORY_META[c.category].label}
                 </span>
               </span>
               <time
                 datetime={verifiedOn(c)}
-                class="tnum shrink-0 whitespace-nowrap font-mono text-[11px] text-mute"
+                class="tnum shrink-0 whitespace-nowrap font-mono text-[11px] text-body"
               >
                 {prettyDate(verifiedOn(c))}
               </time>
@@ -409,7 +410,6 @@ const faqLd = {
   <!-- SEO content / mission -->
   <section class="container mx-auto max-w-[64rem] px-4 py-4" aria-labelledby="about-h">
     <div class="prose max-w-[46rem]">
-      <p class="eyebrow">About CalcYourFinance</p>
       <h2 id="about-h" class="mt-1">A complete, trustworthy library of fee &amp; finance calculators.</h2>
       <p>
         Fees are easy to underestimate and finance math is easy to get wrong. Every payment

@@ -715,6 +715,26 @@ The brand uses STACKED shadows — multiple small offsets layered to fake natura
 - Properties: `backgroundColor`, `rounded`, `padding`, `typography`
 
 
+## Iron rules (project-level, override anything below)
+
+1. **Only what contributes stays. No decoration, no redundancy — anywhere.** Before adding or
+   keeping any element, answer "what does this contribute?" If a heading already says it, the label
+   above it is redundant: delete it. Two thin similar sections merge into one strong one. The same
+   link in two places on one page keeps only the stronger placement. Purely ornamental elements need
+   an explicit justification or they go. This is the on-page counterpart of the SEO "information
+   gain" bar in the revamp roadmap §1.
+   - *Applied 2026-07-21:* the mono uppercase **eyebrow labels above section headings were removed**
+     sitewide on v2 ("ALL CALCULATORS" over "Browse by category." contributed nothing). The
+     `.eyebrow` class survives only for genuine value labels (e.g. a result readout's
+     "TOTAL (INCL. GST)"), never as a section kicker. This supersedes the "technical eyebrow" Do
+     below where it was being used decoratively.
+   - *Accessibility note:* `.eyebrow` at `{colors.mute}` `#888888` on white is **3.54:1**, which
+     fails WCAG AA (4.5:1) for text at that size. Any surviving use must use `{colors.body}`
+     (`#4d4d4d`, 8.45:1) or darker.
+
+2. **Research → propose → confirm → build.** No non-trivial design or architecture change without
+   researching the best approach, proposing it, and getting confirmation first.
+
 ## Do's and Don'ts
 
 ### Do
