@@ -735,6 +735,27 @@ The brand uses STACKED shadows — multiple small offsets layered to fake natura
 2. **Research → propose → confirm → build.** No non-trivial design or architecture change without
    researching the best approach, proposing it, and getting confirmation first.
 
+3. **Vercel Geist (<https://vercel.com/geist/introduction>) is THE visual-design reference.** Before
+   changing colours, typography, radii, shadows, spacing or any component, open the matching Geist
+   foundation page (Colors · Typography · Materials · Grid) and match it. Audit against it rather
+   than approximating from memory; the specs are published as machine-readable Markdown. Recognition
+   only — never use Vercel's logos or clone their pages. **Every deliberate difference is recorded in
+   the table below** so intentional choices are never mistaken for drift.
+
+4. **No per-item hairline rows anywhere.** Dividers separate *groups*, never individual items —
+   Vercel's own sidebar has no line between nav items, only above a group. A row's hover surface
+   already delineates it. Applied to the bento panels and the FAQ accordion.
+
+### Deliberate deviations from Geist (keep current)
+
+| Deviation | Why |
+|---|---|
+| `--mute` is `#767676`, not `#888888` | `#888888` is 3.54:1 on white and fails WCAG AA at 11–13px, where it is used for real content (field help, result sub-lines, the YMYL disclaimer). `#767676` is 4.54:1. Consistent with Geist's own "accessible, high-contrast" colour principle. |
+| Light theme is the default for new visitors, ignoring `prefers-color-scheme` | Deliberate brand choice; the toggle still persists an explicit preference. |
+| Navbar is neutral — no brand colour | ~70% of SaaS navbars are blue, so a coloured bar reads generic. The accent stays reserved for result numbers, where it means "this is the answer". |
+| Subtle dot-grid + glow hero backdrop | Geist names **Grid** a core aesthetic element, so this is on-system; kept near-subliminal (~7% opacity, radially masked) rather than a graph-paper texture. |
+| `.eyebrow` renders in `--body`, not `--mute` | A value label needs more weight than tertiary text, and it keeps contrast well clear of the AA floor. |
+
 ## Do's and Don'ts
 
 ### Do

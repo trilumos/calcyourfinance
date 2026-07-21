@@ -344,17 +344,22 @@ colour, see §8 rationale) and the ⌘K command palette as primary navigation.
 
 ## 12. Release sequence + embed-engine architecture (decided 2026-07-21)
 
-**Agreed order.** Ship in small, verifiable merges rather than one large one onto a live site:
+**Agreed order (revised 2026-07-21).** Ship in small, verifiable merges rather than one large one
+onto a live site, grouped by *type of work* rather than split mid-stream:
 
-1. a11y + light/dark pass on the homepage.
-2. **Pre-merge gate — verify all 60 calculators (§11).** Required because v2 already changed the
+1. a11y + light/dark pass on the homepage. ✅
+2. **`v2` — homepage + chrome/legal pages:** About, Contact, Methodology, Privacy, Terms, 404, 500.
+   Design and copy consistency with the new homepage.
+3. **Pre-merge gate — verify all 60 calculators (§11).** Required because v2 already changed the
    *shared* `CalculatorIsland` (inline region selector, `half` field pairing, toggle layout), so
    merging ships those to every calculator page.
-3. Merge `v2` → `main` — homepage goes live.
-4. **`v3`: calculator-page revamp** — this is M1-W1 (per-type structural differentiation: effective-rate
-   charts, fee-stack tables, real comparison anatomy).
-5. Verify again, merge `v3`.
-6. **Then** the embed engine.
+4. Merge `v2` → `main`.
+5. **`v3` — all 60 calculator pages *and* the 3 category hubs together.** The hubs list the
+   calculators and need their M2.5 content depth (~600 words of original educational content each),
+   so they are the same body of work, not a separate one. This is also M1-W1 (per-type structural
+   differentiation: effective-rate charts, fee-stack tables, real comparison anatomy).
+6. Verify again, merge `v3`.
+7. **Then** the embed engine.
 
 **Why the embed comes last, and why "freeze the UI" is the wrong way to protect it.** The tempting
 plan is "finalise the calculator UI so it never changes, then embeds are safe". That will not hold —
