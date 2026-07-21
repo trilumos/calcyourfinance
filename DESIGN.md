@@ -755,6 +755,13 @@ The brand uses STACKED shadows — multiple small offsets layered to fake natura
 | Navbar is neutral — no brand colour | ~70% of SaaS navbars are blue, so a coloured bar reads generic. The accent stays reserved for result numbers, where it means "this is the answer". |
 | Subtle dot-grid + glow hero backdrop | Geist names **Grid** a core aesthetic element, so this is on-system; kept near-subliminal (~7% opacity, radially masked) rather than a graph-paper texture. |
 | `.eyebrow` renders in `--body`, not `--mute` | A value label needs more weight than tertiary text, and it keeps contrast well clear of the AA floor. |
+| FAQ uses native `<details>/<summary>`, not Geist Collapse's `<button aria-expanded aria-controls>` | Native elements give the same accessible result — Enter/Space toggle, state announced — with **zero JavaScript**, and still satisfy Geist's own Collapse requirement that content stay in the DOM when closed for search. Geist's React component needs the ARIA scaffolding only because it is not using the native element. Trade-off accepted: no animated open/close transition. |
+| Breadcrumbs implement only the `text` variant, with no `menu`/collapsing behaviour | Geist offers `text` and `menu` variants for long paths. Ours are never deeper than Home › Category › Page, so collapsing would be machinery with nothing to collapse. Revisit if a deeper hierarchy appears. |
+
+> **Audit caveat (2026-07-21):** the public Geist pages, including the `.md` route, do not publish
+> separator glyphs, size scales, spacing values or ARIA specifics for Breadcrumbs. Where the docs are
+> silent we follow Geist's stated *principles* (accessible, high-contrast, systematised) and WCAG,
+> and we do not claim a pixel-level match we cannot verify.
 
 ## Do's and Don'ts
 

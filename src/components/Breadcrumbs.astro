@@ -14,7 +14,7 @@ const { items } = Astro.props;
     {
       items.map((c, i) => (
         <li class="inline-flex items-center gap-1.5">
-          {i > 0 && <span class="text-mute">/</span>}
+          {i > 0 && <span class="text-mute" aria-hidden="true">/</span>}
           {c.href && i < items.length - 1 ? (
             <a href={c.href} class="text-mute no-underline hover:text-ink">{c.label}</a>
           ) : (
