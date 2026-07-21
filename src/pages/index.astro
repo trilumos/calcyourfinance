@@ -115,8 +115,9 @@ const faqLd = {
   schemas={[faqLd]}
 >
   <!-- Hero: centered title + a focused live calculator, sized to fit one viewport. -->
-  <section class="border-b border-hairline bg-canvas">
-    <div class="container mx-auto flex min-h-[calc(100svh-3.75rem)] max-w-[64rem] flex-col justify-center px-4 py-8">
+  <section class="relative border-b border-hairline bg-canvas">
+    <div class="hero-backdrop" aria-hidden="true"></div>
+    <div class="container relative z-10 mx-auto flex min-h-[calc(100svh-3.75rem)] max-w-[64rem] flex-col justify-center px-4 py-8">
       <div class="mx-auto max-w-[42rem] text-center">
         <p class="eyebrow">No signup · Instant · In your currency</p>
         <h1 class="mt-3 text-balance text-[clamp(1.9rem,1.4rem+2.2vw,2.7rem)]">
@@ -128,8 +129,9 @@ const faqLd = {
         </p>
       </div>
 
-      <!-- Live demo: a focused, centered card. Inputs and result side by side (md+). -->
-      <div class="mx-auto mt-7 w-full max-w-[50rem]" data-calc-tabs>
+      <!-- Live demo: full-width so tall calcs (Stripe/Etsy) get more horizontal
+           room and stay closer to one viewport. Inputs and result side by side (md+). -->
+      <div class="mt-7 w-full" data-calc-tabs>
         <div
           role="tablist"
           aria-label="Try a calculator"

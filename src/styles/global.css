@@ -249,6 +249,52 @@
     --accent: var(--accent-d, var(--accent-l, var(--link)));
   }
 
+  /* Subtle hero backdrop: near-subliminal dot grid + a soft central glow,
+     radially masked so it fades to the edges. Decorative only (aria-hidden);
+     the calculator card sits above it on its own solid surface. */
+  .hero-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--ink) 7%, transparent) 1px,
+      transparent 1.5px
+    );
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse 78% 66% at 50% 40%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(ellipse 78% 66% at 50% 40%, #000 0%, transparent 72%);
+  }
+  [data-theme="dark"] .hero-backdrop {
+    background-image: radial-gradient(
+      color-mix(in srgb, #ffffff 9%, transparent) 1px,
+      transparent 1.5px
+    );
+  }
+  .hero-backdrop::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 36%;
+    width: min(56rem, 92%);
+    height: 24rem;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--link) 11%, transparent),
+      transparent
+    );
+    filter: blur(28px);
+  }
+  [data-theme="dark"] .hero-backdrop::before {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--link) 16%, transparent),
+      transparent
+    );
+  }
+
   /* Readable long-form prose (no Typography plugin). */
   .prose {
     max-width: 42rem;
