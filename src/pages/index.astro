@@ -66,6 +66,20 @@ const comparisonGradient = (slug: string) => {
   const b = ps[1]?.color ?? a;
   return `linear-gradient(180deg, ${a} 0 50%, ${b} 50% 100%)`;
 };
+// Freshness signal: the calculators whose rates we verified most recently.
+// Every config carries lastUpdated; fee calculators also carry feesVerifiedOn.
+const verifiedOn = (c: (typeof calculators)[number]) => c.feesVerifiedOn ?? c.lastUpdated;
+const recentlyVerified = [...calculators]
+  .sort((a, b) => verifiedOn(b).localeCompare(verifiedOn(a)))
+  .slice(0, 6);
+const prettyDate = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
 const homeFaqs = [
   {
     q: "Are these calculators free?",
@@ -119,13 +133,13 @@ const faqLd = {
     <div class="hero-backdrop" aria-hidden="true"></div>
     <div class="container relative z-10 mx-auto flex min-h-[calc(100svh-3.75rem)] max-w-[64rem] flex-col justify-center px-4 py-8">
       <div class="mx-auto max-w-[42rem] text-center">
-        <p class="eyebrow">No signup · Instant · In your currency</p>
-        <h1 class="mt-3 text-balance text-[clamp(1.9rem,1.4rem+2.2vw,2.7rem)]">
+        <h1 class="text-balance text-[clamp(1.9rem,1.4rem+2.2vw,2.7rem)]">
           Fee and finance calculators you can trust.
         </h1>
         <p class="mx-auto mt-3 max-w-[38rem] text-pretty text-[16px] leading-relaxed text-body">
-          Work out what Stripe, PayPal, Etsy or Amazon really take — plus the everyday math
-          (EMI, SIP, GST). Every rate cited, dated, and shown in your own currency.
+          {total} free calculators — Stripe, PayPal, Etsy, Amazon and more — plus the everyday
+          finance math. Every rate comes from the official pricing page and carries the date we
+          checked it.
         </p>
       </div>
 
@@ -214,6 +228,39 @@ const faqLd = {
     </nav>
   </section>
 
+  <!-- Featured comparisons: highest-intent, fastest-ranking page type — surfaced early. -->
+  {comparisons.length > 0 && (
+    <section id="comparisons" class="container mx-auto max-w-[64rem] scroll-mt-20 px-4 py-12" aria-labelledby="cmp-h">
+      <p class="eyebrow">Head to head</p>
+      <h2 id="cmp-h" class="mb-1 mt-1">Which platform actually costs less?</h2>
+      <p class="mb-6 max-w-[42rem] text-[14px] text-body">
+        Put two platforms side by side on the same sale and see which is cheaper — and by exactly
+        how much, after every fee.
+      </p>
+      <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(17rem,1fr))]">
+        {comparisons.map((c) => (
+          <li>
+            <a
+              href={`/${c.slug}`}
+              class="card group relative flex h-full flex-col gap-2 overflow-hidden p-4 pl-5 no-underline transition hover:shadow-float"
+            >
+              <span
+                class="absolute inset-y-0 left-0 w-[3px]"
+                style={`background:${comparisonGradient(c.slug)}`}
+                aria-hidden="true"
+              />
+              <span class="text-[15px] font-medium text-ink">
+                {c.title.replace(" Fee Calculator", "")}
+              </span>
+              <span class="line-clamp-2 text-[13px] leading-snug text-body">{c.intro}</span>
+              <span class="mt-auto pt-1 text-[13px] text-link" aria-hidden="true">Compare →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
   <!-- All calculators: grouped by category (full internal-link index; search lives in the hero) -->
   <section id="all-calculators" class="container mx-auto max-w-[64rem] scroll-mt-20 px-4 py-12" aria-labelledby="all-h">
     <p class="eyebrow">All calculators</p>
@@ -262,51 +309,79 @@ const faqLd = {
         ))
       }
 
-      {comparisons.length > 0 && (
-        <div id="comparisons" class="scroll-mt-24" aria-labelledby="grp-comparisons">
-          <div class="mb-3">
-            <p class="eyebrow">Comparisons</p>
-            <h3 id="grp-comparisons" class="mt-0.5 text-[17px] font-semibold text-ink">Two platforms, head to head.</h3>
-            <p class="mt-1 max-w-[40rem] text-[14px] text-body">
-              Put two platforms side by side on the same sale and see which is cheaper, and by exactly how much.
-            </p>
-          </div>
-          <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr))]">
-            {comparisons.map((c) => (
-              <li>
-                <a
-                  href={`/${c.slug}`}
-                  class="card group relative flex items-center gap-3 overflow-hidden p-4 pl-5 no-underline transition hover:shadow-float"
-                >
-                  <span class="absolute inset-y-0 left-0 w-[3px]" style={`background:${comparisonGradient(c.slug)}`} aria-hidden="true" />
-                  <span class="min-w-0 flex-1">
-                    <span class="block truncate text-[14px] font-medium text-ink">{c.title.replace(" Fee Calculator", "")}</span>
-                    <span class="block font-mono text-[10px] uppercase tracking-wide text-mute">Comparison</span>
-                  </span>
-                  <span class="shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
     </div>
   </section>
 
-  <!-- Why trust -->
+  <!-- Why trust + how we verify (merged: the E-E-A-T / information-gain section) -->
   <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="trust-h">
-    <div class="card max-w-[52rem] p-6 sm:p-10">
-      <p class="eyebrow">Why trust these numbers</p>
-      <h2 id="trust-h" class="sr-only">Why you can trust these numbers</h2>
-      <ul class="mt-3 grid list-none gap-3 p-0">
-        <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Cited &amp; dated.</strong> Every fee links to the platform's official pricing page with a "last verified" date.</li>
-        <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Tested math.</strong> Each formula has unit tests, so the numbers are reproducible — not guesses.</li>
-        <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Your currency.</strong> Results auto-detect your region and currency; country-aware fees update the rate and example too.</li>
-        <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Reverse mode.</strong> Work backwards to find what to charge so you receive an exact amount after fees.</li>
-      </ul>
-      <p class="mt-4 border-t border-dashed border-hairline pt-4 text-[13px] text-mute">{SITE.disclaimer}</p>
+    <p class="eyebrow">Why trust these numbers</p>
+    <h2 id="trust-h" class="mb-1 mt-1">Numbers you can check for yourself.</h2>
+    <p class="mb-6 max-w-[42rem] text-[14px] text-body">
+      Most fee calculators never tell you where their rates came from, or when they were last
+      correct. Ours do — on every calculator.
+    </p>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="card p-6">
+        <h3 class="mb-3 text-[15px] font-semibold text-ink">What you get</h3>
+        <ul class="grid list-none gap-3 p-0 text-[14px]">
+          <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Cited &amp; dated.</strong> Every fee links to the platform's official pricing page with the date we last verified it.</li>
+          <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Tested math.</strong> Each formula has unit tests, so the numbers are reproducible — not guesses.</li>
+          <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Your currency.</strong> Results follow your region; country-aware fees update the rate and worked example too.</li>
+          <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Reverse mode.</strong> Work backwards to find what to charge so you receive an exact amount after fees.</li>
+        </ul>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="mb-3 text-[15px] font-semibold text-ink">How we verify a rate</h3>
+        <ol class="grid list-none gap-3 p-0 text-[14px]">
+          <li class="relative pl-7 text-body"><span class="tnum absolute left-0 font-mono text-[12px] text-mute" aria-hidden="true">01</span>Take the rate straight from the platform's <strong class="text-ink">official pricing page</strong> — never a third-party summary.</li>
+          <li class="relative pl-7 text-body"><span class="tnum absolute left-0 font-mono text-[12px] text-mute" aria-hidden="true">02</span>Record it in <strong class="text-ink">one shared source of truth</strong>, stamped with the date it was checked.</li>
+          <li class="relative pl-7 text-body"><span class="tnum absolute left-0 font-mono text-[12px] text-mute" aria-hidden="true">03</span>Encode the math as a <strong class="text-ink">unit-tested function</strong>, so every result is reproducible.</li>
+          <li class="relative pl-7 text-body"><span class="tnum absolute left-0 font-mono text-[12px] text-mute" aria-hidden="true">04</span>When a platform changes its pricing, the <strong class="text-ink">figure and the date move together</strong>.</li>
+        </ol>
+        <p class="mt-4 text-[13px]">
+          <a href="/methodology" class="text-link no-underline hover:underline">Read the full methodology →</a>
+        </p>
+      </div>
     </div>
+
+    <p class="mt-4 max-w-[52rem] border-t border-dashed border-hairline pt-4 text-[13px] text-mute">{SITE.disclaimer}</p>
+  </section>
+
+  <!-- Recently verified: freshness signal, straight from each config's verified date. -->
+  <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="fresh-h">
+    <p class="eyebrow">Freshness</p>
+    <h2 id="fresh-h" class="mb-1 mt-1">Rates we checked most recently.</h2>
+    <p class="mb-6 max-w-[42rem] text-[14px] text-body">
+      Every calculator shows when its rates were last verified against the official source. Here are
+      the latest.
+    </p>
+    <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(17rem,1fr))]">
+      {
+        recentlyVerified.map((c) => (
+          <li>
+            <a
+              href={`/${c.slug}`}
+              class="card flex h-full items-center justify-between gap-3 p-4 no-underline transition hover:border-hairline-strong hover:shadow-float"
+            >
+              <span class="min-w-0 flex-1">
+                <span class="block truncate text-[14px] font-medium text-ink">{c.title}</span>
+                <span class="block font-mono text-[10px] uppercase tracking-wide text-mute">
+                  {CATEGORY_META[c.category].label}
+                </span>
+              </span>
+              <time
+                datetime={verifiedOn(c)}
+                class="tnum shrink-0 whitespace-nowrap font-mono text-[11px] text-mute"
+              >
+                {prettyDate(verifiedOn(c))}
+              </time>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 
   <!-- SEO content / mission -->
