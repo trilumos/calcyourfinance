@@ -342,6 +342,42 @@ colour, see §8 rationale) and the ⌘K command palette as primary navigation.
 
 ---
 
+## 12. Release sequence + embed-engine architecture (decided 2026-07-21)
+
+**Agreed order.** Ship in small, verifiable merges rather than one large one onto a live site:
+
+1. a11y + light/dark pass on the homepage.
+2. **Pre-merge gate — verify all 60 calculators (§11).** Required because v2 already changed the
+   *shared* `CalculatorIsland` (inline region selector, `half` field pairing, toggle layout), so
+   merging ships those to every calculator page.
+3. Merge `v2` → `main` — homepage goes live.
+4. **`v3`: calculator-page revamp** — this is M1-W1 (per-type structural differentiation: effective-rate
+   charts, fee-stack tables, real comparison anatomy).
+5. Verify again, merge `v3`.
+6. **Then** the embed engine.
+
+**Why the embed comes last, and why "freeze the UI" is the wrong way to protect it.** The tempting
+plan is "finalise the calculator UI so it never changes, then embeds are safe". That will not hold —
+accessibility fixes, new calculator types and browser changes all force UI work, and M1-W1
+*deliberately* changes calculator pages because that is what fixes the templated-collection indexing
+problem. A freeze would block the work that makes pages index. The durable protection is a **stable
+contract, not a frozen implementation**:
+
+- **Script tag / web component — NOT an iframe.** An iframe produces **no backlink**: search engines
+  attribute the framed content to *our* URL, so the attribution link is not a link *from* the host
+  page. Since the backlink is the entire point of the embed, an iframe defeats it.
+- **The attribution `<a>` must render into the host page's light DOM**, where crawlers can see it.
+- **Depend on the calculation engine** (`config.ts` + `formula.ts`), never on the calculator page's
+  presentation. Then site-side UI work can never break a live embed.
+- **Semantic versioning with a pinned URL** (`widget.js?v=1`), long cache + cache-bust per version.
+  Breaking changes across many third-party sites are expensive.
+
+**Consequence worth stating plainly:** version pinning makes *bad data sticky*. A wrong rate on our
+own page is one fix; a wrong rate pinned into third-party embeds cannot be force-updated. That is the
+strongest reason the verification gate (§11) precedes any embed work, permanently.
+
+---
+
 ## 11. ⚠️ PRE-MERGE GATE — full calculator verification before `v2` → `main`
 
 **Mandatory. Do not merge `v2` into `main` until every box below passes.** The site is live and
