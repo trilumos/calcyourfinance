@@ -1,0 +1,14 @@
+{
+  "date": "2026-07-21",
+  "checked": 111,
+  "counts": {
+    "reached-no-assertion": 24,
+    "unconfirmed": 50,
+    "blocked": 18,
+    "http-error": 1,
+    "unchanged": 17,
+    "unreachable": 1
+  },
+  "actionable": 0,
+  "reportFile": "rate-verification/2026-07-21.md"
+}
