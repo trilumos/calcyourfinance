@@ -60,3 +60,28 @@ jobs:
           else
             echo "no dead links — no issue opened (worklist is in the committed report)"
           fi
+
+      - name: Notify Telegram (weekly reminder + full report)
+        if: always()
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SERVER: ${{ github.server_url }}
+          REPO: ${{ github.repository }}
+          REF: ${{ github.ref_name }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
+            echo "TELEGRAM_* secrets not set — skipping notify"; exit 0
+          fi
+          DATE=$(node -e "process.stdout.write(require('./rate-verification/latest.json').date)")
+          SUMMARY=$(node -e "const j=require('./rate-verification/latest.json'),c=j.counts,w=(c.unconfirmed||0)+(c.blocked||0)+(c.unreachable||0)+(c['http-error']||0);process.stdout.write(\`Checked \${j.checked} sources — 💀 dead \${c.dead||0} · ✅ unchanged \${c.unchanged||0} · ❔ worklist \${w}\`)")
+          URL="$SERVER/$REPO/blob/$REF/rate-verification/$DATE.md"
+          TEXT=$(printf '🗓️ *Weekly rate verification* — %s\n\n%s\n\n⚠️ IRON RULE: do not trust the scraper. Re-verify ALL sources yourself, even the ✅ unchanged ones.\n\n📄 Full report attached (also in the repo: %s)' "$DATE" "$SUMMARY" "$URL")
+          curl -sS --max-time 20 "https://api.telegram.org/bot$TG_TOKEN/sendMessage" \
+            --data-urlencode "chat_id=$TG_CHAT" \
+            --data-urlencode "parse_mode=Markdown" \
+            --data-urlencode "text=$TEXT" >/dev/null
+          curl -sS --max-time 30 "https://api.telegram.org/bot$TG_TOKEN/sendDocument" \
+            -F "chat_id=$TG_CHAT" \
+            -F "document=@rate-verification/$DATE.md" >/dev/null
+          echo "telegram notified"
