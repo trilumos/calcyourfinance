@@ -250,7 +250,7 @@ All rates are taken from Teachable's official pricing page and verified on 2026-
     },
     {
       label: "Teachable — Transaction fees explained",
-      url: "https://support.teachable.com/hc/en-us/articles/4407133671963-Teachable-Transaction-Fees",
+      url: "https://support.teachable.com/en/articles/11682553-teachable-fees",
     },
     {
       label: "Stripe — US card processing pricing",

@@ -2244,7 +2244,7 @@ export const podiaFees: PodiaFees = {
 
    Sources:
      https://teachable.com/pricing
-     https://support.teachable.com/hc/en-us/articles/4407133671963-Teachable-Transaction-Fees
+     https://support.teachable.com/en/articles/11682553-teachable-fees
    =========================================================================== */
 export const TEACHABLE_VERIFIED = "2026-06-15";
 
@@ -2579,13 +2579,13 @@ export const teespringInfo: TeespringInfo = {
      earningsAboveThreshold = base × max(0, markup − 20) / 100
      excessMarkupFee = 50 % × earningsAboveThreshold
 
-   Sources:
+   Sources (official Redbubble Help Centre):
      https://help.redbubble.com/hc/en-us/articles/202270799-How-is-my-payment-calculated
-     https://blog.redbubble.com/2025/08/artist-account-tiers-and-fees/
-     https://blog.redbubble.com/2025/08/excess-markup-fee-explained/
-     https://help.redbubble.com/hc/en-us/articles/4412593541908-What-are-Redbubble-s-account-fees
+     https://help.redbubble.com/hc/en-us/articles/50959863016724-How-does-my-Account-Tier-determine-my-platform-fee
+     https://help.redbubble.com/hc/en-us/articles/50959535480212-What-is-the-excess-markup-fee
+     https://help.redbubble.com/hc/en-us/articles/50960130992916-What-account-fees-exist-on-Redbubble
    =========================================================================== */
-export const REDBUBBLE_VERIFIED = "2026-06-15";
+export const REDBUBBLE_VERIFIED = "2026-07-21";
 
 export interface RedbubbleInfo {
   /** Default markup % recommended by Redbubble (and the excess-fee threshold). */
@@ -2621,9 +2621,9 @@ export const redbubbleInfo: RedbubbleInfo = {
   source:
     "https://help.redbubble.com/hc/en-us/articles/202270799-How-is-my-payment-calculated",
   tierSource:
-    "https://blog.redbubble.com/2025/08/artist-account-tiers-and-fees/",
+    "https://help.redbubble.com/hc/en-us/articles/50959863016724-How-does-my-Account-Tier-determine-my-platform-fee",
   excessFeeSource:
-    "https://blog.redbubble.com/2025/08/excess-markup-fee-explained/",
+    "https://help.redbubble.com/hc/en-us/articles/50959535480212-What-is-the-excess-markup-fee",
   verifiedOn: REDBUBBLE_VERIFIED,
 };
 
