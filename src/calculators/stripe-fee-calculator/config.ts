@@ -96,6 +96,7 @@ export const stripeFeeCalculator: CalculatorConfig = {
       label: "International card",
       type: "toggle",
       default: false,
+      half: true,
       help: "Customer's card was issued in another country.",
     },
     {
@@ -103,6 +104,7 @@ export const stripeFeeCalculator: CalculatorConfig = {
       label: "Currency conversion required",
       type: "toggle",
       default: false,
+      half: true,
       help: "Adds Stripe's currency-conversion surcharge.",
     },
     {
@@ -110,6 +112,7 @@ export const stripeFeeCalculator: CalculatorConfig = {
       label: "Recurring / subscription (Stripe Billing)",
       type: "toggle",
       default: false,
+      half: true,
       help: "Adds Stripe Billing's 0.7% on recurring payments.",
     },
     {
@@ -117,6 +120,7 @@ export const stripeFeeCalculator: CalculatorConfig = {
       label: "Sent with Stripe Invoicing",
       type: "toggle",
       default: false,
+      half: true,
       help: "Adds Stripe Invoicing's 0.4% per paid invoice.",
     },
   ],

@@ -80,6 +80,8 @@ export interface InputSpec {
   suffix?: string;
   /** Currency inputs render the selected country's symbol automatically. */
   placeholder?: string;
+  /** Render at half width so two consecutive half fields pair on one row. */
+  half?: boolean;
 }
 
 /* ---- Results ------------------------------------------------------------- */

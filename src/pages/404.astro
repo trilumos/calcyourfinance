@@ -1,5 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { CATEGORY_META } from "../calculators/_types";
+import { activeCategories, calculators } from "../calculators";
+
+const cats = activeCategories().map((c) => CATEGORY_META[c]);
+const total = calculators.length;
 ---
 
 <BaseLayout
@@ -8,10 +13,51 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   canonicalPath="/404"
   noindex={true}
 >
-  <section class="container mx-auto max-w-[36rem] px-4 py-20 text-center">
+  <section class="container mx-auto max-w-[40rem] px-4 py-20 text-center">
     <p class="eyebrow">404</p>
     <h1 class="my-4">We couldn't find that page.</h1>
-    <p class="mb-6 text-body">The calculator or page you're after may have moved.</p>
-    <a href="/" class="btn btn-primary">Back to all calculators</a>
+    <p class="mb-7 text-body">
+      The calculator you're after may have moved, or the address may have a typo. Search
+      all {total} of them, or pick a category.
+    </p>
+
+    <!-- A 404 should help you find what you came for, not just apologise.
+         The palette binds to any [data-cmdk-open], so this opens site search. -->
+    <button
+      type="button"
+      data-cmdk-open
+      class="mx-auto flex min-h-11 w-full max-w-[24rem] items-center gap-2 rounded-md border border-hairline bg-canvas-soft px-3 text-mute transition hover:border-hairline-strong hover:text-body"
+      aria-label="Search calculators"
+      aria-keyshortcuts="Meta+K Control+K"
+    >
+      <svg
+        class="size-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
+      </svg>
+      <span class="flex-1 text-left text-[14px]">Search calculators…</span>
+      <kbd
+        class="rounded-md border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[11px]"
+        aria-hidden="true">⌘K</kbd
+      >
+    </button>
+
+    <nav class="mt-6 flex flex-wrap justify-center gap-2" aria-label="Browse by category">
+      {
+        cats.map((c) => (
+          <a
+            href={`/${c.slug}`}
+            class="inline-flex items-center rounded-full border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink no-underline transition hover:border-hairline-strong hover:shadow-card"
+          >
+            {c.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <p class="mt-7">
+      <a href="/" class="btn btn-primary">Back to the home page</a>
+    </p>
   </section>
 </BaseLayout>

@@ -34,6 +34,8 @@ interface Props {
   initialResult: CalcOutput;
   countryCodes?: CountryCode[];
   initialCountry: CountryCode;
+  /** Show the saved-calculations list (full calculator pages only). */
+  showHistory?: boolean;
 }
 
 interface Option {
@@ -76,6 +78,32 @@ function resolveCountry(
   return null;
 }
 
+interface HistoryEntry {
+  values: InputValues;
+  country: CountryCode;
+  label: string;
+  ts: number;
+}
+const HISTORY_MAX = 6;
+
+/** Short label for a saved calculation (the result headline, or a verdict). */
+function resultLabel(r: CalcOutput): string {
+  return isComparisonResult(r)
+    ? r.verdict.text
+    : `${r.headline.label}: ${r.headline.display}`;
+}
+
+/** Relative time for a saved entry ("2m ago"). Rendered once, not live. */
+function relTime(ts: number): string {
+  const s = Math.max(0, Math.round((Date.now() - ts) / 1000));
+  if (s < 60) return "just now";
+  const m = Math.round(s / 60);
+  if (m < 60) return `${m}m ago`;
+  const h = Math.round(m / 60);
+  if (h < 24) return `${h}h ago`;
+  return `${Math.round(h / 24)}d ago`;
+}
+
 function makeCtx(country: CountryCode): ComputeCtx {
   return {
     country,
@@ -97,6 +125,7 @@ export default function CalculatorIsland({
   initialResult,
   countryCodes,
   initialCountry,
+  showHistory = false,
 }: Props) {
   const [values, setValues] = useState<InputValues>(() => defaultValues(inputs));
   const [country, setCountry] = useState<CountryCode>(initialCountry);
@@ -110,9 +139,12 @@ export default function CalculatorIsland({
   const countryRef = useRef(country);
   countryRef.current = country;
   const explicitRef = useRef(false);
-  // Local, no-account memory: remember this calculator's last-used inputs.
-  const inputsKey = `cyf-inputs-${slug}`;
+  // Local, no-account calculation history for this calculator.
+  const historyKey = `cyf-history-${slug}`;
   const saveTimer = useRef<number | undefined>(undefined);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const resultRef = useRef<CalcOutput>(result);
+  resultRef.current = result;
 
   const countryOptions = useMemo<Option[]>(
     () =>
@@ -159,45 +191,89 @@ export default function CalculatorIsland({
     setResult(fn(nextValues, makeCtx(nextCountry)));
   }
 
+  /** Debounced: save the settled calculation to this device's history. */
+  function queueRecord(nextValues: InputValues, nextCountry: CountryCode) {
+    window.clearTimeout(saveTimer.current);
+    saveTimer.current = window.setTimeout(() => {
+      const entry: HistoryEntry = {
+        values: nextValues,
+        country: nextCountry,
+        label: resultLabel(resultRef.current),
+        ts: Date.now(),
+      };
+      const sig = JSON.stringify([entry.values, entry.country]);
+      setHistory((prev) => {
+        const next = [
+          entry,
+          ...prev.filter((h) => JSON.stringify([h.values, h.country]) !== sig),
+        ].slice(0, HISTORY_MAX);
+        try {
+          localStorage.setItem(historyKey, JSON.stringify(next));
+        } catch {
+          /* ignore (private mode / storage disabled) */
+        }
+        return next;
+      });
+    }, 900);
+  }
+
   function onInput(id: string, raw: number | string | boolean) {
     const next = { ...values, [id]: raw };
     setValues(next);
     void recompute(next, country);
-    // Debounced: remember the last inputs locally so a return visit doesn't retype.
-    window.clearTimeout(saveTimer.current);
-    saveTimer.current = window.setTimeout(() => {
-      try {
-        localStorage.setItem(inputsKey, JSON.stringify(next));
-      } catch {
-        /* ignore (private mode / storage disabled) */
-      }
-    }, 700);
+    queueRecord(next, country);
   }
 
-  // Restore this calculator's last-used inputs (local only, no account) so a
-  // return visit doesn't require retyping. Runs once; sets valuesRef first so
-  // the geo-detection effect below recomputes with the restored values.
-  useEffect(() => {
-    let saved: InputValues | null = null;
-    try {
-      const raw = localStorage.getItem(inputsKey);
-      saved = raw ? (JSON.parse(raw) as InputValues) : null;
-    } catch {
-      saved = null;
-    }
-    if (!saved || typeof saved !== "object") return;
+  /** Inputs are only restorable if they still match this calculator's fields. */
+  function fitsInputs(v: unknown): v is InputValues {
+    if (!v || typeof v !== "object") return false;
     const ids = new Set(inputs.map((i) => i.id));
-    const savedKeys = Object.keys(saved);
-    const matches =
-      savedKeys.length > 0 &&
-      savedKeys.every((k) => ids.has(k)) &&
-      inputs.every((i) => i.id in (saved as InputValues));
-    if (!matches) return;
-    valuesRef.current = saved;
-    setValues(saved);
-    void recompute(saved, countryRef.current);
+    return (
+      Object.keys(v).every((k) => ids.has(k)) &&
+      inputs.every((i) => i.id in (v as InputValues))
+    );
+  }
+
+  // Load this device's saved history once and restore the most recent inputs so
+  // a return visit doesn't require retyping. Sets valuesRef first so the
+  // geo-detection effect below recomputes with the restored values.
+  useEffect(() => {
+    let saved: HistoryEntry[] = [];
+    try {
+      const raw = localStorage.getItem(historyKey);
+      const parsed = raw ? JSON.parse(raw) : null;
+      if (Array.isArray(parsed)) saved = parsed as HistoryEntry[];
+    } catch {
+      saved = [];
+    }
+    saved = saved.filter((h) => h && fitsInputs(h.values));
+    if (saved.length === 0) return;
+    setHistory(saved);
+    valuesRef.current = saved[0].values;
+    setValues(saved[0].values);
+    void recompute(saved[0].values, countryRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /** Click a saved calculation → put its inputs (and country) back. */
+  function restoreEntry(entry: HistoryEntry) {
+    const cc =
+      countryCodes && countryCodes.includes(entry.country) ? entry.country : country;
+    explicitRef.current = true; // an explicit restore is never auto-overridden
+    valuesRef.current = entry.values;
+    setValues(entry.values);
+    setCountry(cc);
+    void recompute(entry.values, cc);
+  }
+
+  function clearHistory() {
+    try {
+      localStorage.removeItem(historyKey);
+    } catch {
+      /* ignore (private mode / storage disabled) */
+    }
+    setHistory([]);
+  }
 
   function onCountry(code: string) {
     const cc = code as CountryCode;
@@ -209,6 +285,7 @@ export default function CalculatorIsland({
     }
     setCountry(cc);
     void recompute(values, cc);
+    queueRecord(values, cc);
   }
 
   // Auto-default the currency/region to the visitor's location. This runs
@@ -264,14 +341,20 @@ export default function CalculatorIsland({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // The country/region selector rides inline on the first currency input (compact).
+  // Country-aware calcs with no currency input fall back to a standalone selector.
+  const firstCurrencyId = inputs.find((i) => i.type === "currency")?.id;
+  const isCountryAware = countryOptions.length > 1;
+
   return (
-    <div class="grid gap-4 md:grid-cols-2 md:items-start" data-slug={slug}>
+    <div data-slug={slug}>
+    <div class="grid gap-4 md:grid-cols-2 md:items-start">
       <form
-        class="card flex flex-col gap-4 p-5"
+        class="card flex flex-wrap gap-4 p-5"
         onSubmit={(e) => e.preventDefault()}
       >
-        {countryOptions.length > 1 && (
-          <label class="flex flex-col gap-1.5">
+        {isCountryAware && !firstCurrencyId && (
+          <label class="flex w-full flex-col gap-1.5">
             <span class="text-[13px] font-medium text-ink">Country / region</span>
             <Select
               options={countryOptions}
@@ -284,13 +367,22 @@ export default function CalculatorIsland({
         )}
 
         {inputs.map((input) => (
-          <Field
+          <div
             key={input.id}
-            input={input}
-            value={values[input.id]}
-            currencySymbol={currencySymbol}
-            onInput={onInput}
-          />
+            class={`min-w-0 ${input.half ? "grow basis-[calc(50%-0.5rem)]" : "basis-full"}`}
+          >
+            <Field
+              input={input}
+              value={values[input.id]}
+              currencySymbol={currencySymbol}
+              onInput={onInput}
+              region={
+                isCountryAware && input.id === firstCurrencyId
+                  ? { options: countryOptions, value: country, onChange: onCountry }
+                  : undefined
+              }
+            />
+          </div>
         ))}
       </form>
 
@@ -298,6 +390,39 @@ export default function CalculatorIsland({
         <ComparisonReadout result={result} />
       ) : (
         <Readout result={result} />
+      )}
+    </div>
+
+      {showHistory && history.length > 0 && (
+        <section class="card mt-4 p-4" aria-label="Your recent calculations">
+          <div class="flex items-center justify-between gap-3">
+            <p class="eyebrow">Your recent calculations</p>
+            <button
+              type="button"
+              onClick={clearHistory}
+              class="rounded-md text-[12px] text-mute underline-offset-2 hover:text-ink hover:underline"
+            >
+              Clear
+            </button>
+          </div>
+          <ul class="mt-2.5 flex list-none flex-col gap-0.5 p-0">
+            {history.map((h) => (
+              <li key={h.ts}>
+                <button
+                  type="button"
+                  onClick={() => restoreEntry(h)}
+                  class="flex w-full items-center justify-between gap-3 rounded-md px-2 py-1.5 text-left transition hover:bg-canvas-soft"
+                >
+                  <span class="tnum min-w-0 truncate text-[13px] text-ink">{h.label}</span>
+                  <span class="shrink-0 font-mono text-[11px] text-mute">{relTime(h.ts)}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-2 text-[11px] text-mute">
+            Saved on this device only — click one to load it back.
+          </p>
+        </section>
       )}
     </div>
   );
@@ -310,12 +435,17 @@ function Select({
   onChange,
   ariaLabel,
   searchable = false,
+  variant = "field",
+  triggerLabel,
 }: {
   options: Option[];
   value: string;
   onChange: (v: string) => void;
   ariaLabel: string;
   searchable?: boolean;
+  /** "prefix" renders a compact symbol trigger (e.g. currency) beside an input. */
+  variant?: "field" | "prefix";
+  triggerLabel?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -370,21 +500,37 @@ function Select({
 
   return (
     <div class="relative" ref={rootRef}>
-      <button
-        type="button"
-        class="select-trigger"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-label={ariaLabel}
-        onClick={() => setOpen((o) => !o)}
-      >
-        <span class="truncate">{selected?.label ?? "Select…"}</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </button>
+      {variant === "prefix" ? (
+        <button
+          type="button"
+          class="flex h-full min-h-11 items-center gap-1 whitespace-nowrap rounded-md border border-hairline bg-canvas px-2.5 text-[15px] text-ink transition hover:border-hairline-strong aria-expanded:border-ink"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-label={ariaLabel}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span>{triggerLabel ?? selected?.label}</span>
+          <svg class={`text-mute transition-transform ${open ? "rotate-180" : ""}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+      ) : (
+        <button
+          type="button"
+          class="select-trigger"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-label={ariaLabel}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span class="truncate">{selected?.label ?? "Select…"}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+      )}
       {open && (
-        <div class="select-popover" onKeyDown={onKey}>
+        <div class={`select-popover ${variant === "prefix" ? "right-auto min-w-[16rem]" : ""}`} onKeyDown={onKey}>
           {searchable && (
             <div class="select-search">
               <input
@@ -432,11 +578,14 @@ function Field({
   value,
   currencySymbol,
   onInput,
+  region,
 }: {
   input: InputSpec;
   value: number | string | boolean;
   currencySymbol: string;
   onInput: (id: string, raw: number | string | boolean) => void;
+  /** When set, a currency input renders the compact country/region selector inline. */
+  region?: { options: Option[]; value: string; onChange: (v: string) => void };
 }) {
   const id = `f-${input.id}`;
 
@@ -457,19 +606,59 @@ function Field({
 
   if (input.type === "toggle") {
     return (
-      <label class="flex items-center gap-3" for={id}>
+      <label class="flex items-start gap-2.5" for={id}>
         <input
           id={id}
           name={input.id}
           type="checkbox"
-          class="size-[18px] shrink-0 cursor-pointer accent-ink"
+          class="mt-0.5 size-[18px] shrink-0 cursor-pointer accent-ink"
           checked={Boolean(value)}
           onChange={(e) => onInput(input.id, e.currentTarget.checked)}
         />
-        <span class="text-[14px] text-ink">{input.label}</span>
-        {input.help && (
-          <span class="text-[13px] leading-snug text-mute">{input.help}</span>
-        )}
+        <span class="flex min-w-0 flex-col">
+          <span class="text-[14px] text-ink">{input.label}</span>
+          {input.help && (
+            <span class="text-[13px] leading-snug text-mute">{input.help}</span>
+          )}
+        </span>
+      </label>
+    );
+  }
+
+  // Currency input hosting the inline country/region selector (compact prefix).
+  if (input.type === "currency" && region) {
+    return (
+      <label class="flex flex-col gap-1.5" for={id}>
+        <span class="text-[13px] font-medium text-ink">{input.label}</span>
+        <div class="flex items-stretch gap-2">
+          <Select
+            variant="prefix"
+            triggerLabel={currencySymbol}
+            options={region.options}
+            value={region.value}
+            onChange={region.onChange}
+            ariaLabel="Country or region"
+            searchable
+          />
+          <input
+            id={id}
+            name={input.id}
+            autoComplete="off"
+            class="field-control tnum flex-1"
+            type="number"
+            inputMode="decimal"
+            value={value === "" ? "" : Number(value)}
+            min={input.min}
+            max={input.max}
+            step={input.step ?? "any"}
+            placeholder={input.placeholder}
+            onInput={(e) => {
+              const v = e.currentTarget.value;
+              onInput(input.id, v === "" ? "" : Number(v));
+            }}
+          />
+        </div>
+        {input.help && <span class="text-[13px] leading-snug text-mute">{input.help}</span>}
       </label>
     );
   }

@@ -715,6 +715,82 @@ The brand uses STACKED shadows — multiple small offsets layered to fake natura
 - Properties: `backgroundColor`, `rounded`, `padding`, `typography`
 
 
+## Iron rules (project-level, override anything below)
+
+1. **Only what contributes stays. No decoration, no redundancy — anywhere.** Before adding or
+   keeping any element, answer "what does this contribute?" If a heading already says it, the label
+   above it is redundant: delete it. Two thin similar sections merge into one strong one. The same
+   link in two places on one page keeps only the stronger placement. Purely ornamental elements need
+   an explicit justification or they go. This is the on-page counterpart of the SEO "information
+   gain" bar in the revamp roadmap §1.
+   - *Applied 2026-07-21:* the mono uppercase **eyebrow labels above section headings were removed**
+     sitewide on v2 ("ALL CALCULATORS" over "Browse by category." contributed nothing). The
+     `.eyebrow` class survives only for genuine value labels (e.g. a result readout's
+     "TOTAL (INCL. GST)"), never as a section kicker. This supersedes the "technical eyebrow" Do
+     below where it was being used decoratively.
+   - *Accessibility note:* `.eyebrow` at `{colors.mute}` `#888888` on white is **3.54:1**, which
+     fails WCAG AA (4.5:1) for text at that size. Any surviving use must use `{colors.body}`
+     (`#4d4d4d`, 8.45:1) or darker.
+
+2. **Research → propose → confirm → build.** No non-trivial design or architecture change without
+   researching the best approach, proposing it, and getting confirmation first.
+
+3. **Vercel Geist (<https://vercel.com/geist/introduction>) is THE visual-design reference.** Before
+   changing colours, typography, radii, shadows, spacing or any component, open the matching Geist
+   foundation page (Colors · Typography · Materials · Grid) and match it. Audit against it rather
+   than approximating from memory; the specs are published as machine-readable Markdown. Recognition
+   only — never use Vercel's logos or clone their pages. **Every deliberate difference is recorded in
+   the table below** so intentional choices are never mistaken for drift.
+
+4. **No per-item hairline rows anywhere.** Dividers separate *groups*, never individual items —
+   Vercel's own sidebar has no line between nav items, only above a group. A row's hover surface
+   already delineates it. Applied to the bento panels and the FAQ accordion.
+   **This is deliberately stricter than Geist** — see the deviations table.
+
+### Deliberate deviations from Geist (keep current)
+
+| Deviation | Why |
+|---|---|
+| `--mute` is `#767676`, not `#888888` | `#888888` is 3.54:1 on white and fails WCAG AA at 11–13px, where it is used for real content (field help, result sub-lines, the YMYL disclaimer). `#767676` is 4.54:1. Consistent with Geist's own "accessible, high-contrast" colour principle. |
+| Light theme is the default for new visitors, ignoring `prefers-color-scheme` | Deliberate brand choice; the toggle still persists an explicit preference. |
+| Navbar is neutral — no brand colour | ~70% of SaaS navbars are blue, so a coloured bar reads generic. The accent stays reserved for result numbers, where it means "this is the answer". |
+| Subtle dot-grid + glow hero backdrop | Geist names **Grid** a core aesthetic element, so this is on-system; kept near-subliminal (~7% opacity, radially masked) rather than a graph-paper texture. |
+| `.eyebrow` renders in `--body`, not `--mute` | A value label needs more weight than tertiary text, and it keeps contrast well clear of the AA floor. |
+| FAQ uses native `<details>/<summary>`, not Geist Collapse's `<button aria-expanded aria-controls>` | Native elements give the same accessible result — Enter/Space toggle, state announced — with **zero JavaScript**, and still satisfy Geist's own Collapse requirement that content stay in the DOM when closed for search. Geist's React component needs the ARIA scaffolding only because it is not using the native element. Trade-off accepted: no animated open/close transition. |
+| Breadcrumbs implement only the `text` variant, with no `menu`/collapsing behaviour | Geist offers `text` and `menu` variants for long paths. Ours are never deeper than Home › Category › Page, so collapsing would be machinery with nothing to collapse. Revisit if a deeper hierarchy appears. |
+
+| `.btn` uses a 100px pill radius; category chips use `rounded-full` | Geist's Materials scale is 6 / 12 / 16px and does not cover pills. The marketing pill CTA is a deliberate brand shape (see the Do's below). Everything else conforms to the Geist scale. |
+| Three text levels (`ink` / `body` / `mute`) where Geist has two (1000 primary / 900 secondary) | `--body` is the long-form prose colour, sitting between Geist's primary and secondary. A two-step scale makes prose either too heavy or too faint at paragraph length. |
+| No dividers between items inside cards, though Geist's Card offers `borderBetween` for exactly that | Geist supports both patterns — its Card can divide children, its sidebar nav does not. We chose the undivided version after seeing both: the hover surface already delineates a row, and at 8–12 rows per panel the lines added noise without adding information. Deliberately stricter than the system, not an oversight. |
+
+> **Audit caveat (2026-07-21):** the public Geist pages, including the `.md` route, do not publish
+> separator glyphs, size scales, spacing values or ARIA specifics for Breadcrumbs. Where the docs are
+> silent we follow Geist's stated *principles* (accessible, high-contrast, systematised) and WCAG,
+> and we do not claim a pixel-level match we cannot verify.
+
+### Geist foundations mapping (audited 2026-07-21)
+
+**Materials — radii now conform.** Geist publishes exactly three: **6px** (`material-base`,
+`material-small`, `material-tooltip`), **12px** (`material-medium`, `material-large`,
+`material-menu`, `material-modal`), **16px** (`material-fullscreen`). Fixed in this audit:
+`.select-popover` 8px → **12px** (it is a menu), all `rounded-lg` (8px) → **6px**, all bare
+`rounded` (4px) → **6px**, and the `:focus-visible` radius 4px → **6px**. Nesting follows Geist:
+12px containers (`.card`, tablist) with 6px children (rows, fields, options).
+Geist does not publish stroke widths, shadow values or fills, so ours stand.
+
+**Colors — our semantic tokens map onto Geist's 100–1000 step model:**
+
+| Geist step | Purpose | Our token |
+|---|---|---|
+| `background-100` / `background-200` | page backgrounds | `--canvas` / `--canvas-soft` |
+| 100–300 | component bg: default · hover · active | `--canvas` · `--canvas-soft` · `--canvas-soft-2` |
+| 400–600 | border: default · hover · active | `--hairline` · `--hairline-strong` · *(none)* |
+| 900 | secondary text/icons | `--mute` |
+| 1000 | primary text/icons | `--ink` |
+
+**Known gap:** Geist defines three border steps (default/hover/active); we have two. Add a third
+only when an active-border state is actually needed — not pre-emptively.
+
 ## Do's and Don'ts
 
 ### Do

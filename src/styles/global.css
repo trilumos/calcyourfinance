@@ -15,7 +15,7 @@
   --canvas-soft-2: #f5f5f5;
   --ink: #171717;
   --body: #4d4d4d;
-  --mute: #888888;
+  --mute: #767676; /* 4.54:1 on white — #888888 was 3.54:1 and failed WCAG AA */
   --hairline: #ebebeb;
   --hairline-strong: #d4d4d4;
   --link: #0070f3;
@@ -146,7 +146,7 @@
   :focus-visible {
     outline: 2px solid var(--link);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
   input,
   button,
@@ -158,13 +158,16 @@
 
 /* ---- Small, stable component primitives ---------------------------------- */
 @layer components {
-  /* Mono technical eyebrow (DESIGN: caption-mono, uppercase voice). */
+  /* Mono value label (DESIGN: caption-mono, uppercase voice). Only for genuine
+     labels like a result readout's "TOTAL (INCL. GST)" — never as a section
+     kicker above a heading that already says it (DESIGN.md iron rule 1).
+     Uses --body: a heavier weight than --mute suits a value label. */
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--mute);
+    color: var(--body);
   }
 
   /* Universal card: hairline ring + subtle stacked shadow. */
@@ -234,7 +237,7 @@
   /* Select variant: field-control + chevron. */
   .field-select {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23767676' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.8rem center;
     padding-right: 2.3rem;
@@ -247,6 +250,52 @@
   }
   [data-theme="dark"] .calc-accent {
     --accent: var(--accent-d, var(--accent-l, var(--link)));
+  }
+
+  /* Subtle hero backdrop: near-subliminal dot grid + a soft central glow,
+     radially masked so it fades to the edges. Decorative only (aria-hidden);
+     the calculator card sits above it on its own solid surface. */
+  .hero-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--ink) 7%, transparent) 1px,
+      transparent 1.5px
+    );
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse 78% 66% at 50% 40%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(ellipse 78% 66% at 50% 40%, #000 0%, transparent 72%);
+  }
+  [data-theme="dark"] .hero-backdrop {
+    background-image: radial-gradient(
+      color-mix(in srgb, #ffffff 9%, transparent) 1px,
+      transparent 1.5px
+    );
+  }
+  .hero-backdrop::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 36%;
+    width: min(56rem, 92%);
+    height: 24rem;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--link) 11%, transparent),
+      transparent
+    );
+    filter: blur(28px);
+  }
+  [data-theme="dark"] .hero-backdrop::before {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--link) 16%, transparent),
+      transparent
+    );
   }
 
   /* Readable long-form prose (no Typography plugin). */
@@ -325,7 +374,7 @@
     right: 0;
     background: var(--canvas);
     border: 1px solid var(--hairline);
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: var(--shadow-float);
     overflow: hidden;
   }

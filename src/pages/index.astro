@@ -5,6 +5,7 @@ import { SITE } from "../config/site";
 import { calculators } from "../calculators";
 import { CATEGORY_META, type Category } from "../calculators/_types";
 import { getPlatform } from "../config/platforms";
+import { demandRank } from "../config/demand";
 import CalculatorIsland from "../components/CalculatorIsland.tsx";
 import { formatCurrency, formatNumber, formatPercent } from "../lib/money";
 import type { ComputeCtx, InputValues } from "../calculators/_types";
@@ -13,27 +14,21 @@ const singles = calculators.filter((c) => c.kind === "single");
 const comparisons = calculators.filter((c) => c.kind === "comparison");
 const total = singles.length + comparisons.length;
 
-// Popular: a high-search mix across categories (all live on this site).
-const featuredOrder = [
-  "gst-calculator",
-  "emi-calculator",
-  "sip-calculator",
-  "stripe-fee-calculator",
-  "paypal-fee-calculator",
-  "compound-interest-calculator",
-];
-const featured = featuredOrder
-  .map((slug) => calculators.find((c) => c.slug === slug))
-  .filter((c): c is NonNullable<typeof c> => Boolean(c));
-
-// Interactive "try it here" tabs in the hero — a few popular calculators,
-// computed server-side (numbers in the HTML, SEO-safe) and hydrated per-tab.
+// Interactive "try it here" tabs in the hero — computed server-side (numbers in
+// the HTML, SEO-safe) and hydrated per-tab.
+// Calibrated for a global audience: EMI and SIP are India-only terms and were
+// dropped (the rest of the world says "loan payment"), leaving two payment, one
+// e-commerce and two finance tools. Every one is country-aware, so the currency
+// auto-detection demos correctly wherever the visitor is. GST keeps the fifth
+// slot because it is also used in Australia, New Zealand, Singapore and Canada.
+// India is still served: ₹ is auto-detected, and GST/EMI/SIP/FD/RD remain in the
+// Personal Finance panel below.
 const heroTabOrder: { slug: string; label: string }[] = [
+  { slug: "paypal-fee-calculator", label: "PayPal" },
+  { slug: "stripe-fee-calculator", label: "Stripe" },
+  { slug: "etsy-fee-calculator", label: "Etsy" },
+  { slug: "loan-calculator", label: "Loan" },
   { slug: "gst-calculator", label: "GST" },
-  { slug: "emi-calculator", label: "EMI" },
-  { slug: "sip-calculator", label: "SIP" },
-  { slug: "stripe-fee-calculator", label: "Stripe fees" },
-  { slug: "etsy-fee-calculator", label: "Etsy fees" },
 ];
 const heroTabs = heroTabOrder
   .map(({ slug, label }) => {
@@ -60,28 +55,58 @@ const CATEGORY_ORDER: Category[] = [
   "freelance",
   "general",
 ];
-const groups = CATEGORY_ORDER.map((cat) => ({
-  cat,
-  meta: CATEGORY_META[cat],
-  items: singles.filter((c) => c.category === cat),
-})).filter((g) => g.items.length > 0);
+// The homepage shows a curated subset per category and links to the hub for the
+// rest: selective homepage linking concentrates equity on the hubs and keeps every
+// calculator within 2 clicks.
+// Bento size hierarchy: a category with many calculators earns a full-width panel
+// (two inner columns) and shows more of them; the rest sit in equal half panels.
+// Ordering: a researched estVolume always wins (real data). Where it's absent —
+// most payment/e-commerce configs, since keyword volumes are gated behind paid
+// tools — fall back to the explicit editorial demand ranking in config/demand.ts,
+// then alphabetical. Never alphabetical-first: people want the big platforms.
+const WIDE_THRESHOLD = 20;
+const byDemand = (a: (typeof singles)[number], b: (typeof singles)[number]) => {
+  const va = a.keywords.estVolume ?? 0;
+  const vb = b.keywords.estVolume ?? 0;
+  if (va !== vb) return vb - va;
+  const ra = demandRank(a.category, a.slug);
+  const rb = demandRank(b.category, b.slug);
+  return ra - rb || a.title.localeCompare(b.title);
+};
+const groups = CATEGORY_ORDER.map((cat) => {
+  const items = singles.filter((c) => c.category === cat);
+  const wide = items.length >= WIDE_THRESHOLD;
+  return {
+    cat,
+    meta: CATEGORY_META[cat],
+    items,
+    wide,
+    featured: [...items].sort(byDemand).slice(0, wide ? 12 : 8),
+  };
+}).filter((g) => g.items.length > 0);
 
 // Theme-aware accent style for a platform's recognition dot / left bar.
 const accentStyle = (platformId?: string) => {
   const p = getPlatform(platformId);
   return p ? `--accent-l:${p.color};--accent-d:${p.colorDark ?? p.color}` : undefined;
 };
-// A two-colour split bar for comparison cards: the two brand colours.
-const comparisonGradient = (slug: string) => {
-  const cfg = calculators.find((c) => c.slug === slug);
-  const ps = (cfg?.comparisonOf ?? []).map((id) => getPlatform(id)).filter((p): p is NonNullable<typeof p> => Boolean(p));
-  const a = ps[0]?.color ?? "#888888";
-  const b = ps[1]?.color ?? a;
-  return `linear-gradient(180deg, ${a} 0 50%, ${b} 50% 100%)`;
-};
-// Lowercased search terms for the client-side filter.
-const terms = (c: (typeof calculators)[number]) =>
-  `${c.title} ${CATEGORY_META[c.category].label} ${c.keywords.primary} ${(c.keywords.secondary ?? []).join(" ")}`.toLowerCase();
+// Freshness signal: the calculators whose rates we verified most recently.
+// Every config carries lastUpdated; fee calculators also carry feesVerifiedOn.
+const verifiedOn = (c: (typeof calculators)[number]) => c.feesVerifiedOn ?? c.lastUpdated;
+const recentlyVerified = [...calculators]
+  .sort((a, b) => verifiedOn(b).localeCompare(verifiedOn(a)))
+  .slice(0, 6);
+const prettyDate = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
+// Counts are derived, never hardcoded — the prose said "(Etsy, with more rolling
+// out)" long after e-commerce grew past 30 calculators. Derived counts can't rot.
+const catCount = (cat: Category) => singles.filter((c) => c.category === cat).length;
 
 const homeFaqs = [
   {
@@ -93,24 +118,52 @@ const homeFaqs = [
     a: "Each platform fee is taken from the official pricing page, stored in one place, and stamped with the date we last verified it — shown on every calculator. The finance formulas (EMI, SIP, compound interest and the rest) are standard textbook math, and every formula is unit-tested so the numbers are reproducible. Treat the results as reliable estimates and confirm the final figure before pricing decisions.",
   },
   {
-    q: "Which calculators do you have?",
-    a: "Three groups: payment-processor and wallet fees (Stripe, PayPal, Square, Venmo, Cash App, Wise, Payoneer, Razorpay and more), marketplace and seller fees (Etsy, with more rolling out), and personal-finance math (EMI, loan, SIP, FD, RD, GST, compound interest, simple interest, salary and percentage). Plus head-to-head fee comparisons. We add new calculators regularly.",
+    q: "The fee here doesn't match what I was actually charged. Why?",
+    a: "Usually one of five things. You may be on a negotiated or volume rate rather than the public price. The payment may have involved a currency conversion, which carries its own margin on top of the headline fee. Some countries add tax on the fee itself. A dispute, chargeback or refund fee may have been deducted separately. Or the platform is trialling different pricing in your market. These calculators work from each platform's published rates, so they show what the public price implies — if your statement differs, the difference is almost always one of those five.",
   },
   {
-    q: "Can I compare two platforms side by side?",
-    a: "Yes. Our comparison calculators put two platforms next to each other on the same sale and tell you which is cheaper and by exactly how much — try Stripe vs PayPal or Cash App vs Venmo. Every single-platform calculator also links to the relevant comparisons.",
-  },
-  {
-    q: "Does it show my currency?",
-    a: "Yes — the calculators detect your region and show results in your currency automatically (₹ in India, $ in the US, and so on), and you can switch country from the selector on any country-aware calculator. Fee rates that differ by country update together with the currency and worked example.",
+    q: "Is the fee taken out of what the buyer pays, or added on top?",
+    a: "For payment processors and marketplaces it is deducted from the money you receive: the buyer pays the full amount and the platform keeps its cut before paying you out, which is why the calculators show a 'you receive' or 'your payout' figure rather than just the fee. If you would rather charge the customer enough to cover it, use the reverse mode — it grosses the amount up so you net exactly what you wanted.",
   },
   {
     q: "How do I work out what to charge to receive an exact amount?",
     a: "Most fee calculators have a reverse mode: switch to 'I want to receive this amount' and the tool grosses the charge up using charge = (target + fixed fee) ÷ (1 − rate), so you know exactly what to invoice or list to net your target after fees.",
   },
   {
+    q: "Does it show my currency, and why does the fee change when I switch country?",
+    a: "The calculators detect your region and show results in your currency automatically (₹ in India, $ in the US, and so on), formatted the way that region writes numbers. Switching country does more than swap the symbol: most platforms genuinely charge different rates in different markets, so the rate, the worked example and any local tax on the fee all update together. Which countries are available depends on where each platform publishes its pricing.",
+  },
+  {
+    q: "Do these include the tax charged on the fee itself?",
+    a: "Yes, where the platform charges it. In India, for example, payment gateways add 18% GST on their own fee, so the Razorpay, Paytm and India-region calculators show that as a separate line rather than hiding it inside the percentage. It is a commonly missed cost — the fee on the fee.",
+  },
+  {
+    q: "Which calculators do you have?",
+    a: `Three groups: ${catCount("payment-fees")} payment-processor and wallet fee calculators (Stripe, PayPal, Square, Venmo, Cash App, Wise, Payoneer, Razorpay and more), ${catCount("ecommerce-fees")} marketplace and seller-fee calculators (Amazon FBA, eBay, Etsy, Shopify, Poshmark, Depop, TikTok Shop, Fiverr, Upwork and more), and ${catCount("personal-finance")} personal-finance tools (EMI, loan, SIP, FD, RD, GST, compound interest, simple interest, salary and percentage). Plus ${comparisons.length} head-to-head fee comparisons. We add new calculators regularly.`,
+  },
+  {
+    q: "Can I compare two platforms side by side?",
+    a: "Yes. Our comparison calculators put two platforms next to each other on the same sale and tell you which is cheaper and by exactly how much — try Stripe vs PayPal or Cash App vs Venmo. Every single-platform calculator also links to the relevant comparisons.",
+  },
+  {
+    q: "How often do you re-check the rates, and what happens when a platform changes its pricing?",
+    a: "Every rate carries the date it was last checked against the platform's official pricing page, shown on the calculator itself, and the most recently checked ones are listed on the home page. Rather than promise a fixed schedule, we publish that date so you can see exactly how current a number is. When a platform changes its pricing, the figure and the date are updated together.",
+  },
+  {
+    q: "Do you store the numbers I type in?",
+    a: "No. Every calculation runs in your browser, so the amounts you enter are never sent to a server and there is nothing for us to store. If a calculator remembers your recent calculations, that history is saved in your own browser's local storage on your device and can be cleared from the calculator itself. We measure page visits like any site, but never the figures you enter.",
+  },
+  {
+    q: "My platform isn't listed — will you add it?",
+    a: "Probably, if people are asking for it. The library grows towards the platforms and calculations people actually search for rather than padding the count. If something you use is missing, say so through the contact page and it goes on the list.",
+  },
+  {
     q: "Who is behind CalcYourFinance?",
     a: `${SITE.author.name} — ${SITE.author.role}. ${SITE.author.bio}`,
+  },
+  {
+    q: "Is there an API, or can I embed a calculator on my site?",
+    a: "Not yet. Both are planned, and an embeddable calculator is the more likely of the two to arrive first, but neither exists today and we would rather say so than list a feature you cannot use. For now the calculators are free to use and link to.",
   },
 ];
 
@@ -131,34 +184,28 @@ const faqLd = {
   canonicalPath="/"
   schemas={[faqLd]}
 >
-  <!-- Hero -->
-  <section class="border-b border-hairline bg-canvas">
-    <div class="container mx-auto max-w-[64rem] px-4 py-12 sm:py-16">
-      <div class="max-w-[48rem]">
-        <p class="eyebrow">No signup · Instant · In your currency</p>
-        <h1 class="mt-3 text-pretty text-[clamp(2.2rem,1.6rem+2.6vw,3.5rem)]">
-          Free fee and finance calculators.
+  <!-- Hero: centered title + a focused live calculator, sized to fit one viewport. -->
+  <section class="relative border-b border-hairline bg-canvas">
+    <div class="hero-backdrop" aria-hidden="true"></div>
+    <div class="container relative z-10 mx-auto flex min-h-[calc(100svh-3.75rem)] max-w-[64rem] flex-col justify-center px-4 py-8">
+      <div class="mx-auto max-w-[42rem] text-center">
+        <h1 class="text-balance text-[clamp(1.9rem,1.4rem+2.2vw,2.7rem)]">
+          Fee and finance calculators you can trust.
         </h1>
-        <p class="mt-4 max-w-[42rem] text-[18px] leading-relaxed text-body">
-          A fast, accurate library for the numbers that matter — what payment
-          processors and marketplaces take (Stripe, PayPal, Square, Etsy), and the
-          everyday finance math you look up most (EMI, SIP, FD, GST, compound
-          interest). Fee rates are pulled from official pricing pages and dated;
-          results show in your own currency. New calculators added regularly.
+        <p class="mx-auto mt-3 max-w-[38rem] text-pretty text-[16px] leading-relaxed text-body">
+          {total} free calculators — Stripe, PayPal, Etsy, Amazon and more — plus the everyday
+          finance math. Every rate comes from the official pricing page and carries the date we
+          checked it.
         </p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#all-calculators" class="btn btn-primary">Browse all calculators</a>
-          <a href="#comparisons" class="btn btn-secondary">Compare two platforms</a>
-        </div>
       </div>
 
-      <!-- Try it here: a few popular calculators, live -->
-      <div class="mt-12" data-calc-tabs>
-        <p class="eyebrow mb-2.5">Try one now — no signup</p>
+      <!-- Live demo: full-width so tall calcs (Stripe/Etsy) get more horizontal
+           room and stay closer to one viewport. Inputs and result side by side (md+). -->
+      <div class="mt-7 w-full" data-calc-tabs>
         <div
           role="tablist"
           aria-label="Try a calculator"
-          class="mb-3 flex max-w-full flex-wrap gap-1 rounded-xl border border-hairline bg-canvas-soft p-1"
+          class="mx-auto mb-3 flex w-fit max-w-full flex-wrap justify-center gap-1 rounded-xl border border-hairline bg-canvas-soft p-1"
         >
           {
             heroTabs.map((t, i) => (
@@ -169,7 +216,7 @@ const faqLd = {
                 aria-controls={`hpanel-${i}`}
                 aria-selected={i === 0 ? "true" : "false"}
                 tabindex={i === 0 ? 0 : -1}
-                class="whitespace-nowrap rounded-lg px-3.5 py-1.5 text-[13px] font-medium text-body transition hover:text-ink aria-selected:bg-canvas aria-selected:text-ink aria-selected:shadow-card"
+                class="whitespace-nowrap rounded-md px-3 py-1.5 text-[13px] font-medium text-body transition hover:text-ink aria-selected:bg-canvas aria-selected:text-ink aria-selected:shadow-card"
               >
                 {t.label}
               </button>
@@ -194,6 +241,12 @@ const faqLd = {
                 countryCodes={t.config.countries?.supported}
                 initialCountry={t.initialCountry}
               />
+              <p class="mt-2.5 text-center text-[12px] text-mute">
+                Full version with worked example, FAQ and sources:{" "}
+                <a href={`/${t.config.slug}`} class="text-link no-underline hover:underline">
+                  {t.config.title} →
+                </a>
+              </p>
             </div>
           ))
         }
@@ -201,200 +254,230 @@ const faqLd = {
     </div>
   </section>
 
-  <!-- Popular -->
-  <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="popular-h">
-    <p class="eyebrow">Popular calculators</p>
-    <h2 id="popular-h" class="mb-4 mt-1">Start with these.</h2>
-    <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(16rem,1fr))]">
-      {
-        featured.map((c) => {
-          const p = getPlatform(c.platform);
-          return (
-            <li>
-              <a
-                href={`/${c.slug}`}
-                class="calc-accent card flex h-full flex-col gap-1.5 p-4 no-underline transition hover:border-hairline-strong hover:shadow-float"
-                style={accentStyle(c.platform)}
-              >
-                <span class="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-mute">
-                  {p && <span class="size-1.5 rounded-full bg-accent" aria-hidden="true" />}
-                  {CATEGORY_META[c.category].label}
-                </span>
-                <span class="font-medium text-ink">{c.title}</span>
-                <span class="mt-auto text-[13px] text-link" aria-hidden="true">Open →</span>
-              </a>
-            </li>
-          );
-        })
-      }
-    </ul>
-  </section>
-
-  <!-- All calculators: search + grouped by category (full internal-link index) -->
-  <section id="all-calculators" class="container mx-auto max-w-[64rem] scroll-mt-20 px-4 py-12" aria-labelledby="all-h">
-    <p class="eyebrow">All calculators</p>
-    <h2 id="all-h" class="mb-1 mt-1">Browse every calculator by category.</h2>
-    <p class="mb-5 max-w-[40rem] text-[14px] text-body">
-      {total} calculators and counting. Search by name or platform, or jump to a category.
-    </p>
-
-    <div class="mb-8 max-w-[26rem]">
-      <label for="calc-filter" class="eyebrow mb-1.5 block">Find a calculator</label>
-      <span class="relative flex items-center">
-        <svg
-          class="pointer-events-none absolute left-3 text-mute" width="16" height="16" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-        >
-          <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
-        </svg>
-        <input
-          id="calc-filter"
-          type="search"
-          class="field-control pl-9"
-          placeholder="Search Stripe, EMI, GST…"
-          autocomplete="off"
-          spellcheck="false"
-          enterkeyhint="search"
-          aria-describedby="calc-filter-count"
-        />
-      </span>
-      <p id="calc-filter-count" class="mt-1.5 text-[13px] text-mute" aria-live="polite" role="status">{total} calculators</p>
-    </div>
-
-    <div class="flex flex-col gap-9">
+  <!-- Browse by category: first thing on scroll (search lives in the navbar). -->
+  <section class="border-b border-hairline bg-canvas-soft">
+    <nav
+      class="container mx-auto flex max-w-[64rem] flex-wrap items-center justify-center gap-2 px-4 py-4"
+      aria-label="Browse by category"
+    >
+      <span class="eyebrow mr-1">Browse</span>
       {
         groups.map((g) => (
-          <div data-calc-group aria-labelledby={`grp-${g.cat}`}>
-            <div class="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-              <div>
-                <p class="eyebrow">{g.meta.label}</p>
-                <h3 id={`grp-${g.cat}`} class="mt-0.5 text-[17px] font-semibold text-ink">
-                  {g.meta.blurb}
-                </h3>
-              </div>
-              <a href={`/${g.meta.slug}`} class="shrink-0 text-[13px] font-medium text-link no-underline hover:underline">
-                View all {g.meta.label.toLowerCase()} →
-              </a>
+          <a
+            href={`/${g.meta.slug}`}
+            class="inline-flex items-center gap-2 rounded-full border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink no-underline transition hover:border-hairline-strong hover:shadow-card"
+          >
+            {g.meta.label}
+            <span class="tnum font-mono text-[11px] text-mute">{g.items.length}</span>
+          </a>
+        ))
+      }
+      {comparisons.length > 0 && (
+        <a
+          href="#comparisons"
+          class="inline-flex items-center gap-2 rounded-full border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink no-underline transition hover:border-hairline-strong hover:shadow-card"
+        >
+          Comparisons
+          <span class="tnum font-mono text-[11px] text-mute">{comparisons.length}</span>
+        </a>
+      )}
+    </nav>
+  </section>
+
+  <!-- Featured comparisons: highest-intent, fastest-ranking page type — surfaced early. -->
+  {comparisons.length > 0 && (
+    <section id="comparisons" class="container mx-auto max-w-[64rem] scroll-mt-20 px-4 py-12" aria-labelledby="cmp-h">
+      <h2 id="cmp-h" class="mb-1 mt-1">Which platform actually costs less?</h2>
+      <p class="mb-6 max-w-[42rem] text-[15px] text-body">
+        Put two platforms side by side on the same sale and see which is cheaper — and by exactly
+        how much, after every fee.
+      </p>
+      <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(17rem,1fr))]">
+        {comparisons.map((c) => (
+          <li>
+            <a
+              href={`/${c.slug}`}
+              class="card group flex h-full items-center justify-between gap-3 p-5 no-underline transition hover:border-body hover:shadow-float"
+            >
+              <span class="text-[15px] font-medium text-ink">
+                {c.title.replace(" Fee Calculator", "")}
+              </span>
+              <span
+                class="shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5"
+                aria-hidden="true"
+              >→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <!-- Browse by category: a symmetric 2x2 bento — three category panels of equal
+       height (8 rows each) plus a search panel that completes the square. Each
+       panel links to its hub with keyword-rich anchor text. -->
+  <section id="all-calculators" class="container mx-auto max-w-[64rem] scroll-mt-20 px-4 py-12" aria-labelledby="all-h">
+    <h2 id="all-h" class="mb-1 mt-1">Browse by category.</h2>
+    <p class="mb-6 max-w-[42rem] text-[15px] text-body">
+      {total} calculators across {groups.length} categories. The most-searched in each are below —
+      open a category for its full list, or press <kbd class="rounded-md border border-hairline bg-canvas-soft px-1.5 py-0.5 font-mono text-[11px] text-mute">⌘K</kbd> to search them all.
+    </p>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      {
+        groups.map((g) => (
+          <section
+            class={`card flex flex-col p-5 ${g.wide ? "md:col-span-2" : ""}`}
+            aria-labelledby={`grp-${g.cat}`}
+          >
+            <div class="mb-3 flex items-baseline justify-between gap-3 border-b border-hairline pb-3">
+              <h3 id={`grp-${g.cat}`} class="text-[15px] font-semibold text-ink">{g.meta.label}</h3>
+              <span class="tnum shrink-0 font-mono text-[11px] text-body">{g.items.length}</span>
             </div>
-            <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr))]">
-              {g.items.map((c) => (
-                <li data-calc-card data-terms={terms(c)}>
+            <ul
+              class={`-mx-2 list-none p-0 ${g.wide ? "sm:grid sm:grid-cols-2 sm:gap-x-6" : ""}`}
+            >
+              {g.featured.map((c) => (
+                <li>
                   <a
                     href={`/${c.slug}`}
-                    class="card group relative flex items-center gap-3 overflow-hidden p-4 pl-5 no-underline transition hover:shadow-float"
+                    class="group flex items-center gap-3 rounded-md px-2 py-2.5 no-underline transition hover:bg-canvas-soft-2"
                   >
+                    <span class="min-w-0 flex-1 truncate text-[14px] text-ink">{c.title}</span>
                     <span
-                      class="calc-accent absolute inset-y-0 left-0 w-[3px] bg-accent"
-                      style={accentStyle(c.platform)}
+                      class="grid size-6 shrink-0 place-items-center rounded-md text-[13px] text-body opacity-0 transition group-hover:bg-hairline group-hover:opacity-100"
                       aria-hidden="true"
-                    />
-                    <span class="min-w-0 flex-1">
-                      <span class="block truncate text-[14px] font-medium text-ink">{c.title}</span>
-                      <span class="block font-mono text-[10px] uppercase tracking-wide text-mute">{g.meta.label}</span>
-                    </span>
-                    <span class="shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
+                    >→</span>
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+            <a
+              href={`/${g.meta.slug}`}
+              class="mt-auto border-t border-hairline pt-3 text-[13px] font-medium text-link no-underline hover:underline"
+            >
+              View all {g.meta.label.toLowerCase()} calculators →
+            </a>
+          </section>
         ))
       }
 
-      {comparisons.length > 0 && (
-        <div id="comparisons" class="scroll-mt-24" data-calc-group aria-labelledby="grp-comparisons">
-          <div class="mb-3">
-            <p class="eyebrow">Comparisons</p>
-            <h3 id="grp-comparisons" class="mt-0.5 text-[17px] font-semibold text-ink">Two platforms, head to head.</h3>
-            <p class="mt-1 max-w-[40rem] text-[14px] text-body">
-              Put two platforms side by side on the same sale and see which is cheaper, and by exactly how much.
-            </p>
-          </div>
-          <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr))]">
-            {comparisons.map((c) => (
-              <li data-calc-card data-terms={terms(c)}>
-                <a
-                  href={`/${c.slug}`}
-                  class="card group relative flex items-center gap-3 overflow-hidden p-4 pl-5 no-underline transition hover:shadow-float"
-                >
-                  <span class="absolute inset-y-0 left-0 w-[3px]" style={`background:${comparisonGradient(c.slug)}`} aria-hidden="true" />
-                  <span class="min-w-0 flex-1">
-                    <span class="block truncate text-[14px] font-medium text-ink">{c.title.replace(" Fee Calculator", "")}</span>
-                    <span class="block font-mono text-[10px] uppercase tracking-wide text-mute">Comparison</span>
-                  </span>
-                  <span class="shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <p id="calc-filter-empty" hidden class="text-[14px] text-body">
-        No calculators match that search. Try a platform name like <strong class="text-ink">Stripe</strong> or a topic like <strong class="text-ink">EMI</strong>.
-      </p>
     </div>
   </section>
 
-  <!-- Why trust -->
+  <!-- Why trust + how we verify (merged: the E-E-A-T / information-gain section) -->
   <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="trust-h">
-    <div class="card max-w-[52rem] p-6 sm:p-10">
-      <p class="eyebrow">Why trust these numbers</p>
-      <h2 id="trust-h" class="sr-only">Why you can trust these numbers</h2>
-      <ul class="mt-3 grid list-none gap-3 p-0">
-        <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Cited &amp; dated.</strong> Every fee links to the platform's official pricing page with a "last verified" date.</li>
-        <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Tested math.</strong> Each formula has unit tests, so the numbers are reproducible — not guesses.</li>
-        <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Your currency.</strong> Results auto-detect your region and currency; country-aware fees update the rate and example too.</li>
-        <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Reverse mode.</strong> Work backwards to find what to charge so you receive an exact amount after fees.</li>
-      </ul>
-      <p class="mt-4 border-t border-dashed border-hairline pt-4 text-[13px] text-mute">{SITE.disclaimer}</p>
+    <h2 id="trust-h" class="mb-1 mt-1">Numbers you can check for yourself.</h2>
+    <p class="mb-6 max-w-[42rem] text-[15px] text-body">
+      Most fee calculators never tell you where their rates came from, or when they were last
+      correct. Ours do — on every calculator.
+    </p>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="card p-6">
+        <h3 class="mb-3 text-[15px] font-semibold text-ink">What you get</h3>
+        <ul class="grid list-none gap-3 p-0 text-[14px]">
+          <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Cited &amp; dated.</strong> Every fee links to the platform's official pricing page with the date we last verified it.</li>
+          <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Tested math.</strong> Each formula has unit tests, so the numbers are reproducible — not guesses.</li>
+          <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Your currency.</strong> Results follow your region; country-aware fees update the rate and worked example too.</li>
+          <li class="relative pl-6 text-body"><span class="absolute left-0 font-bold text-link" aria-hidden="true">✓</span><strong class="text-ink">Reverse mode.</strong> Work backwards to find what to charge so you receive an exact amount after fees.</li>
+        </ul>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="mb-3 text-[15px] font-semibold text-ink">How we verify a rate</h3>
+        <ol class="grid list-none gap-3 p-0 text-[14px]">
+          <li class="relative pl-7 text-body"><span class="tnum absolute left-0 font-mono text-[12px] text-mute" aria-hidden="true">01</span>Take the rate straight from the platform's <strong class="text-ink">official pricing page</strong> — never a third-party summary.</li>
+          <li class="relative pl-7 text-body"><span class="tnum absolute left-0 font-mono text-[12px] text-mute" aria-hidden="true">02</span>Record it in <strong class="text-ink">one shared source of truth</strong>, stamped with the date it was checked.</li>
+          <li class="relative pl-7 text-body"><span class="tnum absolute left-0 font-mono text-[12px] text-mute" aria-hidden="true">03</span>Encode the math as a <strong class="text-ink">unit-tested function</strong>, so every result is reproducible.</li>
+          <li class="relative pl-7 text-body"><span class="tnum absolute left-0 font-mono text-[12px] text-mute" aria-hidden="true">04</span>When a platform changes its pricing, the <strong class="text-ink">figure and the date move together</strong>.</li>
+        </ol>
+        <p class="mt-4 text-[13px]">
+          <a href="/methodology" class="text-link no-underline hover:underline">Read the full methodology →</a>
+        </p>
+      </div>
     </div>
+
+    <p class="mt-4 max-w-[52rem] border-t border-dashed border-hairline pt-4 text-[13px] text-mute">{SITE.disclaimer}</p>
   </section>
 
-  <!-- SEO content / mission -->
-  <section class="container mx-auto max-w-[64rem] px-4 py-4" aria-labelledby="about-h">
+  <!-- Recently verified: freshness signal, straight from each config's verified date. -->
+  <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="fresh-h">
+    <h2 id="fresh-h" class="mb-1 mt-1">Rates we checked most recently.</h2>
+    <p class="mb-6 max-w-[42rem] text-[15px] text-body">
+      Every calculator shows when its rates were last verified against the official source. Here are
+      the latest.
+    </p>
+    <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(17rem,1fr))]">
+      {
+        recentlyVerified.map((c) => (
+          <li>
+            <a
+              href={`/${c.slug}`}
+              class="card flex h-full items-center justify-between gap-3 p-4 no-underline transition hover:border-body hover:shadow-float"
+            >
+              <span class="min-w-0 flex-1">
+                <span class="block truncate text-[14px] font-medium text-ink">{c.title}</span>
+                <span class="block font-mono text-[10px] uppercase tracking-wide text-body">
+                  {CATEGORY_META[c.category].label}
+                </span>
+              </span>
+              <time
+                datetime={verifiedOn(c)}
+                class="tnum shrink-0 whitespace-nowrap font-mono text-[11px] text-body"
+              >
+                {prettyDate(verifiedOn(c))}
+              </time>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- Long-form: topical context + contextual links into the three category hubs.
+       Deliberately does NOT re-explain sourcing — the trust section above owns that. -->
+  <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="about-h">
     <div class="prose max-w-[46rem]">
-      <p class="eyebrow">About CalcYourFinance</p>
-      <h2 id="about-h" class="mt-1">A complete, trustworthy library of fee &amp; finance calculators.</h2>
+      <h2 id="about-h" class="mt-0">Where these numbers come from.</h2>
       <p>
-        Fees are easy to underestimate and finance math is easy to get wrong. Every payment
-        processor and marketplace charges differently — a percentage here, a fixed fee there,
-        surcharges for international cards — and everyday questions like an EMI, an SIP return or
-        the GST on a bill deserve an exact answer. CalcYourFinance makes both obvious: enter your
-        numbers, pick your platform or country, and see the result and exactly what you keep,
-        instantly and in your own currency.
+        Most fee calculators won't tell you where their rates came from or when anyone last
+        checked them. That is the gap this fills. Every rate here is taken from the platform's own
+        pricing page, and the date it was last checked is printed on the calculator — so you can
+        judge for yourself whether to trust it, instead of taking our word for it.
       </p>
 
       <h3>What this site covers</h3>
       <p>
-        We focus on the calculators people search for most: <a href="/payment-fees">payment
-        processing fees</a> (Stripe, PayPal, Square, Venmo, Cash App, Wise, Payoneer and more),
-        <a href="/ecommerce-fees">marketplace and seller fees</a> (Etsy, with more rolling out),
-        and <a href="/personal-finance">personal-finance tools</a> (EMI, loan, SIP, FD, RD, GST,
-        compound and simple interest, salary and percentage). On top of the single-platform tools,
-        our comparison calculators settle the "which is cheaper" question by putting two platforms
-        head-to-head on the same payment. This is a growing library — our goal is every fee and
-        finance calculator people genuinely need, not filler nobody uses.
+        {catCount("payment-fees")} <a href="/payment-fees">payment-processing fee calculators</a>
+        {" "}(Stripe, PayPal, Square, Venmo, Cash App, Wise, Payoneer, Razorpay and more),
+        {" "}{catCount("ecommerce-fees")} <a href="/ecommerce-fees">marketplace and seller-fee
+        calculators</a> (Amazon FBA, eBay, Etsy, Shopify, Poshmark, Depop, TikTok Shop, Fiverr,
+        Upwork and the rest), and {catCount("personal-finance")}
+        {" "}<a href="/personal-finance">personal-finance tools</a> (EMI, loan, SIP, FD, RD, GST,
+        compound and simple interest, salary and percentage). On top of those,
+        {" "}{comparisons.length} <a href="#comparisons">head-to-head comparisons</a> settle the
+        "which is cheaper" question on the same transaction.
       </p>
 
-      <h3>How the calculators work</h3>
+      <h3>How the math works</h3>
       <p>
         Fee tools apply the platform's published rate to your amount: fee = amount × rate% + fixed
         fee, with surcharges and taxes added where they apply. Finance tools use the standard
-        formulas — compound interest, EMI amortisation, annuity future value and so on. Everything
-        is computed in your browser from pure, unit-tested formulas, and the currency follows your
-        region, so results are fast, private, accurate and reproducible.
+        formulas — compound interest, EMI amortisation, annuity future value and so on. Every
+        formula is a pure, unit-tested function that runs in your browser, so results are
+        reproducible and your numbers never leave your device.
       </p>
 
-      <h3>Why you can trust the numbers</h3>
+      <h3>What these tools can't see</h3>
       <p>
-        Getting these right matters, so every platform rate is sourced from the official pricing
-        page, stored in a single place, and stamped with a "last verified" date shown on the
-        calculator. When a platform changes its pricing, we update the figure and the date
-        together. The site is built and maintained by
-        {" "}<a href="/about">{SITE.author.name}</a>, and every calculator cites its sources and
-        carries a clear "estimate, not financial advice" note. For day-to-day decisions, you get a
-        dependable answer in seconds — and a link to the source if you want to double-check.
+        They calculate from published rates, so they don't know about a rate you negotiated, a
+        promotional period, or a fee a platform is testing in your region. Currency conversion is
+        applied at the platform's stated margin, not the live mid-market rate at the moment you
+        sell. Treat the result as a close estimate from the official numbers, and confirm the final
+        figure before you price anything. Built and maintained by
+        {" "}<a href="/about">{SITE.author.name}</a> — see <a href="/methodology">how we verify
+        every rate</a>.
       </p>
     </div>
   </section>
@@ -405,35 +488,6 @@ const faqLd = {
       <FAQ faqs={homeFaqs} />
     </div>
   </section>
-
-  <script>
-    const input = document.getElementById("calc-filter") as HTMLInputElement | null;
-    const count = document.getElementById("calc-filter-count");
-    const empty = document.getElementById("calc-filter-empty");
-    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-calc-card]"));
-    const groupEls = Array.from(document.querySelectorAll<HTMLElement>("[data-calc-group]"));
-    const total = cards.length;
-
-    function apply() {
-      const q = (input?.value ?? "").trim().toLowerCase();
-      let shown = 0;
-      for (const card of cards) {
-        const match = q === "" || (card.dataset.terms ?? "").includes(q);
-        card.hidden = !match;
-        if (match) shown++;
-      }
-      for (const g of groupEls) {
-        g.hidden = g.querySelectorAll("[data-calc-card]:not([hidden])").length === 0;
-      }
-      if (empty) empty.hidden = shown !== 0;
-      if (count) count.textContent = q === "" ? `${total} calculators` : shown === 0 ? "No matches" : `${shown} of ${total} calculators`;
-    }
-
-    if (input) {
-      input.addEventListener("input", apply);
-      apply();
-    }
-  </script>
 
   <script>
     // Hero "try it here" tabs — reveal the chosen calculator (which hydrates it).
