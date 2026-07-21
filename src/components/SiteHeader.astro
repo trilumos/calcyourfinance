@@ -213,7 +213,7 @@ const cmdIndex = calculators.map((c) => ({
         li.dataset.i = String(i);
         li.setAttribute("aria-selected", i === active ? "true" : "false");
         li.className =
-          "group flex cursor-pointer items-center justify-between gap-3 rounded-lg px-2 py-2 text-[14px] no-underline aria-selected:bg-canvas-soft";
+          "group flex cursor-pointer items-center justify-between gap-3 rounded-lg px-2 py-2 text-[14px] no-underline aria-selected:bg-canvas-soft-2";
         const a = document.createElement("a");
         a.href = "/" + r.slug;
         a.tabIndex = -1; // combobox pattern: navigate options via arrows, not Tab
