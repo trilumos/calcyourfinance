@@ -391,14 +391,29 @@ positioning (§0) collapses if a single number is wrong. v2 changed the **shared
 (inline region selector, `half` field pairing, toggle layout), so every calculator's inputs must be
 re-checked even though the math itself was untouched.
 
-**Automated**
+> **Scope correction (2026-07-21).** This gate was originally written as "verify all 60 rates before
+> merging v2", which over-scoped it. **v2 changes no rate data** — `config/fees.ts` and
+> `config/ai-pricing.ts` are byte-identical to `main`, and the only calculator-config edits are
+> `half: true` layout metadata on three configs. Merging v2 therefore *cannot* make rate accuracy
+> worse. Split the gate accordingly:
+>
+> - **Merge blocker = regressions** from the shared `CalculatorIsland` changes. Fully automated below.
+> - **Rate accuracy = a standing task**, not a v2 blocker. Rates drift with time, not with merges.
+>   This is what the periodic rate watcher owns (§13).
+
+**Automated — `npm run verify` (blocks the merge)**
 - [ ] `npm test` — all formula tests green (706 at time of writing).
 - [ ] `npm run build` — clean, expected page count.
-- [ ] **Shared chrome present on *every* built page, not just the ones we edited.** Anything global —
-      navbar, logo, `[data-cmdk-open]` search trigger, the `#cmdk` palette + `#cmdk-data` index, theme
-      toggle, skip link, `<main>` landmark, footer — must appear in all 71 HTML files. A component can
-      render perfectly on the homepage and be missing elsewhere; grep the whole of `dist/` rather than
-      spot-checking. *(Run 2026-07-21: 71/71 on all eight elements.)*
+- [ ] `npm run verify` — `scripts/verify-build.ts`, which asserts:
+      - every global chrome element (navbar, `[data-cmdk-open]`, `#cmdk` palette + `#cmdk-data`
+        index, theme toggle, skip link, `<main>`) on **every** built page — a component can render
+        perfectly on the homepage and be missing elsewhere;
+      - every calculator page SSRs its inputs and a result, with no `NaN`;
+      - the region selector appears on multi-country calcs, is absent on single-country ones, and
+        never appears twice on a multi-currency calc.
+      It imports the real registry rather than regex-parsing config source, because configs declare
+      countries via spreads (`[...COUNTRIES]`) and shared constants that no regex resolves.
+      *(Run 2026-07-21: 71 pages / 60 calculators, zero issues.)*
 
 **Rate accuracy (the critical one)**
 - [ ] Re-verify **every** rate in `src/config/fees.ts` (and `config/ai-pricing.ts`) against the
