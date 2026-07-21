@@ -27,13 +27,15 @@ const cmdIndex = calculators.map((c) => ({
       <span translate="no">Calc<span class="text-link">Your</span>Finance</span>
     </a>
 
-    <!-- Search is the primary navigation. A faux-input pill that opens the palette. -->
+    <!-- Search is the primary navigation. A faux-input pill that opens the palette.
+         Grows to fill (flex-1) so the language + theme controls sit at the container
+         edge, aligned with the content below. Compact icon-only on mobile. -->
     <button
       type="button"
       id="cmdk-open"
       aria-label="Search calculators"
       aria-keyshortcuts="Meta+K Control+K"
-      class="group ml-auto flex items-center gap-2 rounded-lg border border-hairline bg-canvas-soft px-2.5 text-mute transition hover:border-hairline-strong hover:text-body sm:ml-4 sm:w-full sm:max-w-[22rem] sm:px-3 sm:py-2"
+      class="group ml-auto flex min-h-9 shrink-0 items-center gap-2 rounded-lg border border-hairline bg-canvas-soft px-2.5 text-mute transition hover:border-hairline-strong hover:text-body sm:ml-2 sm:flex-1 sm:px-3"
     >
       <svg
         class="size-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -41,7 +43,7 @@ const cmdIndex = calculators.map((c) => ({
       >
         <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
       </svg>
-      <span class="hidden flex-1 py-2 text-left text-[14px] sm:block sm:py-0">Search calculators…</span>
+      <span class="hidden flex-1 text-left text-[14px] sm:block">Search calculators…</span>
       <kbd
         class="hidden shrink-0 rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[11px] text-mute group-hover:border-hairline-strong sm:block"
         aria-hidden="true"
