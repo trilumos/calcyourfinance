@@ -1,0 +1,13 @@
+# Cloudflare Worker: Telegram → GitHub bridge for the rate watcher.
+# Deploy:  cd telegram && npx wrangler deploy
+# Secrets (set once, never commit): see README.md
+name = "cyf-rate-verify-bot"
+main = "worker.js"
+compatibility_date = "2026-07-01"
+
+# Non-secret config. Secrets (BOT_TOKEN, CHAT_ID, GH_PAT, WEBHOOK_SECRET) are set
+# with `wrangler secret put`, not here.
+[vars]
+GH_REPO = "trilumos/calcyourfinance"
+WORKFLOW = "rate-verify.yml"
+REF = "main"

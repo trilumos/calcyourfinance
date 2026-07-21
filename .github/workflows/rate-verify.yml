@@ -1,0 +1,87 @@
+name: rate-verify
+
+# Weekly rate watcher. Checks every source URL in fees.ts / ai-pricing.ts from a
+# fresh checkout (so it always uses the CURRENT committed rates), writes a dated
+# report into rate-verification/, commits it (the history you pull from GitHub),
+# and opens an issue only when a human needs to act.
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch: {} # allow manual runs
+
+permissions:
+  contents: write # commit the dated report
+  issues: write # ping on actionable findings
+
+concurrency:
+  group: rate-verify
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run rate watcher
+        run: npm run verify:rates
+
+      - name: Commit dated report
+        run: |
+          git config user.name "rate-verify[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add rate-verification/
+          if git diff --cached --quiet; then
+            echo "no report changes"
+          else
+            git commit -m "chore(rate-verify): report $(date -u +%F)"
+            git push
+          fi
+
+      - name: Open issue on actionable findings
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ACTIONABLE=$(node -e "process.stdout.write(String(require('./rate-verification/latest.json').actionable))")
+          DATE=$(node -e "process.stdout.write(require('./rate-verification/latest.json').date)")
+          echo "actionable=$ACTIONABLE"
+          if [ "$ACTIONABLE" -gt 0 ]; then
+            gh issue create \
+              --title "Rate verification: $ACTIONABLE dead citation(s) to fix — $DATE" \
+              --label "rate-verify" \
+              --body-file "rate-verification/$DATE.md"
+          else
+            echo "no dead links — no issue opened (worklist is in the committed report)"
+          fi
+
+      - name: Notify Telegram (weekly reminder + full report)
+        if: always()
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SERVER: ${{ github.server_url }}
+          REPO: ${{ github.repository }}
+          REF: ${{ github.ref_name }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
+            echo "TELEGRAM_* secrets not set — skipping notify"; exit 0
+          fi
+          DATE=$(node -e "process.stdout.write(require('./rate-verification/latest.json').date)")
+          SUMMARY=$(node -e "const j=require('./rate-verification/latest.json'),c=j.counts,w=(c.unconfirmed||0)+(c.blocked||0)+(c.unreachable||0)+(c['http-error']||0);process.stdout.write(\`Checked \${j.checked} sources — 💀 dead \${c.dead||0} · ✅ unchanged \${c.unchanged||0} · ❔ worklist \${w}\`)")
+          URL="$SERVER/$REPO/blob/$REF/rate-verification/$DATE.md"
+          TEXT=$(printf '🗓️ *Weekly rate verification* — %s\n\n%s\n\n⚠️ IRON RULE: do not trust the scraper. Re-verify ALL sources yourself, even the ✅ unchanged ones.\n\n📄 Full report attached (also in the repo: %s)' "$DATE" "$SUMMARY" "$URL")
+          curl -sS --max-time 20 "https://api.telegram.org/bot$TG_TOKEN/sendMessage" \
+            --data-urlencode "chat_id=$TG_CHAT" \
+            --data-urlencode "parse_mode=Markdown" \
+            --data-urlencode "text=$TEXT" >/dev/null
+          curl -sS --max-time 30 "https://api.telegram.org/bot$TG_TOKEN/sendDocument" \
+            -F "chat_id=$TG_CHAT" \
+            -F "document=@rate-verification/$DATE.md" >/dev/null
+          echo "telegram notified"

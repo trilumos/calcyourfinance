@@ -331,12 +331,12 @@ This calculator models the per-sale Redbubble earnings calculation: gross markup
       url: "https://help.redbubble.com/hc/en-us/articles/202270799-How-is-my-payment-calculated",
     },
     {
-      label: "Redbubble Blog — Artist Account Tiers and Fees (August 2025)",
-      url: "https://blog.redbubble.com/2025/08/artist-account-tiers-and-fees/",
+      label: "Redbubble — How does my Account Tier determine my platform fee?",
+      url: "https://help.redbubble.com/hc/en-us/articles/50959863016724-How-does-my-Account-Tier-determine-my-platform-fee",
     },
     {
-      label: "Redbubble Blog — The Excess Markup Fee Explained (August 2025)",
-      url: "https://blog.redbubble.com/2025/08/excess-markup-fee-explained/",
+      label: "Redbubble — What is the excess markup fee?",
+      url: "https://help.redbubble.com/hc/en-us/articles/50959535480212-What-is-the-excess-markup-fee",
     },
     {
       label: "Redbubble Help — What are Redbubble's account fees?",
