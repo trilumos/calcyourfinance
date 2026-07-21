@@ -745,6 +745,7 @@ The brand uses STACKED shadows — multiple small offsets layered to fake natura
 4. **No per-item hairline rows anywhere.** Dividers separate *groups*, never individual items —
    Vercel's own sidebar has no line between nav items, only above a group. A row's hover surface
    already delineates it. Applied to the bento panels and the FAQ accordion.
+   **This is deliberately stricter than Geist** — see the deviations table.
 
 ### Deliberate deviations from Geist (keep current)
 
@@ -760,6 +761,7 @@ The brand uses STACKED shadows — multiple small offsets layered to fake natura
 
 | `.btn` uses a 100px pill radius; category chips use `rounded-full` | Geist's Materials scale is 6 / 12 / 16px and does not cover pills. The marketing pill CTA is a deliberate brand shape (see the Do's below). Everything else conforms to the Geist scale. |
 | Three text levels (`ink` / `body` / `mute`) where Geist has two (1000 primary / 900 secondary) | `--body` is the long-form prose colour, sitting between Geist's primary and secondary. A two-step scale makes prose either too heavy or too faint at paragraph length. |
+| No dividers between items inside cards, though Geist's Card offers `borderBetween` for exactly that | Geist supports both patterns — its Card can divide children, its sidebar nav does not. We chose the undivided version after seeing both: the hover surface already delineates a row, and at 8–12 rows per panel the lines added noise without adding information. Deliberately stricter than the system, not an oversight. |
 
 > **Audit caveat (2026-07-21):** the public Geist pages, including the `.md` route, do not publish
 > separator glyphs, size scales, spacing values or ARIA specifics for Breadcrumbs. Where the docs are

@@ -394,6 +394,11 @@ re-checked even though the math itself was untouched.
 **Automated**
 - [ ] `npm test` — all formula tests green (706 at time of writing).
 - [ ] `npm run build` — clean, expected page count.
+- [ ] **Shared chrome present on *every* built page, not just the ones we edited.** Anything global —
+      navbar, logo, `[data-cmdk-open]` search trigger, the `#cmdk` palette + `#cmdk-data` index, theme
+      toggle, skip link, `<main>` landmark, footer — must appear in all 71 HTML files. A component can
+      render perfectly on the homepage and be missing elsewhere; grep the whole of `dist/` rather than
+      spot-checking. *(Run 2026-07-21: 71/71 on all eight elements.)*
 
 **Rate accuracy (the critical one)**
 - [ ] Re-verify **every** rate in `src/config/fees.ts` (and `config/ai-pricing.ts`) against the
