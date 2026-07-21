@@ -60,11 +60,18 @@ We investigated the actual site rather than assuming. Findings:
    pattern: "sites with strong author infrastructure **and** original content + links held; topical
    volume without trust did not." Compounded by the April de-index from historical URL churn.
    → **Unlock: 3–5 real editorial backlinks + referring domains. This is user-side and it is the #1 lever.**
-2. **Structural template sameness.** Every page is visually and structurally identical — same layout,
-   same section order, same components, brand accent aside. Google's near-duplicate clustering and
-   "low value-add" evaluation key off *structure and presentation*, not just word count. When the only
-   differentiation is prose, a young domain's pages look like a scaled template. This is the biggest
-   **code-side** lever, and it's exactly where the UI/UX revamp and the SEO differentiation mandate meet.
+2. **Structural template sameness → limited "information gain."** Every page is visually and structurally
+   identical — same layout, same section order, same components, brand accent aside. Google's
+   near-duplicate clustering and "low value-add" evaluation key off *structure and presentation*, not just
+   word count. When the only differentiation is prose, a young domain's pages look like a scaled template.
+   Stated in Google's own vocabulary (and independently confirmed by a second audit, §9):
+   **the site-quality classifier is likely grouping the calculators as a templated collection with
+   limited information gain.** This is the biggest **code-side** lever, and it's exactly where the UI/UX
+   revamp and the SEO differentiation mandate meet.
+
+   > **The information-gain bar (apply to every page):** *what does a visitor learn here that isn't
+   > already on the 50 other pages ranking for this query?* If the honest answer is "nothing," the page
+   > will keep getting crawled-not-indexed. This is the pass/fail test for M1–M3 work.
 3. **Domain-level Helpful-Content proportion.** Google scores the *share* of genuinely value-adding
    pages across the whole domain. The 8 comparison pages are the lightest (526–632 words) and most
    structurally alike each other — the most likely to be filtered and to drag the average.
@@ -111,10 +118,23 @@ scoped headlines to be detailed when we reach them.
   evergreen artifact. Plus **open rate dataset** (`/rates.json` + `/rates.csv`) exposing the single fees
   file as a cited "source of truth" for other tools to link back to (dev-SEO). Both are cheap and can ship
   as soon as M1 lands.
+- **M2.5 — Category hubs + supporting guides** *(the topical-authority + link-earning engine)*.
+  - **Deepen the category hubs.** `/payment-fees`, `/ecommerce-fees`, `/personal-finance` are currently
+    near-thin link lists. Each needs substantial original educational content (~600+ words): how
+    processors actually calculate fees, pricing models (flat vs % vs interchange+), international
+    surcharges, a comparison table, then the calculators. Google rewards strong category pages.
+  - **Supporting guides (non-calculator pages).** Publish explainer content per cluster — "Stripe fees
+    explained", "interchange fees", "chargebacks", "MDR explained", "payment gateway comparison" —
+    heavily interlinked with the calculators. **This is the point: guides attract backlinks; calculators
+    generally don't.** It converts the site's story from "this site has calculators" to "this site is
+    *about* payment processing", which is what topical authority means.
+
 - **M3 — Link engine** *(user-side + light code)*. The original data study ("what 30 platforms take from
-  creators in 2026") as link bait; directory/outreach (incl. a free Viberank submission — skip the paid
-  tier); **email fee-change digest** (owned channel; needs an ESP integration) seeded from the changelog;
-  **decision point on the embed widget**.
+  creators in 2026") as link bait; **link-magnet guide formats** the calculators can't provide —
+  "best payment processor for X", platform reviews, "hidden payment fees" round-ups; directory/outreach
+  (incl. a free Viberank submission — skip the paid tier); **email fee-change digest** (owned channel;
+  needs an ESP integration) seeded from the changelog; **decision point on the embed widget** (an
+  independent second audit also lands on embeds as the highest-leverage link source).
 - **M4 — UI/UX polish pass**. Motion, empty/loading/error states, responsive + dark-mode hardening,
   micro-interactions — the "delight" layer, after the structure is right.
 - **M5 — SaaS foundation** *(only if traffic warrants)*. Embed widget productized, public API for rates,
@@ -256,3 +276,55 @@ M1-W2; fee-rate changelog page + open rate dataset → M2; email fee-change dige
 **Deferred / optional (not scheduled):** copy-results-as-table + CSV export; explicit "no ads, no
 tracking, we don't store your numbers" privacy copy; default-dark by system preference (vs the deliberate
 default-light in `DESIGN.md`); privacy-first analytics (Plausible/Umami) vs current GA4; PWA offline.
+
+---
+
+## 9. Second audit triage (ChatGPT, 2026-07-21) — `calcyourfinance plan and report.md`
+
+An independent audit the user commissioned. Valuable: it reached the **same diagnosis independently**
+(technical SEO excellent; the blocker is quality/trust), which raises confidence in §1.
+
+**Confirmed (no change needed):** technical SEO/schema/canonicals/SSR are strong · every calculator needs
+a moat (= our differentiation mandate) · comparison pages are the biggest opportunity (= Battle Plan
+Cluster H) · more internal linking · revision history (= our fee-rate changelog) · and critically:
+**"don't build more calculators until Google trusts the site — more pages won't fix trust, better pages
+will"**, which matches our milestone ordering exactly.
+
+**Adopted (new, folded in above):**
+1. **"Information gain"** as the explicit pass/fail bar for every page → §1.
+2. **Category hubs need real educational depth** (~600+ words), not thin link lists → M2.5.
+3. **Supporting guides as the backlink engine** — guides attract links, calculators don't. This closes the
+   gap in our plan between "we need 3–5 editorial links" and "how do we actually earn them" → M2.5 + M3.
+
+**Rejected — would deepen the very problem it diagnoses:**
+- *"Every saved calculation becomes shareable at `/share/abc123` → that's indexable."* **No.** Thousands
+  of near-identical share URLs is the scaled-content/doorway pattern that its own "templated collection"
+  diagnosis warns against — the same reason we rejected page-per-amount in §8. Share/permalink URLs are
+  good UX and **must stay `rel=canonical` to the base calculator page**, never separately indexed (M1-W5).
+
+**Calibration:** its 10-phase SaaS vision (accounts → receipt scanner → plugins → AI assistant) is a
+*vision*, not a near-term plan — it monetizes traffic that does not exist yet, so it stays behind
+Tracks 1–3 exactly as §2 states. Its positioning ideas ("calculators are the free acquisition channel
+inside a larger knowledge base"; "a programmable finance toolkit") are a useful complement to the §0
+north star and are recorded as such. Its Phase 6 (embeddable calculators = free backlinks) independently
+converges on the embed widget already parked in M3.
+
+---
+
+## 10. Homepage v2 structure (decided 2026-07-21)
+
+The homepage becomes an **authority hub**, not a list of tools. Order (✓ = done on `v2`):
+
+1. **Hero** ✓ — centered headline ("Fee and finance calculators you can trust."), one-viewport live
+   calculator (input | result side by side), subtle dot-grid + glow backdrop.
+2. **Browse by category** ✓ — chips with counts, directly under the fold.
+3. **Featured comparisons** *(new)* — our fastest-ranking page type, surfaced early.
+4. **Why trust these numbers** — cited/dated/tested/your-currency.
+5. **How we verify rates** *(new)* — the E-E-A-T + methodology signal, surfaced not buried.
+6. **Recently updated** *(new)* — freshness signal, fed by `verifiedOn`/`lastUpdated`.
+7. **All calculators** — the full grouped internal-link index.
+8. **Guides** *(new, once M2.5 guides exist)*.
+9. **About / long-form** and **FAQ**.
+
+Global chrome: slim navbar (Logo · ⌘K search · Language · Theme, deliberately **neutral** — no brand
+colour, see §8 rationale) and the ⌘K command palette as primary navigation.
