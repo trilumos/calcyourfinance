@@ -83,14 +83,6 @@ const accentStyle = (platformId?: string) => {
   const p = getPlatform(platformId);
   return p ? `--accent-l:${p.color};--accent-d:${p.colorDark ?? p.color}` : undefined;
 };
-// A two-colour split bar for comparison cards: the two brand colours.
-const comparisonGradient = (slug: string) => {
-  const cfg = calculators.find((c) => c.slug === slug);
-  const ps = (cfg?.comparisonOf ?? []).map((id) => getPlatform(id)).filter((p): p is NonNullable<typeof p> => Boolean(p));
-  const a = ps[0]?.color ?? "#888888";
-  const b = ps[1]?.color ?? a;
-  return `linear-gradient(180deg, ${a} 0 50%, ${b} 50% 100%)`;
-};
 // Freshness signal: the calculators whose rates we verified most recently.
 // Every config carries lastUpdated; fee calculators also carry feesVerifiedOn.
 const verifiedOn = (c: (typeof calculators)[number]) => c.feesVerifiedOn ?? c.lastUpdated;
@@ -266,18 +258,15 @@ const faqLd = {
           <li>
             <a
               href={`/${c.slug}`}
-              class="card group relative flex h-full flex-col gap-2 overflow-hidden p-4 pl-5 no-underline transition hover:shadow-float"
+              class="card group flex h-full items-center justify-between gap-3 p-5 no-underline transition hover:border-hairline-strong hover:shadow-float"
             >
-              <span
-                class="absolute inset-y-0 left-0 w-[3px]"
-                style={`background:${comparisonGradient(c.slug)}`}
-                aria-hidden="true"
-              />
               <span class="text-[15px] font-medium text-ink">
                 {c.title.replace(" Fee Calculator", "")}
               </span>
-              <span class="line-clamp-2 text-[13px] leading-snug text-body">{c.intro}</span>
-              <span class="mt-auto pt-1 text-[13px] text-link" aria-hidden="true">Compare →</span>
+              <span
+                class="shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5"
+                aria-hidden="true"
+              >→</span>
             </a>
           </li>
         ))}
