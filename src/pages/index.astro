@@ -97,6 +97,10 @@ const prettyDate = (iso: string) =>
     timeZone: "UTC",
   });
 
+// Counts are derived, never hardcoded — the prose said "(Etsy, with more rolling
+// out)" long after e-commerce grew past 30 calculators. Derived counts can't rot.
+const catCount = (cat: Category) => singles.filter((c) => c.category === cat).length;
+
 const homeFaqs = [
   {
     q: "Are these calculators free?",
@@ -108,7 +112,7 @@ const homeFaqs = [
   },
   {
     q: "Which calculators do you have?",
-    a: "Three groups: payment-processor and wallet fees (Stripe, PayPal, Square, Venmo, Cash App, Wise, Payoneer, Razorpay and more), marketplace and seller fees (Etsy, with more rolling out), and personal-finance math (EMI, loan, SIP, FD, RD, GST, compound interest, simple interest, salary and percentage). Plus head-to-head fee comparisons. We add new calculators regularly.",
+    a: `Three groups: ${catCount("payment-fees")} payment-processor and wallet fee calculators (Stripe, PayPal, Square, Venmo, Cash App, Wise, Payoneer, Razorpay and more), ${catCount("ecommerce-fees")} marketplace and seller-fee calculators (Amazon FBA, eBay, Etsy, Shopify, Poshmark, Depop, TikTok Shop, Fiverr, Upwork and more), and ${catCount("personal-finance")} personal-finance tools (EMI, loan, SIP, FD, RD, GST, compound interest, simple interest, salary and percentage). Plus ${comparisons.length} head-to-head fee comparisons. We add new calculators regularly.`,
   },
   {
     q: "Can I compare two platforms side by side?",
@@ -302,11 +306,11 @@ const faqLd = {
                 <li class="border-b border-hairline last:border-b-0">
                   <a
                     href={`/${c.slug}`}
-                    class="group flex items-center gap-3 rounded-md border border-transparent px-2 py-[0.55rem] no-underline transition hover:border-body hover:bg-canvas-soft-2"
+                    class="group flex items-center gap-3 rounded-lg px-2 py-[0.55rem] no-underline transition hover:bg-canvas-soft-2"
                   >
                     <span class="min-w-0 flex-1 truncate text-[14px] text-ink">{c.title}</span>
                     <span
-                      class="shrink-0 text-[13px] text-mute opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100"
+                      class="grid size-6 shrink-0 place-items-center rounded-md text-[13px] text-body opacity-0 transition group-hover:bg-hairline group-hover:opacity-100"
                       aria-hidden="true"
                     >→</span>
                   </a>
@@ -396,49 +400,49 @@ const faqLd = {
     </ul>
   </section>
 
-  <!-- SEO content / mission -->
-  <section class="container mx-auto max-w-[64rem] px-4 py-4" aria-labelledby="about-h">
+  <!-- Long-form: topical context + contextual links into the three category hubs.
+       Deliberately does NOT re-explain sourcing — the trust section above owns that. -->
+  <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="about-h">
     <div class="prose max-w-[46rem]">
-      <h2 id="about-h" class="mt-1">A complete, trustworthy library of fee &amp; finance calculators.</h2>
+      <h2 id="about-h" class="mt-0">Where these numbers come from.</h2>
       <p>
-        Fees are easy to underestimate and finance math is easy to get wrong. Every payment
-        processor and marketplace charges differently — a percentage here, a fixed fee there,
-        surcharges for international cards — and everyday questions like an EMI, an SIP return or
-        the GST on a bill deserve an exact answer. CalcYourFinance makes both obvious: enter your
-        numbers, pick your platform or country, and see the result and exactly what you keep,
-        instantly and in your own currency.
+        Most fee calculators won't tell you where their rates came from or when anyone last
+        checked them. That is the gap this fills. Every rate here is taken from the platform's own
+        pricing page, and the date it was last checked is printed on the calculator — so you can
+        judge for yourself whether to trust it, instead of taking our word for it.
       </p>
 
       <h3>What this site covers</h3>
       <p>
-        We focus on the calculators people search for most: <a href="/payment-fees">payment
-        processing fees</a> (Stripe, PayPal, Square, Venmo, Cash App, Wise, Payoneer and more),
-        <a href="/ecommerce-fees">marketplace and seller fees</a> (Etsy, with more rolling out),
-        and <a href="/personal-finance">personal-finance tools</a> (EMI, loan, SIP, FD, RD, GST,
-        compound and simple interest, salary and percentage). On top of the single-platform tools,
-        our comparison calculators settle the "which is cheaper" question by putting two platforms
-        head-to-head on the same payment. This is a growing library — our goal is every fee and
-        finance calculator people genuinely need, not filler nobody uses.
+        {catCount("payment-fees")} <a href="/payment-fees">payment-processing fee calculators</a>
+        {" "}(Stripe, PayPal, Square, Venmo, Cash App, Wise, Payoneer, Razorpay and more),
+        {" "}{catCount("ecommerce-fees")} <a href="/ecommerce-fees">marketplace and seller-fee
+        calculators</a> (Amazon FBA, eBay, Etsy, Shopify, Poshmark, Depop, TikTok Shop, Fiverr,
+        Upwork and the rest), and {catCount("personal-finance")}
+        {" "}<a href="/personal-finance">personal-finance tools</a> (EMI, loan, SIP, FD, RD, GST,
+        compound and simple interest, salary and percentage). On top of those,
+        {" "}{comparisons.length} <a href="#comparisons">head-to-head comparisons</a> settle the
+        "which is cheaper" question on the same transaction.
       </p>
 
-      <h3>How the calculators work</h3>
+      <h3>How the math works</h3>
       <p>
         Fee tools apply the platform's published rate to your amount: fee = amount × rate% + fixed
         fee, with surcharges and taxes added where they apply. Finance tools use the standard
-        formulas — compound interest, EMI amortisation, annuity future value and so on. Everything
-        is computed in your browser from pure, unit-tested formulas, and the currency follows your
-        region, so results are fast, private, accurate and reproducible.
+        formulas — compound interest, EMI amortisation, annuity future value and so on. Every
+        formula is a pure, unit-tested function that runs in your browser, so results are
+        reproducible and your numbers never leave your device.
       </p>
 
-      <h3>Why you can trust the numbers</h3>
+      <h3>What these tools can't see</h3>
       <p>
-        Getting these right matters, so every platform rate is sourced from the official pricing
-        page, stored in a single place, and stamped with a "last verified" date shown on the
-        calculator. When a platform changes its pricing, we update the figure and the date
-        together. The site is built and maintained by
-        {" "}<a href="/about">{SITE.author.name}</a>, and every calculator cites its sources and
-        carries a clear "estimate, not financial advice" note. For day-to-day decisions, you get a
-        dependable answer in seconds — and a link to the source if you want to double-check.
+        They calculate from published rates, so they don't know about a rate you negotiated, a
+        promotional period, or a fee a platform is testing in your region. Currency conversion is
+        applied at the platform's stated margin, not the live mid-market rate at the moment you
+        sell. Treat the result as a close estimate from the official numbers, and confirm the final
+        figure before you price anything. Built and maintained by
+        {" "}<a href="/about">{SITE.author.name}</a> — see <a href="/methodology">how we verify
+        every rate</a>.
       </p>
     </div>
   </section>

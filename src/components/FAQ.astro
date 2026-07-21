@@ -10,7 +10,6 @@ const { faqs } = Astro.props;
 {
   faqs.length > 0 && (
     <section class="mt-12" aria-labelledby="faq-heading">
-      <p class="eyebrow">FAQ</p>
       <h2 id="faq-heading" class="mb-4 mt-1">Frequently asked questions</h2>
       <div class="border-t border-hairline">
         {faqs.map((f) => (
