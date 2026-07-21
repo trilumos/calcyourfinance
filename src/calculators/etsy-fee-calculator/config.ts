@@ -75,10 +75,10 @@ export const etsyFeeCalculator: CalculatorConfig = {
 
   inputs: [
     { id: "itemPrice", label: "Item price", type: "currency", default: 25, min: 0, help: "Price the buyer pays for the item." },
-    { id: "shipping", label: "Shipping charged to buyer", type: "currency", default: 5, min: 0, help: "Etsy's 6.5% transaction fee applies to shipping too." },
-    { id: "itemCost", label: "Your item cost (optional)", type: "currency", default: 0, min: 0, help: "Cost of goods, to calculate profit." },
-    { id: "offsiteAds", label: "This sale came from Offsite Ads", type: "toggle", default: false, help: "Adds the Offsite Ads fee (capped per order)." },
-    { id: "highVolume", label: "I make over $10k/year on Etsy", type: "toggle", default: false, help: "Lowers the Offsite Ads rate from 15% to 12%." },
+    { id: "shipping", label: "Shipping charged to buyer", type: "currency", default: 5, min: 0, half: true, help: "Etsy's 6.5% transaction fee applies to shipping too." },
+    { id: "itemCost", label: "Your item cost (optional)", type: "currency", default: 0, min: 0, half: true, help: "Cost of goods, to calculate profit." },
+    { id: "offsiteAds", label: "This sale came from Offsite Ads", type: "toggle", default: false, half: true, help: "Adds the Offsite Ads fee (capped per order)." },
+    { id: "highVolume", label: "I make over $10k/year on Etsy", type: "toggle", default: false, half: true, help: "Lowers the Offsite Ads rate from 15% to 12%." },
     { id: "conversion", label: "Currency conversion (different listing currency)", type: "toggle", default: false, help: "Adds Etsy's 2.5% currency-conversion fee." },
   ],
 

@@ -606,19 +606,21 @@ function Field({
 
   if (input.type === "toggle") {
     return (
-      <label class="flex items-center gap-3" for={id}>
+      <label class="flex items-start gap-2.5" for={id}>
         <input
           id={id}
           name={input.id}
           type="checkbox"
-          class="size-[18px] shrink-0 cursor-pointer accent-ink"
+          class="mt-0.5 size-[18px] shrink-0 cursor-pointer accent-ink"
           checked={Boolean(value)}
           onChange={(e) => onInput(input.id, e.currentTarget.checked)}
         />
-        <span class="text-[14px] text-ink">{input.label}</span>
-        {input.help && (
-          <span class="text-[13px] leading-snug text-mute">{input.help}</span>
-        )}
+        <span class="flex min-w-0 flex-col">
+          <span class="text-[14px] text-ink">{input.label}</span>
+          {input.help && (
+            <span class="text-[13px] leading-snug text-mute">{input.help}</span>
+          )}
+        </span>
       </label>
     );
   }
