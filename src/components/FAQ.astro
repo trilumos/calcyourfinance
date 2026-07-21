@@ -14,7 +14,7 @@ const { faqs } = Astro.props;
       <div class="border-t border-hairline">
         {faqs.map((f) => (
           <details class="group border-b border-hairline">
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-medium text-ink">
+            <summary class="-mx-2 flex cursor-pointer list-none items-center justify-between gap-4 rounded-lg px-2 py-4 font-medium text-ink transition hover:bg-canvas-soft-2">
               {f.q}
               <span class="font-mono text-[20px] leading-none text-mute transition group-open:rotate-45">+</span>
             </summary>

@@ -43,6 +43,35 @@ import { SITE } from "../config/site";
       </p>
     </div>
 
-    <a href={`mailto:${SITE.contactEmail}`} class="btn btn-primary mt-6">Email us</a>
+    <!-- mailto alone fails silently when no mail client is registered, so the
+         address is always visible and copyable as well. -->
+    <div class="card mt-8 flex flex-wrap items-center justify-between gap-4 p-5">
+      <div class="min-w-0">
+        <p class="text-[13px] text-body">Email</p>
+        <p class="truncate text-[17px] font-medium text-ink">{SITE.contactEmail}</p>
+      </div>
+      <div class="flex shrink-0 flex-wrap gap-2">
+        <button type="button" id="copy-email" class="btn btn-secondary" data-email={SITE.contactEmail}>
+          Copy address
+        </button>
+        <a href={`mailto:${SITE.contactEmail}`} class="btn btn-primary">Open mail app</a>
+      </div>
+    </div>
+    <p id="copy-status" class="mt-2 text-[13px] text-body" role="status" aria-live="polite"></p>
   </section>
+
+  <script>
+    const copyBtn = document.getElementById("copy-email") as HTMLButtonElement | null;
+    const copyStatus = document.getElementById("copy-status");
+    copyBtn?.addEventListener("click", async () => {
+      const email = copyBtn.dataset.email ?? "";
+      try {
+        await navigator.clipboard.writeText(email);
+        if (copyStatus) copyStatus.textContent = `Copied ${email} to your clipboard.`;
+      } catch {
+        if (copyStatus)
+          copyStatus.textContent = "Couldn't copy automatically — select the address above and copy it.";
+      }
+    });
+  </script>
 </BaseLayout>
