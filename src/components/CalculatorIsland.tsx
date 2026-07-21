@@ -400,7 +400,7 @@ export default function CalculatorIsland({
             <button
               type="button"
               onClick={clearHistory}
-              class="rounded text-[12px] text-mute underline-offset-2 hover:text-ink hover:underline"
+              class="rounded-md text-[12px] text-mute underline-offset-2 hover:text-ink hover:underline"
             >
               Clear
             </button>
@@ -411,7 +411,7 @@ export default function CalculatorIsland({
                 <button
                   type="button"
                   onClick={() => restoreEntry(h)}
-                  class="flex w-full items-center justify-between gap-3 rounded-lg px-2 py-1.5 text-left transition hover:bg-canvas-soft"
+                  class="flex w-full items-center justify-between gap-3 rounded-md px-2 py-1.5 text-left transition hover:bg-canvas-soft"
                 >
                   <span class="tnum min-w-0 truncate text-[13px] text-ink">{h.label}</span>
                   <span class="shrink-0 font-mono text-[11px] text-mute">{relTime(h.ts)}</span>

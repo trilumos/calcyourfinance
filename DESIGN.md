@@ -758,10 +758,36 @@ The brand uses STACKED shadows — multiple small offsets layered to fake natura
 | FAQ uses native `<details>/<summary>`, not Geist Collapse's `<button aria-expanded aria-controls>` | Native elements give the same accessible result — Enter/Space toggle, state announced — with **zero JavaScript**, and still satisfy Geist's own Collapse requirement that content stay in the DOM when closed for search. Geist's React component needs the ARIA scaffolding only because it is not using the native element. Trade-off accepted: no animated open/close transition. |
 | Breadcrumbs implement only the `text` variant, with no `menu`/collapsing behaviour | Geist offers `text` and `menu` variants for long paths. Ours are never deeper than Home › Category › Page, so collapsing would be machinery with nothing to collapse. Revisit if a deeper hierarchy appears. |
 
+| `.btn` uses a 100px pill radius; category chips use `rounded-full` | Geist's Materials scale is 6 / 12 / 16px and does not cover pills. The marketing pill CTA is a deliberate brand shape (see the Do's below). Everything else conforms to the Geist scale. |
+| Three text levels (`ink` / `body` / `mute`) where Geist has two (1000 primary / 900 secondary) | `--body` is the long-form prose colour, sitting between Geist's primary and secondary. A two-step scale makes prose either too heavy or too faint at paragraph length. |
+
 > **Audit caveat (2026-07-21):** the public Geist pages, including the `.md` route, do not publish
 > separator glyphs, size scales, spacing values or ARIA specifics for Breadcrumbs. Where the docs are
 > silent we follow Geist's stated *principles* (accessible, high-contrast, systematised) and WCAG,
 > and we do not claim a pixel-level match we cannot verify.
+
+### Geist foundations mapping (audited 2026-07-21)
+
+**Materials — radii now conform.** Geist publishes exactly three: **6px** (`material-base`,
+`material-small`, `material-tooltip`), **12px** (`material-medium`, `material-large`,
+`material-menu`, `material-modal`), **16px** (`material-fullscreen`). Fixed in this audit:
+`.select-popover` 8px → **12px** (it is a menu), all `rounded-lg` (8px) → **6px**, all bare
+`rounded` (4px) → **6px**, and the `:focus-visible` radius 4px → **6px**. Nesting follows Geist:
+12px containers (`.card`, tablist) with 6px children (rows, fields, options).
+Geist does not publish stroke widths, shadow values or fills, so ours stand.
+
+**Colors — our semantic tokens map onto Geist's 100–1000 step model:**
+
+| Geist step | Purpose | Our token |
+|---|---|---|
+| `background-100` / `background-200` | page backgrounds | `--canvas` / `--canvas-soft` |
+| 100–300 | component bg: default · hover · active | `--canvas` · `--canvas-soft` · `--canvas-soft-2` |
+| 400–600 | border: default · hover · active | `--hairline` · `--hairline-strong` · *(none)* |
+| 900 | secondary text/icons | `--mute` |
+| 1000 | primary text/icons | `--ink` |
+
+**Known gap:** Geist defines three border steps (default/hover/active); we have two. Add a third
+only when an active-border state is actually needed — not pre-emptively.
 
 ## Do's and Don'ts
 

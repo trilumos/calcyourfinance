@@ -216,7 +216,7 @@ const faqLd = {
                 aria-controls={`hpanel-${i}`}
                 aria-selected={i === 0 ? "true" : "false"}
                 tabindex={i === 0 ? 0 : -1}
-                class="whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] font-medium text-body transition hover:text-ink aria-selected:bg-canvas aria-selected:text-ink aria-selected:shadow-card"
+                class="whitespace-nowrap rounded-md px-3 py-1.5 text-[13px] font-medium text-body transition hover:text-ink aria-selected:bg-canvas aria-selected:text-ink aria-selected:shadow-card"
               >
                 {t.label}
               </button>
@@ -320,7 +320,7 @@ const faqLd = {
     <h2 id="all-h" class="mb-1 mt-1">Browse by category.</h2>
     <p class="mb-6 max-w-[42rem] text-[15px] text-body">
       {total} calculators across {groups.length} categories. The most-searched in each are below —
-      open a category for its full list, or press <kbd class="rounded border border-hairline bg-canvas-soft px-1.5 py-0.5 font-mono text-[11px] text-mute">⌘K</kbd> to search them all.
+      open a category for its full list, or press <kbd class="rounded-md border border-hairline bg-canvas-soft px-1.5 py-0.5 font-mono text-[11px] text-mute">⌘K</kbd> to search them all.
     </p>
 
     <div class="grid gap-4 md:grid-cols-2">
@@ -341,7 +341,7 @@ const faqLd = {
                 <li>
                   <a
                     href={`/${c.slug}`}
-                    class="group flex items-center gap-3 rounded-lg px-2 py-2.5 no-underline transition hover:bg-canvas-soft-2"
+                    class="group flex items-center gap-3 rounded-md px-2 py-2.5 no-underline transition hover:bg-canvas-soft-2"
                   >
                     <span class="min-w-0 flex-1 truncate text-[14px] text-ink">{c.title}</span>
                     <span

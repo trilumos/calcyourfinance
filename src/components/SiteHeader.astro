@@ -37,7 +37,7 @@ const cmdIndex = calculators.map((c) => ({
       data-cmdk-open
       aria-label="Search calculators"
       aria-keyshortcuts="Meta+K Control+K"
-      class="group ml-auto flex min-h-9 shrink-0 items-center gap-2 rounded-lg border border-hairline bg-canvas-soft px-2.5 text-mute transition hover:border-hairline-strong hover:text-body sm:ml-2 sm:flex-1 sm:px-3"
+      class="group ml-auto flex min-h-9 shrink-0 items-center gap-2 rounded-md border border-hairline bg-canvas-soft px-2.5 text-mute transition hover:border-hairline-strong hover:text-body sm:ml-2 sm:flex-1 sm:px-3"
     >
       <svg
         class="size-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -47,7 +47,7 @@ const cmdIndex = calculators.map((c) => ({
       </svg>
       <span class="hidden flex-1 text-left text-[14px] sm:block">Search calculators…</span>
       <kbd
-        class="hidden shrink-0 rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[11px] text-mute group-hover:border-hairline-strong sm:block"
+        class="hidden shrink-0 rounded-md border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[11px] text-mute group-hover:border-hairline-strong sm:block"
         aria-hidden="true"
       >⌘K</kbd>
     </button>
@@ -96,7 +96,7 @@ const cmdIndex = calculators.map((c) => ({
         autocomplete="off"
         spellcheck="false"
       />
-      <kbd class="hidden shrink-0 rounded border border-hairline px-1.5 py-0.5 font-mono text-[11px] text-mute sm:block" aria-hidden="true">Esc</kbd>
+      <kbd class="hidden shrink-0 rounded-md border border-hairline px-1.5 py-0.5 font-mono text-[11px] text-mute sm:block" aria-hidden="true">Esc</kbd>
     </div>
 
     <ul id="cmdk-list" role="listbox" aria-label="Calculators" class="flex-1 list-none overflow-y-auto overscroll-contain p-2"></ul>
@@ -213,7 +213,7 @@ const cmdIndex = calculators.map((c) => ({
         li.dataset.i = String(i);
         li.setAttribute("aria-selected", i === active ? "true" : "false");
         li.className =
-          "group flex cursor-pointer items-center justify-between gap-3 rounded-lg px-2 py-2 text-[14px] no-underline aria-selected:bg-canvas-soft-2";
+          "group flex cursor-pointer items-center justify-between gap-3 rounded-md px-2 py-2 text-[14px] no-underline aria-selected:bg-canvas-soft-2";
         const a = document.createElement("a");
         a.href = "/" + r.slug;
         a.tabIndex = -1; // combobox pattern: navigate options via arrows, not Tab
