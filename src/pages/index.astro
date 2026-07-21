@@ -14,14 +14,21 @@ const singles = calculators.filter((c) => c.kind === "single");
 const comparisons = calculators.filter((c) => c.kind === "comparison");
 const total = singles.length + comparisons.length;
 
-// Interactive "try it here" tabs in the hero — a few popular calculators,
-// computed server-side (numbers in the HTML, SEO-safe) and hydrated per-tab.
+// Interactive "try it here" tabs in the hero — computed server-side (numbers in
+// the HTML, SEO-safe) and hydrated per-tab.
+// Calibrated for a global audience: EMI and SIP are India-only terms and were
+// dropped (the rest of the world says "loan payment"), leaving two payment, one
+// e-commerce and two finance tools. Every one is country-aware, so the currency
+// auto-detection demos correctly wherever the visitor is. GST keeps the fifth
+// slot because it is also used in Australia, New Zealand, Singapore and Canada.
+// India is still served: ₹ is auto-detected, and GST/EMI/SIP/FD/RD remain in the
+// Personal Finance panel below.
 const heroTabOrder: { slug: string; label: string }[] = [
-  { slug: "gst-calculator", label: "GST" },
-  { slug: "emi-calculator", label: "EMI" },
-  { slug: "sip-calculator", label: "SIP" },
+  { slug: "paypal-fee-calculator", label: "PayPal" },
   { slug: "stripe-fee-calculator", label: "Stripe" },
   { slug: "etsy-fee-calculator", label: "Etsy" },
+  { slug: "loan-calculator", label: "Loan" },
+  { slug: "gst-calculator", label: "GST" },
 ];
 const heroTabs = heroTabOrder
   .map(({ slug, label }) => {
