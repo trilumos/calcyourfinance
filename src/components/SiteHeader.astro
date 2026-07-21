@@ -12,6 +12,7 @@ const cmdIndex = calculators.map((c) => ({
   slug: c.slug,
   title: c.kind === "comparison" ? c.title.replace(" Fee Calculator", "") : c.title,
   cat: c.kind === "comparison" ? "Comparison" : CATEGORY_META[c.category].label,
+  kind: c.kind,
   terms:
     `${c.title} ${CATEGORY_META[c.category].label} ${c.keywords.primary} ${(c.keywords.secondary ?? []).join(" ")}`.toLowerCase(),
 }));
@@ -84,7 +85,7 @@ const cmdIndex = calculators.map((c) => ({
       <input
         id="cmdk-input"
         type="text"
-        class="w-full rounded bg-transparent py-3.5 text-[15px] text-ink placeholder:text-mute"
+        class="w-full bg-transparent py-3.5 text-[15px] text-ink outline-none focus:outline-none focus-visible:outline-none placeholder:text-mute"
         placeholder="Search calculators — try 'stripe', 'emi', 'vs'…"
         aria-label="Search calculators"
         role="combobox"
@@ -133,7 +134,15 @@ const cmdIndex = calculators.map((c) => ({
 <script>
   // ⌘K command palette — global fuzzy-ish search over all calculators. Vanilla,
   // no deps; the index is embedded as JSON by the server.
-  interface Row { slug: string; title: string; cat: string; terms: string }
+  interface Row { slug: string; title: string; cat: string; kind: string; terms: string }
+
+  // Fixed category order for the default (empty-query) browse view.
+  const CAT_ORDER: Record<string, number> = {
+    "Payment Fees": 0,
+    "Personal Finance": 1,
+    "E-commerce & Seller Fees": 2,
+    Comparison: 3,
+  };
 
   const overlay = document.getElementById("cmdk");
   const input = document.getElementById("cmdk-input") as HTMLInputElement | null;
@@ -162,14 +171,26 @@ const cmdIndex = calculators.map((c) => ({
 
     function render() {
       const q = input!.value.trim().toLowerCase();
-      results = (q === ""
-        ? rows.slice()
-        : rows
-            .map((r) => ({ r, s: score(r, q) }))
-            .filter((x) => x.s > 0)
-            .sort((a, b) => b.s - a.s || a.r.title.length - b.r.title.length)
-            .map((x) => x.r)
-      ).slice(0, 40);
+      // Comparison intent: the query has a second token starting with "v" (e.g.
+      // "stripe v", "stripe vs paypal"). Then rank comparisons first; otherwise
+      // the single/exact calculator ranks above its comparisons.
+      const compIntent = q.includes(" v");
+      if (q === "") {
+        results = rows.slice().sort((a, b) => (CAT_ORDER[a.cat] ?? 9) - (CAT_ORDER[b.cat] ?? 9));
+      } else {
+        results = rows
+          .map((r) => ({ r, s: score(r, q) }))
+          .filter((x) => x.s > 0)
+          .sort((a, b) => {
+            if (b.s !== a.s) return b.s - a.s;
+            const aComp = a.r.kind === "comparison" ? 1 : 0;
+            const bComp = b.r.kind === "comparison" ? 1 : 0;
+            if (aComp !== bComp) return compIntent ? bComp - aComp : aComp - bComp;
+            return a.r.title.length - b.r.title.length;
+          })
+          .map((x) => x.r);
+      }
+      results = results.slice(0, 40);
       active = 0;
 
       empty!.hidden = results.length > 0;
@@ -190,14 +211,16 @@ const cmdIndex = calculators.map((c) => ({
         li.dataset.i = String(i);
         li.setAttribute("aria-selected", i === active ? "true" : "false");
         li.className =
-          "flex cursor-pointer items-center justify-between gap-3 rounded-lg px-2 py-2 text-[14px] no-underline aria-selected:bg-canvas-soft";
+          "group flex cursor-pointer items-center justify-between gap-3 rounded-lg px-2 py-2 text-[14px] no-underline aria-selected:bg-canvas-soft";
         const a = document.createElement("a");
         a.href = "/" + r.slug;
         a.tabIndex = -1; // combobox pattern: navigate options via arrows, not Tab
         a.className = "min-w-0 flex-1 truncate font-medium text-ink no-underline";
         a.textContent = r.title;
         const arrow = document.createElement("span");
-        arrow.className = "shrink-0 text-[13px] text-mute";
+        // ↵ hint only on the active/hovered row (Linear/Raycast style).
+        arrow.className =
+          "shrink-0 text-[13px] text-mute opacity-0 transition-opacity group-hover:opacity-100 group-aria-selected:opacity-100";
         arrow.setAttribute("aria-hidden", "true");
         arrow.textContent = "↵";
         li.appendChild(a);

@@ -114,32 +114,26 @@ const faqLd = {
   canonicalPath="/"
   schemas={[faqLd]}
 >
-  <!-- Hero: minimal headline, then a full-width live calculator (input | result). -->
+  <!-- Hero: centered title + a focused live calculator, sized to fit one viewport. -->
   <section class="border-b border-hairline bg-canvas">
-    <div class="container mx-auto max-w-[64rem] px-4 py-12 sm:py-14">
-      <div class="max-w-[46rem]">
+    <div class="container mx-auto flex min-h-[calc(100svh-3.75rem)] max-w-[64rem] flex-col justify-center px-4 py-8">
+      <div class="mx-auto max-w-[42rem] text-center">
         <p class="eyebrow">No signup · Instant · In your currency</p>
-        <h1 class="mt-3 text-balance text-[clamp(2.1rem,1.6rem+2.2vw,3rem)]">
+        <h1 class="mt-3 text-balance text-[clamp(1.9rem,1.4rem+2.2vw,2.7rem)]">
           Work out any platform fee or finance number in seconds.
         </h1>
-        <p class="mt-3 text-[17px] leading-relaxed text-body">
-          {total} free calculators — Stripe, PayPal, Etsy, EMI, SIP, GST — with every rate
-          cited and dated, and results in your own currency.
+        <p class="mx-auto mt-3 max-w-[36rem] text-pretty text-[16px] leading-relaxed text-body">
+          {total} free calculators — Stripe, PayPal, Etsy, EMI, SIP, GST — every rate cited and
+          dated, in your own currency.
         </p>
       </div>
 
-      <!-- Live demo: tab a popular calculator, inputs and result side by side. -->
-      <div class="mt-8" data-calc-tabs>
-        <div class="mb-2.5 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-          <p class="eyebrow">Try one live</p>
-          <a href="#all-calculators" class="text-[13px] font-medium text-link no-underline hover:underline">
-            Browse all {total} →
-          </a>
-        </div>
+      <!-- Live demo: a focused, centered card. Inputs and result side by side (md+). -->
+      <div class="mx-auto mt-7 w-full max-w-[50rem]" data-calc-tabs>
         <div
           role="tablist"
           aria-label="Try a calculator"
-          class="mb-3 flex max-w-full flex-wrap gap-1 rounded-xl border border-hairline bg-canvas-soft p-1"
+          class="mx-auto mb-3 flex w-fit max-w-full flex-wrap justify-center gap-1 rounded-xl border border-hairline bg-canvas-soft p-1"
         >
           {
             heroTabs.map((t, i) => (
@@ -175,7 +169,7 @@ const faqLd = {
                 countryCodes={t.config.countries?.supported}
                 initialCountry={t.initialCountry}
               />
-              <p class="mt-2.5 text-[12px] text-mute">
+              <p class="mt-2.5 text-center text-[12px] text-mute">
                 Full version with worked example, FAQ and sources:{" "}
                 <a href={`/${t.config.slug}`} class="text-link no-underline hover:underline">
                   {t.config.title} →
@@ -185,32 +179,37 @@ const faqLd = {
           ))
         }
       </div>
+    </div>
+  </section>
 
-      <!-- Browse by category: routing kept near the fold (search lives in the navbar). -->
-      <nav class="mt-8 flex flex-wrap items-center gap-2" aria-label="Browse by category">
-        <span class="eyebrow mr-1">Browse</span>
-        {
-          groups.map((g) => (
-            <a
-              href={`/${g.meta.slug}`}
-              class="inline-flex items-center gap-2 rounded-full border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink no-underline transition hover:border-hairline-strong hover:shadow-card"
-            >
-              {g.meta.label}
-              <span class="tnum font-mono text-[11px] text-mute">{g.items.length}</span>
-            </a>
-          ))
-        }
-        {comparisons.length > 0 && (
+  <!-- Browse by category: first thing on scroll (search lives in the navbar). -->
+  <section class="border-b border-hairline bg-canvas-soft">
+    <nav
+      class="container mx-auto flex max-w-[64rem] flex-wrap items-center justify-center gap-2 px-4 py-4"
+      aria-label="Browse by category"
+    >
+      <span class="eyebrow mr-1">Browse</span>
+      {
+        groups.map((g) => (
           <a
-            href="#comparisons"
+            href={`/${g.meta.slug}`}
             class="inline-flex items-center gap-2 rounded-full border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink no-underline transition hover:border-hairline-strong hover:shadow-card"
           >
-            Comparisons
-            <span class="tnum font-mono text-[11px] text-mute">{comparisons.length}</span>
+            {g.meta.label}
+            <span class="tnum font-mono text-[11px] text-mute">{g.items.length}</span>
           </a>
-        )}
-      </nav>
-    </div>
+        ))
+      }
+      {comparisons.length > 0 && (
+        <a
+          href="#comparisons"
+          class="inline-flex items-center gap-2 rounded-full border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink no-underline transition hover:border-hairline-strong hover:shadow-card"
+        >
+          Comparisons
+          <span class="tnum font-mono text-[11px] text-mute">{comparisons.length}</span>
+        </a>
+      )}
+    </nav>
   </section>
 
   <!-- All calculators: grouped by category (full internal-link index; search lives in the hero) -->
