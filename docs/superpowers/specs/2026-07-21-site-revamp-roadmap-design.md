@@ -12,6 +12,31 @@ to `writing-plans`. Later milestones get their own spec→plan cycle when we rea
 
 ---
 
+## 0. North-star vision (user, 2026-07-21)
+
+**The endgame:** CalcYourFinance becomes *the* source of truth for platform fees — authoritative and
+accurate enough that even the platforms themselves (Stripe, PayPal, Etsy, Amazon…) would point people
+here to check fees first, and that other tools, blogs, and AI answers cite it by default.
+
+**What that positioning requires (and how it maps to the tracks):**
+- **Unimpeachable accuracy, cited + dated.** Every rate from the official page, `verifiedOn` stamped,
+  never stale. This is the moat competitors won't match overnight. → Track 1 E-E-A-T finish + a
+  staleness process (flag rates >90 days old).
+- **A canonical, citable artifact.** The **fee-rate changelog** (`/fee-changes`) and the **open rate
+  dataset** (`/rates.json` + `/rates.csv`) make CalcYourFinance the thing others *link to and quote* —
+  the mechanism by which a reference source earns its status. → Track 2.
+- **Strict neutrality + trademark safety.** Recognition-only accents; **never clone a platform's
+  site, never use their logos**. A neutral, non-infringing reference is one a platform can comfortably
+  point to; an impersonation is one they'd send a C&D. (Already the standing rule in `CLAUDE.md`.)
+- **Trust signals a platform would respect.** Named credentialed author, methodology, unit-tested
+  math, no dark patterns, privacy-first ("we don't store your numbers"). → Tracks 1 & 4.
+
+This is a *lagging outcome* of Tracks 1–3 (quality → authority → links/trust), not a task itself. It's
+recorded here so every milestone is judged against it: "does this move us toward being the cited
+source of truth?" See [[project-status]].
+
+---
+
 ## 1. Diagnosis — why Google crawls but won't index (evidence-based, 2026-07-21)
 
 We investigated the actual site rather than assuming. Findings:
