@@ -34,6 +34,7 @@ const cmdIndex = calculators.map((c) => ({
     <button
       type="button"
       id="cmdk-open"
+      data-cmdk-open
       aria-label="Search calculators"
       aria-keyshortcuts="Meta+K Control+K"
       class="group ml-auto flex min-h-9 shrink-0 items-center gap-2 rounded-lg border border-hairline bg-canvas-soft px-2.5 text-mute transition hover:border-hairline-strong hover:text-body sm:ml-2 sm:flex-1 sm:px-3"
@@ -148,10 +149,11 @@ const cmdIndex = calculators.map((c) => ({
   const input = document.getElementById("cmdk-input") as HTMLInputElement | null;
   const list = document.getElementById("cmdk-list");
   const empty = document.getElementById("cmdk-empty");
-  const opener = document.getElementById("cmdk-open");
+  // Any [data-cmdk-open] element opens the palette (header button, page CTAs).
+  const openers = Array.from(document.querySelectorAll<HTMLElement>("[data-cmdk-open]"));
   const dataEl = document.getElementById("cmdk-data");
 
-  if (overlay && input && list && empty && opener && dataEl) {
+  if (overlay && input && list && empty && openers.length && dataEl) {
     const rows: Row[] = JSON.parse(dataEl.textContent || "[]");
     let results: Row[] = [];
     let active = 0;
@@ -261,7 +263,7 @@ const cmdIndex = calculators.map((c) => ({
       if (lastFocused) lastFocused.focus();
     }
 
-    opener.addEventListener("click", open);
+    openers.forEach((el) => el.addEventListener("click", open));
     overlay.querySelectorAll("[data-cmdk-close]").forEach((el) => el.addEventListener("click", close));
     input.addEventListener("input", render);
 

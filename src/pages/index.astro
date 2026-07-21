@@ -47,11 +47,26 @@ const CATEGORY_ORDER: Category[] = [
   "freelance",
   "general",
 ];
-const groups = CATEGORY_ORDER.map((cat) => ({
-  cat,
-  meta: CATEGORY_META[cat],
-  items: singles.filter((c) => c.category === cat),
-})).filter((g) => g.items.length > 0);
+// The homepage shows a curated subset per category and links to the hub for the
+// rest: selective homepage linking concentrates equity on the hubs and keeps every
+// calculator within 2 clicks. Ordered by known search volume, then alphabetically
+// (only ~13 configs carry estVolume, so alphabetical is the stable fallback).
+// Bento size hierarchy: a category with many calculators earns a full-width panel
+// (two inner columns) and shows more of them; the rest sit in equal half panels.
+const WIDE_THRESHOLD = 20;
+const byDemand = (a: (typeof singles)[number], b: (typeof singles)[number]) =>
+  (b.keywords.estVolume ?? 0) - (a.keywords.estVolume ?? 0) || a.title.localeCompare(b.title);
+const groups = CATEGORY_ORDER.map((cat) => {
+  const items = singles.filter((c) => c.category === cat);
+  const wide = items.length >= WIDE_THRESHOLD;
+  return {
+    cat,
+    meta: CATEGORY_META[cat],
+    items,
+    wide,
+    featured: [...items].sort(byDemand).slice(0, wide ? 12 : 8),
+  };
+}).filter((g) => g.items.length > 0);
 
 // Theme-aware accent style for a platform's recognition dot / left bar.
 const accentStyle = (platformId?: string) => {
@@ -261,51 +276,58 @@ const faqLd = {
     </section>
   )}
 
-  <!-- All calculators: grouped by category (full internal-link index; search lives in the hero) -->
+  <!-- Browse by category: a symmetric 2x2 bento — three category panels of equal
+       height (8 rows each) plus a search panel that completes the square. Each
+       panel links to its hub with keyword-rich anchor text. -->
   <section id="all-calculators" class="container mx-auto max-w-[64rem] scroll-mt-20 px-4 py-12" aria-labelledby="all-h">
     <p class="eyebrow">All calculators</p>
-    <h2 id="all-h" class="mb-1 mt-1">Browse every calculator by category.</h2>
-    <p class="mb-8 max-w-[40rem] text-[14px] text-body">
-      {total} calculators and counting — grouped by category. Use the search at the top to jump straight to one.
+    <h2 id="all-h" class="mb-1 mt-1">Browse by category.</h2>
+    <p class="mb-6 max-w-[42rem] text-[14px] text-body">
+      {total} calculators across {groups.length} categories. The most-searched in each are below —
+      open a category for its full list, or press <kbd class="rounded border border-hairline bg-canvas-soft px-1.5 py-0.5 font-mono text-[11px] text-mute">⌘K</kbd> to search them all.
     </p>
 
-    <div class="flex flex-col gap-9">
+    <div class="grid gap-4 md:grid-cols-2">
       {
         groups.map((g) => (
-          <div aria-labelledby={`grp-${g.cat}`}>
-            <div class="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-              <div>
-                <p class="eyebrow">{g.meta.label}</p>
-                <h3 id={`grp-${g.cat}`} class="mt-0.5 text-[17px] font-semibold text-ink">
-                  {g.meta.blurb}
-                </h3>
-              </div>
-              <a href={`/${g.meta.slug}`} class="shrink-0 text-[13px] font-medium text-link no-underline hover:underline">
-                View all {g.meta.label.toLowerCase()} →
-              </a>
+          <section
+            class={`card flex flex-col p-5 ${g.wide ? "md:col-span-2" : ""}`}
+            aria-labelledby={`grp-${g.cat}`}
+          >
+            <div class="mb-3 flex items-baseline justify-between gap-3">
+              <h3 id={`grp-${g.cat}`} class="text-[15px] font-semibold text-ink">{g.meta.label}</h3>
+              <span class="tnum shrink-0 font-mono text-[11px] text-mute">{g.items.length}</span>
             </div>
-            <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr))]">
-              {g.items.map((c) => (
-                <li>
+            <ul
+              class={`-mx-2 list-none p-0 ${g.wide ? "sm:grid sm:grid-cols-2 sm:gap-x-6 [&>li:nth-last-child(-n+2)]:sm:border-b-0" : ""}`}
+            >
+              {g.featured.map((c) => (
+                <li class="border-b border-hairline last:border-b-0">
                   <a
                     href={`/${c.slug}`}
-                    class="card group relative flex items-center gap-3 overflow-hidden p-4 pl-5 no-underline transition hover:shadow-float"
+                    class="group flex items-center gap-2.5 rounded-md px-2 py-[0.55rem] no-underline transition hover:bg-canvas-soft"
                   >
                     <span
-                      class="calc-accent absolute inset-y-0 left-0 w-[3px] bg-accent"
+                      class="calc-accent size-1.5 shrink-0 rounded-full bg-accent"
                       style={accentStyle(c.platform)}
                       aria-hidden="true"
                     />
-                    <span class="min-w-0 flex-1">
-                      <span class="block truncate text-[14px] font-medium text-ink">{c.title}</span>
-                      <span class="block font-mono text-[10px] uppercase tracking-wide text-mute">{g.meta.label}</span>
-                    </span>
-                    <span class="shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5" aria-hidden="true">→</span>
+                    <span class="min-w-0 flex-1 truncate text-[14px] text-ink">{c.title}</span>
+                    <span
+                      class="shrink-0 text-[13px] text-mute opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100"
+                      aria-hidden="true"
+                    >→</span>
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+            <a
+              href={`/${g.meta.slug}`}
+              class="mt-auto pt-3 text-[13px] font-medium text-link no-underline hover:underline"
+            >
+              View all {g.meta.label.toLowerCase()} calculators →
+            </a>
+          </section>
         ))
       }
 
