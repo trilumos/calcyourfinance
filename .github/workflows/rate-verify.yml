@@ -1,0 +1,62 @@
+name: rate-verify
+
+# Weekly rate watcher. Checks every source URL in fees.ts / ai-pricing.ts from a
+# fresh checkout (so it always uses the CURRENT committed rates), writes a dated
+# report into rate-verification/, commits it (the history you pull from GitHub),
+# and opens an issue only when a human needs to act.
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch: {} # allow manual runs
+
+permissions:
+  contents: write # commit the dated report
+  issues: write # ping on actionable findings
+
+concurrency:
+  group: rate-verify
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run rate watcher
+        run: npm run verify:rates
+
+      - name: Commit dated report
+        run: |
+          git config user.name "rate-verify[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add rate-verification/
+          if git diff --cached --quiet; then
+            echo "no report changes"
+          else
+            git commit -m "chore(rate-verify): report $(date -u +%F)"
+            git push
+          fi
+
+      - name: Open issue on actionable findings
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ACTIONABLE=$(node -e "process.stdout.write(String(require('./rate-verification/latest.json').actionable))")
+          DATE=$(node -e "process.stdout.write(require('./rate-verification/latest.json').date)")
+          echo "actionable=$ACTIONABLE"
+          if [ "$ACTIONABLE" -gt 0 ]; then
+            gh issue create \
+              --title "Rate verification: $ACTIONABLE dead citation(s) to fix — $DATE" \
+              --label "rate-verify" \
+              --body-file "rate-verification/$DATE.md"
+          else
+            echo "no dead links — no issue opened (worklist is in the committed report)"
+          fi
