@@ -115,12 +115,40 @@ const homeFaqs = [
     a: `Three groups: ${catCount("payment-fees")} payment-processor and wallet fee calculators (Stripe, PayPal, Square, Venmo, Cash App, Wise, Payoneer, Razorpay and more), ${catCount("ecommerce-fees")} marketplace and seller-fee calculators (Amazon FBA, eBay, Etsy, Shopify, Poshmark, Depop, TikTok Shop, Fiverr, Upwork and more), and ${catCount("personal-finance")} personal-finance tools (EMI, loan, SIP, FD, RD, GST, compound interest, simple interest, salary and percentage). Plus ${comparisons.length} head-to-head fee comparisons. We add new calculators regularly.`,
   },
   {
+    q: "The fee here doesn't match what I was actually charged. Why?",
+    a: "Usually one of five things. You may be on a negotiated or volume rate rather than the public price. The payment may have involved a currency conversion, which carries its own margin on top of the headline fee. Some countries add tax on the fee itself. A dispute, chargeback or refund fee may have been deducted separately. Or the platform is trialling different pricing in your market. These calculators work from each platform's published rates, so they show what the public price implies — if your statement differs, the difference is almost always one of those five.",
+  },
+  {
+    q: "Is the fee taken out of what the buyer pays, or added on top?",
+    a: "For payment processors and marketplaces it is deducted from the money you receive: the buyer pays the full amount and the platform keeps its cut before paying you out, which is why the calculators show a 'you receive' or 'your payout' figure rather than just the fee. If you would rather charge the customer enough to cover it, use the reverse mode — it grosses the amount up so you net exactly what you wanted.",
+  },
+  {
+    q: "Do these include the tax charged on the fee itself?",
+    a: "Yes, where the platform charges it. In India, for example, payment gateways add 18% GST on their own fee, so the Razorpay, Paytm and India-region calculators show that as a separate line rather than hiding it inside the percentage. It is a commonly missed cost — the fee on the fee.",
+  },
+  {
     q: "Can I compare two platforms side by side?",
     a: "Yes. Our comparison calculators put two platforms next to each other on the same sale and tell you which is cheaper and by exactly how much — try Stripe vs PayPal or Cash App vs Venmo. Every single-platform calculator also links to the relevant comparisons.",
   },
   {
-    q: "Does it show my currency?",
-    a: "Yes — the calculators detect your region and show results in your currency automatically (₹ in India, $ in the US, and so on), and you can switch country from the selector on any country-aware calculator. Fee rates that differ by country update together with the currency and worked example.",
+    q: "Does it show my currency, and why does the fee change when I switch country?",
+    a: "The calculators detect your region and show results in your currency automatically (₹ in India, $ in the US, and so on), formatted the way that region writes numbers. Switching country does more than swap the symbol: most platforms genuinely charge different rates in different markets, so the rate, the worked example and any local tax on the fee all update together. Which countries are available depends on where each platform publishes its pricing.",
+  },
+  {
+    q: "How often do you re-check the rates, and what happens when a platform changes its pricing?",
+    a: "Every rate carries the date it was last checked against the platform's official pricing page, shown on the calculator itself, and the most recently checked ones are listed on the home page. Rather than promise a fixed schedule, we publish that date so you can see exactly how current a number is. When a platform changes its pricing, the figure and the date are updated together.",
+  },
+  {
+    q: "My platform isn't listed — will you add it?",
+    a: "Probably, if people are asking for it. The library grows towards the platforms and calculations people actually search for rather than padding the count. If something you use is missing, say so through the contact page and it goes on the list.",
+  },
+  {
+    q: "Do you store the numbers I type in?",
+    a: "No. Every calculation runs in your browser, so the amounts you enter are never sent to a server and there is nothing for us to store. If a calculator remembers your recent calculations, that history is saved in your own browser's local storage on your device and can be cleared from the calculator itself. We measure page visits like any site, but never the figures you enter.",
+  },
+  {
+    q: "Is there an API, or can I embed a calculator on my site?",
+    a: "Not yet. Both are planned, and an embeddable calculator is the more likely of the two to arrive first, but neither exists today and we would rather say so than list a feature you cannot use. For now the calculators are free to use and link to.",
   },
   {
     q: "How do I work out what to charge to receive an exact amount?",
@@ -300,13 +328,13 @@ const faqLd = {
               <span class="tnum shrink-0 font-mono text-[11px] text-body">{g.items.length}</span>
             </div>
             <ul
-              class={`-mx-2 list-none p-0 ${g.wide ? "sm:grid sm:grid-cols-2 sm:gap-x-6 [&>li:nth-last-child(-n+2)]:sm:border-b-0" : ""}`}
+              class={`-mx-2 list-none p-0 ${g.wide ? "sm:grid sm:grid-cols-2 sm:gap-x-6" : ""}`}
             >
               {g.featured.map((c) => (
-                <li class="border-b border-hairline last:border-b-0">
+                <li>
                   <a
                     href={`/${c.slug}`}
-                    class="group flex items-center gap-3 rounded-lg px-2 py-[0.55rem] no-underline transition hover:bg-canvas-soft-2"
+                    class="group flex items-center gap-3 rounded-lg px-2 py-2.5 no-underline transition hover:bg-canvas-soft-2"
                   >
                     <span class="min-w-0 flex-1 truncate text-[14px] text-ink">{c.title}</span>
                     <span
@@ -319,7 +347,7 @@ const faqLd = {
             </ul>
             <a
               href={`/${g.meta.slug}`}
-              class="mt-auto pt-3 text-[13px] font-medium text-link no-underline hover:underline"
+              class="mt-auto border-t border-hairline pt-3 text-[13px] font-medium text-link no-underline hover:underline"
             >
               View all {g.meta.label.toLowerCase()} calculators →
             </a>
