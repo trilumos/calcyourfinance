@@ -85,7 +85,8 @@ export const emiCalculator: CalculatorConfig = {
       default: 20,
       min: 1,
       step: 1,
-      help: "Repayment period — select years or months below.",
+      half: true,
+      help: "Repayment period — pick the unit beside it.",
     },
     {
       id: "tenureUnit",
@@ -93,7 +94,8 @@ export const emiCalculator: CalculatorConfig = {
       type: "select",
       default: "years",
       options: TENURE_UNIT_OPTIONS,
-      help: "Whether the tenure above is in years or months.",
+      half: true,
+      help: "Years or months for the tenure.",
     },
   ],
 

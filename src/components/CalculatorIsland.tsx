@@ -341,15 +341,20 @@ export default function CalculatorIsland({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // The country/region selector rides inline on the first currency input (compact).
+  // Country-aware calcs with no currency input fall back to a standalone selector.
+  const firstCurrencyId = inputs.find((i) => i.type === "currency")?.id;
+  const isCountryAware = countryOptions.length > 1;
+
   return (
     <div data-slug={slug}>
     <div class="grid gap-4 md:grid-cols-2 md:items-start">
       <form
-        class="card flex flex-col gap-4 p-5"
+        class="card flex flex-wrap gap-4 p-5"
         onSubmit={(e) => e.preventDefault()}
       >
-        {countryOptions.length > 1 && (
-          <label class="flex flex-col gap-1.5">
+        {isCountryAware && !firstCurrencyId && (
+          <label class="flex w-full flex-col gap-1.5">
             <span class="text-[13px] font-medium text-ink">Country / region</span>
             <Select
               options={countryOptions}
@@ -362,13 +367,22 @@ export default function CalculatorIsland({
         )}
 
         {inputs.map((input) => (
-          <Field
+          <div
             key={input.id}
-            input={input}
-            value={values[input.id]}
-            currencySymbol={currencySymbol}
-            onInput={onInput}
-          />
+            class={`min-w-0 ${input.half ? "grow basis-[calc(50%-0.5rem)]" : "basis-full"}`}
+          >
+            <Field
+              input={input}
+              value={values[input.id]}
+              currencySymbol={currencySymbol}
+              onInput={onInput}
+              region={
+                isCountryAware && input.id === firstCurrencyId
+                  ? { options: countryOptions, value: country, onChange: onCountry }
+                  : undefined
+              }
+            />
+          </div>
         ))}
       </form>
 
@@ -421,12 +435,17 @@ function Select({
   onChange,
   ariaLabel,
   searchable = false,
+  variant = "field",
+  triggerLabel,
 }: {
   options: Option[];
   value: string;
   onChange: (v: string) => void;
   ariaLabel: string;
   searchable?: boolean;
+  /** "prefix" renders a compact symbol trigger (e.g. currency) beside an input. */
+  variant?: "field" | "prefix";
+  triggerLabel?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -481,21 +500,37 @@ function Select({
 
   return (
     <div class="relative" ref={rootRef}>
-      <button
-        type="button"
-        class="select-trigger"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-label={ariaLabel}
-        onClick={() => setOpen((o) => !o)}
-      >
-        <span class="truncate">{selected?.label ?? "Select…"}</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </button>
+      {variant === "prefix" ? (
+        <button
+          type="button"
+          class="flex h-full min-h-11 items-center gap-1 whitespace-nowrap rounded-md border border-hairline bg-canvas px-2.5 text-[15px] text-ink transition hover:border-hairline-strong aria-expanded:border-ink"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-label={ariaLabel}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span>{triggerLabel ?? selected?.label}</span>
+          <svg class={`text-mute transition-transform ${open ? "rotate-180" : ""}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+      ) : (
+        <button
+          type="button"
+          class="select-trigger"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-label={ariaLabel}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span class="truncate">{selected?.label ?? "Select…"}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+      )}
       {open && (
-        <div class="select-popover" onKeyDown={onKey}>
+        <div class={`select-popover ${variant === "prefix" ? "right-auto min-w-[16rem]" : ""}`} onKeyDown={onKey}>
           {searchable && (
             <div class="select-search">
               <input
@@ -543,11 +578,14 @@ function Field({
   value,
   currencySymbol,
   onInput,
+  region,
 }: {
   input: InputSpec;
   value: number | string | boolean;
   currencySymbol: string;
   onInput: (id: string, raw: number | string | boolean) => void;
+  /** When set, a currency input renders the compact country/region selector inline. */
+  region?: { options: Option[]; value: string; onChange: (v: string) => void };
 }) {
   const id = `f-${input.id}`;
 
@@ -581,6 +619,44 @@ function Field({
         {input.help && (
           <span class="text-[13px] leading-snug text-mute">{input.help}</span>
         )}
+      </label>
+    );
+  }
+
+  // Currency input hosting the inline country/region selector (compact prefix).
+  if (input.type === "currency" && region) {
+    return (
+      <label class="flex flex-col gap-1.5" for={id}>
+        <span class="text-[13px] font-medium text-ink">{input.label}</span>
+        <div class="flex items-stretch gap-2">
+          <Select
+            variant="prefix"
+            triggerLabel={currencySymbol}
+            options={region.options}
+            value={region.value}
+            onChange={region.onChange}
+            ariaLabel="Country or region"
+            searchable
+          />
+          <input
+            id={id}
+            name={input.id}
+            autoComplete="off"
+            class="field-control tnum flex-1"
+            type="number"
+            inputMode="decimal"
+            value={value === "" ? "" : Number(value)}
+            min={input.min}
+            max={input.max}
+            step={input.step ?? "any"}
+            placeholder={input.placeholder}
+            onInput={(e) => {
+              const v = e.currentTarget.value;
+              onInput(input.id, v === "" ? "" : Number(v));
+            }}
+          />
+        </div>
+        {input.help && <span class="text-[13px] leading-snug text-mute">{input.help}</span>}
       </label>
     );
   }
