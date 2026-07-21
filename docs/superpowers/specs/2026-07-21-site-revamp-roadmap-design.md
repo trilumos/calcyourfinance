@@ -81,8 +81,15 @@ scoped headlines to be detailed when we reach them.
   Core Web Vitals + a11y pass, comparison-page depth, E-E-A-T finish. **Deploy gate for everything else.**
 - **M2 — Authority clusters** *(from SEO Battle Plan)*. Build `/creator-platform-fees` pillar + upgrade
   Cluster A; ship Cluster H comparisons to full anatomy; differentiation wedge audit across all pages.
+  Plus **fee-rate changelog page** (`/fee-changes`) — a public log of every processor pricing change with
+  date + old→new delta, generated from the `verifiedOn`/rate history in `config/fees.ts`; a linkable,
+  evergreen artifact. Plus **open rate dataset** (`/rates.json` + `/rates.csv`) exposing the single fees
+  file as a cited "source of truth" for other tools to link back to (dev-SEO). Both are cheap and can ship
+  as soon as M1 lands.
 - **M3 — Link engine** *(user-side + light code)*. The original data study ("what 30 platforms take from
-  creators in 2026") as link bait; directory/outreach; **decision point on the embed widget**.
+  creators in 2026") as link bait; directory/outreach (incl. a free Viberank submission — skip the paid
+  tier); **email fee-change digest** (owned channel; needs an ESP integration) seeded from the changelog;
+  **decision point on the embed widget**.
 - **M4 — UI/UX polish pass**. Motion, empty/loading/error states, responsive + dark-mode hardening,
   micro-interactions — the "delight" layer, after the structure is right.
 - **M5 — SaaS foundation** *(only if traffic warrants)*. Embed widget productized, public API for rates,
@@ -95,7 +102,7 @@ scoped headlines to be detailed when we reach them.
 **Goal:** every page passes the site-level quality gate — visibly differentiated, fast, accessible,
 trustworthy — so that when the first backlinks land, indexing follows with no technical excuse left.
 
-**Definition of done:** all four workstreams below complete; `npm test` green; `npm run build` clean at
+**Definition of done:** all five workstreams below complete; `npm test` green; `npm run build` clean at
 71 pages; Lighthouse (mobile) ≥ 90 Performance / 100 Accessibility on 3 sampled pages
 (a calculator, a hub, the homepage); `web-design-guidelines` skill run with findings fixed.
 
@@ -128,6 +135,10 @@ Track 3's start — it makes the site look less templated *and* adds indexable u
   card already reserves `min-h`; confirm inputs/selects don't reflow. Target CLS < 0.1.
 - **LCP:** confirm the LCP element (hero H1 / first result number) isn't blocked by font loading; Geist is
   self-hosted — verify `font-display` and preload of the one critical weight.
+- **INP / debounce (verified gap).** `recompute` currently runs synchronously on every keystroke
+  (`onInput` → `recompute`, `CalculatorIsland.tsx`). Fine for today's light math, but W1 adds charts and
+  amortization tables — debounce the *result* recompute (~120–150ms) while keeping the input itself
+  responsive, and memoize currency formatting. Target INP < 200ms. (Raised by the 2026-07-21 external review.)
 - Measure with Lighthouse mobile on 3 sampled routes; fix regressions.
 
 ### W3 — Accessibility pass (WCAG 2.2 AA — quality signal + your explicit ask)
@@ -144,6 +155,14 @@ in W1. Target Lighthouse a11y 100 + manual keyboard pass.
 - Fill `SITE.organization.sameAs` (brand social profiles) and `SITE.social.twitter` once they exist;
   add a visible **"Rates verified by {author} on {date}"** line near each tool (dated-and-cited is your
   single biggest trust edge — surface it harder). Confirm schema `dateModified` == `feesVerifiedOn`.
+
+### W5 — Shareable permalink scenario URLs (safe, from the 2026-07-21 review)
+
+Read `?amount=`, `?currency=`/country, and mode from the query string to hydrate the calculator to an
+exact scenario, and update the URL (via `history.replaceState`, no reload) as inputs change so users can
+bookmark/share a specific calculation. **Every such URL uses `<link rel="canonical">` to the clean base
+page** — bookmarkable and shareable with **zero index bloat**. Explicitly NOT a page-per-amount (see
+§8); the canonical is non-negotiable.
 
 ### Out of scope for M1 (deliberately)
 - New calculators (Battle Plan clusters) → M2.
@@ -181,3 +200,34 @@ in W1. Target Lighthouse a11y 100 + manual keyboard pass.
 2. `CalcYourFinance-SEO-Battle-Plan.md` currently sits untracked at repo root — move into `docs/` and
    commit as the M2 source of truth? (Recommended.)
 3. Embed widget stays parked until you reopen it (M3 decision point) — confirm.
+
+---
+
+## 8. External review triage (2026-07-21)
+
+A cold "Viberank" outreach email (post-Product-Hunt lead-gen with a paid $4.99 upsell) included a
+site review. Verified against the live code; recorded here so the decisions are durable.
+
+**Already implemented — do not re-add:** dark/light toggle with no-FOUC script; `WebApplication` +
+`FAQPage` + `BreadcrumbList` + `Person`/`Organization` JSON-LD; `inputmode="decimal"` on number inputs;
+per-calculator "recently used" history (localStorage).
+
+**Premise correction — the "21 languages" is NOT an SEO moat.** It is an on-demand Google-Translate
+widget (`LanguageSwitcher.astro`), not 21 sets of uniquely translated indexable pages. So "add hreflang
+to rank in non-English SERPs" has nothing to point at. Real localized pages are a large, *risky* project
+(automated-translation filter) and are the wrong bet before English pages index. **Parked.**
+
+**Rejected — actively harmful:**
+- *"A unique indexable page per long-tail query (e.g. 'Stripe fee on $97 USD→INR')."* Scaled-content /
+  doorway pages; for a young YMYL domain this dilutes the helpful-content proportion and worsens the exact
+  indexing problem. The safe substitute is W5 (permalinks canonical to base). **Never ship page-per-amount.**
+- *Exit-intent / interstitial popups.* Google penalizes intrusive mobile interstitials — hurts indexing.
+- *Fabricated social-proof counters* ("used in 47 countries"). Only if backed by real analytics.
+- *API / Pro tier now.* Stays M5 — monetizes traffic that doesn't exist yet.
+
+**Accepted and folded in (user-approved 2026-07-21):** permalink scenario URLs → M1-W5; INP/debounce →
+M1-W2; fee-rate changelog page + open rate dataset → M2; email fee-change digest → M3.
+
+**Deferred / optional (not scheduled):** copy-results-as-table + CSV export; explicit "no ads, no
+tracking, we don't store your numbers" privacy copy; default-dark by system preference (vs the deliberate
+default-light in `DESIGN.md`); privacy-first analytics (Plausible/Umami) vs current GA4; PWA offline.
