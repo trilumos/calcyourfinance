@@ -1,7 +1,20 @@
-# HANDOFF — calcyourfinance.com
+# Handoff — session of 2026-07-21: "hero calculator + saved calculations"
 
-**Written 2026-07-21.** Read this first, then `CLAUDE.md` (rules), `PLAN.md` (roadmap),
-`DESIGN.md` (design source of truth), `PROGRESS.md` (changelog).
+| | |
+|---|---|
+| **Session** | Claude Code session `aad616f6-8d5d-45b1-9e36-34bd6b0c00b7`, 2026-07-21 |
+| **Ended because** | Context exhausted — long session, user called the handoff |
+| **This session did** | Product Hunt launch support (footer badge, first comment) → homepage hero tabbed live calculators → comparison prominence → local input memory → **per-calculator saved-calculations history** → **hero calculator moved beside the copy** |
+| **Left open** | Branch `hero-history` (commits `edbc4d6`, `6970dce`) **pushed + previewing, NOT merged** — awaiting the user's review. See §2. |
+| **Handoff written by** | Claude Opus 4.8 |
+
+Earlier in this same session (already merged to `main` and deployed): the full 30-calculator
+e-commerce/seller-fee category, the legacy-10 personal-finance rebuild, the merge of
+`ecommerce-seller-fee-calculators` into `main` (`24952e2`), the Product Hunt footer badge
+(`45a537f`), and the first version of the hero tabs + local input memory (`a3ec71e`).
+
+Read this first, then `CLAUDE.md` (rules), `PLAN.md` (roadmap), `DESIGN.md` (design source of
+truth), `PROGRESS.md` (changelog).
 
 ---
 
