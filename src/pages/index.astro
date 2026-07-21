@@ -32,8 +32,8 @@ const heroTabOrder: { slug: string; label: string }[] = [
   { slug: "gst-calculator", label: "GST" },
   { slug: "emi-calculator", label: "EMI" },
   { slug: "sip-calculator", label: "SIP" },
-  { slug: "stripe-fee-calculator", label: "Stripe fees" },
-  { slug: "etsy-fee-calculator", label: "Etsy fees" },
+  { slug: "stripe-fee-calculator", label: "Stripe" },
+  { slug: "etsy-fee-calculator", label: "Etsy" },
 ];
 const heroTabs = heroTabOrder
   .map(({ slug, label }) => {
@@ -131,30 +131,36 @@ const faqLd = {
   canonicalPath="/"
   schemas={[faqLd]}
 >
-  <!-- Hero -->
+  <!-- Hero: copy on the left, a live calculator beside it -->
   <section class="border-b border-hairline bg-canvas">
-    <div class="container mx-auto max-w-[64rem] px-4 py-12 sm:py-16">
-      <div class="max-w-[48rem]">
+    <div class="container mx-auto grid max-w-[64rem] items-start gap-8 px-4 py-12 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-10">
+      <div class="max-w-[42rem]">
         <p class="eyebrow">No signup · Instant · In your currency</p>
-        <h1 class="mt-3 text-pretty text-[clamp(2.2rem,1.6rem+2.6vw,3.5rem)]">
+        <h1 class="mt-3 text-pretty text-[clamp(2.1rem,1.6rem+2.2vw,3rem)]">
           Free fee and finance calculators.
         </h1>
-        <p class="mt-4 max-w-[42rem] text-[18px] leading-relaxed text-body">
+        <p class="mt-4 text-[17px] leading-relaxed text-body">
           A fast, accurate library for the numbers that matter — what payment
-          processors and marketplaces take (Stripe, PayPal, Square, Etsy), and the
-          everyday finance math you look up most (EMI, SIP, FD, GST, compound
-          interest). Fee rates are pulled from official pricing pages and dated;
-          results show in your own currency. New calculators added regularly.
+          processors and marketplaces take (Stripe, PayPal, Square, Etsy, Amazon),
+          and the everyday finance math you look up most (EMI, SIP, FD, GST,
+          compound interest). Rates come from official pricing pages and are dated;
+          results show in your own currency.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#all-calculators" class="btn btn-primary">Browse all calculators</a>
+          <a href="#all-calculators" class="btn btn-primary">Browse all {total} calculators</a>
           <a href="#comparisons" class="btn btn-secondary">Compare two platforms</a>
         </div>
       </div>
 
-      <!-- Try it here: a few popular calculators, live -->
-      <div class="mt-12" data-calc-tabs>
-        <p class="eyebrow mb-2.5">Try one now — no signup</p>
+      <!-- Try it here: a few popular calculators, live. Stacked at lg so it
+           fits the narrow hero column (the island's own 2-col is viewport-based). -->
+      <div class="lg:[&_[data-slug]>div]:grid-cols-1" data-calc-tabs>
+        <div class="mb-2.5 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+          <p class="eyebrow">Try one right here</p>
+          <a href="#all-calculators" class="text-[13px] font-medium text-link no-underline hover:underline">
+            {total} more →
+          </a>
+        </div>
         <div
           role="tablist"
           aria-label="Try a calculator"
@@ -169,7 +175,7 @@ const faqLd = {
                 aria-controls={`hpanel-${i}`}
                 aria-selected={i === 0 ? "true" : "false"}
                 tabindex={i === 0 ? 0 : -1}
-                class="whitespace-nowrap rounded-lg px-3.5 py-1.5 text-[13px] font-medium text-body transition hover:text-ink aria-selected:bg-canvas aria-selected:text-ink aria-selected:shadow-card"
+                class="whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] font-medium text-body transition hover:text-ink aria-selected:bg-canvas aria-selected:text-ink aria-selected:shadow-card"
               >
                 {t.label}
               </button>
@@ -197,6 +203,9 @@ const faqLd = {
             </div>
           ))
         }
+        <p class="mt-2.5 text-[12px] text-mute">
+          Full version of each: <a href="#all-calculators" class="text-link no-underline hover:underline">see all {total} calculators</a>.
+        </p>
       </div>
     </div>
   </section>
