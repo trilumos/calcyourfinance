@@ -23,6 +23,33 @@ cycle section at the top each time.
 > or live in the config's `sources[]` (Shopify, App Store, Printful). It now scans
 > those too — 111 → 169 watched sources.
 
+## ⚠️ Zendesk help centres are unreachable for many users
+
+Confirmed 2026-07-22 from a real browser (India) **and** from CI/sandbox:
+**Zendesk-hosted help centres fail to load** — the `/hc/en-*/articles/…` pattern,
+including `*.zendesk.com`, `support.patreon.com`, `depophelp.zendesk.com`.
+Main domains (`www.patreon.com`, `news.depop.com`) load fine.
+
+**Why it matters:** a citation the reader cannot open is worthless on a site whose
+entire pitch is verifiability.
+
+**Rule — treat "primary source unreachable" as a defect, not a nitpick:**
+1. Prefer a **main-domain page that states the number** as `sources[0]`
+   (e.g. `www.patreon.com/pricing` for Patreon's 10%).
+2. Keep the Zendesk article as a **secondary** entry — it's often the richer
+   reference and sometimes the only one.
+3. **Never delete the only source.** Where Zendesk is genuinely the sole official
+   statement (e.g. Depop's rest-of-world 10% — `partnerapi.depop.com` explicitly
+   defers to it, `depop.com/blog` 403s), keep it and rank reachable sources above.
+
+**Still on a Zendesk primary** (fix when a main-domain page stating the fee is
+confirmed): reverb, printful, whatnot, ko-fi, substack, fiverr, upwork,
+teespring, redbubble. Likely candidates to verify first:
+`reverb.com/selling/selling-fees`, `ko-fi.com/pricing`, `printful.com/pricing`,
+`upwork.com/pricing`, `fiverr.com/legal-portal/legal-terms/payment-terms`.
+Already fixed: patreon. Not Zendesk (Intercom/Salesforce, load fine): poshmark,
+buymeacoffee, podia, teachable, kajabi.
+
 ## Method (follow every cycle)
 
 1. **Prefer the official page.** Domain-restricted WebSearch (or WebFetch) on the
