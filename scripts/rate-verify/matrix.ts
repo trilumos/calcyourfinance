@@ -14,6 +14,7 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { calculators } from "../../src/calculators";
+import { TIER1 } from "../../src/config/verification-tiers";
 import { getManifest } from "./manifest";
 
 type Cfg = {
@@ -41,7 +42,12 @@ function sourcesFor(c: Cfg): { urls: string[]; verifiedOn?: string } {
 const fee = (calculators as Cfg[]).filter(
   (c) => c.kind === "single" && c.category !== "personal-finance",
 );
-fee.sort((a, b) => (a.category ?? "").localeCompare(b.category ?? "") || a.slug.localeCompare(b.slug));
+fee.sort(
+  (a, b) =>
+    (TIER1.has(a.slug) ? 0 : 1) - (TIER1.has(b.slug) ? 0 : 1) ||
+    (a.category ?? "").localeCompare(b.category ?? "") ||
+    a.slug.localeCompare(b.slug),
+);
 
 let points = 0;
 const lines: string[] = [];
@@ -62,6 +68,16 @@ lines.push(
     "e.g. Wise). Status: `ok` · `changed` · `recheck`.",
 );
 lines.push("");
+lines.push(
+  `**Cadence.** 🔴 **Tier 1 (${[...TIER1].length}) — verified the 1st AND 15th** of ` +
+    "each month. **Tier 2 (rest) — verified the 1st.** On any date, check what's due " +
+    "for that anchor (1st = all; 15th = Tier 1); if a check runs late, do it as soon " +
+    "as possible but keep the next date on the 1st/15th anchor. Every session is " +
+    "logged in `src/config/verification-log.ts` and shown publicly at `/verification`.",
+);
+lines.push("");
+lines.push("Tier 1: " + [...TIER1].map((s) => `\`${s}\``).join(", ") + ".");
+lines.push("");
 
 for (const c of fee) {
   const { urls, verifiedOn } = sourcesFor(c);
@@ -69,7 +85,8 @@ for (const c of fee) {
   const rows = countries.length ? countries : ["—"];
   points += rows.length;
   const src = urls.length ? urls.map((u) => `[src](${u})`).join(" ") : "—";
-  lines.push(`### ${c.slug} — ${c.category}`);
+  const tier = TIER1.has(c.slug) ? "🔴 Tier 1 — 1st + 15th" : "Tier 2 — 1st only";
+  lines.push(`### ${c.slug} — ${c.category} · ${tier}`);
   lines.push(`Sources: ${src} · data verified ${verifiedOn ?? "?"}`);
   lines.push("");
   lines.push("| Country | Checked | Credibility | Status | Notes |");
@@ -78,11 +95,12 @@ for (const c of fee) {
   lines.push("");
 }
 
-lines.unshift(""); // spacer under title inserted later
+// Summary line right under the title (index 2, after "# title" + blank).
 lines.splice(
-  4,
+  2,
   0,
-  `**${fee.length} fee calculators · ${points} country rate-points to verify each cycle.**`,
+  `**${fee.length} fee calculators · ${points} country rate-points.** ` +
+    `🔴 ${TIER1.size} Tier 1 (twice-monthly) · ${fee.length - TIER1.size} Tier 2 (monthly).`,
   "",
 );
 

@@ -1,0 +1,292 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { calculators } from "../calculators";
+import { CATEGORY_META, type Category } from "../calculators/_types";
+import { TIER1, tierOf } from "../config/verification-tiers";
+import { verificationLog } from "../config/verification-log";
+import { rateHistory } from "../config/rate-history";
+
+// Fee calculators only — personal-finance tools are standard, unit-tested math
+// with no external rate to verify (covered separately below).
+const fee = calculators.filter(
+  (c) => c.kind === "single" && c.category !== "personal-finance",
+);
+const financeCount = calculators.filter(
+  (c) => c.kind === "single" && c.category === "personal-finance",
+).length;
+
+const verifiedOn = (c: (typeof calculators)[number]) =>
+  (c as { feesVerifiedOn?: string; lastUpdated: string }).feesVerifiedOn ?? c.lastUpdated;
+const firstSource = (c: (typeof calculators)[number]) =>
+  (c as { sources?: { label?: string; url?: string }[] }).sources?.[0];
+const countryCount = (c: (typeof calculators)[number]) =>
+  (c as { countries?: { supported?: string[] } }).countries?.supported?.length ?? 0;
+
+const prettyDate = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
+// Group fee calculators by category, Tier 1 first within each.
+const CAT_ORDER: Category[] = ["payment-fees", "ecommerce-fees", "ai-api-costs", "freelance", "general"];
+const groups = CAT_ORDER.map((cat) => ({
+  cat,
+  meta: CATEGORY_META[cat],
+  items: fee
+    .filter((c) => c.category === cat)
+    .sort(
+      (a, b) => tierOf(a.slug) - tierOf(b.slug) || a.title.localeCompare(b.title),
+    ),
+})).filter((g) => g.items.length > 0);
+
+const totalCountryPoints = fee.reduce((n, c) => n + Math.max(countryCount(c), 1), 0);
+const lastChecked = verificationLog[0]?.date;
+const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
+---
+
+<BaseLayout
+  title="Data accuracy & verification"
+  description="How CalcYourFinance keeps every platform fee accurate: official sources, independent triangulation, a human check on a fixed schedule, and a public log of exactly what we checked and when."
+  canonicalPath="/verification"
+>
+  <section class="container mx-auto max-w-[64rem] px-4 py-6 pb-16">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Data accuracy" }]} />
+
+    <p class="eyebrow mt-4">Data accuracy</p>
+    <h1 class="my-3">How we keep every rate accurate.</h1>
+    <p class="max-w-[42rem] text-pretty text-[17px] leading-relaxed text-body">
+      A fee calculator is only worth what its numbers are worth. Every rate here comes from the
+      platform's official page, is checked by a person against that page on a fixed schedule, and is
+      stamped with the date we last confirmed it. This page is the public record — what we checked,
+      when, and how.
+    </p>
+
+    <!-- Trust stats -->
+    <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {
+        [
+          { n: fee.length, l: "fee calculators tracked" },
+          { n: totalCountryPoints, l: "country rate-points" },
+          { n: `${TIER1.size} + ${fee.length - TIER1.size}`, l: "twice-monthly + monthly" },
+          { n: lastChecked ? prettyDate(lastChecked) : "—", l: "last checked" },
+        ].map((s) => (
+          <div class="card p-4">
+            <div class="text-[22px] font-semibold text-ink tnum">{s.n}</div>
+            <div class="mt-1 text-[13px] text-body">{s.l}</div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- How we verify -->
+    <h2 class="mb-3 mt-12">How each rate is verified</h2>
+    <div class="prose max-w-[46rem]">
+      <ol>
+        <li><strong>Official source first.</strong> Each fee is taken from the platform's own pricing or help page — never a third-party summary. That exact page is cited on every calculator and linked below.</li>
+        <li><strong>Triangulated when the page hides its numbers.</strong> Some platforms (PayPal, Stripe, Meta, help-centre pages) render fees with JavaScript or behind a login. There we confirm the value against <strong>two or more independent, current sources</strong> and only accept it when they agree — a single result is treated as unverified.</li>
+        <li><strong>A human decides.</strong> No rate changes automatically. A person reviews each check, and only then do we update the number and log the change.</li>
+        <li><strong>Dated in public.</strong> Every calculator shows its "last verified" date, and each change is recorded with its source in our <a href="/methodology">methodology</a> and change history.</li>
+      </ol>
+    </div>
+
+    <!-- Cadence -->
+    <h2 class="mb-3 mt-12">Our checking schedule</h2>
+    <p class="mb-4 max-w-[46rem] text-body">
+      Rates change rarely, but when they do it matters. So we re-verify on a fixed cadence — more
+      often for the platforms where a change is most likely or most costly.
+    </p>
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div class="card p-5">
+        <p class="text-[13px] font-medium text-accent">Twice a month · 1st &amp; 15th</p>
+        <p class="mt-1 text-[15px] font-medium text-ink">Tier 1 — {TIER1.size} calculators</p>
+        <p class="mt-2 text-[14px] leading-relaxed text-body">
+          Payment processors spanning many countries, the highest-traffic marketplaces, and
+          platforms whose fees are actively changing.
+        </p>
+      </div>
+      <div class="card p-5">
+        <p class="text-[13px] font-medium text-body">Once a month · 1st</p>
+        <p class="mt-1 text-[15px] font-medium text-ink">Tier 2 — {fee.length - TIER1.size} calculators</p>
+        <p class="mt-2 text-[14px] leading-relaxed text-body">
+          Stable, mostly single-rate platforms. Any change a platform announces is applied
+          immediately, not held for the schedule.
+        </p>
+      </div>
+    </div>
+    <p class="mt-4 max-w-[46rem] text-[14px] leading-relaxed text-body">
+      <strong class="text-ink">Every check is full scope.</strong> Whichever tier a calculator is in,
+      when it's due we re-verify every country and every fee variant it covers — never a sample. The
+      tiers change how <em>often</em> we check, never how <em>thoroughly</em>.
+    </p>
+
+    <!-- Verification sessions log -->
+    <h2 class="mb-3 mt-12">Verification log</h2>
+    <p class="mb-4 max-w-[46rem] text-body">
+      Every check we run, with its date, duration and outcome. Newest first.
+    </p>
+    <div class="flex flex-col gap-3">
+      {
+        verificationLog.map((s) => (
+          <div class="card p-5">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <p class="text-[15px] font-semibold text-ink tnum">{prettyDate(s.date)}</p>
+              <p class="font-mono text-[12px] text-mute tnum">
+                {s.startUTC}–{s.endUTC} UTC · {s.slot}
+              </p>
+            </div>
+            <p class="mt-2 text-[14px] leading-relaxed text-body">{s.scope}</p>
+            <p class="mt-2 text-[14px] leading-relaxed text-ink">
+              <strong>Result:</strong> {s.result}
+            </p>
+            <p class="mt-1 text-[13px] text-mute">
+              Coverage: {s.coverage} · Method: {s.method}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Recent rate changes -->
+    {
+      recentChanges.length > 0 && (
+        <>
+          <h2 class="mb-3 mt-12">Recent rate changes</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[36rem] border-collapse text-[14px]">
+              <thead>
+                <tr class="border-b border-hairline text-left text-[12px] uppercase tracking-wide text-mute">
+                  <th class="py-2 pr-4 font-medium">Effective</th>
+                  <th class="py-2 pr-4 font-medium">Platform</th>
+                  <th class="py-2 pr-4 font-medium">What changed</th>
+                  <th class="py-2 pr-4 font-medium">From → To</th>
+                  <th class="py-2 font-medium">Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentChanges.map((r) => (
+                  <tr class="border-b border-hairline">
+                    <td class="py-2.5 pr-4 tnum text-body">{prettyDate(r.effective)}</td>
+                    <td class="py-2.5 pr-4 text-ink">{r.platform}</td>
+                    <td class="py-2.5 pr-4 text-body">{r.field}</td>
+                    <td class="py-2.5 pr-4 tnum text-body">
+                      {r.from ?? "—"} → <span class="text-ink">{r.to ?? "—"}</span>
+                    </td>
+                    <td class="py-2.5">
+                      <a href={r.source} rel="nofollow noopener" target="_blank" class="text-link no-underline hover:underline">
+                        official ↗
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )
+    }
+
+    <!-- Per-calculator table -->
+    <h2 class="mb-3 mt-12">Every calculator, last verified</h2>
+    <p class="mb-4 max-w-[46rem] text-body">
+      When we last confirmed each platform's rates, how many countries the tool covers, and the
+      source we check against. <span class="text-accent">●</span> marks Tier&nbsp;1 (twice-monthly).
+    </p>
+    <label class="sr-only" for="verify-search">Search calculators</label>
+    <input
+      id="verify-search"
+      type="search"
+      placeholder="Search a calculator — e.g. Stripe, Etsy, PayPal…"
+      autocomplete="off"
+      class="field-control mb-1 w-full max-w-[24rem]"
+    />
+    <p id="verify-noresult" class="hidden py-3 text-[14px] text-mute">No calculator matches that.</p>
+    <div id="verify-list">
+    {
+      groups.map((g) => (
+        <div class="mt-6" data-group>
+          <h3 class="mb-2 border-b border-hairline pb-2 text-[15px] font-medium text-ink">
+            {g.meta.label}
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[38rem] border-collapse text-[14px]">
+              <tbody>
+                {g.items.map((c) => {
+                  const src = firstSource(c);
+                  const cc = countryCount(c);
+                  return (
+                    <tr class="border-b border-hairline" data-name={c.title.toLowerCase()} data-slug={c.slug}>
+                      <td class="py-2.5 pr-3">
+                        {tierOf(c.slug) === 1 && <span class="text-accent" title="Tier 1 — twice monthly">●</span>}{" "}
+                        <a href={`/${c.slug}`} class="text-ink no-underline hover:underline">
+                          {c.title}
+                        </a>
+                      </td>
+                      <td class="py-2.5 pr-3 tnum whitespace-nowrap text-body">{prettyDate(verifiedOn(c))}</td>
+                      <td class="py-2.5 pr-3 whitespace-nowrap text-mute">
+                        {cc > 1 ? `${cc} countries` : "single rate"}
+                      </td>
+                      <td class="py-2.5">
+                        {src?.url && (
+                          <a href={src.url} rel="nofollow noopener" target="_blank" class="text-link no-underline hover:underline">
+                            source ↗
+                          </a>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))
+    }
+    </div>
+
+    <p class="mt-8 max-w-[46rem] text-[14px] leading-relaxed text-body">
+      Our {financeCount} personal-finance calculators (loan, EMI, compound interest and the rest)
+      aren't in this table because they don't depend on a platform's rates — they're standard
+      textbook formulas, and each one is covered by automated tests so the math is reproducible.
+    </p>
+
+    <div class="card mt-10 flex flex-wrap items-center justify-between gap-4 p-5">
+      <p class="text-[14px] text-body">
+        Spotted a fee that looks out of date? Tell us and we'll verify it fast.
+      </p>
+      <a href="/contact" class="btn btn-secondary shrink-0">Report a rate</a>
+    </div>
+  </section>
+
+  <script>
+    // Filter the per-calculator table so a user can find their tool's last-checked
+    // date. Progressive enhancement — the full list is server-rendered and works
+    // without JS; this only narrows it.
+    const input = document.getElementById("verify-search") as HTMLInputElement | null;
+    const list = document.getElementById("verify-list");
+    const noResult = document.getElementById("verify-noresult");
+    if (input && list) {
+      const rows = Array.from(list.querySelectorAll<HTMLElement>("tr[data-name]"));
+      const groups = Array.from(list.querySelectorAll<HTMLElement>("[data-group]"));
+      input.addEventListener("input", () => {
+        const q = input.value.trim().toLowerCase();
+        let any = false;
+        for (const r of rows) {
+          const match = !q || (r.dataset.name ?? "").includes(q) || (r.dataset.slug ?? "").includes(q);
+          r.style.display = match ? "" : "none";
+          if (match) any = true;
+        }
+        for (const g of groups) {
+          const visible = Array.from(g.querySelectorAll<HTMLElement>("tr[data-name]")).some(
+            (r) => r.style.display !== "none",
+          );
+          g.style.display = visible ? "" : "none";
+        }
+        noResult?.classList.toggle("hidden", any);
+      });
+    }
+  </script>
+</BaseLayout>
