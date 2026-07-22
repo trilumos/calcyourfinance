@@ -1,12 +1,14 @@
-name: matrix-audit-reminder
+name: rate-audit-reminder
 
-# Monthly nudge for the FULL manual rate audit (all calculators × all countries).
-# The weekly rate-verify workflow is only a link/staleness tripwire; this is the
-# reminder to actually re-verify every value against its official source using
-# rate-verification/matrix.md. Rates change rarely, so monthly is the cadence.
+# The manual full-scope audit reminders → Telegram.
+#   1st of month  → FULL audit (all 42 fee calculators)
+#   15th of month → Tier 1 only (the 9 high-priority calculators)
+# Every check is full scope (all countries, all variants) — the tier only
+# changes frequency. The weekly rate-verify.yml is the between-audits tripwire.
 on:
   schedule:
-    - cron: "0 7 1 * *" # 1st of each month, 07:00 UTC
+    - cron: "0 7 1 * *" # 1st, 07:00 UTC — full audit
+    - cron: "0 7 15 * *" # 15th, 07:00 UTC — Tier 1
   workflow_dispatch: {}
 
 permissions:
@@ -17,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Telegram reminder
+      - name: Telegram audit reminder
         env:
           TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -25,10 +27,16 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then echo "no telegram secrets"; exit 0; fi
-          URL="$SERVER/$REPO/blob/main/rate-verification/matrix.md"
-          TEXT=$(printf '🗓️ *Monthly rate audit due.*\n\nRe-verify all 42 fee calculators × 147 country rate-points against their official sources — triangulate, never trust one search. Work the checklist with Claude.\n\n📋 %s' "$URL")
+          DAY=$(date -u +%d)
+          if [ "$DAY" = "15" ]; then
+            SET="🔴 *Tier 1 audit* (9 calculators) — the twice-monthly mid-month check"
+          else
+            SET="*Full monthly audit* — all 42 fee calculators"
+          fi
+          MATRIX="$SERVER/$REPO/blob/main/rate-verification/matrix.md"
+          TEXT=$(printf '🗓️ Rate audit due: %s.\n\nFull scope — every country and variant, triangulated. Tell Claude to recheck; it will verify what today’s date makes due and log the session.\n\n📋 Checklist: %s' "$SET" "$MATRIX")
           curl -sS --max-time 20 "https://api.telegram.org/bot$TG_TOKEN/sendMessage" \
             --data-urlencode "chat_id=$TG_CHAT" \
             --data-urlencode "parse_mode=Markdown" \
             --data-urlencode "text=$TEXT" >/dev/null
-          echo "monthly audit reminder sent"
+          echo "audit reminder sent (day $DAY)"

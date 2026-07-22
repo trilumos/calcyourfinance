@@ -368,9 +368,12 @@ const faqLd = {
   <!-- Why trust + how we verify (merged: the E-E-A-T / information-gain section) -->
   <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="trust-h">
     <h2 id="trust-h" class="mb-1 mt-1">Numbers you can check for yourself.</h2>
-    <p class="mb-6 max-w-[42rem] text-[15px] text-body">
+    <p class="mb-5 max-w-[42rem] text-[15px] text-body">
       Most fee calculators never tell you where their rates came from, or when they were last
       correct. Ours do — on every calculator.
+    </p>
+    <p class="mb-6">
+      <a href="/verification" class="btn btn-primary">See what we checked, and when →</a>
     </p>
 
     <div class="grid gap-4 md:grid-cols-2">
@@ -406,7 +409,9 @@ const faqLd = {
     <h2 id="fresh-h" class="mb-1 mt-1">Rates we checked most recently.</h2>
     <p class="mb-6 max-w-[42rem] text-[15px] text-body">
       Every calculator shows when its rates were last verified against the official source. Here are
-      the latest.
+      the latest — or open the
+      <a href="/verification" class="text-link no-underline hover:underline">verification log</a> to
+      see every calculator's date, what has changed, and how often we re-check it.
     </p>
     <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(17rem,1fr))]">
       {
@@ -467,6 +472,24 @@ const faqLd = {
         formulas — compound interest, EMI amortisation, annuity future value and so on. Every
         formula is a pure, unit-tested function that runs in your browser, so results are
         reproducible and your numbers never leave your device.
+      </p>
+
+      <h3>How we keep them current</h3>
+      <p>
+        A rate is only right until the platform changes it. So every fee calculator is re-checked
+        against its official source on a fixed schedule: the busiest and fastest-moving platforms —
+        Stripe, PayPal, Etsy, Amazon, eBay, Shopify, Depop and TikTok Shop — every 15 days, on the
+        1st and the 15th; the rest monthly, on the 1st. Whichever it is, the check is full scope —
+        every country and every fee variant that calculator covers, never a sample.
+      </p>
+      <p>
+        Some platforms hide their fees behind JavaScript or a login. There we confirm the figure
+        against two or more independent, current sources and accept it only when they agree; a
+        single search result is treated as unverified. No rate ever changes automatically — a person
+        reviews every check. All of it is public: the
+        {" "}<a href="/verification">verification log</a> shows each calculator's last-verified date,
+        how often it is re-checked, exactly what has changed and when, and the announcement every
+        change came from — so you can audit the numbers the same way we do.
       </p>
 
       <h3>What these tools can't see</h3>

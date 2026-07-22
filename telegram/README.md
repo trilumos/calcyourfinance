@@ -75,6 +75,30 @@ report lands back in the chat. `/help` lists commands.
 
 ---
 
+## Rotating the GitHub PAT (it expires)
+
+Fine-grained tokens expire. When you generate a new one, **nothing needs
+redeploying** — just replace the secret:
+
+```bash
+cd telegram
+npx wrangler secret put GH_PAT     # paste the new github_pat_…
+```
+
+Secrets take effect immediately.
+
+**Scopes the token needs** (Repository permissions, `calcyourfinance` only):
+- `Actions: Read and write` — for `/verify` to start the workflow
+- `Issues: Read and write` — for the /verification report form to log reports
+
+**What breaks if it expires:** `/verify` replies "couldn't start", and the report
+form falls back to "email us instead". The **scheduled** weekly check and the
+audit reminders are unaffected — those use the workflow's own `github.token`, not
+this PAT. So an expired token degrades the manual triggers, never the automation.
+
+Set a calendar note a few days before expiry, or generate the replacement with a
+longer window when you rotate.
+
 ## Security notes
 
 - The Worker only obeys the one `CHAT_ID`; other users are ignored.

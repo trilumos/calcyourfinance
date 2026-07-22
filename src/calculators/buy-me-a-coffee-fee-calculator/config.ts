@@ -243,6 +243,6 @@ All rates in this calculator are taken from Buy Me a Coffee's official help docu
     },
   ],
 
-  feesVerifiedOn: "2026-06-13",
+  feesVerifiedOn: "2026-07-22",
   lastUpdated: "2026-06-13",
 };

@@ -7,6 +7,7 @@ import type { APIRoute } from "astro";
 import { SITE } from "../config/site";
 import { calculators, activeCategories } from "../calculators";
 import { CATEGORY_META } from "../calculators/_types";
+import { verificationLog } from "../config/verification-log";
 
 export const GET: APIRoute = () => {
   // Honest per-page lastmod (Google warns against fake freshness): each
@@ -22,6 +23,9 @@ export const GET: APIRoute = () => {
     { path: "/", lastmod: latestCalc, priority: "1.0" },
     { path: "/about", lastmod: SITE.effectiveDate, priority: "0.5" },
     { path: "/methodology", lastmod: SITE.effectiveDate, priority: "0.5" },
+    // Data-accuracy log — lastmod tracks the newest verification session, so its
+    // freshness is real (it changes every time we re-verify).
+    { path: "/verification", lastmod: verificationLog[0]?.date ?? SITE.effectiveDate, priority: "0.6" },
     { path: "/contact", lastmod: SITE.effectiveDate, priority: "0.4" },
     { path: "/privacy", lastmod: SITE.effectiveDate, priority: "0.3" },
     { path: "/terms", lastmod: SITE.effectiveDate, priority: "0.3" },

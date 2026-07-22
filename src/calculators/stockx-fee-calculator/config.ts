@@ -275,6 +275,6 @@ Every rate in this calculator is taken from StockX's official help center and se
     },
   ],
 
-  feesVerifiedOn: "2026-06-12",
+  feesVerifiedOn: "2026-07-22",
   lastUpdated: "2026-06-12",
 };

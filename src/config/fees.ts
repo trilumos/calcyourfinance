@@ -466,7 +466,7 @@ export const cashappFees: WalletFeesByCountry = {
     notes:
       "US-only. Business accounts pay 2.75% per payment received (no fixed fee). Instant deposit 0.5%–1.75% (min $0.25); standard deposit is free. Sending funded by a credit card is 3%.",
     source: "https://cash.app/help/us/en-us/6521-cash-app-for-business-fees",
-    verifiedOn: "2026-06-10",
+    verifiedOn: "2026-07-22",
   },
 };
 
@@ -515,7 +515,7 @@ export interface PayoneerMethod {
   percent: number;
   fixed: number;
 }
-export const PAYONEER_VERIFIED = "2026-06-11";
+export const PAYONEER_VERIFIED = "2026-07-22";
 export const PAYONEER_SOURCE = "https://www.payoneer.com/about/pricing/";
 export const PAYONEER_CONVERSION_PERCENT = 0.5;
 
@@ -563,7 +563,7 @@ export const paytmMethods: MethodRate[] = [
    separate processor fee). Both are 5% + $0.50; Lemon Squeezy adds +1.5% on
    international cards. Source: official pricing pages.
    =========================================================================== */
-export const MOR_VERIFIED = "2026-06-11";
+export const MOR_VERIFIED = "2026-07-22";
 export const paddleFees = {
   percent: 5,
   fixed: 0.5,
@@ -1042,7 +1042,7 @@ export interface DepopFees {
   verifiedOn: string;
 }
 
-export const DEPOP_VERIFIED = "2026-06-12";
+export const DEPOP_VERIFIED = "2026-07-22";
 
 /* ===========================================================================
    VINTED — buyer protection fee (platform-fee marketplace)
@@ -1214,7 +1214,7 @@ export interface StockXFees {
   verifiedOn: string;
 }
 
-export const STOCKX_VERIFIED = "2026-06-12";
+export const STOCKX_VERIFIED = "2026-07-22";
 
 export const stockxFees: StockXFees = {
   levels: [
@@ -1303,7 +1303,7 @@ export interface TikTokShopFees {
 
 export type TikTokShopFeesByCountry = Partial<Record<CountryCode, TikTokShopFees>>;
 
-export const TIKTOK_SHOP_VERIFIED = "2026-06-12";
+export const TIKTOK_SHOP_VERIFIED = "2026-07-22";
 
 export const tiktokShopFees: TikTokShopFeesByCountry = {
   // ── United States ──────────────────────────────────────────────────────
@@ -1467,7 +1467,7 @@ export interface FacebookFees {
   verifiedOn: string;
 }
 
-export const FACEBOOK_VERIFIED = "2026-06-12";
+export const FACEBOOK_VERIFIED = "2026-07-22";
 
 export const facebookFees: FacebookFees = {
   shippedPercent: 10,
@@ -1875,7 +1875,7 @@ export const kofiFees: KofiFees = {
      https://help.buymeacoffee.com/en/articles/8105744-how-to-calculate-charges-on-your-payment
      https://help.buymeacoffee.com/en/articles/10182730-what-is-buy-me-a-coffee-and-how-does-it-work
    =========================================================================== */
-export const BMAC_VERIFIED = "2026-06-13";
+export const BMAC_VERIFIED = "2026-07-22";
 
 export interface BmacFees {
   /** BMaC platform fee % on all transactions. */
@@ -1981,7 +1981,7 @@ export const substackFees: SubstackFees = {
      https://gumroad.com/help/article/66-gumroads-fees  (official help page)
      https://help.gumroad.com/article/66-gumroadfees   (alternate URL, same content)
    =========================================================================== */
-export const GUMROAD_VERIFIED = "2026-06-15";
+export const GUMROAD_VERIFIED = "2026-07-22";
 
 export interface GumroadFees {
   /**
@@ -2302,7 +2302,7 @@ export const teachableFees: TeachableFees = {
 /* ===========================================================================
    BANDCAMP
    =========================================================================== */
-export const BANDCAMP_VERIFIED = "2026-06-15";
+export const BANDCAMP_VERIFIED = "2026-07-22";
 
 export interface BandcampFees {
   /**

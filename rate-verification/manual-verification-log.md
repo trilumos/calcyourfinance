@@ -53,6 +53,14 @@ right; acting on the search would have introduced errors. Watch for these:
 Lesson: official-page snippets can be stale/misparsed; **triangulation is
 mandatory** for any value that would change our data.
 
+**The reverse trap — third-party guides lag same-day changes.** On 2026-07-22,
+hours after Depop's own newsroom announced Australia moving to a 0% selling fee
+*that day*, multiple 2026 "Depop fees" guides still said Australia pays 10%.
+Triangulation across secondary sources would have given the WRONG answer here.
+Rule: when a **primary announcement is dated and explicit**, it outranks any
+number of stale secondary guides. Triangulate to confirm what a hidden page
+says — never to overrule a dated official announcement.
+
 ---
 
 ## Cycle: 2026-07-22 (all 111 sources / 39 platforms)

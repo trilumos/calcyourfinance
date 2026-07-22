@@ -17,6 +17,17 @@
  */
 export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+
+    // Public rate-change reports from /verification. Logged as a GitHub issue so
+    // every report is visible, triageable (open = unverified, closed = handled)
+    // and impossible to lose — then pinged to Telegram so we see it immediately.
+    if (url.pathname === "/report") {
+      if (request.method === "OPTIONS") return cors(new Response(null, { status: 204 }));
+      if (request.method !== "POST") return cors(new Response("method", { status: 405 }));
+      return cors(await handleReport(request, env));
+    }
+
     if (request.method !== "POST") return new Response("ok"); // health check
     if (
       env.WEBHOOK_SECRET &&
@@ -52,6 +63,74 @@ export default {
     return new Response("ok");
   },
 };
+
+/** Allow the site to post here; everything else is same-origin/no-op. */
+function cors(res) {
+  const h = new Headers(res.headers);
+  h.set("Access-Control-Allow-Origin", "https://calcyourfinance.com");
+  h.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  h.set("Access-Control-Allow-Headers", "content-type");
+  return new Response(res.body, { status: res.status, headers: h });
+}
+
+const clean = (v, max) => String(v ?? "").trim().slice(0, max);
+
+async function handleReport(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response("bad json", { status: 400 });
+  }
+
+  // Honeypot — real users leave this empty. Return 200 so bots don't learn.
+  if (clean(body.website, 10)) return new Response(JSON.stringify({ ok: true }), { status: 200 });
+
+  const calculator = clean(body.calculator, 80);
+  const detail = clean(body.detail, 1200);
+  if (!calculator || !detail) return new Response("missing fields", { status: 400 });
+  const source = clean(body.source, 300);
+  const email = clean(body.email, 120);
+
+  const lines = [
+    `**Calculator:** ${calculator}`,
+    "",
+    `**Reported:** ${detail}`,
+    "",
+    source ? `**Source given:** ${source}` : "**Source given:** none",
+    email ? `**Contact:** ${email}` : "**Contact:** not provided",
+    "",
+    `_Submitted ${new Date().toISOString()} via /verification. Verify against the official page before changing any rate._`,
+  ];
+
+  const res = await fetch(`https://api.github.com/repos/${env.GH_REPO}/issues`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.GH_PAT}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json; charset=utf-8",
+      "X-GitHub-Api-Version": "2022-11-28",
+      "User-Agent": "cyf-rate-verify-bot",
+    },
+    body: JSON.stringify({
+      title: `Rate report: ${calculator}`,
+      body: lines.join("\n"),
+      labels: ["rate-report"],
+    }),
+  });
+  if (!res.ok) return new Response("upstream", { status: 502 });
+
+  const issue = await res.json().catch(() => ({}));
+  await send(
+    env,
+    env.CHAT_ID,
+    `📣 Rate report — ${calculator}\n\n${detail.slice(0, 300)}\n\n${issue.html_url ?? ""}`,
+  );
+  return new Response(JSON.stringify({ ok: true }), {
+    status: 200,
+    headers: { "content-type": "application/json" },
+  });
+}
 
 async function dispatch(env) {
   const res = await fetch(
