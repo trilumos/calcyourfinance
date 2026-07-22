@@ -1,0 +1,34 @@
+name: matrix-audit-reminder
+
+# Monthly nudge for the FULL manual rate audit (all calculators × all countries).
+# The weekly rate-verify workflow is only a link/staleness tripwire; this is the
+# reminder to actually re-verify every value against its official source using
+# rate-verification/matrix.md. Rates change rarely, so monthly is the cadence.
+on:
+  schedule:
+    - cron: "0 7 1 * *" # 1st of each month, 07:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Telegram reminder
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SERVER: ${{ github.server_url }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then echo "no telegram secrets"; exit 0; fi
+          URL="$SERVER/$REPO/blob/main/rate-verification/matrix.md"
+          TEXT=$(printf '🗓️ *Monthly rate audit due.*\n\nRe-verify all 42 fee calculators × 147 country rate-points against their official sources — triangulate, never trust one search. Work the checklist with Claude.\n\n📋 %s' "$URL")
+          curl -sS --max-time 20 "https://api.telegram.org/bot$TG_TOKEN/sendMessage" \
+            --data-urlencode "chat_id=$TG_CHAT" \
+            --data-urlencode "parse_mode=Markdown" \
+            --data-urlencode "text=$TEXT" >/dev/null
+          echo "monthly audit reminder sent"

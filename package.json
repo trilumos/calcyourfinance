@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "Fast, config-driven finance & e-commerce calculators \u2014 calcyourfinance.com",
+  "description": "Fast, config-driven finance & e-commerce calculators — calcyourfinance.com",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -15,7 +15,8 @@
     "keywords": "tsx scripts/build-keywords.ts",
     "og": "tsx scripts/make-og.ts",
     "verify": "tsx scripts/verify-build.ts",
-    "verify:rates": "tsx scripts/rate-verify/run.ts"
+    "verify:rates": "tsx scripts/rate-verify/run.ts",
+    "verify:matrix": "tsx scripts/rate-verify/matrix.ts"
   },
   "dependencies": {
     "@astrojs/preact": "^4.0.4",

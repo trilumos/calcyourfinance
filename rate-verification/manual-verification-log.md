@@ -7,6 +7,22 @@ cycle section at the top each time.
 
 ---
 
+## Cadence & tooling
+
+- **Monthly full audit** (this log + `matrix.md`): re-verify all 42 fee calculators
+  × 147 country rate-points against official sources. Reminder auto-sent to
+  Telegram on the 1st (`matrix-audit-reminder.yml`).
+- **Weekly engine** (`rate-verify.yml`): link-health + staleness tripwire over all
+  169 cited sources — a reminder, never trusted on its own.
+- **Immediately** on any announced change (e.g. Depop AU): verify + apply, don't wait.
+- Personal-finance calculators (10) are excluded — pure unit-tested math, no
+  external rate.
+
+> Coverage note (fixed 2026-07-22): the manifest previously missed 7 calculators
+> whose sources are top-level `*_SOURCE` consts (Razorpay, Paytm, Wise, Payoneer)
+> or live in the config's `sources[]` (Shopify, App Store, Printful). It now scans
+> those too — 111 → 169 watched sources.
+
 ## Method (follow every cycle)
 
 1. **Prefer the official page.** Domain-restricted WebSearch (or WebFetch) on the

@@ -7,6 +7,7 @@
  */
 import * as fees from "../../src/config/fees";
 import * as aiPricing from "../../src/config/ai-pricing";
+import { calculators } from "../../src/calculators";
 import { EXPECT, LABEL } from "./expect";
 import type { CheckTarget } from "./classify";
 
@@ -75,9 +76,43 @@ function scan(node: unknown, platform: string, inheritedVerified: string | undef
 export function getManifest(): CheckTarget[] {
   const raw: Raw[] = [];
   for (const mod of [fees, aiPricing]) {
-    for (const [name, val] of Object.entries(mod)) {
+    const record = mod as Record<string, unknown>;
+    for (const [name, val] of Object.entries(record)) {
       if (val && typeof val === "object") {
         scan(val, LABEL[name] ?? prettify(name), undefined, raw);
+      } else if (
+        // Top-level source consts, e.g. `export const RAZORPAY_SOURCE = "…"`.
+        // These live outside any object so the recursive scan misses them —
+        // they're how Razorpay/Paytm/Wise/Payoneer/Walmart cite their pricing.
+        typeof val === "string" &&
+        /_(SOURCE|SRC)$/.test(name) &&
+        /^https?:\/\//.test(val)
+      ) {
+        const base = name.replace(/_(SOURCE|SRC)$/, "");
+        const verifiedOn = record[`${base}_VERIFIED`];
+        raw.push({
+          platform: LABEL[name] ?? prettify(base.toLowerCase()),
+          field: name,
+          url: val,
+          verifiedOn: typeof verifiedOn === "string" ? verifiedOn : undefined,
+          auto: [],
+        });
+      }
+    }
+  }
+
+  // Every calculator's cited sources[] — the authoritative list of what each
+  // page actually shows. Catches calcs that store rates inline in their config
+  // (Shopify, App Store, Printful) rather than in fees.ts, so nothing a user
+  // can click goes unwatched. Link-health + staleness only (no value to assert).
+  for (const c of calculators) {
+    const srcs = (c as { sources?: { url?: string }[] }).sources;
+    if (!Array.isArray(srcs)) continue;
+    const meta = c as { feesVerifiedOn?: string; lastUpdated?: string; title?: string };
+    const verifiedOn = meta.feesVerifiedOn ?? meta.lastUpdated;
+    for (const s of srcs) {
+      if (s?.url && /^https?:\/\//.test(s.url)) {
+        raw.push({ platform: meta.title ?? c.slug, field: `page:${c.slug}`, url: s.url, verifiedOn, auto: [] });
       }
     }
   }
