@@ -40,28 +40,34 @@ const changesFor = (slug: string) =>
     .filter((r) => r.kind === "rate" && r.calculators.includes(slug))
     .sort((a, b) => b.effective.localeCompare(a.effective));
 
+// A change only counts as "new" for the ● marker if it landed recently — a rate
+// that moved 11 months ago is history, not news, and flagging it the same as
+// today's change tells the reader nothing. 90 days ≈ the last few check cycles.
+const RECENT_DAYS = 90;
+const daysAgo = (iso: string) =>
+  Math.floor((Date.now() - new Date(`${iso}T00:00:00Z`).getTime()) / 86_400_000);
+
 const rows = fee
   .map((c) => {
     const changes = changesFor(c.slug);
+    const lastChange = changes[0]?.effective ?? null;
     return {
       c,
       changes,
-      lastChange: changes[0]?.effective ?? null,
+      lastChange,
+      recentlyChanged: !!lastChange && daysAgo(lastChange) <= RECENT_DAYS,
       sources: (c as { sources?: { label?: string; url?: string }[] }).sources ?? [],
     };
   })
-  // Most recently CHECKED first (so a fresh audit surfaces together), and within
-  // the same check date the ones that actually CHANGED come first — those are
-  // what a returning user is looking for.
+  // Recently-changed rows lead the table — that's the news. Everything after is
+  // ordered by most recently checked.
   .sort((a, b) => {
+    if (a.recentlyChanged !== b.recentlyChanged) return a.recentlyChanged ? -1 : 1;
     const byChecked = verifiedOn(b.c).localeCompare(verifiedOn(a.c));
     if (byChecked !== 0) return byChecked;
     if (a.lastChange && b.lastChange) return b.lastChange.localeCompare(a.lastChange);
-    if (a.lastChange) return -1;
-    if (b.lastChange) return 1;
     return a.c.title.localeCompare(b.c.title);
   });
-const changedCount = rows.filter((r) => r.lastChange).length;
 
 const totalCountryPoints = fee.reduce((n, c) => n + Math.max(countryCount(c), 1), 0);
 const latest = verificationLog[0];
@@ -113,10 +119,13 @@ const latestChange = allChanges[0];
       <div class="min-w-0">
         <p class="text-[15px] font-medium text-ink">Checking a specific calculator?</p>
         <p class="mt-1 text-[14px] text-body">
-          See exactly when we last verified it, and against which source.
+          See when we last verified it — or tell us about a fee we've got wrong.
         </p>
       </div>
-      <a href="#calculators" class="btn btn-primary shrink-0">Look up a calculator ↓</a>
+      <div class="flex shrink-0 flex-wrap gap-2">
+        <a href="#calculators" class="btn btn-primary">Look up a calculator ↓</a>
+        <a href="#report" class="btn btn-secondary">Report a rate change ↓</a>
+      </div>
     </div>
 
     <!-- The two things people want first: when did you last check, and what most
@@ -227,9 +236,9 @@ const latestChange = allChanges[0];
     </p>
     <div class="mb-4 max-w-[46rem] rounded-md border border-hairline bg-canvas-soft p-4 text-[13px] leading-relaxed text-body">
       <p>
-        <span class="text-accent">●</span> <strong class="text-ink">marks a calculator whose rates
-        have changed</strong> since we began tracking. Rows are ordered by most recently checked,
-        and within the same check date the changed ones come first. Click any row to see exactly what
+        <span class="text-accent">●</span> <strong class="text-ink">marks a rate that changed in the
+        last {RECENT_DAYS} days</strong> — recent news, not old history. Those rows lead the table;
+        everything after is ordered by most recently checked. Click any row to see exactly what
         changed and the announcement it came from.
       </p>
       <p class="mt-2">
@@ -268,7 +277,7 @@ const latestChange = allChanges[0];
         </thead>
         <tbody>
           {
-            rows.map(({ c, changes, lastChange, sources }) => (
+            rows.map(({ c, changes, lastChange, recentlyChanged, sources }) => (
               <Fragment>
                 <tr
                   class="cursor-pointer border-b border-hairline transition hover:bg-canvas-soft"
@@ -277,8 +286,8 @@ const latestChange = allChanges[0];
                   data-slug={c.slug}
                 >
                   <td class="py-2.5 pr-3">
-                    {lastChange && (
-                      <span class="text-accent" title="Rates have changed">●</span>
+                    {recentlyChanged && (
+                      <span class="text-accent" title="Rates changed recently">●</span>
                     )}{" "}
                     <a href={`/${c.slug}`} class="text-ink no-underline hover:underline">
                       {c.title}
@@ -442,12 +451,84 @@ const latestChange = allChanges[0];
       )
     }
 
-    <div class="card mt-10 flex flex-wrap items-center justify-between gap-4 p-5">
-      <p class="text-[14px] text-body">
-        Spotted a fee that looks out of date? Tell us and we'll verify it fast.
+    <h2 id="report" class="mb-3 mt-12 scroll-mt-20">Report a rate change</h2>
+    <p class="mb-4 max-w-[46rem] text-body">
+      Spotted a fee we've got wrong, or a change we haven't caught yet? Tell us. Every report is
+      logged publicly on GitHub and reviewed at the next scheduled check — if it's right, the rate
+      is updated and the change appears in the history above.
+    </p>
+
+    <form id="report-form" class="card flex max-w-[42rem] flex-col gap-4 p-5">
+      <div>
+        <label for="rp-calc" class="mb-1 block text-[14px] font-medium text-ink">
+          Which calculator? <span class="text-mute">(required)</span>
+        </label>
+        <input
+          id="rp-calc"
+          name="calculator"
+          required
+          maxlength="80"
+          list="rp-calcs"
+          placeholder="e.g. Stripe Fee Calculator"
+          class="field-control w-full"
+        />
+        <datalist id="rp-calcs">{fee.map((c) => <option value={c.title} />)}</datalist>
+      </div>
+
+      <div>
+        <label for="rp-detail" class="mb-1 block text-[14px] font-medium text-ink">
+          What's wrong, or what changed? <span class="text-mute">(required)</span>
+        </label>
+        <textarea
+          id="rp-detail"
+          name="detail"
+          required
+          rows="4"
+          maxlength="1200"
+          placeholder="e.g. The UK rate is now 2.5% + 20p, not 1.5% — changed on 1 July."
+          class="field-control w-full"></textarea>
+      </div>
+
+      <div>
+        <label for="rp-source" class="mb-1 block text-[14px] font-medium text-ink">
+          Link to the official page <span class="text-mute">(optional — but it speeds this up a lot)</span>
+        </label>
+        <input
+          id="rp-source"
+          name="source"
+          type="url"
+          maxlength="300"
+          placeholder="https://stripe.com/gb/pricing"
+          class="field-control w-full"
+        />
+      </div>
+
+      <div>
+        <label for="rp-email" class="mb-1 block text-[14px] font-medium text-ink">
+          Your email <span class="text-mute">(optional — only if you want a reply)</span>
+        </label>
+        <input id="rp-email" name="email" type="email" maxlength="120" class="field-control w-full" />
+      </div>
+
+      <!-- Honeypot: real people never fill this; bots usually do. -->
+      <input
+        type="text"
+        name="website"
+        tabindex="-1"
+        autocomplete="off"
+        aria-hidden="true"
+        class="hidden"
+      />
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button type="submit" class="btn btn-primary">Submit report</button>
+        <p id="rp-status" role="status" aria-live="polite" class="text-[13px] text-body"></p>
+      </div>
+      <p class="text-[12px] text-mute">
+        Your report is stored publicly on GitHub so anyone can see what was raised and how it was
+        resolved. Don't include anything private. Email is used only to reply to you.
       </p>
-      <a href="/contact" class="btn btn-secondary shrink-0">Report a rate</a>
-    </div>
+    </form>
   </section>
 
   <script>
@@ -499,5 +580,38 @@ const latestChange = allChanges[0];
         noResult?.classList.toggle("hidden", any);
       });
     }
+
+    // Rate-change reports. Posts to the Cloudflare Worker, which logs the report
+    // publicly on GitHub and pings us. Kept dependency-free; the form degrades to
+    // a plain message with a mailto fallback if the endpoint is unreachable.
+    const REPORT_ENDPOINT = "https://cyf-rate-verify-bot.trilumos-app.workers.dev/report";
+    const form = document.getElementById("report-form") as HTMLFormElement | null;
+    const status = document.getElementById("rp-status");
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!status) return;
+      const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const data = Object.fromEntries(new FormData(form).entries());
+      submit && (submit.disabled = true);
+      status.textContent = "Sending…";
+      status.className = "text-[13px] text-body";
+      try {
+        const res = await fetch(REPORT_ENDPOINT, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = "Thanks — logged. We'll verify it at the next check.";
+        status.className = "text-[13px] font-medium text-ink";
+      } catch {
+        status.innerHTML =
+          'Couldn\'t send that. Please <a class="text-link" href="/contact">email it to us</a> instead.';
+        status.className = "text-[13px] text-body";
+      } finally {
+        submit && (submit.disabled = false);
+      }
+    });
   </script>
 </BaseLayout>
