@@ -105,8 +105,10 @@ const latestChange = allChanges[0];
       {
         [
           { n: `${fee.length}/${totalCalcs}`, l: "calculators using platform rates" },
-          { n: totalCountryPoints, l: "country rates verified" },
-          { n: `${TIER1.size} + ${fee.length - TIER1.size}`, l: "twice-monthly + monthly" },
+          // "tracked", not "verified" — this is the size of the checking job, not
+          // a claim that all 147 are currently confirmed.
+          { n: totalCountryPoints, l: "country rates we track" },
+          { n: "1st & 15th", l: "our audit dates each month" },
           { n: latest ? prettyDate(latest.date) : "—", l: "last checked" },
         ].map((s) => (
           <div class="card p-4">
