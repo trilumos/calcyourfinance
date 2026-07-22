@@ -14,6 +14,10 @@ const fee = calculators.filter(
 const financeCount = calculators.filter(
   (c) => c.kind === "single" && c.category === "personal-finance",
 ).length;
+// Comparison tools ("Stripe vs PayPal") don't hold rates of their own — they read
+// the same verified fee data as the single calculators they compare.
+const comparisonCount = calculators.filter((c) => c.kind === "comparison").length;
+const totalCalcs = calculators.length;
 
 const verifiedOn = (c: (typeof calculators)[number]) =>
   (c as { feesVerifiedOn?: string; lastUpdated: string }).feesVerifiedOn ?? c.lastUpdated;
@@ -100,7 +104,7 @@ const latestChange = allChanges[0];
     <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
       {
         [
-          { n: fee.length, l: "fee calculators tracked" },
+          { n: `${fee.length}/${totalCalcs}`, l: "calculators using platform rates" },
           { n: totalCountryPoints, l: "country rates verified" },
           { n: `${TIER1.size} + ${fee.length - TIER1.size}`, l: "twice-monthly + monthly" },
           { n: latest ? prettyDate(latest.date) : "—", l: "last checked" },
@@ -229,10 +233,19 @@ const latestChange = allChanges[0];
     </p>
 
     <!-- The lookup table: the page's main utility, and the jump target. -->
-    <h2 id="calculators" class="mb-2 mt-12 scroll-mt-20">Every calculator, last verified</h2>
+    <h2 id="calculators" class="mb-2 mt-12 scroll-mt-20">Every rate-backed calculator, last verified</h2>
     <p class="mb-3 max-w-[46rem] text-body">
       When we last confirmed each platform's rates, how many countries the tool covers, and the
       source we check it against.
+    </p>
+    <p class="mb-3 max-w-[46rem] text-[14px] leading-relaxed text-body">
+      These <strong class="text-ink">{fee.length}</strong> are the calculators that depend on a
+      platform's published rates, so each is verified on the schedule above. The other
+      {" "}{financeCount + comparisonCount} of our {totalCalcs} tools have no rates of their own to
+      check: the <a href="/personal-finance">{financeCount} personal-finance calculators</a> (loan,
+      EMI, compound interest and the rest) are standard textbook formulas covered by automated tests,
+      and the {comparisonCount} comparison tools read the very same verified fee data as the
+      calculators they put side by side.
     </p>
     <div class="mb-4 max-w-[46rem] rounded-md border border-hairline bg-canvas-soft p-4 text-[13px] leading-relaxed text-body">
       <p>
@@ -381,12 +394,6 @@ const latestChange = allChanges[0];
         </tbody>
       </table>
     </div>
-
-    <p class="mt-6 max-w-[46rem] text-[14px] leading-relaxed text-body">
-      Our {financeCount} personal-finance calculators (loan, EMI, compound interest and the rest)
-      aren't listed here because they don't depend on a platform's rates — they're standard textbook
-      formulas, and each is covered by automated tests so the math is reproducible.
-    </p>
 
     <!-- History: every session, then every change. -->
     <h2 id="log" class="mb-3 mt-12 scroll-mt-20">Verification history</h2>
