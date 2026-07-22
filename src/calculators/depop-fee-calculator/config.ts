@@ -1,15 +1,16 @@
 import type { CalculatorConfig, InputValues, ComputeCtx, CalcResult } from "../_types";
-import { depopFeesUS, depopFeesGB, depopFeesROW } from "../../config/fees";
+import { depopFeesUS, depopFeesGB, depopFeesAU, depopFeesROW } from "../../config/fees";
 import { computeMarketplaceFee } from "../_shared/marketplaceFee";
 
-// Depop supports 3 fee regions via a simple region selector.
-// "US" and "GB" have 0% seller fee; all other countries use ROW (10%).
-const REGIONS = ["US", "GB", "ROW"] as const;
+// Depop supports 4 fee regions via a simple region selector.
+// "US", "GB" and "AU" have 0% seller fee; all other countries use ROW (10%).
+const REGIONS = ["US", "GB", "AU", "ROW"] as const;
 type DepopRegion = (typeof REGIONS)[number];
 
 function getRegionFees(region: DepopRegion) {
   if (region === "US") return depopFeesUS;
   if (region === "GB") return depopFeesGB;
+  if (region === "AU") return depopFeesAU;
   return depopFeesROW;
 }
 
@@ -21,10 +22,10 @@ export const depopFeeCalculator: CalculatorConfig = {
   platform: "depop",
   title: "Depop Fee Calculator",
   metaDescription:
-    "Free Depop fee calculator for 2026. See exactly what Depop charges — US and UK sellers pay 0% selling fee (buyer pays the Depop Marketplace fee); other countries pay 10%. Enter your sale price to see your exact payout.",
+    "Free Depop fee calculator for 2026. See exactly what Depop charges — US, UK and Australia sellers pay 0% selling fee (buyer pays the Depop Marketplace fee); other countries pay 10%. Enter your sale price to see your exact payout.",
   h1: "Depop Fee Calculator",
   intro:
-    "Calculate your Depop payout and see exactly what fees apply. US and UK sellers pay no selling fee — Depop removed the 10% seller fee in 2024. You still pay a small payment-processing fee; the buyer pays a separate Marketplace fee at checkout that does not reduce your payout. Sellers outside the US and UK still pay the 10% selling fee. Enter your sale price to see the breakdown.",
+    "Calculate your Depop payout and see exactly what fees apply. US and UK sellers pay no selling fee — Depop removed the 10% seller fee in 2024, and Australia followed on 22 July 2026. You still pay a small payment-processing fee; the buyer pays a separate Marketplace fee at checkout that does not reduce your payout. Sellers outside these markets still pay the 10% selling fee. Enter your sale price to see the breakdown.",
 
   keywords: {
     primary: "depop fee calculator",
@@ -70,9 +71,10 @@ export const depopFeeCalculator: CalculatorConfig = {
       options: [
         { value: "US", label: "United States" },
         { value: "GB", label: "United Kingdom" },
-        { value: "ROW", label: "Other country (Australia, Canada, EU…)" },
+        { value: "AU", label: "Australia" },
+        { value: "ROW", label: "Other country (Canada, EU…)" },
       ],
-      help: "US and UK sellers pay 0% selling fee. All other countries pay a 10% selling fee.",
+      help: "US, UK and Australia sellers pay 0% selling fee. All other countries pay a 10% selling fee.",
     },
     {
       id: "itemPrice",
@@ -88,7 +90,7 @@ export const depopFeeCalculator: CalculatorConfig = {
       type: "currency",
       default: 0,
       min: 0,
-      help: "Shipping the buyer pays. For US/UK sellers, payment-processing fee applies to shipping too. ROW sellers: Depop's 10% selling fee is on item price only.",
+      help: "Shipping the buyer pays. For US/UK/AU sellers, payment-processing fee applies to shipping too. ROW sellers: Depop's 10% selling fee is on item price only.",
     },
     {
       id: "itemCost",
@@ -103,7 +105,7 @@ export const depopFeeCalculator: CalculatorConfig = {
   compute(values: InputValues, ctx: ComputeCtx): CalcResult {
     const region = (values.region as DepopRegion) ?? "US";
     const fees = getRegionFees(region);
-    const isZeroSellerFee = region === "US" || region === "GB";
+    const isZeroSellerFee = region === "US" || region === "GB" || region === "AU";
 
     // Currency symbol and amounts — for non-US/GB ROW we show USD as a proxy
     // (Depop ROW sellers use their own local currency; exact amounts vary).

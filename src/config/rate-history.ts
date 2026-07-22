@@ -63,6 +63,20 @@ export interface RateChange {
  */
 export const rateHistory: RateChange[] = [
   {
+    effective: "2026-07-22",
+    recordedOn: "2026-07-22",
+    kind: "rate",
+    platform: "Depop",
+    calculators: ["depop-fee-calculator"],
+    field: "Seller fee (Australia)",
+    from: "10%",
+    to: "0%",
+    source:
+      "https://news.depop.com/company-news/depop-makes-selling-free-in-australia-helping-people-earn-more-from-fashion-resale/",
+    verifiedBy: "manual",
+    note: "Effective 22 Jul 2026: AU sellers pay 0% selling fee on AUD sales (was 10% under rest-of-world). Depop Payments processing 2.6% + A$0.30; buyers now pay a marketplace fee up to 5% + up to A$1 (does not reduce seller payout). Added depopFeesAU + AU region to the calculator.",
+  },
+  {
     effective: "2025-08-04",
     recordedOn: "2026-07-21",
     kind: "rate",

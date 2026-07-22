@@ -1780,6 +1780,19 @@ export const depopFeesGB: DepopFees = {
 };
 
 /** Rest of world: 10% seller fee + PayPal processing (variable; not modelled here). */
+export const depopFeesAU: DepopFees = {
+  sellingPercent: 0,
+  processingPercent: 2.6,
+  processingFixed: 0.3,
+  buyerMarketplacePercent: 5,
+  buyerMarketplaceFixedMax: 1,
+  currency: "AUD",
+  notes:
+    "Australian sellers pay 0% selling fee on AUD sales (removed July 22, 2026). Depop Payments processing (via Stripe): 2.6% + A$0.30 on item price plus shipping and any tax. Buyers pay a marketplace fee of up to 5% of item price + up to A$1 fixed at checkout (effective July 22, 2026) — this does NOT reduce the seller's payout.",
+  source:
+    "https://news.depop.com/company-news/depop-makes-selling-free-in-australia-helping-people-earn-more-from-fashion-resale/",
+  verifiedOn: "2026-07-22",
+};
 export const depopFeesROW: DepopFees = {
   sellingPercent: 10,
   processingPercent: 0, // PayPal rates vary widely; modelled separately in copy
