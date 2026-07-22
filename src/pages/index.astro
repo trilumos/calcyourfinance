@@ -6,6 +6,7 @@ import { calculators } from "../calculators";
 import { CATEGORY_META, type Category } from "../calculators/_types";
 import { getPlatform } from "../config/platforms";
 import { demandRank } from "../config/demand";
+import { rateHistory } from "../config/rate-history";
 import CalculatorIsland from "../components/CalculatorIsland.tsx";
 import { formatCurrency, formatNumber, formatPercent } from "../lib/money";
 import type { ComputeCtx, InputValues } from "../calculators/_types";
@@ -93,9 +94,25 @@ const accentStyle = (platformId?: string) => {
 // Freshness signal: the calculators whose rates we verified most recently.
 // Every config carries lastUpdated; fee calculators also carry feesVerifiedOn.
 const verifiedOn = (c: (typeof calculators)[number]) => c.feesVerifiedOn ?? c.lastUpdated;
+// A rate that actually MOVED is the news; a re-check that found nothing is
+// reassurance. Show changes first (marked), then the most recently re-checked,
+// and send everything else to /verification rather than listing an arbitrary six.
+const FRESH_RECENT_DAYS = 90;
+const daysAgoFrom = (iso: string) =>
+  Math.floor((Date.now() - new Date(`${iso}T00:00:00Z`).getTime()) / 86_400_000);
+const recentChangeBySlug = new Map<string, (typeof rateHistory)[number]>();
+for (const r of rateHistory) {
+  if (r.kind !== "rate" || daysAgoFrom(r.effective) > FRESH_RECENT_DAYS) continue;
+  for (const slug of r.calculators) if (!recentChangeBySlug.has(slug)) recentChangeBySlug.set(slug, r);
+}
 const recentlyVerified = [...calculators]
-  .sort((a, b) => verifiedOn(b).localeCompare(verifiedOn(a)))
+  .sort(
+    (a, b) =>
+      (recentChangeBySlug.has(a.slug) ? 0 : 1) - (recentChangeBySlug.has(b.slug) ? 0 : 1) ||
+      verifiedOn(b).localeCompare(verifiedOn(a)),
+  )
   .slice(0, 6);
+const changedCount = recentChangeBySlug.size;
 const prettyDate = (iso: string) =>
   new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
     day: "numeric",
@@ -406,12 +423,18 @@ const faqLd = {
 
   <!-- Recently verified: freshness signal, straight from each config's verified date. -->
   <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="fresh-h">
-    <h2 id="fresh-h" class="mb-1 mt-1">Rates we checked most recently.</h2>
-    <p class="mb-6 max-w-[42rem] text-[15px] text-body">
-      Every calculator shows when its rates were last verified against the official source. Here are
-      the latest — or open the
-      <a href="/verification" class="text-link no-underline hover:underline">verification log</a> to
-      see every calculator's date, what has changed, and how often we re-check it.
+    <h2 id="fresh-h" class="mb-1 mt-1">What changed, and what we just checked.</h2>
+    <p class="mb-4 max-w-[42rem] text-[15px] text-body">
+      {
+        changedCount > 0
+          ? "Rates that moved recently are marked and listed first; the rest are the ones we re-checked most recently and found unchanged."
+          : "Nothing has changed recently — these are the calculators we re-checked most recently and found unchanged."
+      }
+    </p>
+    <p class="mb-6 text-[13px]">
+      <a href="/verification" class="text-link no-underline hover:underline">
+        See all {calculators.length} calculators, every date and the full change history →
+      </a>
     </p>
     <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(17rem,1fr))]">
       {
@@ -422,9 +445,16 @@ const faqLd = {
               class="card flex h-full items-center justify-between gap-3 p-4 no-underline transition hover:border-body hover:shadow-float"
             >
               <span class="min-w-0 flex-1">
-                <span class="block truncate text-[14px] font-medium text-ink">{c.title}</span>
-                <span class="block font-mono text-[10px] uppercase tracking-wide text-body">
-                  {CATEGORY_META[c.category].label}
+                <span class="block truncate text-[14px] font-medium text-ink">
+                  {recentChangeBySlug.has(c.slug) && (
+                    <span class="text-accent" aria-hidden="true">●</span>
+                  )}{" "}
+                  {c.title}
+                </span>
+                <span class="block truncate font-mono text-[10px] uppercase tracking-wide text-body">
+                  {recentChangeBySlug.has(c.slug)
+                    ? `Rate changed — ${recentChangeBySlug.get(c.slug)!.field}`
+                    : CATEGORY_META[c.category].label}
                 </span>
               </span>
               <time
