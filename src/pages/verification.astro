@@ -2,7 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import { calculators } from "../calculators";
-import { CATEGORY_META, type Category } from "../calculators/_types";
 import { TIER1, tierOf } from "../config/verification-tiers";
 import { verificationLog } from "../config/verification-log";
 import { rateHistory } from "../config/rate-history";
@@ -31,19 +30,43 @@ const prettyDate = (iso: string) =>
     timeZone: "UTC",
   });
 
-// Group fee calculators by category, Tier 1 first within each.
-const CAT_ORDER: Category[] = ["payment-fees", "ecommerce-fees", "ai-api-costs", "freelance", "general"];
-const groups = CAT_ORDER.map((cat) => ({
-  cat,
-  meta: CATEGORY_META[cat],
-  items: fee
-    .filter((c) => c.category === cat)
-    .sort((a, b) => tierOf(a.slug) - tierOf(b.slug) || a.title.localeCompare(b.title)),
-})).filter((g) => g.items.length > 0);
+// Per-calculator rate-change history, newest first. This drives BOTH the ●
+// marker and the row order: what users care about is "did this rate change?",
+// so calculators that actually changed surface at the top, most recent first.
+// (Deliberately not marking the check-frequency tier here — a coloured dot next
+// to a calculator reads as "this changed", which is the wrong signal.)
+const changesFor = (slug: string) =>
+  rateHistory
+    .filter((r) => r.kind === "rate" && r.calculators.includes(slug))
+    .sort((a, b) => b.effective.localeCompare(a.effective));
+
+const rows = fee
+  .map((c) => {
+    const changes = changesFor(c.slug);
+    return {
+      c,
+      changes,
+      lastChange: changes[0]?.effective ?? null,
+      sources: (c as { sources?: { label?: string; url?: string }[] }).sources ?? [],
+    };
+  })
+  .sort((a, b) => {
+    if (a.lastChange && b.lastChange) return b.lastChange.localeCompare(a.lastChange);
+    if (a.lastChange) return -1;
+    if (b.lastChange) return 1;
+    return a.c.title.localeCompare(b.c.title);
+  });
+const changedCount = rows.filter((r) => r.lastChange).length;
 
 const totalCountryPoints = fee.reduce((n, c) => n + Math.max(countryCount(c), 1), 0);
 const latest = verificationLog[0];
-const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
+// Newest-first. The most recent of each (check + change) is pinned to the top of
+// the page; the full histories sit together lower so neither list pushes the
+// other down the page as they grow.
+const allChanges = rateHistory
+  .filter((r) => r.kind === "rate")
+  .sort((a, b) => b.effective.localeCompare(a.effective));
+const latestChange = allChanges[0];
 ---
 
 <BaseLayout
@@ -91,25 +114,65 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
       <a href="#calculators" class="btn btn-primary shrink-0">Look up a calculator ↓</a>
     </div>
 
-    <!-- Latest check, surfaced up top (status-page pattern). Full history lower. -->
-    {
-      latest && (
-        <div class="card mt-4 p-5">
-          <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <p class="eyebrow">Most recent check</p>
-            <p class="tnum font-mono text-[12px] text-mute">
-              {latest.startUTC}–{latest.endUTC} UTC
-            </p>
+    <!-- The two things people want first: when did you last check, and what most
+         recently changed. Pinned here; full histories live together lower down so
+         neither pushes the other off the page as they grow. -->
+    <div class="mt-4 grid gap-3 md:grid-cols-2">
+      {
+        latest && (
+          <div class="card p-5">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <p class="eyebrow">Most recent check</p>
+              <p class="tnum font-mono text-[12px] text-mute">
+                {latest.startUTC}–{latest.endUTC} UTC
+              </p>
+            </div>
+            <p class="mt-2 tnum text-[17px] font-semibold text-ink">{prettyDate(latest.date)}</p>
+            <p class="mt-2 text-[14px] leading-relaxed text-ink">{latest.result}</p>
+            <a href="#log" class="mt-3 inline-block text-[13px] text-link no-underline hover:underline">
+              Full check history ↓
+            </a>
           </div>
-          <p class="mt-2 tnum text-[17px] font-semibold text-ink">{prettyDate(latest.date)}</p>
-          <p class="mt-2 max-w-[46rem] text-[14px] leading-relaxed text-ink">{latest.result}</p>
-          <p class="mt-2 max-w-[46rem] text-[13px] leading-relaxed text-body">{latest.scope}</p>
-          <a href="#log" class="mt-3 inline-block text-[13px] text-link no-underline hover:underline">
-            See the full verification history ↓
-          </a>
-        </div>
-      )
-    }
+        )
+      }
+      <div class="card p-5">
+        <p class="eyebrow">Most recent rate change</p>
+        {
+          latestChange ? (
+            <>
+              <p class="mt-2 tnum text-[17px] font-semibold text-ink">
+                {prettyDate(latestChange.effective)}
+              </p>
+              <p class="mt-2 text-[14px] leading-relaxed text-ink">
+                <strong>{latestChange.platform}</strong> — {latestChange.field}:{" "}
+                <span class="tnum">
+                  {latestChange.from ?? "—"} →{" "}
+                  <span class="font-medium">{latestChange.to ?? "—"}</span>
+                </span>
+              </p>
+              <p class="mt-2 text-[13px] leading-relaxed text-body">
+                <a
+                  href={latestChange.source}
+                  target="_blank"
+                  rel="nofollow noopener"
+                  class="text-link no-underline hover:underline"
+                >
+                  Read the announcement ↗
+                </a>
+              </p>
+              <a href="#changes" class="mt-3 inline-block text-[13px] text-link no-underline hover:underline">
+                Full change history ↓
+              </a>
+            </>
+          ) : (
+            <p class="mt-2 text-[14px] leading-relaxed text-body">
+              No rate changes recorded yet — every check so far has confirmed the published rates
+              unchanged.
+            </p>
+          )
+        }
+      </div>
+    </div>
 
     <!-- Why you can trust it: method, then schedule. -->
     <h2 class="mb-3 mt-12">How each rate is verified</h2>
@@ -157,10 +220,19 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
       When we last confirmed each platform's rates, how many countries the tool covers, and the
       source we check it against.
     </p>
-    <p class="mb-4 text-[13px] text-body">
-      <span class="text-accent">●</span> = Tier 1, re-checked twice a month (1st &amp; 15th). Everything
-      else is checked monthly, on the 1st.
-    </p>
+    <div class="mb-4 max-w-[46rem] rounded-md border border-hairline bg-canvas-soft p-4 text-[13px] leading-relaxed text-body">
+      <p>
+        <span class="text-accent">●</span> <strong class="text-ink">marks a calculator whose rates
+        have changed</strong> since we began tracking. Those are listed first, most recent change at
+        the top. Click any row to see exactly what changed and the announcement it came from.
+      </p>
+      <p class="mt-2">
+        <strong class="text-ink">Rates last verified</strong> is the date we last completed a
+        <em>full</em> check of that calculator against its official source — every country and
+        variant. It only moves when a full check is finished, so it can be older than today even
+        though the tool is current: it means nothing has changed since that date.
+      </p>
+    </div>
     <label class="sr-only" for="verify-search">Search calculators</label>
     <input
       id="verify-search"
@@ -170,49 +242,119 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
       class="field-control mb-1 w-full max-w-[24rem]"
     />
     <p id="verify-noresult" class="hidden py-3 text-[14px] text-mute">No calculator matches that.</p>
-    <div id="verify-list">
-      {
-        groups.map((g) => (
-          <div class="mt-6" data-group>
-            <h3 class="mb-2 border-b border-hairline pb-2 text-[15px] font-medium text-ink">
-              {g.meta.label}
-            </h3>
-            <div class="overflow-x-auto">
-              <table class="w-full min-w-[38rem] border-collapse text-[14px]">
-                <tbody>
-                  {g.items.map((c) => {
-                    const src = firstSource(c);
-                    const cc = countryCount(c);
-                    return (
-                      <tr class="border-b border-hairline" data-name={c.title.toLowerCase()} data-slug={c.slug}>
-                        <td class="py-2.5 pr-3">
-                          {tierOf(c.slug) === 1 && (
-                            <span class="text-accent" title="Tier 1 — checked twice a month">●</span>
-                          )}{" "}
-                          <a href={`/${c.slug}`} class="text-ink no-underline hover:underline">
-                            {c.title}
-                          </a>
-                        </td>
-                        <td class="tnum whitespace-nowrap py-2.5 pr-3 text-body">{prettyDate(verifiedOn(c))}</td>
-                        <td class="whitespace-nowrap py-2.5 pr-3 text-mute">
-                          {cc > 1 ? `${cc} countries` : "single rate"}
-                        </td>
-                        <td class="py-2.5">
-                          {src?.url && (
-                            <a href={src.url} rel="nofollow noopener" target="_blank" class="text-link no-underline hover:underline">
-                              source ↗
-                            </a>
+    <div id="verify-list" class="overflow-x-auto">
+      <table class="w-full min-w-[52rem] border-collapse text-[14px]">
+        <thead>
+          <tr class="border-b border-hairline text-left text-[12px] uppercase tracking-wide text-mute">
+            <th scope="col" class="py-2 pr-3 font-medium">Calculator</th>
+            <th scope="col" class="py-2 pr-3 font-medium">Rates last verified</th>
+            <th scope="col" class="py-2 pr-3 font-medium">Check frequency</th>
+            <th scope="col" class="py-2 pr-3 font-medium">Coverage</th>
+            <th scope="col" class="py-2 pr-3 font-medium">Last rate change</th>
+            <th scope="col" class="py-2 font-medium"><span class="sr-only">Details</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            rows.map(({ c, changes, lastChange, sources }) => (
+              <Fragment>
+                <tr
+                  class="cursor-pointer border-b border-hairline transition hover:bg-canvas-soft"
+                  data-row
+                  data-name={c.title.toLowerCase()}
+                  data-slug={c.slug}
+                >
+                  <td class="py-2.5 pr-3">
+                    {lastChange && (
+                      <span class="text-accent" title="Rates have changed">●</span>
+                    )}{" "}
+                    <a href={`/${c.slug}`} class="text-ink no-underline hover:underline">
+                      {c.title}
+                    </a>
+                  </td>
+                  <td class="tnum whitespace-nowrap py-2.5 pr-3 text-body">{prettyDate(verifiedOn(c))}</td>
+                  <td class="whitespace-nowrap py-2.5 pr-3 text-body">
+                    {tierOf(c.slug) === 1 ? "Every 15 days — 1st & 15th" : "Monthly — 1st"}
+                  </td>
+                  <td class="whitespace-nowrap py-2.5 pr-3 text-mute">
+                    {countryCount(c) > 1 ? `${countryCount(c)} countries` : "single rate"}
+                  </td>
+                  <td class="tnum whitespace-nowrap py-2.5 pr-3 text-body">
+                    {lastChange ? prettyDate(lastChange) : "—"}
+                  </td>
+                  <td class="py-2.5 text-right">
+                    <button
+                      type="button"
+                      data-toggle
+                      aria-expanded="false"
+                      aria-controls={`detail-${c.slug}`}
+                      class="rounded-md px-2 py-1 text-mute transition hover:text-ink"
+                    >
+                      <span class="sr-only">Show verification detail for {c.title}</span>
+                      <span aria-hidden="true" data-chev class="inline-block transition">▾</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr id={`detail-${c.slug}`} class="hidden border-b border-hairline" data-detail>
+                  <td colspan="6" class="bg-canvas-soft px-3 py-4">
+                    {changes.length > 0 ? (
+                      <>
+                        <p class="mb-2 text-[13px] font-medium text-ink">What changed</p>
+                        <ul class="flex flex-col gap-2">
+                          {changes.map((ch) => (
+                            <li class="text-[13px] leading-relaxed text-body">
+                              <span class="tnum text-ink">{prettyDate(ch.effective)}</span> — {ch.field}:{" "}
+                              <span class="tnum">
+                                {ch.from ?? "—"} → <span class="font-medium text-ink">{ch.to ?? "—"}</span>
+                              </span>{" "}
+                              <a
+                                href={ch.source}
+                                target="_blank"
+                                rel="nofollow noopener"
+                                class="text-link no-underline hover:underline"
+                              >
+                                announcement ↗
+                              </a>
+                              {ch.note && <span class="mt-0.5 block text-mute">{ch.note}</span>}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : (
+                      <p class="text-[13px] leading-relaxed text-body">
+                        No rate change recorded since we began tracking — at each scheduled check the
+                        published rates were re-confirmed unchanged.
+                      </p>
+                    )}
+                    {sources.length > 0 && (
+                      <div class="mt-3 border-t border-hairline pt-3">
+                        <p class="mb-1 text-[13px] font-medium text-ink">Official sources we check</p>
+                        <ul class="flex flex-col gap-1">
+                          {sources.map(
+                            (s) =>
+                              s.url && (
+                                <li class="text-[13px]">
+                                  <a
+                                    href={s.url}
+                                    target="_blank"
+                                    rel="nofollow noopener"
+                                    class="text-link no-underline hover:underline"
+                                  >
+                                    {s.label ?? s.url} ↗
+                                  </a>
+                                </li>
+                              ),
                           )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))
-      }
+                        </ul>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              </Fragment>
+            ))
+          }
+        </tbody>
+      </table>
     </div>
 
     <p class="mt-6 max-w-[46rem] text-[14px] leading-relaxed text-body">
@@ -244,11 +386,11 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
     </div>
 
     {
-      recentChanges.length > 0 && (
+      allChanges.length > 0 && (
         <>
-          <h2 class="mb-3 mt-12">Rate changes we've applied</h2>
+          <h2 id="changes" class="mb-3 mt-12 scroll-mt-20">Rate change history</h2>
           <p class="mb-4 max-w-[46rem] text-body">
-            When a platform changes a fee, this is what changed and the announcement we took it from.
+            Every fee change we've applied, newest first, with the announcement we took it from.
           </p>
           <div class="overflow-x-auto">
             <table class="w-full min-w-[36rem] border-collapse text-[14px]">
@@ -262,7 +404,7 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
                 </tr>
               </thead>
               <tbody>
-                {recentChanges.map((r) => (
+                {allChanges.map((r) => (
                   <tr class="border-b border-hairline">
                     <td class="tnum py-2.5 pr-4 text-body">{prettyDate(r.effective)}</td>
                     <td class="py-2.5 pr-4 text-ink">{r.platform}</td>
@@ -296,26 +438,47 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
     // Filter the per-calculator table so a user can find their tool's last-checked
     // date. Progressive enhancement — the full list is server-rendered and works
     // without JS; this only narrows it.
-    const input = document.getElementById("verify-search") as HTMLInputElement | null;
     const list = document.getElementById("verify-list");
-    const noResult = document.getElementById("verify-noresult");
-    if (input && list) {
-      const rows = Array.from(list.querySelectorAll<HTMLElement>("tr[data-name]"));
-      const groups = Array.from(list.querySelectorAll<HTMLElement>("[data-group]"));
-      input.addEventListener("input", () => {
+    if (list) {
+      const rows = Array.from(list.querySelectorAll<HTMLElement>("tr[data-row]"));
+      const detailOf = (row: HTMLElement) => {
+        const next = row.nextElementSibling as HTMLElement | null;
+        return next?.hasAttribute("data-detail") ? next : null;
+      };
+      const setOpen = (row: HTMLElement, open: boolean) => {
+        const d = detailOf(row);
+        if (!d) return;
+        d.classList.toggle("hidden", !open);
+        row.querySelector("[data-toggle]")?.setAttribute("aria-expanded", String(open));
+        const chev = row.querySelector<HTMLElement>("[data-chev]");
+        if (chev) chev.style.transform = open ? "rotate(180deg)" : "";
+      };
+
+      // Click anywhere on the row to reveal what changed — but let real links
+      // (the calculator, the sources) behave normally.
+      for (const row of rows) {
+        row.addEventListener("click", (e) => {
+          if ((e.target as HTMLElement).closest("a")) return;
+          const d = detailOf(row);
+          if (d) setOpen(row, d.classList.contains("hidden"));
+        });
+      }
+
+      const input = document.getElementById("verify-search") as HTMLInputElement | null;
+      const noResult = document.getElementById("verify-noresult");
+      input?.addEventListener("input", () => {
         const q = input.value.trim().toLowerCase();
         let any = false;
-        for (const r of rows) {
+        for (const row of rows) {
           const match =
-            !q || (r.dataset.name ?? "").includes(q) || (r.dataset.slug ?? "").includes(q);
-          r.style.display = match ? "" : "none";
+            !q || (row.dataset.name ?? "").includes(q) || (row.dataset.slug ?? "").includes(q);
+          row.style.display = match ? "" : "none";
+          const d = detailOf(row);
+          if (d) {
+            d.style.display = match ? "" : "none";
+            if (!match) setOpen(row, false); // collapse anything filtered away
+          }
           if (match) any = true;
-        }
-        for (const g of groups) {
-          const visible = Array.from(g.querySelectorAll<HTMLElement>("tr[data-name]")).some(
-            (r) => r.style.display !== "none",
-          );
-          g.style.display = visible ? "" : "none";
         }
         noResult?.classList.toggle("hidden", any);
       });

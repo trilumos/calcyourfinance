@@ -348,6 +348,11 @@ Every rate in this calculator is taken from Depop's official newsroom and help p
   sources: [
     {
       label:
+        "Depop newsroom — Depop makes selling free in Australia (22 July 2026)",
+      url: "https://news.depop.com/company-news/depop-makes-selling-free-in-australia-helping-people-earn-more-from-fashion-resale/",
+    },
+    {
+      label:
         "Depop newsroom — Depop removes selling fees in the United States, evolves fee structure (July 2024)",
       url: "https://news.depop.com/company-news/depop-removes-selling-fees-in-the-united-states-evolves-fee-structure/",
     },
