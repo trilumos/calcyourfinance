@@ -108,6 +108,7 @@ async function handleReport(request, env) {
     headers: {
       Authorization: `Bearer ${env.GH_PAT}`,
       Accept: "application/vnd.github+json",
+      "Content-Type": "application/json; charset=utf-8",
       "X-GitHub-Api-Version": "2022-11-28",
       "User-Agent": "cyf-rate-verify-bot",
     },
