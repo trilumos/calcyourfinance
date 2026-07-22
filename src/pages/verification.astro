@@ -38,13 +38,11 @@ const groups = CAT_ORDER.map((cat) => ({
   meta: CATEGORY_META[cat],
   items: fee
     .filter((c) => c.category === cat)
-    .sort(
-      (a, b) => tierOf(a.slug) - tierOf(b.slug) || a.title.localeCompare(b.title),
-    ),
+    .sort((a, b) => tierOf(a.slug) - tierOf(b.slug) || a.title.localeCompare(b.title)),
 })).filter((g) => g.items.length > 0);
 
 const totalCountryPoints = fee.reduce((n, c) => n + Math.max(countryCount(c), 1), 0);
-const lastChecked = verificationLog[0]?.date;
+const latest = verificationLog[0];
 const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
 ---
 
@@ -60,44 +58,74 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
     <h1 class="my-3">How we keep every rate accurate.</h1>
     <p class="max-w-[42rem] text-pretty text-[17px] leading-relaxed text-body">
       A fee calculator is only worth what its numbers are worth. Every rate here comes from the
-      platform's official page, is checked by a person against that page on a fixed schedule, and is
-      stamped with the date we last confirmed it. This page is the public record — what we checked,
-      when, and how.
+      platform's official page, is checked by a person on a fixed schedule, and is stamped with the
+      date we last confirmed it. This page is the public record — what we checked, and when.
     </p>
 
-    <!-- Trust stats -->
+    <!-- Stats: quick, scannable proof before any prose. -->
     <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
       {
         [
           { n: fee.length, l: "fee calculators tracked" },
-          { n: totalCountryPoints, l: "country rate-points" },
+          { n: totalCountryPoints, l: "country rates verified" },
           { n: `${TIER1.size} + ${fee.length - TIER1.size}`, l: "twice-monthly + monthly" },
-          { n: lastChecked ? prettyDate(lastChecked) : "—", l: "last checked" },
+          { n: latest ? prettyDate(latest.date) : "—", l: "last checked" },
         ].map((s) => (
           <div class="card p-4">
-            <div class="text-[22px] font-semibold text-ink tnum">{s.n}</div>
+            <div class="tnum text-[22px] font-semibold text-ink">{s.n}</div>
             <div class="mt-1 text-[13px] text-body">{s.l}</div>
           </div>
         ))
       }
     </div>
 
-    <!-- How we verify -->
+    <!-- The most common reason someone lands here: "is MY calculator current?"
+         Give them that jump immediately, before any explanation. -->
+    <div class="card mt-4 flex flex-wrap items-center justify-between gap-4 p-5">
+      <div class="min-w-0">
+        <p class="text-[15px] font-medium text-ink">Checking a specific calculator?</p>
+        <p class="mt-1 text-[14px] text-body">
+          See exactly when we last verified it, and against which source.
+        </p>
+      </div>
+      <a href="#calculators" class="btn btn-primary shrink-0">Look up a calculator ↓</a>
+    </div>
+
+    <!-- Latest check, surfaced up top (status-page pattern). Full history lower. -->
+    {
+      latest && (
+        <div class="card mt-4 p-5">
+          <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <p class="eyebrow">Most recent check</p>
+            <p class="tnum font-mono text-[12px] text-mute">
+              {latest.startUTC}–{latest.endUTC} UTC
+            </p>
+          </div>
+          <p class="mt-2 tnum text-[17px] font-semibold text-ink">{prettyDate(latest.date)}</p>
+          <p class="mt-2 max-w-[46rem] text-[14px] leading-relaxed text-ink">{latest.result}</p>
+          <p class="mt-2 max-w-[46rem] text-[13px] leading-relaxed text-body">{latest.scope}</p>
+          <a href="#log" class="mt-3 inline-block text-[13px] text-link no-underline hover:underline">
+            See the full verification history ↓
+          </a>
+        </div>
+      )
+    }
+
+    <!-- Why you can trust it: method, then schedule. -->
     <h2 class="mb-3 mt-12">How each rate is verified</h2>
     <div class="prose max-w-[46rem]">
       <ol>
-        <li><strong>Official source first.</strong> Each fee is taken from the platform's own pricing or help page — never a third-party summary. That exact page is cited on every calculator and linked below.</li>
-        <li><strong>Triangulated when the page hides its numbers.</strong> Some platforms (PayPal, Stripe, Meta, help-centre pages) render fees with JavaScript or behind a login. There we confirm the value against <strong>two or more independent, current sources</strong> and only accept it when they agree — a single result is treated as unverified.</li>
-        <li><strong>A human decides.</strong> No rate changes automatically. A person reviews each check, and only then do we update the number and log the change.</li>
-        <li><strong>Dated in public.</strong> Every calculator shows its "last verified" date, and each change is recorded with its source in our <a href="/methodology">methodology</a> and change history.</li>
+        <li><strong>Official source first.</strong> Each fee comes from the platform's own pricing or help page — never a third-party summary. That exact page is cited on every calculator and linked below.</li>
+        <li><strong>Triangulated when a page hides its numbers.</strong> Some platforms (PayPal, Stripe, Meta, help-centre pages) render fees with JavaScript or behind a login. There we confirm the value against <strong>two or more independent, current sources</strong> and accept it only when they agree — a single result is treated as unverified.</li>
+        <li><strong>A human decides.</strong> No rate changes automatically. A person reviews every check, and only then do we update the number and log the change.</li>
+        <li><strong>Dated in public.</strong> Every calculator shows its "last verified" date, and each change is recorded with its source — see <a href="/methodology">our methodology</a>.</li>
       </ol>
     </div>
 
-    <!-- Cadence -->
     <h2 class="mb-3 mt-12">Our checking schedule</h2>
     <p class="mb-4 max-w-[46rem] text-body">
       Rates change rarely, but when they do it matters. So we re-verify on a fixed cadence — more
-      often for the platforms where a change is most likely or most costly.
+      often for the platforms where a change is most likely, or most costly to get wrong.
     </p>
     <div class="grid gap-3 sm:grid-cols-2">
       <div class="card p-5">
@@ -123,38 +151,105 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
       tiers change how <em>often</em> we check, never how <em>thoroughly</em>.
     </p>
 
-    <!-- Verification sessions log -->
-    <h2 class="mb-3 mt-12">Verification log</h2>
-    <p class="mb-4 max-w-[46rem] text-body">
-      Every check we run, with its date, duration and outcome. Newest first.
+    <!-- The lookup table: the page's main utility, and the jump target. -->
+    <h2 id="calculators" class="mb-2 mt-12 scroll-mt-20">Every calculator, last verified</h2>
+    <p class="mb-3 max-w-[46rem] text-body">
+      When we last confirmed each platform's rates, how many countries the tool covers, and the
+      source we check it against.
     </p>
-    <div class="flex flex-col gap-3">
+    <p class="mb-4 text-[13px] text-body">
+      <span class="text-accent">●</span> = Tier 1, re-checked twice a month (1st &amp; 15th). Everything
+      else is checked monthly, on the 1st.
+    </p>
+    <label class="sr-only" for="verify-search">Search calculators</label>
+    <input
+      id="verify-search"
+      type="search"
+      placeholder="Search a calculator — e.g. Stripe, Etsy, PayPal…"
+      autocomplete="off"
+      class="field-control mb-1 w-full max-w-[24rem]"
+    />
+    <p id="verify-noresult" class="hidden py-3 text-[14px] text-mute">No calculator matches that.</p>
+    <div id="verify-list">
       {
-        verificationLog.map((s) => (
-          <div class="card p-5">
-            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-              <p class="text-[15px] font-semibold text-ink tnum">{prettyDate(s.date)}</p>
-              <p class="font-mono text-[12px] text-mute tnum">
-                {s.startUTC}–{s.endUTC} UTC · {s.slot}
-              </p>
+        groups.map((g) => (
+          <div class="mt-6" data-group>
+            <h3 class="mb-2 border-b border-hairline pb-2 text-[15px] font-medium text-ink">
+              {g.meta.label}
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[38rem] border-collapse text-[14px]">
+                <tbody>
+                  {g.items.map((c) => {
+                    const src = firstSource(c);
+                    const cc = countryCount(c);
+                    return (
+                      <tr class="border-b border-hairline" data-name={c.title.toLowerCase()} data-slug={c.slug}>
+                        <td class="py-2.5 pr-3">
+                          {tierOf(c.slug) === 1 && (
+                            <span class="text-accent" title="Tier 1 — checked twice a month">●</span>
+                          )}{" "}
+                          <a href={`/${c.slug}`} class="text-ink no-underline hover:underline">
+                            {c.title}
+                          </a>
+                        </td>
+                        <td class="tnum whitespace-nowrap py-2.5 pr-3 text-body">{prettyDate(verifiedOn(c))}</td>
+                        <td class="whitespace-nowrap py-2.5 pr-3 text-mute">
+                          {cc > 1 ? `${cc} countries` : "single rate"}
+                        </td>
+                        <td class="py-2.5">
+                          {src?.url && (
+                            <a href={src.url} rel="nofollow noopener" target="_blank" class="text-link no-underline hover:underline">
+                              source ↗
+                            </a>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
-            <p class="mt-2 text-[14px] leading-relaxed text-body">{s.scope}</p>
-            <p class="mt-2 text-[14px] leading-relaxed text-ink">
-              <strong>Result:</strong> {s.result}
-            </p>
-            <p class="mt-1 text-[13px] text-mute">
-              Coverage: {s.coverage} · Method: {s.method}
-            </p>
           </div>
         ))
       }
     </div>
 
-    <!-- Recent rate changes -->
+    <p class="mt-6 max-w-[46rem] text-[14px] leading-relaxed text-body">
+      Our {financeCount} personal-finance calculators (loan, EMI, compound interest and the rest)
+      aren't listed here because they don't depend on a platform's rates — they're standard textbook
+      formulas, and each is covered by automated tests so the math is reproducible.
+    </p>
+
+    <!-- History: every session, then every change. -->
+    <h2 id="log" class="mb-3 mt-12 scroll-mt-20">Verification history</h2>
+    <p class="mb-4 max-w-[46rem] text-body">Every check we've run, newest first.</p>
+    <div class="flex flex-col gap-3">
+      {
+        verificationLog.map((s) => (
+          <div class="card p-5">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <p class="tnum text-[15px] font-semibold text-ink">{prettyDate(s.date)}</p>
+              <p class="tnum font-mono text-[12px] text-mute">
+                {s.startUTC}–{s.endUTC} UTC · {s.slot}
+              </p>
+            </div>
+            <p class="mt-2 text-[14px] leading-relaxed text-ink">{s.result}</p>
+            <p class="mt-2 text-[13px] leading-relaxed text-body">{s.scope}</p>
+            <p class="mt-1 text-[13px] text-mute">Coverage: {s.coverage}</p>
+            <p class="mt-1 text-[13px] text-mute">Method: {s.method}</p>
+          </div>
+        ))
+      }
+    </div>
+
     {
       recentChanges.length > 0 && (
         <>
-          <h2 class="mb-3 mt-12">Recent rate changes</h2>
+          <h2 class="mb-3 mt-12">Rate changes we've applied</h2>
+          <p class="mb-4 max-w-[46rem] text-body">
+            When a platform changes a fee, this is what changed and the announcement we took it from.
+          </p>
           <div class="overflow-x-auto">
             <table class="w-full min-w-[36rem] border-collapse text-[14px]">
               <thead>
@@ -169,10 +264,10 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
               <tbody>
                 {recentChanges.map((r) => (
                   <tr class="border-b border-hairline">
-                    <td class="py-2.5 pr-4 tnum text-body">{prettyDate(r.effective)}</td>
+                    <td class="tnum py-2.5 pr-4 text-body">{prettyDate(r.effective)}</td>
                     <td class="py-2.5 pr-4 text-ink">{r.platform}</td>
                     <td class="py-2.5 pr-4 text-body">{r.field}</td>
-                    <td class="py-2.5 pr-4 tnum text-body">
+                    <td class="tnum py-2.5 pr-4 text-body">
                       {r.from ?? "—"} → <span class="text-ink">{r.to ?? "—"}</span>
                     </td>
                     <td class="py-2.5">
@@ -188,70 +283,6 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
         </>
       )
     }
-
-    <!-- Per-calculator table -->
-    <h2 class="mb-3 mt-12">Every calculator, last verified</h2>
-    <p class="mb-4 max-w-[46rem] text-body">
-      When we last confirmed each platform's rates, how many countries the tool covers, and the
-      source we check against. <span class="text-accent">●</span> marks Tier&nbsp;1 (twice-monthly).
-    </p>
-    <label class="sr-only" for="verify-search">Search calculators</label>
-    <input
-      id="verify-search"
-      type="search"
-      placeholder="Search a calculator — e.g. Stripe, Etsy, PayPal…"
-      autocomplete="off"
-      class="field-control mb-1 w-full max-w-[24rem]"
-    />
-    <p id="verify-noresult" class="hidden py-3 text-[14px] text-mute">No calculator matches that.</p>
-    <div id="verify-list">
-    {
-      groups.map((g) => (
-        <div class="mt-6" data-group>
-          <h3 class="mb-2 border-b border-hairline pb-2 text-[15px] font-medium text-ink">
-            {g.meta.label}
-          </h3>
-          <div class="overflow-x-auto">
-            <table class="w-full min-w-[38rem] border-collapse text-[14px]">
-              <tbody>
-                {g.items.map((c) => {
-                  const src = firstSource(c);
-                  const cc = countryCount(c);
-                  return (
-                    <tr class="border-b border-hairline" data-name={c.title.toLowerCase()} data-slug={c.slug}>
-                      <td class="py-2.5 pr-3">
-                        {tierOf(c.slug) === 1 && <span class="text-accent" title="Tier 1 — twice monthly">●</span>}{" "}
-                        <a href={`/${c.slug}`} class="text-ink no-underline hover:underline">
-                          {c.title}
-                        </a>
-                      </td>
-                      <td class="py-2.5 pr-3 tnum whitespace-nowrap text-body">{prettyDate(verifiedOn(c))}</td>
-                      <td class="py-2.5 pr-3 whitespace-nowrap text-mute">
-                        {cc > 1 ? `${cc} countries` : "single rate"}
-                      </td>
-                      <td class="py-2.5">
-                        {src?.url && (
-                          <a href={src.url} rel="nofollow noopener" target="_blank" class="text-link no-underline hover:underline">
-                            source ↗
-                          </a>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ))
-    }
-    </div>
-
-    <p class="mt-8 max-w-[46rem] text-[14px] leading-relaxed text-body">
-      Our {financeCount} personal-finance calculators (loan, EMI, compound interest and the rest)
-      aren't in this table because they don't depend on a platform's rates — they're standard
-      textbook formulas, and each one is covered by automated tests so the math is reproducible.
-    </p>
 
     <div class="card mt-10 flex flex-wrap items-center justify-between gap-4 p-5">
       <p class="text-[14px] text-body">
@@ -275,7 +306,8 @@ const recentChanges = rateHistory.filter((r) => r.kind === "rate").slice(0, 8);
         const q = input.value.trim().toLowerCase();
         let any = false;
         for (const r of rows) {
-          const match = !q || (r.dataset.name ?? "").includes(q) || (r.dataset.slug ?? "").includes(q);
+          const match =
+            !q || (r.dataset.name ?? "").includes(q) || (r.dataset.slug ?? "").includes(q);
           r.style.display = match ? "" : "none";
           if (match) any = true;
         }
