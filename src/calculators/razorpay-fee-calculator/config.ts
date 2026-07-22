@@ -162,6 +162,6 @@ Razorpay updates its pricing periodically and offers negotiated rates to high-vo
 
   sources: [{ label: "Razorpay — pricing", url: RAZORPAY_SOURCE }],
 
-  feesVerifiedOn: "2026-06-11",
+  feesVerifiedOn: "2026-07-22",
   lastUpdated: "2026-06-11",
 };

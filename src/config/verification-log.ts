@@ -38,7 +38,7 @@ export const verificationLog: VerificationSession[] = [
     scope:
       "Set up the verification system (this public log, the 1st/15th schedule, and a watcher covering every cited source) and ran a correctness sweep across all 42 fee calculators against their official pages.",
     coverage:
-      "Depop fully re-verified across all regions for today's change. Each other calculator's last full-scope verification date is shown per-calculator below; their next scheduled full-scope check is 1 Aug 2026.",
+      "Full scope completed for 12 calculators (Depop across all regions, TikTok Shop across both, and the single-rate platforms: Gumroad, Bandcamp, Buy Me a Coffee, Cash App, Facebook, Paddle, Lemon Squeezy, StockX, Razorpay, Payoneer) — their dates move to today. The multi-country calculators (Stripe, PayPal, Etsy, Shopify, App Store, Vinted, Square, eBay, Whatnot, Mercari, Poshmark, Amazon, Walmart) keep their last complete verification date until their first scheduled full pass on 1 Aug 2026.",
     result:
       "One change — Depop Australia 10% → 0% (effective today). No other platform's published rates had changed; three single-search false positives (Square, Facebook, Cash App) were caught and rejected by triangulation.",
     changes: ["depop-fee-calculator"],

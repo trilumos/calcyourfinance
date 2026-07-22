@@ -50,7 +50,12 @@ const rows = fee
       sources: (c as { sources?: { label?: string; url?: string }[] }).sources ?? [],
     };
   })
+  // Most recently CHECKED first (so a fresh audit surfaces together), and within
+  // the same check date the ones that actually CHANGED come first — those are
+  // what a returning user is looking for.
   .sort((a, b) => {
+    const byChecked = verifiedOn(b.c).localeCompare(verifiedOn(a.c));
+    if (byChecked !== 0) return byChecked;
     if (a.lastChange && b.lastChange) return b.lastChange.localeCompare(a.lastChange);
     if (a.lastChange) return -1;
     if (b.lastChange) return 1;
@@ -223,8 +228,9 @@ const latestChange = allChanges[0];
     <div class="mb-4 max-w-[46rem] rounded-md border border-hairline bg-canvas-soft p-4 text-[13px] leading-relaxed text-body">
       <p>
         <span class="text-accent">●</span> <strong class="text-ink">marks a calculator whose rates
-        have changed</strong> since we began tracking. Those are listed first, most recent change at
-        the top. Click any row to see exactly what changed and the announcement it came from.
+        have changed</strong> since we began tracking. Rows are ordered by most recently checked,
+        and within the same check date the changed ones come first. Click any row to see exactly what
+        changed and the announcement it came from.
       </p>
       <p class="mt-2">
         <strong class="text-ink">Last checked</strong> — the date we last completed a <em>full</em>

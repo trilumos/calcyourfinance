@@ -367,6 +367,6 @@ Every rate in this calculator is taken from Depop's official newsroom and help p
     },
   ],
 
-  feesVerifiedOn: "2026-06-12",
+  feesVerifiedOn: "2026-07-22",
   lastUpdated: "2026-06-12",
 };

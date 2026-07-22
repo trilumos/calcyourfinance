@@ -140,6 +140,6 @@ Paddle's standard rate is 5% + $0.50, but products under $10 and large or scalin
 
   sources: [{ label: "Paddle — pricing", url: paddleFees.source }],
 
-  feesVerifiedOn: "2026-06-11",
+  feesVerifiedOn: "2026-07-22",
   lastUpdated: "2026-06-11",
 };

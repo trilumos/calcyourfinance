@@ -164,6 +164,6 @@ Payoneer updates its fee schedule periodically — the current schedule moved to
     { label: "Payoneer — how withdrawal fees work", url: "https://www.payoneer.com/resources/how-to-use-payoneer/how-payoneer-calculates-withdrawal-fees/" },
   ],
 
-  feesVerifiedOn: "2026-06-11",
+  feesVerifiedOn: "2026-07-22",
   lastUpdated: "2026-06-11",
 };

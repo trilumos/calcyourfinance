@@ -255,6 +255,6 @@ All fees in this calculator are taken from Gumroad's official help page and veri
     },
   ],
 
-  feesVerifiedOn: "2026-06-15",
+  feesVerifiedOn: "2026-07-22",
   lastUpdated: "2026-06-15",
 };
