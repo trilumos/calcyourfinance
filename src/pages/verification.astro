@@ -73,7 +73,6 @@ const rows = fee
     return a.c.title.localeCompare(b.c.title);
   });
 
-const totalCountryPoints = fee.reduce((n, c) => n + Math.max(countryCount(c), 1), 0);
 const latest = verificationLog[0];
 // Newest-first. The most recent of each (check + change) is pinned to the top of
 // the page; the full histories sit together lower so neither list pushes the
@@ -100,16 +99,13 @@ const latestChange = allChanges[0];
       date we last confirmed it. This page is the public record — what we checked, and when.
     </p>
 
-    <!-- Stats: quick, scannable proof before any prose. -->
-    <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <!-- Two facts that are unambiguous and don't repeat anything below. The
+         freshness date lives in the "Most recent check" card, not here. -->
+    <div class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
       {
         [
-          { n: `${fee.length}/${totalCalcs}`, l: "calculators using platform rates" },
-          // "tracked", not "verified" — this is the size of the checking job, not
-          // a claim that all 147 are currently confirmed.
-          { n: totalCountryPoints, l: "country rates we track" },
-          { n: "1st & 15th", l: "our audit dates each month" },
-          { n: latest ? prettyDate(latest.date) : "—", l: "last checked" },
+          { n: `${fee.length} of ${totalCalcs}`, l: "calculators use a platform's published rates" },
+          { n: "1st & 15th", l: "the dates we re-check them each month" },
         ].map((s) => (
           <div class="card p-4">
             <div class="tnum text-[22px] font-semibold text-ink">{s.n}</div>
