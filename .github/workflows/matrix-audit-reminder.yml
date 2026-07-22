@@ -28,13 +28,23 @@ jobs:
         run: |
           if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then echo "no telegram secrets"; exit 0; fi
           DAY=$(date -u +%d)
+          # Read the tier list from the repo so the reminder can never drift from
+          # src/config/verification-tiers.ts.
+          TIER1=$(node -e "
+            const s=require('fs').readFileSync('src/config/verification-tiers.ts','utf8');
+            const m=s.match(/TIER1_SLUGS = \[([\s\S]*?)\]/);
+            const l=[...m[1].matchAll(/\"([a-z0-9-]+)\"/g)].map(x=>x[1].replace(/-(fee|profit)-calculator|-calculator/,''));
+            process.stdout.write(l.join(', '));
+          ")
           if [ "$DAY" = "15" ]; then
-            SET="🔴 *Tier 1 audit* (9 calculators) — the twice-monthly mid-month check"
+            SET="🔴 *Tier 1 audit* — the twice-monthly mid-month check"
+            SCOPE="Due today: $TIER1"
           else
-            SET="*Full monthly audit* — all 42 fee calculators"
+            SET="*Full monthly audit* — every rate-backed calculator"
+            SCOPE="Due today: all 42, Tier 1 first ($TIER1)"
           fi
           MATRIX="$SERVER/$REPO/blob/main/rate-verification/matrix.md"
-          TEXT=$(printf '🗓️ Rate audit due: %s.\n\nFull scope — every country and variant, triangulated. Tell Claude to recheck; it will verify what today’s date makes due and log the session.\n\n📋 Checklist: %s' "$SET" "$MATRIX")
+          TEXT=$(printf '🗓️ Rate audit due: %s\n\n%s\n\nFull scope — every country and every fee variant, triangulated against the official page. Say “recheck” to Claude; it reads today’s date, verifies what is due, and logs the session to /verification.\n\n📋 Checklist: %s' "$SET" "$SCOPE" "$MATRIX")
           curl -sS --max-time 20 "https://api.telegram.org/bot$TG_TOKEN/sendMessage" \
             --data-urlencode "chat_id=$TG_CHAT" \
             --data-urlencode "parse_mode=Markdown" \
