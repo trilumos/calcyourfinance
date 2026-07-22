@@ -99,13 +99,15 @@ const latestChange = allChanges[0];
       date we last confirmed it. This page is the public record — what we checked, and when.
     </p>
 
-    <!-- Two facts that are unambiguous and don't repeat anything below. The
-         freshness date lives in the "Most recent check" card, not here. -->
-    <div class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    <!-- Three unambiguous facts, glanceable before any prose. "Last checked" is
+         deliberately repeated from the card below: it's the one thing a visitor
+         wants answered instantly. -->
+    <div class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
       {
         [
           { n: `${fee.length} of ${totalCalcs}`, l: "calculators use a platform's published rates" },
           { n: "1st & 15th", l: "the dates we re-check them each month" },
+          { n: latest ? prettyDate(latest.date) : "—", l: "last checked" },
         ].map((s) => (
           <div class="card p-4">
             <div class="tnum text-[22px] font-semibold text-ink">{s.n}</div>
