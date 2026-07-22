@@ -227,10 +227,16 @@ const latestChange = allChanges[0];
         the top. Click any row to see exactly what changed and the announcement it came from.
       </p>
       <p class="mt-2">
-        <strong class="text-ink">Rates last verified</strong> is the date we last completed a
-        <em>full</em> check of that calculator against its official source — every country and
-        variant. It only moves when a full check is finished, so it can be older than today even
-        though the tool is current: it means nothing has changed since that date.
+        <strong class="text-ink">Last checked</strong> — the date we last completed a <em>full</em>
+        verification of that calculator against its official source (every country and variant). It
+        moves only when a full check finishes, so an older date doesn't mean the tool is stale: it
+        means we confirmed the rates then and nothing has changed since.
+      </p>
+      <p class="mt-2">
+        <strong class="text-ink">Last changed</strong> — the date the platform's fee itself actually
+        changed, and we updated it. "No change" means the rate has held steady the whole time we've
+        been tracking it. The two dates are independent: we check far more often than platforms
+        change their prices.
       </p>
     </div>
     <label class="sr-only" for="verify-search">Search calculators</label>
@@ -247,10 +253,10 @@ const latestChange = allChanges[0];
         <thead>
           <tr class="border-b border-hairline text-left text-[12px] uppercase tracking-wide text-mute">
             <th scope="col" class="py-2 pr-3 font-medium">Calculator</th>
-            <th scope="col" class="py-2 pr-3 font-medium">Rates last verified</th>
+            <th scope="col" class="py-2 pr-3 font-medium">Last checked</th>
+            <th scope="col" class="py-2 pr-3 font-medium">Last changed</th>
             <th scope="col" class="py-2 pr-3 font-medium">Check frequency</th>
             <th scope="col" class="py-2 pr-3 font-medium">Coverage</th>
-            <th scope="col" class="py-2 pr-3 font-medium">Last rate change</th>
             <th scope="col" class="py-2 font-medium"><span class="sr-only">Details</span></th>
           </tr>
         </thead>
@@ -273,14 +279,18 @@ const latestChange = allChanges[0];
                     </a>
                   </td>
                   <td class="tnum whitespace-nowrap py-2.5 pr-3 text-body">{prettyDate(verifiedOn(c))}</td>
+                  <td class="whitespace-nowrap py-2.5 pr-3">
+                    {lastChange ? (
+                      <span class="tnum font-medium text-ink">{prettyDate(lastChange)}</span>
+                    ) : (
+                      <span class="text-mute">No change</span>
+                    )}
+                  </td>
                   <td class="whitespace-nowrap py-2.5 pr-3 text-body">
                     {tierOf(c.slug) === 1 ? "Every 15 days — 1st & 15th" : "Monthly — 1st"}
                   </td>
                   <td class="whitespace-nowrap py-2.5 pr-3 text-mute">
                     {countryCount(c) > 1 ? `${countryCount(c)} countries` : "single rate"}
-                  </td>
-                  <td class="tnum whitespace-nowrap py-2.5 pr-3 text-body">
-                    {lastChange ? prettyDate(lastChange) : "—"}
                   </td>
                   <td class="py-2.5 text-right">
                     <button
