@@ -2074,6 +2074,8 @@ export interface PatreonFees {
   microThreshold: number;
   currency: string;
   source: string;
+  /** Help-centre article — richer detail, but blocked on some networks/regions. */
+  helpCentreSource?: string;
   newPlanSource: string;
   verifiedOn: string;
 }
@@ -2089,7 +2091,12 @@ export const patreonFees: PatreonFees = {
   microProcessingFixed: 0.10,
   microThreshold: 3,
   currency: "USD",
-  source: "https://support.patreon.com/hc/en-us/articles/11111747095181-Creator-fees-overview",
+  // Main-domain pricing page: states the 10% platform fee and stays reachable
+  // where support.patreon.com is blocked (some regions/networks). The help-centre
+  // article is kept below as the detailed secondary reference.
+  source: "https://www.patreon.com/pricing",
+  helpCentreSource:
+    "https://support.patreon.com/hc/en-us/articles/11111747095181-Creator-fees-overview",
   newPlanSource:
     "https://support.patreon.com/hc/en-us/articles/36426991446797-A-standard-platform-fee-for-new-creators-effective-after-August-4-2025",
   verifiedOn: PATREON_VERIFIED,

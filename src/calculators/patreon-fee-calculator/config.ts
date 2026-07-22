@@ -300,6 +300,14 @@ All rates are taken from Patreon's official support documentation and verified o
   ],
 
   sources: [
+    // Primary: the main-domain pricing page states the 10% platform fee and stays
+    // reachable where the support.patreon.com help centre is blocked in some
+    // regions/networks. The help-centre articles follow for the legacy-plan
+    // detail the pricing page doesn't cover.
+    {
+      label: "Patreon — Pricing (10% platform fee)",
+      url: "https://www.patreon.com/pricing",
+    },
     {
       label: "Patreon — Creator fees overview",
       url: "https://support.patreon.com/hc/en-us/articles/11111747095181-Creator-fees-overview",
