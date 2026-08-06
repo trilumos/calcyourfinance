@@ -245,6 +245,10 @@ For freelancers withdrawing in local currencies, the currency conversion fee (up
 
   sources: [
     {
+      label: "Upwork — Is Upwork Free? Pricing breakdown (0–15% service fee)",
+      url: "https://www.upwork.com/resources/is-upwork-free",
+    },
+    {
       label: "Upwork — Learn about the Freelancer Service Fee",
       url: "https://support.upwork.com/hc/en-us/articles/211062538",
     },
@@ -254,6 +258,6 @@ For freelancers withdrawing in local currencies, the currency conversion fee (up
     },
   ],
 
-  feesVerifiedOn: "2026-06-15",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-15",
 };

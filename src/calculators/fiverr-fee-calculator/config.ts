@@ -267,6 +267,10 @@ The 20% commission is the same worldwide — there are no country-specific disco
 
   sources: [
     {
+      label: "Fiverr — Payment Terms of Service (20% seller commission)",
+      url: "https://www.fiverr.com/legal-portal/legal-terms/payment-terms-of-service",
+    },
+    {
       label: "Fiverr Help — What is the service fee? (seller)",
       url: "https://help.fiverr.com/hc/en-us/articles/360011028477",
     },
@@ -276,6 +280,6 @@ The 20% commission is the same worldwide — there are no country-specific disco
     },
   ],
 
-  feesVerifiedOn: "2026-06-15",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-15",
 };

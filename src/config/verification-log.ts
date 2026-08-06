@@ -31,6 +31,21 @@ export interface VerificationSession {
 
 export const verificationLog: VerificationSession[] = [
   {
+    date: "2026-08-06",
+    startUTC: "06:42",
+    endUTC: "07:45",
+    slot: "full",
+    scope:
+      "Full audit (August cycle, run 5 days after the 1st). Re-verified every Tier-1 and payment-processor platform against its official page, and replaced Zendesk-only citations with reachable main-domain sources across the site.",
+    coverage:
+      "No rate changes found anywhere checked. 7 calculators fully re-verified today (Reverb, Ko-fi, Fiverr, Upwork, Printful, TikTok Shop, Depop). Country-heavy tables (Stripe/PayPal/Etsy and the rest) re-confirmed stable at platform + major-market level — including the Stripe New Zealand cut effective Dec 2025, which our value already matched (2.65% + NZ$0.30).",
+    result:
+      "No rate changes since 22 July. Source reachability improved: 5 calculators moved to a reachable main-domain primary (Reverb, Ko-fi, Upwork, Fiverr, Printful); 4 remain on a Zendesk-only citation with no confirmed main-domain fee page yet (Whatnot, Substack, Teespring, Redbubble).",
+    changes: [],
+    method:
+      "Official pages, triangulated against 2+ independent 2026 sources where a page was JS-rendered or login-walled. Reachable replacement pages were confirmed to state the fee before being cited.",
+  },
+  {
     date: "2026-07-22",
     startUTC: "04:40",
     endUTC: "05:30",

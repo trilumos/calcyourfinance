@@ -240,6 +240,10 @@ This calculator models the core Printful POD profit calculation: retail revenue 
 
   sources: [
     {
+      label: "Printful — Pricing (free; Growth $24.99/mo)",
+      url: "https://www.printful.com/pricing",
+    },
+    {
       label: "Printful — How much does Printful cost?",
       url: "https://help.printful.com/hc/en-us/articles/360014010240-How-much-does-Printful-cost",
     },
@@ -257,6 +261,6 @@ This calculator models the core Printful POD profit calculation: retail revenue 
     },
   ],
 
-  feesVerifiedOn: "2026-06-11",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-11",
 };

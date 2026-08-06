@@ -243,6 +243,10 @@ Every rate in this calculator is taken from Reverb's official help pages and ver
 
   sources: [
     {
+      label: "Reverb — Pricing & Payouts (5% selling fee)",
+      url: "https://reverb.com/selling/selling-fees",
+    },
+    {
       label: "Reverb — What fees will I pay for selling on Reverb?",
       url: "https://help.reverb.com/hc/en-us/articles/40917652290843-What-fees-will-I-pay-for-selling-on-Reverb",
     },
@@ -260,6 +264,6 @@ Every rate in this calculator is taken from Reverb's official help pages and ver
     },
   ],
 
-  feesVerifiedOn: "2026-06-11",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-11",
 };

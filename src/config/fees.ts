@@ -675,7 +675,7 @@ export interface ReverbFees {
   verifiedOn: string;
 }
 
-export const REVERB_VERIFIED = "2026-06-11";
+export const REVERB_VERIFIED = "2026-08-06";
 
 export const reverbFees: ReverbFees = {
   sellingPercent: 5,
@@ -1042,7 +1042,7 @@ export interface DepopFees {
   verifiedOn: string;
 }
 
-export const DEPOP_VERIFIED = "2026-07-22";
+export const DEPOP_VERIFIED = "2026-08-06";
 
 /* ===========================================================================
    VINTED — buyer protection fee (platform-fee marketplace)
@@ -1303,7 +1303,7 @@ export interface TikTokShopFees {
 
 export type TikTokShopFeesByCountry = Partial<Record<CountryCode, TikTokShopFees>>;
 
-export const TIKTOK_SHOP_VERIFIED = "2026-07-22";
+export const TIKTOK_SHOP_VERIFIED = "2026-08-06";
 
 export const tiktokShopFees: TikTokShopFeesByCountry = {
   // ── United States ──────────────────────────────────────────────────────
@@ -1824,7 +1824,7 @@ export const depopFeesROW: DepopFees = {
      https://ko-fi.com/pricing
      https://help.ko-fi.com/hc/en-us/articles/360005506873-What-is-Ko-fi-Gold
    =========================================================================== */
-export const KOFI_VERIFIED = "2026-06-13";
+export const KOFI_VERIFIED = "2026-08-06";
 
 export interface KofiFees {
   /** Ko-fi platform fee % on tips/donations (Free plan). */
@@ -2388,7 +2388,7 @@ export const bandcampFees: BandcampFees = {
      https://help.fiverr.com/hc/en-us/articles/360011028477 (seller fees)
      https://help.fiverr.com/hc/en-us/articles/360010359797 (buyer service fee)
    =========================================================================== */
-export const FIVERR_VERIFIED = "2026-06-15";
+export const FIVERR_VERIFIED = "2026-08-06";
 
 export interface FiverrFees {
   /** Fiverr's commission on every seller order (including tips). 20%. */
@@ -2452,7 +2452,7 @@ export const fiverrFees: FiverrFees = {
      https://support.upwork.com/hc/en-us/articles/211062538
      https://www.upwork.com/i/pricing/
    =========================================================================== */
-export const UPWORK_VERIFIED = "2026-06-15";
+export const UPWORK_VERIFIED = "2026-08-06";
 
 export interface UpworkFees {
   /**

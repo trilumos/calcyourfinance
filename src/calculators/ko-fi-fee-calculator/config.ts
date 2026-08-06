@@ -272,6 +272,10 @@ All rates in this calculator are taken from Ko-fi's official help pages and pric
 
   sources: [
     {
+      label: "Ko-fi — Pricing (0% free / 5% shop & memberships / Gold $12)",
+      url: "https://ko-fi.com/pricing",
+    },
+    {
       label: "Ko-fi — Does Ko-fi take a fee?",
       url: "https://help.ko-fi.com/hc/en-us/articles/360002506494-Does-Ko-fi-take-a-fee",
     },
@@ -285,6 +289,6 @@ All rates in this calculator are taken from Ko-fi's official help pages and pric
     },
   ],
 
-  feesVerifiedOn: "2026-06-13",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-13",
 };

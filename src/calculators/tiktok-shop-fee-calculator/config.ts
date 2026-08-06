@@ -280,6 +280,6 @@ Every rate in this calculator is sourced from TikTok Shop's official seller univ
     },
   ],
 
-  feesVerifiedOn: "2026-07-22",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-12",
 };
