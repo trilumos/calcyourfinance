@@ -5,6 +5,8 @@
  */
 import type { APIRoute } from "astro";
 import { SITE } from "../config/site";
+import { absUrl } from "../lib/seo";
+import { isIndexable } from "../config/indexing";
 import { calculators, activeCategories } from "../calculators";
 import { CATEGORY_META } from "../calculators/_types";
 import { verificationLog } from "../config/verification-log";
@@ -42,8 +44,15 @@ export const GET: APIRoute = () => {
   ];
 
   const urls = entries
+    // Only the current indexing batch — a sitemap listing noindexed pages is a
+    // contradictory signal, and the point of the batch is a small surface.
+    .filter(({ path }) => isIndexable(path))
     .map(({ path, lastmod, priority }) => {
-      const loc = path === "/" ? SITE.url : `${SITE.url}${path}`;
+      // Must match the page's own canonical exactly. `absUrl("/")` yields the
+      // trailing-slash form used by the canonical tag, OG, schema and
+      // breadcrumbs; emitting the bare origin here made the sitemap the one
+      // signal that disagreed with every other (caught by `npm run audit:gsc`).
+      const loc = absUrl(path);
       return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
     })
     .join("\n");

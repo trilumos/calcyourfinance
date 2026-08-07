@@ -28,6 +28,28 @@ Data accuracy is the product's whole moat. This runs first, always, before any o
 See memory `rate-audit-schedule`, `rate-verify-independent-check`,
 `verification-method-and-credibility`, `exact-source-per-rate`.
 
+## ⚠ SEARCH-DATA CHECK — also at the START of EVERY session, right after the date
+
+Search Console and GA4 are wired to a service account; **the user has delegated both to
+Claude entirely.** Never ask them to paste screenshots or read numbers out — pull the data.
+
+1. `npm run stats` — GSC clicks/impressions/position, top pages, top queries; GA4 users,
+   top pages, traffic channels. (28-day window.)
+2. `npm run audit:gsc` — sitemap state as Google sees it, **per-URL indexing verdicts**
+   (URL Inspection API), and drift checks of the live site vs the registry and the
+   indexing allowlist.
+3. **Report what CHANGED since last session, and anything newly broken** — new queries,
+   a page that gained or lost indexing, a sitemap that stopped being read, a canonical
+   Google disagrees with, a drift check that flipped to FAIL. Don't just dump the numbers.
+
+Credentials: service-account JSON in `secrets/` (gitignored, never commit). GA4 property
+`540631319`. GSC is a **domain property** (`sc-domain:calcyourfinance.com`).
+
+Why this is mandatory: connecting GSC immediately exposed real problems that months of
+guessing had not — the five batch-1 pages are "URL is unknown to Google" despite sitting in
+a successfully-downloaded sitemap, and our sitemap contradicted our own canonical. Those are
+only visible in the data. See memory `session-start-search-data`.
+
 ## What this is
 A fast, static, **config-driven** library of finance / e-commerce / payment / AI-API calculators.
 SEO-first, long-tail-first, monetized by display ads. Astro + Preact islands, statically generated,
