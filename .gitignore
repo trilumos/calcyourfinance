@@ -27,3 +27,7 @@ Thumbs.db
 .claude/
 .agents/
 skills-lock.json
+
+# Service-account keys and any other credentials. NEVER commit these.
+secrets/
+*.json.key

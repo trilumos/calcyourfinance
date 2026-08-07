@@ -5,6 +5,7 @@
  */
 import type { APIRoute } from "astro";
 import { SITE } from "../config/site";
+import { isIndexable } from "../config/indexing";
 import { calculators, activeCategories } from "../calculators";
 import { CATEGORY_META } from "../calculators/_types";
 import { verificationLog } from "../config/verification-log";
@@ -42,6 +43,9 @@ export const GET: APIRoute = () => {
   ];
 
   const urls = entries
+    // Only the current indexing batch — a sitemap listing noindexed pages is a
+    // contradictory signal, and the point of the batch is a small surface.
+    .filter(({ path }) => isIndexable(path))
     .map(({ path, lastmod, priority }) => {
       const loc = path === "/" ? SITE.url : `${SITE.url}${path}`;
       return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;

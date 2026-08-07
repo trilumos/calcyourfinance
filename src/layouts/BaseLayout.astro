@@ -9,6 +9,7 @@ import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
 
 import { SITE } from "../config/site";
+import { isIndexable } from "../config/indexing";
 import { organizationSchema, websiteSchema, absUrl } from "../lib/seo";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
@@ -19,6 +20,7 @@ interface Props {
   canonicalPath: string; // e.g. "/stripe-fee-calculator"
   ogImage?: string; // absolute URL
   schemas?: unknown[]; // JSON-LD objects
+  /** Force noindex. Omit to let the indexing allowlist decide (config/indexing.ts). */
   noindex?: boolean;
 }
 
@@ -28,10 +30,13 @@ const {
   canonicalPath,
   ogImage = absUrl("/og/default.png"),
   schemas = [],
-  noindex = false,
+  noindex,
 } = Astro.props;
 
 const canonical = absUrl(canonicalPath);
+// One gate for the whole site: the allowlist decides, so a page can never be
+// noindexed here yet still listed in the sitemap (both read config/indexing.ts).
+const isNoindex = noindex ?? !isIndexable(canonicalPath);
 const allSchemas = [organizationSchema(), websiteSchema(), ...schemas];
 const twitterHandle = SITE.social.twitter ? `@${SITE.social.twitter}` : "";
 ---
@@ -68,7 +73,8 @@ const twitterHandle = SITE.social.twitter ? `@${SITE.social.twitter}` : "";
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {/* `follow`, not `nofollow` — held-back pages must still pass crawl paths. */}
+    {isNoindex && <meta name="robots" content="noindex, follow" />}
     {
       SITE.verification.google && (
         <meta name="google-site-verification" content={SITE.verification.google} />

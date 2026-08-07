@@ -16,7 +16,8 @@
     "og": "tsx scripts/make-og.ts",
     "verify": "tsx scripts/verify-build.ts",
     "verify:rates": "tsx scripts/rate-verify/run.ts",
-    "verify:matrix": "tsx scripts/rate-verify/matrix.ts"
+    "verify:matrix": "tsx scripts/rate-verify/matrix.ts",
+    "stats": "tsx scripts/stats.ts"
   },
   "dependencies": {
     "@astrojs/preact": "^4.0.4",
@@ -34,6 +35,7 @@
     "@fontsource/geist-sans": "^5.2.5",
     "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^22.10.7",
+    "google-auth-library": "^11.0.0",
     "satori": "^0.26.0",
     "tsx": "^4.19.2",
     "vitest": "^2.1.8"
