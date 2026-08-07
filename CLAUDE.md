@@ -65,12 +65,30 @@ all math client-side. One shared template; a new calculator = a config + a formu
   **`tailwind-4-docs` skill** when writing/refactoring/reviewing Tailwind. Follow its engineering
   playbook: compose with utilities in markup first; extract markup before CSS; tokens before repeated
   arbitrary values; only a few small, stable component classes.
+- **SEO — ALWAYS use the `claude-seo` plugin** (skills + subagents) for anything SEO: audits,
+  on-page/technical checks, schema, Core Web Vitals, content/E-E-A-T review, **keyword research**,
+  **topic clustering** (`seo-cluster` for the calculator-cluster rebuild), comparison/alternatives
+  pages, GEO/AI-Overviews, sitemaps, backlinks, drift checks. Prefer its skills/subagents over
+  ad-hoc web search or from-memory SEO. This is mandatory — never do SEO work without it. It pairs
+  with the GSC/GA4 data (already wired: `npm run stats`, `npm run audit:gsc`). See memory
+  `always-use-claude-seo`.
 - **UI review** — run the **`web-design-guidelines` skill** (Vercel Web Interface Guidelines) when
   building or changing any UI, and fix findings (a11y, forms, focus, overflow, i18n).
 - **Formulas** — TDD. Use the **`superpowers:test-driven-development` skill**; write
   `formula.test.ts` and make it pass before wiring the config. Run `npm test`.
 - **Creative/new features** — brainstorm with the user first (`superpowers:brainstorming`) before big
   new directions; for routine "add the next calculator" work, just follow the established pattern.
+
+## ⚠ IRON RULE — NEVER DEGRADE RESPONSIVENESS
+**Never ship a change that makes the site less responsive than it was. Always improve it.**
+Every new or edited component must work from 320px up: no horizontal page scroll at any width,
+wide content (tables, code, diagrams) scrolls inside its own `overflow-x:auto` container, touch
+targets ≥44px, text never clipped or overlapping, no fixed pixel widths where a fluid unit works.
+Check every viewport you touch — 320 / 375 / 768 / 1024 / 1440 — in **both** light and dark.
+This applies to interaction responsiveness too: don't regress LCP/CLS/INP. SSR the initial
+result, reserve space so nothing shifts, and keep islands small.
+Run the `web-design-guidelines` skill on any UI change and fix what it finds. A layout that
+"looks fine on my laptop" is not verified. See memory `never-degrade-responsiveness`.
 
 ## Design (non-negotiable — see DESIGN.md)
 - **DESIGN.md is the source of truth**: the **Vercel / Geist** system. Ink-on-near-white, **Geist +
