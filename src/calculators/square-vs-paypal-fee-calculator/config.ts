@@ -239,6 +239,6 @@ Fees are only part of the story. PayPal offers instant brand recognition at chec
     { label: "Square — UK pricing", url: "https://squareup.com/gb/en/pricing" },
   ],
 
-  feesVerifiedOn: "2026-06-10",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-10",
 };

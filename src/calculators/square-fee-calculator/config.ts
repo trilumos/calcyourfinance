@@ -206,6 +206,6 @@ Payment pricing changes, so every Square rate here is taken from Square's offici
     { label: "Square — Ireland pricing", url: "https://squareup.com/ie/en/pricing" },
   ],
 
-  feesVerifiedOn: "2026-06-10",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-10",
 };

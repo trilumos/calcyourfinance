@@ -252,6 +252,6 @@ All rates are taken from Substack's official support documentation and verified 
     },
   ],
 
-  feesVerifiedOn: "2026-06-13",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-13",
 };

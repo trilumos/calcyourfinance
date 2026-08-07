@@ -213,8 +213,8 @@ This calculator assumes a constant monthly investment, a constant expected annua
 
   sources: [
     {
-      label: "SEBI / AMFI — investor education on mutual funds and SIPs",
-      url: "https://www.amfiindia.com/investor-corner",
+      label: "AMFI — investor education on mutual funds and SIPs",
+      url: "https://www.amfiindia.com/",
     },
   ],
 

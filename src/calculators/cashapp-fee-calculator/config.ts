@@ -166,6 +166,6 @@ Cash App is a US-only service from Block (the company behind Square), and its fe
     { label: "Cash App — cash out speed & fees", url: "https://cash.app/help/us/en-us/3073-cash-out-speed-options" },
   ],
 
-  feesVerifiedOn: "2026-07-22",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-10",
 };

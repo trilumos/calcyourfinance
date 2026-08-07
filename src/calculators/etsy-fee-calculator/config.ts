@@ -207,6 +207,6 @@ We keep Etsy's rates in a single dated source file and stamp the page with a "fe
     { label: "Etsy Help — payment processing fees", url: "https://help.etsy.com/hc/en-us/articles/115015628847" },
   ],
 
-  feesVerifiedOn: "2026-06-09",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-09",
 };

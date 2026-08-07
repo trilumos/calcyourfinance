@@ -263,6 +263,6 @@ This calculator models the core Spring profit calculation: retail revenue minus 
     },
   ],
 
-  feesVerifiedOn: "2026-06-15",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-15",
 };

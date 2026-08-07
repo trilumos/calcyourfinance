@@ -164,6 +164,6 @@ The 30% / 15% commission tiers are long-standing and were confirmed for 2026; th
     { label: "Google Play — Service fees", url: "https://support.google.com/googleplay/android-developer/answer/112622" },
   ],
 
-  feesVerifiedOn: "2026-06-15",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-15",
 };

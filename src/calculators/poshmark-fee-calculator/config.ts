@@ -232,6 +232,6 @@ Every fee in this calculator is sourced from Poshmark's official help and fee-po
     },
   ],
 
-  feesVerifiedOn: "2026-06-12",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-12",
 };

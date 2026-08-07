@@ -344,6 +344,6 @@ This calculator models the per-sale Redbubble earnings calculation: gross markup
     },
   ],
 
-  feesVerifiedOn: "2026-06-15",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-15",
 };

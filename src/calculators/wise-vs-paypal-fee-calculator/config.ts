@@ -194,6 +194,6 @@ We model Wise's per-route fee from its published pricing and PayPal's 5%-capped 
     { label: "PayPal — consumer fees", url: paypalIntlSend.source },
   ],
 
-  feesVerifiedOn: "2026-06-11",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-11",
 };

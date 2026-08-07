@@ -166,6 +166,6 @@ Paytm's rates depend on your merchant tier (the ₹20 lakh turnover threshold) a
 
   sources: [{ label: "Paytm — payment gateway pricing", url: PAYTM_SOURCE }],
 
-  feesVerifiedOn: "2026-06-11",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-11",
 };

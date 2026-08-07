@@ -12,7 +12,7 @@
 
 import type { CountryCode } from "../lib/countries";
 
-const VERIFIED = "2026-06-09";
+const VERIFIED = "2026-08-06";
 
 /* ===========================================================================
    STRIPE — standard online card processing (domestic cards)
@@ -515,7 +515,7 @@ export interface PayoneerMethod {
   percent: number;
   fixed: number;
 }
-export const PAYONEER_VERIFIED = "2026-07-22";
+export const PAYONEER_VERIFIED = "2026-08-06";
 export const PAYONEER_SOURCE = "https://www.payoneer.com/about/pricing/";
 export const PAYONEER_CONVERSION_PERCENT = 0.5;
 
@@ -563,7 +563,7 @@ export const paytmMethods: MethodRate[] = [
    separate processor fee). Both are 5% + $0.50; Lemon Squeezy adds +1.5% on
    international cards. Source: official pricing pages.
    =========================================================================== */
-export const MOR_VERIFIED = "2026-07-22";
+export const MOR_VERIFIED = "2026-08-06";
 export const paddleFees = {
   percent: 5,
   fixed: 0.5,
@@ -623,7 +623,7 @@ export interface PoshmarkFees {
 }
 export type PoshmarkFeesByCountry = Partial<Record<CountryCode, PoshmarkFees>>;
 
-export const POSHMARK_VERIFIED = "2026-06-12";
+export const POSHMARK_VERIFIED = "2026-08-06";
 
 export const poshmarkFees: PoshmarkFeesByCountry = {
   US: {
@@ -718,7 +718,7 @@ export const reverbFees: ReverbFees = {
      CA: https://www.ebay.ca/help/selling/fees-credits-invoices/selling-fees-managed-payments-sellers?id=4822
    eBay's own US worked example cross-check: 13.6% × $210.50 + $0.40 = $29.03. ✓
    =========================================================================== */
-export const EBAY_VERIFIED = "2026-06-11";
+export const EBAY_VERIFIED = "2026-08-06";
 
 export interface EbayCategory {
   /** stable id for the category <select> */
@@ -966,7 +966,7 @@ export interface MercariFees {
   verifiedOn: string;
 }
 
-export const MERCARI_VERIFIED = "2026-06-12";
+export const MERCARI_VERIFIED = "2026-08-06";
 
 export const mercariFeesUS: MercariFees = {
   sellingPercent: 10,
@@ -1104,7 +1104,7 @@ export interface VintedFees {
 }
 export type VintedFeesByCountry = Partial<Record<CountryCode, VintedFees>>;
 
-export const VINTED_VERIFIED = "2026-06-12";
+export const VINTED_VERIFIED = "2026-08-06";
 
 const VINTED_EUR_SRC = "https://www.vinted.com/pricelist";
 
@@ -1214,7 +1214,7 @@ export interface StockXFees {
   verifiedOn: string;
 }
 
-export const STOCKX_VERIFIED = "2026-07-22";
+export const STOCKX_VERIFIED = "2026-08-06";
 
 export const stockxFees: StockXFees = {
   levels: [
@@ -1383,7 +1383,7 @@ export interface WhatnotFees {
 }
 export type WhatnotFeesByCountry = Partial<Record<CountryCode, WhatnotFees>>;
 
-export const WHATNOT_VERIFIED = "2026-06-12";
+export const WHATNOT_VERIFIED = "2026-08-06";
 
 export const whatnotFees: WhatnotFeesByCountry = {
   // ── United States ──────────────────────────────────────────────────────
@@ -1467,7 +1467,7 @@ export interface FacebookFees {
   verifiedOn: string;
 }
 
-export const FACEBOOK_VERIFIED = "2026-07-22";
+export const FACEBOOK_VERIFIED = "2026-08-06";
 
 export const facebookFees: FacebookFees = {
   shippedPercent: 10,
@@ -1546,7 +1546,7 @@ export interface WalmartFees {
   verifiedOn: string;
 }
 
-export const WALMART_VERIFIED = "2026-06-13";
+export const WALMART_VERIFIED = "2026-08-06";
 export const WALMART_SOURCE = "https://marketplace.walmart.com/pricing/";
 
 export const walmartFees: WalmartFees = {
@@ -1875,7 +1875,7 @@ export const kofiFees: KofiFees = {
      https://help.buymeacoffee.com/en/articles/8105744-how-to-calculate-charges-on-your-payment
      https://help.buymeacoffee.com/en/articles/10182730-what-is-buy-me-a-coffee-and-how-does-it-work
    =========================================================================== */
-export const BMAC_VERIFIED = "2026-07-22";
+export const BMAC_VERIFIED = "2026-08-06";
 
 export interface BmacFees {
   /** BMaC platform fee % on all transactions. */
@@ -1923,7 +1923,7 @@ export const bmacFees: BmacFees = {
      https://substack.com/going-paid
      https://stripe.com/billing/pricing  (Stripe Billing 0.7% recurring fee)
    =========================================================================== */
-export const SUBSTACK_VERIFIED = "2026-06-13";
+export const SUBSTACK_VERIFIED = "2026-08-06";
 
 export interface SubstackFees {
   /** Substack platform fee % on all paid subscriptions. */
@@ -1981,7 +1981,7 @@ export const substackFees: SubstackFees = {
      https://gumroad.com/help/article/66-gumroads-fees  (official help page)
      https://help.gumroad.com/article/66-gumroadfees   (alternate URL, same content)
    =========================================================================== */
-export const GUMROAD_VERIFIED = "2026-07-22";
+export const GUMROAD_VERIFIED = "2026-08-06";
 
 export interface GumroadFees {
   /**
@@ -2051,7 +2051,7 @@ export const gumroadFees: GumroadFees = {
      https://support.patreon.com/hc/en-us/articles/36426991446797-A-standard-platform-fee-for-new-creators-effective-after-August-4-2025
      https://support.patreon.com/hc/en-us/articles/360024952552-Patreon-Creator-Plans
    =========================================================================== */
-export const PATREON_VERIFIED = "2026-06-15";
+export const PATREON_VERIFIED = "2026-08-06";
 
 export interface PatreonFees {
   /** New plan platform fee % (for creators who published after Aug 4 2025). */
@@ -2135,7 +2135,7 @@ export const patreonFees: PatreonFees = {
      https://help.kajabi.com/hc/en-us/articles/23370972909851-Kajabi-Payments-Fees-United-States
      https://www.kajabi.com/updates/2025-pricing-updates
    =========================================================================== */
-export const KAJABI_VERIFIED = "2026-06-15";
+export const KAJABI_VERIFIED = "2026-08-06";
 
 export interface KajabiPlan {
   /** stable id for the plan <select> */
@@ -2203,7 +2203,7 @@ export const kajabiFees: KajabiFees = {
      https://help.podia.com/en/articles/11371138-understanding-podia-transaction-fees
      https://help.podia.com/en/articles/11370888-podia-plans-pricing-faqs
    =========================================================================== */
-export const PODIA_VERIFIED = "2026-06-15";
+export const PODIA_VERIFIED = "2026-08-06";
 
 export interface PodiaPlan {
   /** stable id for the plan <select> */
@@ -2266,7 +2266,7 @@ export const podiaFees: PodiaFees = {
      https://teachable.com/pricing
      https://support.teachable.com/en/articles/11682553-teachable-fees
    =========================================================================== */
-export const TEACHABLE_VERIFIED = "2026-06-15";
+export const TEACHABLE_VERIFIED = "2026-08-06";
 
 export interface TeachablePlan {
   /** stable id for the plan <select> */
@@ -2309,7 +2309,7 @@ export const teachableFees: TeachableFees = {
 /* ===========================================================================
    BANDCAMP
    =========================================================================== */
-export const BANDCAMP_VERIFIED = "2026-07-22";
+export const BANDCAMP_VERIFIED = "2026-08-06";
 
 export interface BandcampFees {
   /**
@@ -2510,7 +2510,7 @@ export const upworkFees: UpworkFees = {
      https://printify.com/pricing/
      https://printify.com/how-it-works/
    =========================================================================== */
-export const PRINTIFY_VERIFIED = "2026-06-15";
+export const PRINTIFY_VERIFIED = "2026-08-06";
 
 export interface PrintifyPremium {
   /** Maximum % discount on product base costs for Premium subscribers. */
@@ -2552,7 +2552,7 @@ export const printifyPremium: PrintifyPremium = {
      https://spring4creators.zendesk.com/hc/en-us/articles/12423741560589
        (How Spring Works — official Spring help article)
    =========================================================================== */
-export const TEESPRING_VERIFIED = "2026-06-15";
+export const TEESPRING_VERIFIED = "2026-08-06";
 
 /**
  * Spring (Teespring) platform note.
@@ -2605,7 +2605,7 @@ export const teespringInfo: TeespringInfo = {
      https://help.redbubble.com/hc/en-us/articles/50959535480212-What-is-the-excess-markup-fee
      https://help.redbubble.com/hc/en-us/articles/50960130992916-What-account-fees-exist-on-Redbubble
    =========================================================================== */
-export const REDBUBBLE_VERIFIED = "2026-07-21";
+export const REDBUBBLE_VERIFIED = "2026-08-06";
 
 export interface RedbubbleInfo {
   /** Default markup % recommended by Redbubble (and the excess-fee threshold). */
@@ -2690,7 +2690,7 @@ export const redbubbleInfo: RedbubbleInfo = {
      Referral fees:    https://sellercentral.amazon.com/help/hub/reference/GTG4BAWSY39Z98CX
      FBA 2026 changes: https://sellercentral.amazon.com/help/hub/reference/external/GABBX6GZPA8MSZGW
    =========================================================================== */
-export const AMAZON_VERIFIED = "2026-07-14";
+export const AMAZON_VERIFIED = "2026-08-06";
 
 export interface AmazonReferralCategory {
   /** stable id for the category <select>. */

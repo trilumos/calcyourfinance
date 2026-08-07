@@ -172,6 +172,6 @@ Sellers consistently underestimate Shopify's cost because they anchor on the mon
     { label: "Shopify — Payments & fees", url: "https://help.shopify.com/en/manual/payments" },
   ],
 
-  feesVerifiedOn: "2026-06-15",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-15",
 };

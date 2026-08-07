@@ -183,6 +183,6 @@ Both platforms publish a 5% + $0.50 base rate; Lemon Squeezy's 1.5% internationa
     { label: "Lemon Squeezy — fees", url: lemonSqueezyFees.source },
   ],
 
-  feesVerifiedOn: "2026-06-11",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-11",
 };

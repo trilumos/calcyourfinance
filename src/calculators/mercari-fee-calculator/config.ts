@@ -277,6 +277,6 @@ Every rate in this calculator is taken from Mercari's official US help center an
     },
   ],
 
-  feesVerifiedOn: "2026-06-12",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-12",
 };

@@ -292,6 +292,6 @@ Every rate in this calculator is taken from the official Walmart Marketplace pri
     },
   ],
 
-  feesVerifiedOn: "2026-06-13",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-13",
 };

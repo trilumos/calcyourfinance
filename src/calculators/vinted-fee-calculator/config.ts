@@ -290,6 +290,6 @@ For UK: the dynamic nature of the fee (3–8% + £0.30–0.80 range) is document
     },
   ],
 
-  feesVerifiedOn: "2026-06-12",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-12",
 };

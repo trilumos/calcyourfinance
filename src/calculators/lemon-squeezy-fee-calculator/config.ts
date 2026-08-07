@@ -153,6 +153,6 @@ Lemon Squeezy's base rate is 5% + 50¢ with a 1.5% international-card surcharge,
 
   sources: [{ label: "Lemon Squeezy — fees", url: lemonSqueezyFees.source }],
 
-  feesVerifiedOn: "2026-07-22",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-11",
 };

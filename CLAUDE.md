@@ -3,6 +3,31 @@
 Project rules for every session. **These are mandatory.** Read `PLAN.md` (strategy/roadmap),
 `DESIGN.md` (design source of truth), `PROGRESS.md` (changelog) before non-trivial work.
 
+## ⚠️ RATE-AUDIT PROTOCOL — run this at the START of EVERY session, before anything else
+
+Data accuracy is the product's whole moat. This runs first, always, before any other task:
+
+1. **Check today's date.**
+2. **Pull the inputs first — always, before auditing:**
+   - `git pull` and read the newest watcher report in `rate-verification/<date>.md`
+     (the weekly CI run — its dead-link/`actionable` flags).
+   - Read open **user rate reports**: GitHub issues labelled `rate-report`
+     (`gh issue list --label rate-report --state open`, or the API).
+3. **Decide what's due (schedule anchors, `src/config/verification-tiers.ts`):**
+   - **1st of month → FULL audit: ALL 42 fee calculators, every value.**
+   - **15th → Tier-1 audit** (the 9 high-traffic/volatile calcs).
+4. **Catch-up rule:** if today isn't an anchor, check whether the **last due anchor's
+   audit actually happened** (look at `src/config/verification-log.ts` newest entry). If a
+   due audit was missed, **do it now, first**, before any other work.
+5. **The monthly FULL all-calculator audit MUST ALWAYS happen** — if missed on the 1st,
+   run it late, but it is never skipped. Only after it's done do you continue with other work.
+6. Verify each rate against the **official page**, triangulate JS/login-walled ones, apply any
+   change to `fees.ts` + `rate-history.ts`, bump `verifiedOn` only where fully checked, and log
+   the session (real UTC start/end) in `verification-log.ts`. Full scope always — never partial.
+
+See memory `rate-audit-schedule`, `rate-verify-independent-check`,
+`verification-method-and-credibility`, `exact-source-per-rate`.
+
 ## What this is
 A fast, static, **config-driven** library of finance / e-commerce / payment / AI-API calculators.
 SEO-first, long-tail-first, monetized by display ads. Astro + Preact islands, statically generated,

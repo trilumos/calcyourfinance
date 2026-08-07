@@ -244,6 +244,6 @@ Payment pricing changes, so we store every rate in a single, dated source file a
     { label: "Stripe — pricing by country", url: "https://stripe.com/pricing" },
   ],
 
-  feesVerifiedOn: "2026-06-08",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-08",
 };

@@ -190,6 +190,6 @@ Both services are US-only for commercial use and their fees can change, so we st
     { label: "Venmo — our fees", url: "https://venmo.com/resources/our-fees" },
   ],
 
-  feesVerifiedOn: "2026-06-10",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-10",
 };

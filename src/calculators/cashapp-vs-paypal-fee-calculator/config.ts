@@ -190,6 +190,6 @@ Both platforms are US-only for commercial use, and their fees can change, so we 
     { label: "PayPal — US merchant fees", url: "https://www.paypal.com/us/webapps/mpp/merchant-fees" },
   ],
 
-  feesVerifiedOn: "2026-06-10",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-10",
 };

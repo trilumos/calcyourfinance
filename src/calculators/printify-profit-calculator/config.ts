@@ -259,6 +259,6 @@ This calculator models the core Printify POD profit calculation: retail revenue 
     },
   ],
 
-  feesVerifiedOn: "2026-06-15",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-15",
 };

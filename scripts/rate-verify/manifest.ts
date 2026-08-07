@@ -101,11 +101,18 @@ export function getManifest(): CheckTarget[] {
     }
   }
 
-  // Every calculator's cited sources[] — the authoritative list of what each
+  // Every FEE calculator's cited sources[] — the authoritative list of what each
   // page actually shows. Catches calcs that store rates inline in their config
   // (Shopify, App Store, Printful) rather than in fees.ts, so nothing a user
   // can click goes unwatched. Link-health + staleness only (no value to assert).
+  //
+  // Personal-finance calcs (loan, EMI, SIP, compound interest…) are EXCLUDED:
+  // they're static, unit-tested formulas with no platform rate to verify. Their
+  // optional "learn more" links are editorial, not rate citations, so a rate
+  // watcher has no business flagging them (that's why a dead AMFI education link
+  // wrongly surfaced in the rate audit).
   for (const c of calculators) {
+    if ((c as { category?: string }).category === "personal-finance") continue;
     const srcs = (c as { sources?: { url?: string }[] }).sources;
     if (!Array.isArray(srcs)) continue;
     const meta = c as { feesVerifiedOn?: string; lastUpdated?: string; title?: string };

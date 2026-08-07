@@ -166,6 +166,6 @@ Venmo is a US-only service owned by PayPal, and its fees can change, so we store
     { label: "Venmo — business profile transaction fees", url: "https://help.venmo.com/cs/articles/business-profile-transaction-fees-vhel221" },
   ],
 
-  feesVerifiedOn: "2026-06-10",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-10",
 };

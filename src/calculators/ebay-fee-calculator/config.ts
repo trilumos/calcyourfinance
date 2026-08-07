@@ -374,6 +374,6 @@ Every rate here comes from eBay's official fee pages for each country and was ve
     },
   ],
 
-  feesVerifiedOn: "2026-06-11",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-11",
 };

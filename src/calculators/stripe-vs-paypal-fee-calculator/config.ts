@@ -258,6 +258,6 @@ Online sellers deciding which checkout to offer, freelancers choosing how to inv
     { label: "PayPal — UK business fees", url: "https://www.paypal.com/uk/business/paypal-business-fees" },
   ],
 
-  feesVerifiedOn: "2026-06-09",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-09",
 };

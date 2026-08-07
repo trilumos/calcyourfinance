@@ -266,6 +266,6 @@ Every fee in this calculator is taken from Whatnot's official seller help pages 
     },
   ],
 
-  feesVerifiedOn: "2026-06-12",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-12",
 };

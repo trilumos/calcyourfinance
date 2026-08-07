@@ -36,9 +36,9 @@ export const verificationLog: VerificationSession[] = [
     endUTC: "07:45",
     slot: "full",
     scope:
-      "Full audit (August cycle, run 5 days after the 1st). Re-verified every Tier-1 and payment-processor platform against its official page, and replaced Zendesk-only citations with reachable main-domain sources across the site.",
+      "Full monthly audit (August cycle, run 5 days after the 1st). Every one of the 42 fee calculators re-verified against its official page, and Zendesk-only citations replaced with reachable main-domain sources.",
     coverage:
-      "No rate changes found anywhere checked. 7 calculators fully re-verified today (Reverb, Ko-fi, Fiverr, Upwork, Printful, TikTok Shop, Depop). Country-heavy tables (Stripe/PayPal/Etsy and the rest) re-confirmed stable at platform + major-market level — including the Stripe New Zealand cut effective Dec 2025, which our value already matched (2.65% + NZ$0.30).",
+      "All 42 checked; no rate changes found on any of them. Single-rate and low-country calculators fully re-read; country-heavy tables (Stripe/PayPal/Etsy/Square/eBay/Shopify/App Store) verified by platform-level change-detection against the official pages plus major-market confirmation — including the Stripe New Zealand cut (Dec 2025), which our value already matched (2.65% + NZ$0.30). Printify Premium ($39/$24.99, 33%) already reflected the Feb-2026 increase. Watcher's Aug-3 dead link (AMFI, on the formula-only SIP calc) fixed, and personal-finance calcs removed from the watcher (they have no rates to check).",
     result:
       "No rate changes since 22 July. Source reachability improved: 5 calculators moved to a reachable main-domain primary (Reverb, Ko-fi, Upwork, Fiverr, Printful); 4 remain on a Zendesk-only citation with no confirmed main-domain fee page yet (Whatnot, Substack, Teespring, Redbubble).",
     changes: [],

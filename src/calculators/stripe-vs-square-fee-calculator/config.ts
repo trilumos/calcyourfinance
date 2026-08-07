@@ -228,6 +228,6 @@ Price is only part of the decision. Stripe is the stronger choice for custom onl
     { label: "Square — UK pricing", url: "https://squareup.com/gb/en/pricing" },
   ],
 
-  feesVerifiedOn: "2026-06-10",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-10",
 };

@@ -258,6 +258,6 @@ All rates are taken from Teachable's official pricing page and verified on 2026-
     },
   ],
 
-  feesVerifiedOn: "2026-06-15",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-15",
 };

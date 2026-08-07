@@ -245,6 +245,6 @@ The fee in this calculator — 10% selling fee for shipped orders, $0.80 minimum
     },
   ],
 
-  feesVerifiedOn: "2026-07-22",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-12",
 };

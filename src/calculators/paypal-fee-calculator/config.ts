@@ -229,6 +229,6 @@ We keep every rate in a dated configuration file and stamp the page with a "fees
     { label: "PayPal — India business fees", url: "https://www.paypal.com/in/business/paypal-business-fees" },
   ],
 
-  feesVerifiedOn: "2026-06-09",
+  feesVerifiedOn: "2026-08-06",
   lastUpdated: "2026-06-09",
 };
