@@ -18,7 +18,8 @@
     "verify:rates": "tsx scripts/rate-verify/run.ts",
     "verify:matrix": "tsx scripts/rate-verify/matrix.ts",
     "stats": "tsx scripts/stats.ts",
-    "audit:gsc": "tsx scripts/gsc-audit.ts"
+    "audit:gsc": "tsx scripts/gsc-audit.ts",
+    "gsc:submit": "tsx scripts/gsc-submit-sitemap.ts"
   },
   "dependencies": {
     "@astrojs/preact": "^4.0.4",
