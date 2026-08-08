@@ -202,45 +202,75 @@ export const kofiFeeCalculator: CalculatorConfig = {
   howItWorks:
     "\"Ko-fi is 0% on tips\" is the line everyone repeats — and it's only true if you turned a setting off. Every new Ko-fi account starts with Contributor status switched ON, which gives Ko-fi 5% of your tips too. It's opt-out, not opt-in: you disable it in Settings → Payment. So the honest default a new creator is on takes 5% of tips, 5% of shop/membership/commission income, plus the payment processor's fee. This calculator defaults to Contributor ON for that reason; switch the plan to \"Contributor off\" to see the true 0%-tips figure, or Gold to zero every platform fee.\n\nKo-fi never touches the money itself — you connect your OWN Stripe or PayPal, and the processor bills you directly, with no Ko-fi markup. Because it's your account, the processor fee is your choice, and on small tips it's the bigger lever than Ko-fi's cut. Stripe is 2.9% + $0.30; PayPal Micropayments (which you must enable on your PayPal account) is 4.99% + $0.09. The fixed $0.09 vs $0.30 means Micropayments wins on small payments and loses on large ones — they cross over near $10. On a $4 tip, Micropayments leaves you noticeably more; on a $50 sale, Stripe does.\n\nKo-fi Gold ($12/month) removes the 5% platform fee on everything. Whether it pays off depends on how much fee-bearing income you have: with Contributor off, the break-even is $240/month in shop/membership income (5% × $240 = $12). But if you leave Contributor ON, your tips are fee-bearing too, so Gold breaks even sooner — count tips + shop together against the $240.",
 
-  seoContent: `Our Ko-fi fee calculator shows what Ko-fi actually takes from your tips, shop sales, memberships and commissions — including the 5% cut most creators don't realise they're paying. Ko-fi is famous as the "0% on tips" platform, but that number is conditional on a setting, and your choice of payment processor changes your real payout more than most people expect. This tool runs your exact numbers on both.
+  seoContent: `Ko-fi is famous as the "0% on tips" platform — but that's only true if you turned a setting off, and your payment processor quietly changes your payout more than Ko-fi's own cut does. This tool runs your real numbers; here's what actually comes out of each payment.
 
-## The 5% on tips nobody mentions: Contributor status.
+**The short version:**
 
-Here's the thing the "Ko-fi is free" articles skip. Every new Ko-fi account starts with **Contributor status turned ON**, and Contributor gives Ko-fi **5% of your tips** as well as the 5% it already takes on shop and membership income. It is opt-OUT, not opt-in: unless you go to Settings → Payment and switch it off, a supporter's $5 tip loses about $0.25 to Ko-fi on top of the payment-processor fee.
+- New accounts pay **5% on tips** by default (Contributor status is on) — turn it off in Settings → Payment for the real 0%.
+- Shop, membership and commission income is **5%** regardless (0% only on Gold).
+- Your processor is your choice: **PayPal Micropayments wins under ~$10, Stripe wins above it.**
+- **Ko-fi Gold ($12/mo)** removes the 5% — worth it above ~$240/mo of fee-bearing income.
 
-That's why this calculator defaults to "Contributor on" — it's the honest starting point for a real new creator. Switch the plan selector to **Contributor off** to see the genuine 0%-on-tips payout, or **Gold** to remove every platform fee. If you've never touched that setting, assume you're paying the 5%.
+## Does Ko-fi really take 0% on tips?
 
-Contributor is a legitimate feature — some creators happily give 5% back to fund the platform. The problem is only that it's on by default and quietly framed, so people repeat "Ko-fi takes nothing on tips" while paying 5%.
+Only if you switched it off. Every new Ko-fi account starts with **Contributor status ON**, which gives Ko-fi **5% of your tips** on top of the 5% it already takes on shop and membership income. It's opt-out: unless you visit Settings → Payment and turn it off, a $5 tip loses about $0.25 to Ko-fi before the processor fee.
 
-## Your processor is your choice — and it's the bigger lever on small tips.
+Here's the full picture by plan:
 
-Ko-fi never handles the money. You connect your **own Stripe or PayPal account**, and the processor bills you directly with no Ko-fi markup. Because it's your account, the processing fee is a decision you make — and on small tips it moves your payout more than Ko-fi's own cut.
+| Plan | Fee on tips | Fee on shop / memberships | Monthly cost |
+|---|---|---|---|
+| Contributor **on** (default) | 5% | 5% | Free |
+| Contributor **off** | 0% | 5% | Free |
+| Ko-fi Gold | 0% | 0% | $12 |
 
-- **Stripe:** 2.9% + $0.30
-- **PayPal Micropayments:** 4.99% + $0.09 (you must enable Micropayments on your PayPal account)
+Contributor is a legitimate "give 5% back to fund Ko-fi" feature — the only problem is it's on by default and quietly framed, so creators repeat "Ko-fi takes nothing on tips" while paying 5%. This calculator defaults to Contributor on for that reason; switch the plan to see the other rows.
 
-The trick is the fixed fee. On a $4 tip, Stripe's $0.30 is brutal (that's 7.5% before the percentage even applies), while Micropayments' $0.09 barely registers — so Micropayments wins. On a $50 sale, the 4.99% rate costs far more than the $0.30 fixed, so Stripe wins. The two **cross over around $10**. If most of your support comes as small tips, enabling PayPal Micropayments can quietly raise your take-home; if you mostly sell higher-priced products, stay on Stripe. Use the processor selector above to test your own typical amount.
+## Stripe or PayPal: which should you use on Ko-fi?
 
-## Is Ko-fi Gold worth it? (it depends on the Contributor setting)
+Ko-fi never touches the money — you connect your **own** Stripe or PayPal, so the processing fee is your decision, and on small tips it's the bigger lever.
 
-Ko-fi Gold costs **$12/month** and removes the 5% platform fee on everything. The break-even depends on which fees you're actually paying:
+| Processor | Fee | Best for |
+|---|---|---|
+| Stripe | 2.9% + $0.30 | Payments over ~$10 |
+| PayPal Micropayments | 4.99% + $0.09 | Tips under ~$10 |
 
-- **Contributor off:** only shop/membership/commission income is charged 5%, so Gold breaks even at **$240/month** of that income ($12 ÷ 5%).
-- **Contributor on:** your tips are fee-bearing too, so count tips + shop + memberships together against the $240 — Gold pays for itself sooner.
+It's the fixed fee that decides it. On a $4 tip, Stripe's $0.30 is 7.5% before the percentage even applies, while Micropayments' $0.09 barely registers. On a $50 sale the 4.99% rate costs far more than $0.30, so Stripe wins. They cross near **$10**. If your support is mostly small tips, enabling PayPal Micropayments can raise your take-home; toggle the processor above to test your own amount.
 
-At $500/month of fee-bearing income you'd pay $25 in Ko-fi fees on a standard account versus $12 for Gold — a $13/month saving. Below ~$240 of fee-bearing income (with Contributor off), Gold costs more than it saves.
+## Is Ko-fi Gold worth it?
 
-## Ko-fi vs Patreon vs Buy Me a Coffee.
+Gold ($12/month) removes the 5% platform fee on everything, so it pays off once the 5% you'd otherwise lose exceeds $12 — i.e. **above ~$240/month of fee-bearing income** ($12 ÷ 5%).
 
-Ko-fi's advantage is real but **conditional**. With Contributor off, Ko-fi takes 0% on tips — better than Patreon (5–12% on all creator income, never zero) and Buy Me a Coffee (a flat 5% on everything, always). But leave Contributor on and Ko-fi's 5% on tips is identical to Buy Me a Coffee. For shop and membership income, Ko-fi's 5% sits near Patreon's lower tiers and below Gumroad's 10% free-plan rate. The honest summary: Ko-fi can be the cheapest of the three — if you turn off the setting most people never see.
+- **Contributor off:** count only shop/membership/commission income toward the $240.
+- **Contributor on:** tips count too, so Gold breaks even sooner.
 
-## How the payout is calculated.
+At $500/month of fee-bearing income you'd pay $25 in Ko-fi fees versus $12 for Gold — a $13/month saving. Below ~$240, Gold costs more than it saves.
 
-Tip, Contributor off: payout = amount − processor fee. Tip, Contributor on: payout = amount − (amount × 5%) − processor fee. Shop/membership (any standard account): payout = amount − (amount × 5%) − processor fee. Gold: payout = amount − processor fee. The processor fee is 2.9% + $0.30 (Stripe) or 4.99% + $0.09 (PayPal Micropayments). The calculator above runs any combination instantly.
+## How does Ko-fi compare to Patreon and Buy Me a Coffee?
+
+Ko-fi's edge is real but conditional on that one setting:
+
+| Platform | Fee on tips | Fee on shop / memberships |
+|---|---|---|
+| Ko-fi (Contributor off) | 0% | 5% |
+| Ko-fi (Contributor on) | 5% | 5% |
+| Buy Me a Coffee | 5% | 5% |
+| Patreon | 5–12% | 5–12% |
+
+With Contributor off, Ko-fi is the cheapest of the three on tips. Leave it on and Ko-fi matches Buy Me a Coffee. For shop income, Ko-fi's 5% sits below Gumroad's 10% free-plan rate.
+
+## How your payout is calculated.
+
+Your payout is the amount minus Ko-fi's platform fee (if any) minus your processor's fee:
+
+- **Tip, Contributor off / Gold:** amount − processor fee
+- **Tip, Contributor on:** amount − 5% − processor fee
+- **Shop / membership (non-Gold):** amount − 5% − processor fee
+
+Processor fee = 2.9% + $0.30 (Stripe) or 4.99% + $0.09 (PayPal Micropayments). The calculator runs any combination instantly.
 
 ## Accuracy and sources.
 
-Rates verified against Ko-fi's own help pages on 2026-08-08 — including the Contributor-status article ("everyone who joins Ko-fi now starts with Contributor status"), the fee overview, and the Gold page. Processor rates are the standard US Stripe and PayPal Micropayments rates. International cards may carry additional processor surcharges not modelled here. This tool estimates from published rates; confirm the exact figures in your own Stripe or PayPal dashboard and Ko-fi settings before pricing decisions. Every rate on this site carries the date we last checked it — see our verification log.`,
+Rates verified against Ko-fi's own help pages on **2026-08-08** — the Contributor-status article ("everyone who joins Ko-fi now starts with Contributor status"), the fee overview, and the Gold page. Processor rates are the standard US Stripe and PayPal Micropayments rates; international cards may add surcharges not modelled here. Confirm the exact figures in your own Stripe/PayPal dashboard and Ko-fi settings before pricing decisions — and see our verification log for when each rate was last checked.`,
 
   workedExample: {
     scenario:

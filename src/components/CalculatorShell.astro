@@ -67,6 +67,21 @@ const seoHtml = config.seoContent
     if (lines.length && lines.every((l) => l.startsWith("- "))) {
       return `<ul>${lines.map((l) => `<li>${inline(l.slice(2))}</li>`).join("")}</ul>`;
     }
+    // Markdown pipe table: line 2 is a |---|---| separator. Comparative data as a
+    // table is more scannable AND more citable (featured snippets / AI Overviews).
+    // Wrapped in an overflow-x container so it never breaks layout on mobile.
+    const cells = (l: string) => l.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+    if (lines.length >= 2 && /^\|?[\s:|-]*-[\s:|-]*\|?$/.test(lines[1])) {
+      const head = cells(lines[0]);
+      const body = lines.slice(2).map(cells);
+      return (
+        `<div class="cyf-table-wrap"><table><thead><tr>` +
+        head.map((h) => `<th>${inline(h)}</th>`).join("") +
+        `</tr></thead><tbody>` +
+        body.map((r) => `<tr>${r.map((c) => `<td>${inline(c)}</td>`).join("")}</tr>`).join("") +
+        `</tbody></table></div>`
+      );
+    }
     return `<p>${inline(b.replace(/\n/g, " "))}</p>`;
   })
   .join("\n");

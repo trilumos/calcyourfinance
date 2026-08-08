@@ -332,6 +332,36 @@
     color: var(--ink);
     font-weight: 600;
   }
+  /* Comparison tables in guide copy. Wrapper scrolls on narrow screens so a wide
+     table never forces horizontal page scroll (responsiveness iron rule). */
+  .prose :where(.cyf-table-wrap) {
+    margin-top: 1rem;
+    overflow-x: auto;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+  }
+  .prose :where(table) {
+    width: 100%;
+    min-width: 30rem;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .prose :where(th, td) {
+    padding: 0.6rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--hairline);
+    vertical-align: top;
+  }
+  .prose :where(thead th) {
+    color: var(--ink);
+    font-weight: 600;
+    background: var(--canvas-soft);
+    white-space: nowrap;
+  }
+  .prose :where(tbody tr:last-child td) {
+    border-bottom: 0;
+  }
 
   /* ---- Custom dropdown (replaces native <select>) ---- */
   .select-trigger {
