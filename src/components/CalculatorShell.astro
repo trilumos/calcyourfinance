@@ -40,51 +40,53 @@ const defaults: InputValues = Object.fromEntries(
 const initialResult = config.compute(defaults, ctx);
 
 const related = relatedCalculators(config);
-const howItWorksParas = config.howItWorks.split("\n\n");
-// Render the SEO copy from a tiny, safe subset of Markdown so authored content
-// can use headings, **bold**, and "- " bullet lists (the things that make a
-// guide scannable instead of a wall of text). Content is authored by us, not
-// user input, but we still escape first and only re-introduce the tags we
-// support — so set:html can never inject anything unexpected.
+// Render authored copy from a tiny, safe subset of Markdown so both the
+// "How it works" and guide sections can use headings, **bold**, "- " lists and
+// pipe tables — the things that make dense copy scannable (and more citable by
+// featured snippets / AI Overviews). Content is authored by us, but we escape
+// first and only re-introduce supported tags, so set:html can't inject anything.
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const inline = (s: string) =>
   esc(s)
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" rel="nofollow noopener" target="_blank">$1</a>');
-const seoHtml = config.seoContent
-  .split("\n\n")
-  .map((raw) => raw.trim())
-  .filter(Boolean)
-  .map((b) => {
-    if (b.startsWith("## ")) {
-      const nl = b.indexOf("\n");
-      const head = nl === -1 ? b.slice(3) : b.slice(3, nl);
-      const rest = nl === -1 ? "" : b.slice(nl + 1).trim();
-      return `<h3>${inline(head.trim())}</h3>${rest ? `<p>${inline(rest)}</p>` : ""}`;
-    }
-    const lines = b.split("\n").map((l) => l.trim()).filter(Boolean);
-    if (lines.length && lines.every((l) => l.startsWith("- "))) {
-      return `<ul>${lines.map((l) => `<li>${inline(l.slice(2))}</li>`).join("")}</ul>`;
-    }
-    // Markdown pipe table: line 2 is a |---|---| separator. Comparative data as a
-    // table is more scannable AND more citable (featured snippets / AI Overviews).
-    // Wrapped in an overflow-x container so it never breaks layout on mobile.
-    const cells = (l: string) => l.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
-    if (lines.length >= 2 && /^\|?[\s:|-]*-[\s:|-]*\|?$/.test(lines[1])) {
-      const head = cells(lines[0]);
-      const body = lines.slice(2).map(cells);
-      return (
-        `<div class="cyf-table-wrap"><table><thead><tr>` +
-        head.map((h) => `<th>${inline(h)}</th>`).join("") +
-        `</tr></thead><tbody>` +
-        body.map((r) => `<tr>${r.map((c) => `<td>${inline(c)}</td>`).join("")}</tr>`).join("") +
-        `</tbody></table></div>`
-      );
-    }
-    return `<p>${inline(b.replace(/\n/g, " "))}</p>`;
-  })
-  .join("\n");
+const cells = (l: string) => l.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+function renderMd(src: string): string {
+  return src
+    .split("\n\n")
+    .map((raw) => raw.trim())
+    .filter(Boolean)
+    .map((b) => {
+      if (b.startsWith("## ")) {
+        const nl = b.indexOf("\n");
+        const head = nl === -1 ? b.slice(3) : b.slice(3, nl);
+        const rest = nl === -1 ? "" : b.slice(nl + 1).trim();
+        return `<h3>${inline(head.trim())}</h3>${rest ? `<p>${inline(rest)}</p>` : ""}`;
+      }
+      const lines = b.split("\n").map((l) => l.trim()).filter(Boolean);
+      if (lines.length && lines.every((l) => l.startsWith("- "))) {
+        return `<ul>${lines.map((l) => `<li>${inline(l.slice(2))}</li>`).join("")}</ul>`;
+      }
+      // Markdown pipe table: line 2 is a |---|---| separator. Wrapped in an
+      // overflow-x container so a wide table never breaks layout on mobile.
+      if (lines.length >= 2 && /^\|?[\s:|-]*-[\s:|-]*\|?$/.test(lines[1])) {
+        const head = cells(lines[0]);
+        const body = lines.slice(2).map(cells);
+        return (
+          `<div class="cyf-table-wrap"><table><thead><tr>` +
+          head.map((h) => `<th>${inline(h)}</th>`).join("") +
+          `</tr></thead><tbody>` +
+          body.map((r) => `<tr>${r.map((c) => `<td>${inline(c)}</td>`).join("")}</tr>`).join("") +
+          `</tbody></table></div>`
+        );
+      }
+      return `<p>${inline(b.replace(/\n/g, " "))}</p>`;
+    })
+    .join("\n");
+}
+const seoHtml = renderMd(config.seoContent);
+const howItWorksHtml = renderMd(config.howItWorks);
 
 const accentStyle = platform
   ? `--accent-l:${platform.color};--accent-d:${platform.colorDark ?? platform.color}`
@@ -224,7 +226,7 @@ const comparisons =
       <section aria-labelledby="how-heading">
         <p class="eyebrow">The method</p>
         <h2 id="how-heading" class="mt-1">How it works</h2>
-        {howItWorksParas.map((p) => <p>{p}</p>)}
+        <Fragment set:html={howItWorksHtml} />
       </section>
 
       <section class="mt-8" aria-labelledby="example-heading">
