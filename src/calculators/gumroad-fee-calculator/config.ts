@@ -253,13 +253,14 @@ Fees come from Gumroad's official help page, verified on 2026-08-06: the direct 
     },
   ],
 
+  // Batch-1 siblings first (see config/indexing.ts): keep crawl equity in the
+  // indexable set while it's the only surface Google is indexing.
   related: [
     "ko-fi-fee-calculator",
+    "buy-me-a-coffee-fee-calculator",
     "substack-fee-calculator",
-    "paypal-fee-calculator",
-    "stripe-fee-calculator",
+    "bandcamp-fee-calculator",
     "paddle-fee-calculator",
-    "etsy-fee-calculator",
   ],
 
   sources: [

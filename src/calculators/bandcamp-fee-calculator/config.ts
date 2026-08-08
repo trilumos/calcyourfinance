@@ -273,10 +273,13 @@ Rates come from Bandcamp's official help pages, verified on 2026-08-06: digital 
     },
   ],
 
+  // Batch-1 siblings first (see config/indexing.ts): keep crawl equity in the
+  // indexable set while it's the only surface Google is indexing.
   related: [
-    "substack-fee-calculator",
     "ko-fi-fee-calculator",
+    "buy-me-a-coffee-fee-calculator",
     "gumroad-fee-calculator",
+    "substack-fee-calculator",
     "patreon-fee-calculator",
   ],
 

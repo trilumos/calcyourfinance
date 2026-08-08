@@ -251,11 +251,14 @@ Rates come from Buy Me a Coffee's official help documentation, verified on 2026-
     },
   ],
 
+  // Batch-1 siblings first (see config/indexing.ts): keep crawl equity in the
+  // indexable set while it's the only surface Google is indexing.
   related: [
     "ko-fi-fee-calculator",
+    "gumroad-fee-calculator",
+    "substack-fee-calculator",
+    "bandcamp-fee-calculator",
     "stripe-fee-calculator",
-    "paypal-fee-calculator",
-    "etsy-fee-calculator",
   ],
 
   sources: [

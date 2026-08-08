@@ -315,11 +315,14 @@ Rates verified against Ko-fi's own help pages on **2026-08-08** — the Contribu
     },
   ],
 
+  // Batch-1 siblings first: concentrates crawl + link equity within the indexable
+  // set (config/indexing.ts) while it's the only surface Google is indexing.
   related: [
-    "etsy-fee-calculator",
-    "paypal-fee-calculator",
-    "stripe-fee-calculator",
     "buy-me-a-coffee-fee-calculator",
+    "gumroad-fee-calculator",
+    "substack-fee-calculator",
+    "bandcamp-fee-calculator",
+    "stripe-fee-calculator",
   ],
 
   sources: [

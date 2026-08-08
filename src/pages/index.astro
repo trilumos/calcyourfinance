@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import FAQ from "../components/FAQ.astro";
 import { SITE } from "../config/site";
 import { calculators } from "../calculators";
+import { INDEXABLE_CALCULATORS } from "../config/indexing";
 import { CATEGORY_META, type Category } from "../calculators/_types";
 import { getPlatform } from "../config/platforms";
 import { demandRank } from "../config/demand";
@@ -85,6 +86,21 @@ const groups = CATEGORY_ORDER.map((cat) => {
     featured: [...items].sort(byDemand).slice(0, wide ? 12 : 8),
   };
 }).filter((g) => g.items.length > 0);
+
+// Featured "creator payout" calculators = the indexable batch (config/indexing.ts).
+// These are the pages we're actively getting crawled, so they get top billing and
+// the strongest internal links on the one page Google has indexed (the home page).
+// Derived from the allowlist so this section can never drift out of sync with it.
+const batchHooks: Record<string, string> = {
+  "ko-fi-fee-calculator": "0% on tips on the Free plan — and when Gold's $12/mo actually pays off.",
+  "buy-me-a-coffee-fee-calculator": "The “5% fee” is really ~9–18% once Stripe stacks on top.",
+  "gumroad-fee-calculator": "Direct sales run ~14%; Gumroad Discover takes a flat 30%.",
+  "substack-fee-calculator": "10% plus hidden Stripe costs — closer to 14–20% in practice.",
+  "bandcamp-fee-calculator": "15% on digital, 10% after $5k — and 0% on Bandcamp Friday.",
+};
+const featuredBatch = INDEXABLE_CALCULATORS
+  .map((slug) => calculators.find((c) => c.slug === slug))
+  .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
 // Theme-aware accent style for a platform's recognition dot / left bar.
 const accentStyle = (platformId?: string) => {
@@ -270,6 +286,45 @@ const faqLd = {
       </div>
     </div>
   </section>
+
+  <!-- Featured creator-payout calculators = the indexable batch. First content
+       block on scroll, so these pages get the strongest internal links from the
+       one page Google has indexed. Keyword-rich anchor text + the fee wedge. -->
+  {featuredBatch.length > 0 && (
+    <section class="border-b border-hairline bg-canvas" aria-labelledby="creator-h">
+      <div class="container mx-auto max-w-[64rem] px-4 py-12">
+        <p class="eyebrow">Start here</p>
+        <h2 id="creator-h" class="mb-1 mt-1">What creators actually keep.</h2>
+        <p class="mb-6 max-w-[42rem] text-[15px] text-body">
+          The real take-home on the platforms creators sell on — every headline rate broken down to
+          what lands in your account, with the fees the platforms don't advertise.
+        </p>
+        <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(17rem,1fr))]">
+          {featuredBatch.map((c) => (
+            <li>
+              <a
+                href={`/${c.slug}`}
+                class="calc-accent card group flex h-full flex-col gap-2 p-5 no-underline transition hover:border-body hover:shadow-float"
+                style={accentStyle(c.platform)}
+              >
+                <span class="flex items-center gap-2">
+                  <span class="size-2 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                  <span class="text-[15px] font-semibold text-ink">
+                    {c.title.replace(" Calculator", "")}
+                  </span>
+                  <span
+                    class="ml-auto shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  >→</span>
+                </span>
+                <span class="text-[13px] leading-relaxed text-body">{batchHooks[c.slug]}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 
   <!-- Browse by category: first thing on scroll (search lives in the navbar). -->
   <section class="border-b border-hairline bg-canvas-soft">

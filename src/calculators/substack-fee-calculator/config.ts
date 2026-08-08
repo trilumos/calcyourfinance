@@ -254,11 +254,14 @@ Rates come from Substack's official support docs and Stripe's Billing pricing, v
     },
   ],
 
+  // Batch-1 siblings first (see config/indexing.ts): keep crawl equity in the
+  // indexable set while it's the only surface Google is indexing.
   related: [
     "ko-fi-fee-calculator",
     "buy-me-a-coffee-fee-calculator",
-    "stripe-fee-calculator",
-    "paypal-fee-calculator",
+    "gumroad-fee-calculator",
+    "bandcamp-fee-calculator",
+    "patreon-fee-calculator",
   ],
 
   sources: [
