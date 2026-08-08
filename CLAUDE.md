@@ -90,6 +90,36 @@ result, reserve space so nothing shifts, and keep islands small.
 Run the `web-design-guidelines` skill on any UI change and fix what it finds. A layout that
 "looks fine on my laptop" is not verified. See memory `never-degrade-responsiveness`.
 
+## ⚠ IRON RULE — NEVER SHIP A TEMPLATED PAGE
+
+Template-at-scale is why this domain wouldn't index (70 near-identical calc pages → Google's
+scaled-content throttle → "unknown to Google"). **Every page — this batch and every future
+batch/page — must be built so no two pages share their connective tissue.** The mandatory
+per-page process (proven on batch 1):
+
+1. **Verify the facts from primary sources first** — never build on unverified numbers;
+   triangulate; kill myths (e.g. the BMaC "Gold tier" that doesn't exist). See the rate-audit
+   iron rules.
+2. **Lead with a distinct wedge** — the ONE non-obvious insight that makes the page worth
+   reading (BMaC's hidden ~9–18%; Gumroad's Direct-vs-Discover cliff; Substack's hidden Stripe
+   cost; Bandcamp's Friday 0%; Ko-fi's Contributor default). No two pages share a wedge.
+3. **Scannable pattern** — TL;DR bullets, data tables, short answer-first paragraphs, clear H2s.
+4. **VARY THE SCAFFOLDING per page** — the TL;DR opener label, the section headings
+   ("How the math works" / "Accuracy and scope" etc.), the sources/closer sentence, and the
+   generic FAQs ("is there a monthly fee?", "what percentage does X take?") must be UNIQUE to
+   each page. Never reuse the same opener/heading/closer/FAQ skeleton across pages — fold each
+   page's own wedge into them. This is the single biggest indexing risk; Ko-fi is the reference
+   for how varied it should read.
+5. **Run the `claude-seo` cross-page similarity + content audit BEFORE merge** — a shingle/
+   similarity check across the whole batch, plus per-page E-E-A-T/citability. Fix everything it
+   flags; verify in the build that NO template phrase is shared across the set.
+6. **Internal-link mesh** — homepage → every indexable page, and each page → its siblings, with
+   descriptive anchor text; internal `/slug` links are follow links (the crawl lever).
+7. **Merge only after** the audit passes and a phrase sweep confirms zero shared scaffolding.
+
+See memory `never-ship-templated-pages`. Also: on widening the indexing allowlist, re-derive
+`related` site-wide (the `src/config/indexing.ts` iron reminder).
+
 ## Design (non-negotiable — see DESIGN.md)
 - **DESIGN.md is the source of truth**: the **Vercel / Geist** system. Ink-on-near-white, **Geist +
   Geist Mono** (self-hosted via fontsource), mono uppercase eyebrows, **sentence-case,
