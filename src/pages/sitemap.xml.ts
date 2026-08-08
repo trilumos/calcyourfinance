@@ -48,10 +48,11 @@ export const GET: APIRoute = () => {
     // contradictory signal, and the point of the batch is a small surface.
     .filter(({ path }) => isIndexable(path))
     .map(({ path, lastmod, priority }) => {
-      // Must match the page's own canonical exactly. `absUrl("/")` yields the
-      // trailing-slash form used by the canonical tag, OG, schema and
-      // breadcrumbs; emitting the bare origin here made the sitemap the one
-      // signal that disagreed with every other (caught by `npm run audit:gsc`).
+      // Must match the page's own canonical exactly. Both come from absUrl(), so
+      // the homepage emits the bare origin (NO trailing slash) that Google
+      // selected as its canonical, and every other page its /slug. Keeping loc
+      // and the canonical tag on one helper is what stops the sitemap being the
+      // one signal that disagrees with the rest (caught by `npm run audit:gsc`).
       const loc = absUrl(path);
       return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
     })

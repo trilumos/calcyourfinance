@@ -8,7 +8,10 @@ import { CATEGORY_META, type CalculatorConfig } from "../calculators/_types";
 
 export function absUrl(path: string): string {
   const clean = path.startsWith("/") ? path : `/${path}`;
-  return `${SITE.url}${clean}`;
+  // The homepage canonical is the bare origin with NO trailing slash — that's the
+  // canonical Google actually selected for "/", so we declare the same to avoid a
+  // canonical mismatch. Every other path is "/slug" (already no trailing slash).
+  return clean === "/" ? SITE.url : `${SITE.url}${clean}`;
 }
 
 export function calculatorUrl(slug: string): string {
