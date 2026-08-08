@@ -10,10 +10,10 @@ export const gumroadFeeCalculator: CalculatorConfig = {
   platform: "gumroad",
   title: "Gumroad Fee Calculator",
   metaDescription:
-    "Free Gumroad fee calculator. See exactly what Gumroad takes — 10% + $0.50 on direct sales plus Stripe processing, or 30% all-in for Gumroad Discover — and calculate your real payout.",
+    "Free Gumroad fee calculator. Direct sales cost ~14% (10% + $0.50 + Stripe); Gumroad Discover costs a flat 30%. See the real payout on both — and why cheap products barely beat the Discover rate.",
   h1: "Gumroad Fee Calculator",
   intro:
-    "Calculate exactly what Gumroad takes from every sale and what you keep. Gumroad charges a flat 10% + $0.50 per direct sale, plus Stripe's processing fee on top. Sales through Gumroad Discover carry a flat 30% all-in fee. Enter your sale price and select your sale source to see the full breakdown.",
+    "Gumroad has two very different prices. A sale from your own link costs about 14% once Stripe is added; a sale Gumroad's marketplace sends you costs a flat 30%. On cheap products the gap almost vanishes — a $5 direct sale already loses ~29%. Enter your price and sale source to see exactly what you keep.",
 
   keywords: {
     primary: "gumroad fee calculator",
@@ -145,53 +145,71 @@ export const gumroadFeeCalculator: CalculatorConfig = {
   },
 
   howItWorks:
-    "Gumroad charges a flat fee on every sale with no monthly subscription, no tiers, and no volume discounts. The fee you pay depends on where your customer found your product.\n\nFor direct sales — customers buying from a link you shared, your creator profile, or an embedded checkout — Gumroad takes 10% of the sale price plus a $0.50 per-transaction fee. On top of that, Stripe charges its standard card processing fee of 2.9% + $0.30 per transaction separately. So on a $25 direct sale, the Gumroad fee is $3.00 (10% + $0.50) and the Stripe processing fee is $1.03 (2.9% + $0.30), giving you a payout of $20.97.\n\nFor sales through Gumroad Discover — Gumroad's built-in discovery marketplace where customers browse and search for products on gumroad.com — the fee is a flat 30% of the sale price, with all payment processing included in that 30%. There is no separate Stripe fee added. On a $25 Discover sale, Gumroad takes $7.50 and you keep $17.50.\n\nThere is no monthly fee on Gumroad. You only pay when you make a sale.",
+    "Gumroad has no monthly fee, no tiers, and no volume discounts — you pay only when you sell. What you pay depends entirely on where the customer came from:\n\n- **Direct sale** (your link, profile, or embed): **10% + $0.50** to Gumroad, plus **Stripe 2.9% + $0.30** charged separately. On a $25 sale that's $3.00 + $1.03 = $4.03, so you keep **$20.97**.\n- **Gumroad Discover** (a buyer found you in Gumroad's marketplace): a flat **30%, all-in** — processing is included, nothing extra. On a $25 Discover sale you keep **$17.50**.\n\nBecause the direct fee has a fixed 80¢ built in ($0.50 + Stripe's $0.30), it bites hardest on cheap products: a $5 direct sale loses ~29%, nearly the 30% Discover rate. The bigger the price, the closer direct sales get to their ~13.7% floor. Toggle the sale source above to compare.",
 
-  seoContent: `Our Gumroad fee calculator is a free tool that shows exactly what Gumroad takes on every sale and what you keep. Gumroad is one of the most popular platforms for creators selling digital products — ebooks, courses, software, templates, music, and more. Its fee structure is simple by design, but the combination of a platform fee, a fixed per-transaction charge, and a separate Stripe processing fee on direct sales means your real payout is always less than the listed price. This calculator works it out instantly so you can price your products correctly.
+  seoContent: `**The short version:**
 
-## How Gumroad's fee structure works in 2026.
+- **Two prices.** A sale you drive costs **10% + $0.50 + Stripe (2.9% + $0.30)**; a sale from Gumroad Discover costs a flat **30%, all-in**.
+- **Direct sales run ~14%** on a $100 product — but **~29% on a $5 one**, because of the fixed 80¢.
+- **No monthly fee, no tiers.** Everyone pays the same rate; you only pay when you sell.
+- **Gumroad is now Merchant of Record** — it handles VAT/sales tax, charged to the buyer on top, not from your payout.
 
-Gumroad operates on a flat fee model with no monthly subscription, no free vs. paid tier, and no volume discounts. The fee you pay depends on one thing: where did your customer come from?
+## The two Gumroad fees — the cliff between them.
 
-**Direct sales** are sales made through a link you control — a link from your email list, your social media, your website, or your Gumroad creator profile. For these sales, Gumroad charges a platform fee of 10% of the sale price plus a fixed $0.50 per transaction. On top of that, Stripe (Gumroad's payment processor) charges its standard 2.9% + $0.30 per card payment. These two fees are separate: the 10% + $0.50 goes to Gumroad; the 2.9% + $0.30 goes to Stripe.
+Gumroad charges based on how the customer found you, and the gap is large:
 
-On a $100 direct sale: Gumroad fee = $10.50, Stripe processing = $3.20, total fees = $13.70, you keep $86.30. On a $25 direct sale: Gumroad fee = $3.00, Stripe processing = $1.03, total fees = $4.03, you keep $20.97.
+| Sale source | Fee on a $100 sale | You keep |
+|---|---|---|
+| **Direct** (your link / profile) | ~13.7% ($13.70) | $86.30 |
+| **Gumroad Discover** (marketplace) | 30% ($30.00) | $70.00 |
 
-**Gumroad Discover sales** are sales where a customer found your product by browsing or searching Gumroad's built-in marketplace at gumroad.com — the Discover section. For these sales, Gumroad charges a flat 30%, and that 30% is all-inclusive: payment processing is embedded, and no additional Stripe fee is charged. On a $100 Discover sale, Gumroad takes $30 and you keep $70.
+Direct sales are ones you drive — from your email list, social posts, website, or profile link. Discover sales are ones Gumroad's own marketplace sends you. The 30% is the price of that traffic; if you brought the customer yourself, you never pay it.
 
-## Why the Discover fee is so much higher.
+## What you really keep on a direct sale.
 
-The 30% Gumroad Discover fee reflects the traffic and distribution value Gumroad provides. When a customer finds your product through Gumroad's own marketplace — not through your own marketing effort — Gumroad is both the channel and the processor. The 30% all-in rate is intended to capture that customer acquisition value. By contrast, when you drive a sale yourself, you only pay the 10% + $0.50 + Stripe processing for using Gumroad's platform infrastructure.
+The "10%" isn't the whole story: Stripe adds 2.9% + $0.30, and Gumroad's own $0.50 is fixed. Those fixed cents dominate small sales, so the effective rate falls as your price rises:
 
-For most serious Gumroad creators, the majority of sales come from direct links driven by their own audience — email lists, YouTube channels, social media, or SEO. Discover sales are an occasional bonus from organic search on Gumroad rather than the primary revenue driver for most sellers.
+| Sale price | You keep | Effective fee |
+|---|---|---|
+| $5 | $3.55 | ~29% |
+| $10 | $7.91 | ~21% |
+| $25 | $20.97 | ~16% |
+| $50 | $42.75 | ~14.5% |
+| $100 | $86.30 | ~13.7% |
 
-## Does Gumroad still charge separate processing fees?
+The striking line is the top one: a **$5 direct sale loses ~29% — almost the 30% Discover rate.** On cheap products, driving your own traffic barely beats letting Gumroad's marketplace do it. Price higher, bundle, or add an order bump so the fixed 80¢ is a smaller slice.
 
-Yes — for direct sales, Gumroad's 10% + $0.50 is their platform fee only. Stripe's card processing fee of 2.9% + $0.30 is charged separately on every direct sale. This is a common source of confusion because some platforms (like Mercari and Facebook Marketplace) have moved to an all-in fee model where processing is included. Gumroad has not done this for direct sales. The 30% Discover fee is all-in, but the standard direct-sale fee is not.
+## Why Discover costs 30%.
 
-This means the effective rate on direct sales scales with the price. On a $10 product, Gumroad's effective take is about 18.8% of the sale. On a $100 product, the effective take drops to about 13.7%. The fixed components ($0.50 Gumroad + $0.30 Stripe = $0.80 total fixed) become proportionally smaller as the price rises.
+When a buyer finds you through Gumroad's marketplace, Gumroad is the channel and the processor, so the 30% all-in rate is its cut for the customer it acquired. For most established sellers, Discover is an occasional bonus — the bulk of revenue comes from their own audience at the direct rate. Treat any Discover sale as found money, not your pricing baseline.
 
-## A brief history of Gumroad's fee changes.
+## Gumroad vs Ko-fi vs Substack.
 
-Gumroad's fee structure has changed significantly over its history. In its early years, the platform charged a tiered model: higher percentages for lower-revenue creators (capped at 8.5%), lower percentages for higher earners (as low as 3.5%), plus a separate payment processing fee. This created a system where scale rewarded established creators.
+| Platform | Fee on a digital sale | Processing | Monthly |
+|---|---|---|---|
+| **Gumroad** (direct) | 10% + $0.50 | + 2.9% + $0.30 | None |
+| **Gumroad** (Discover) | 30% all-in | included | None |
+| **Ko-fi** (Free) | 5% shop | + Stripe | None |
+| **Substack** | 10% | + Stripe | None |
+| **Patreon** | 8–12% | + Stripe | None |
 
-In 2021, Gumroad moved to the current flat model — 10% for everyone, no tiers, no monthly fee. This was controversial among high-volume sellers who had previously paid lower rates, but it simplified pricing significantly and removed the monthly subscription requirement that had existed under the tiered plan. The current 10% + $0.50 rate has remained unchanged since then.
+For one-off digital products, [Ko-fi's shop](/ko-fi-fee-calculator) at 5% is cheaper than Gumroad's 10% direct rate — but Gumroad handles global sales tax and has a built-in marketplace Ko-fi doesn't. For subscription content, [Substack](/substack-fee-calculator) matches Gumroad at 10% + Stripe. Paddle and Lemon Squeezy sit lower at ~5% + $0.50 and also act as merchant of record.
 
-Since January 1, 2025, Gumroad has operated as a full Merchant of Record on all sales. This means Gumroad itself handles the calculation, collection, and remittance of sales tax, VAT, and GST for your customers around the world. You no longer need to manage sales tax compliance — Gumroad does it automatically and the tax is collected from the buyer on top of your listed price (not taken from your payout).
+## Is there a monthly fee?
 
-## Is there a monthly fee on Gumroad?
+No. Gumroad has no subscription, no plan tiers, and no volume minimums — you can publish unlimited products and pay nothing until a sale happens. Every seller pays the same 10% + $0.50 (plus Stripe) on direct sales regardless of how much they earn.
 
-No. Gumroad has no monthly subscription fee. You can publish unlimited products, make unlimited sales, and build an audience on Gumroad without paying anything until you actually make a sale. The 10% fee (plus processing) only applies when a customer pays you. This makes Gumroad zero-risk for new creators or those with smaller audiences — you only pay when you earn.
+## What "Merchant of Record" means for you.
 
-## Gumroad fees compared to other creator platforms.
+Since 1 January 2025 Gumroad is the merchant of record on every sale. It calculates, collects, and remits VAT, GST, and US sales tax worldwide, and that tax is added to the buyer's total — it does not come out of your payout. You don't file or track it; Gumroad does. (It does not change the fees above.)
 
-Gumroad's 10% direct fee is higher than some competitors. Ko-fi charges 5% on shop sales (on the Free plan), with 0% for Ko-fi Gold at $12/month. Substack charges a flat 10% (same as Gumroad) plus Stripe processing — nearly identical to Gumroad for subscription-based content. Patreon charges 5–12% depending on the plan. Buy Me a Coffee charges a flat 5%.
+## How the math works.
 
-For digital product sellers specifically, Gumroad's 10% + processing is broadly competitive with similar platforms. Platforms like Paddle and Lemon Squeezy charge 5% + $0.50 but handle all tax compliance (as Gumroad now does too). The key advantage Gumroad offers is a large existing audience on Discover, brand recognition among digital product buyers, and deep integrations with creator workflows.
+Direct payout = price − (price × 10% + $0.50) − (price × 2.9% + $0.30). Discover payout = price × 70% (nothing else is deducted). The calculator above does both instantly — switch the sale source and enter your price.
 
-## Accuracy and what this calculator covers.
+## Accuracy and scope.
 
-All fees in this calculator are taken from Gumroad's official help page and verified on 2026-06-15. The direct sale fee (10% + $0.50) and Discover fee (30%, all-in) are Gumroad's current published rates. Stripe's processing fee (2.9% + $0.30) represents the standard US domestic card rate. International card surcharges, PayPal payment options, or currency conversion fees are not modelled here. Check the sources below and your Gumroad dashboard for the complete picture before making pricing decisions.`,
+Fees come from Gumroad's official help page, verified on 2026-08-06: the direct rate (10% + $0.50), the Discover rate (30%, all-in), and Stripe's standard US card rate (2.9% + $0.30). International card surcharges, PayPal, and currency-conversion fees aren't modelled. Sources are linked below.`,
 
   workedExample: {
     scenario: "You sell a $25 digital product through a direct link (your own audience).",
@@ -256,5 +274,5 @@ All fees in this calculator are taken from Gumroad's official help page and veri
   ],
 
   feesVerifiedOn: "2026-08-06",
-  lastUpdated: "2026-06-15",
+  lastUpdated: "2026-08-08",
 };
