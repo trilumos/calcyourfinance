@@ -10,10 +10,10 @@ export const bandcampFeeCalculator: CalculatorConfig = {
   platform: "bandcamp",
   title: "Bandcamp Fee Calculator",
   metaDescription:
-    "Free Bandcamp fee calculator. See exactly what Bandcamp takes — 15% revenue share (drops to 10% after $5,000 in sales), 10% on physical merch, 0% on Bandcamp Friday — plus payment processing, and calculate your real artist payout.",
+    "Free Bandcamp fee calculator. Digital is 15% (drops to 10% after $5,000 lifetime), merch is 10%, and on Bandcamp Friday the share is 0% — ~19% more in your pocket. See your real payout on any sale.",
   h1: "Bandcamp Fee Calculator",
   intro:
-    "Calculate exactly what Bandcamp takes from every digital download or physical merch sale. Bandcamp charges a 15% revenue share on digital sales that drops to 10% once you've sold $5,000 in music. Physical merch carries a flat 10%. On Bandcamp Friday, Bandcamp waives its share entirely — you pay only payment processing. Enter your sale price to see the full breakdown.",
+    "Bandcamp takes 15% of a digital sale — but that number moves. It falls to 10% once you've sold $5,000 of music, merch is 10% flat, and on Bandcamp Friday the share is 0%, putting about 19% more in your pocket on the same $10 sale. Enter your price and pick the scenario to see exactly what you keep.",
 
   keywords: {
     primary: "bandcamp fee calculator",
@@ -165,57 +165,71 @@ export const bandcampFeeCalculator: CalculatorConfig = {
   },
 
   howItWorks:
-    "Bandcamp charges artists two fees on every sale: a revenue share and a payment processing fee.\n\nThe revenue share is Bandcamp's cut of the sale price. For digital music and download sales, the standard rate is 15%. Once you've earned $5,000 USD in lifetime digital sales — maintained on a rolling 12-month basis — the rate drops permanently to 10% (as long as you continue to earn at least $5,000 in each trailing 12-month window). For physical merchandise including vinyl, CDs, and apparel, the revenue share is a flat 10% regardless of your sales volume.\n\nThe payment processing fee covers the cost of the card transaction. Bandcamp uses 2.9% + $0.30 as the representative card processing rate. This applies on top of the revenue share on every sale.\n\nOn Bandcamp Friday — a recurring one-day event where Bandcamp waives its revenue share — the platform fee drops to 0%. Fans still pay the listed price, but Bandcamp's entire cut goes directly to you. Only the payment processing fee applies on Bandcamp Friday sales.\n\nBandcamp does not charge listing fees, monthly subscription fees, or discovery fees on your own profile sales.",
+    "Every sale has two deductions: Bandcamp's revenue share, and a payment-processing fee. The share is the part that changes:\n\n- **Digital, standard: 15%** — the default on music and downloads.\n- **Digital, after $5,000: 10%** — once your digital sales pass $5,000 (kept on a rolling 12-month basis).\n- **Physical / merch: 10% flat** — vinyl, CDs, apparel, at any volume.\n- **Bandcamp Friday: 0%** — on those days Bandcamp waives its share entirely.\n- **Processing: ~2.9% + $0.30** — goes to the payment processor, so it applies even on Bandcamp Friday.\n\nOn a $10 digital sale that's $7.91 kept at the standard rate, $8.41 once you're past $5k, and **$9.41 on Bandcamp Friday** — about 19% more for the same sale. There are no listing, monthly, or discovery fees. Pick the sale type and toggles above to see your figure.",
 
-  seoContent: `Our Bandcamp fee calculator is a free tool for artists, bands, and independent musicians that shows exactly what Bandcamp takes on every sale — and what you actually receive. Bandcamp is one of the most creator-friendly music platforms on the internet, but understanding its revenue share structure, the $5,000 threshold, and how Bandcamp Friday changes your payout is important for pricing your music and merchandise correctly.
+  seoContent: `**The short version:**
 
-## How Bandcamp's fee structure works in 2026.
+- **Digital: 15%**, dropping to **10%** once your digital sales pass **$5,000** (rolling 12-month).
+- **Physical / merch: 10% flat**, at any volume.
+- **Bandcamp Friday: 0% share** — you keep everything but processing, ~19% more on a $10 sale.
+- **Processing: ~2.9% + $0.30**, and it applies even on Bandcamp Friday (it goes to the card processor, not Bandcamp).
+- **No listing, monthly, or discovery fees.**
 
-Bandcamp charges artists two separate fees on each sale: a revenue share and a payment processing fee. These are stacked: both apply to the sale price, and your payout is what remains after both are deducted.
+## What you keep, by scenario.
 
-**Digital sales (music, EPs, albums, downloads):**
+The revenue share is the part that moves. Here's the same $10 digital sale under each rate (card processing included):
 
-The standard Bandcamp revenue share on digital sales is **15%**. However, once an artist's cumulative digital sales reach **$5,000 USD**, the rate drops to **10%**. This lower rate is maintained on a rolling 12-month basis — meaning Bandcamp expects you to have earned at least $5,000 in the preceding 12 months for the reduced rate to stay active. If your sales fall below that threshold in any 12-month window, the rate reverts to 15%.
+| Scenario | Bandcamp share | You keep |
+|---|---|---|
+| Digital — standard | 15% | $7.91 |
+| Digital — after $5,000 | 10% | $8.41 |
+| Physical / merch | 10% | $8.41 |
+| **Any sale on Bandcamp Friday** | **0%** | **$9.41** |
 
-On a $10 digital sale at the standard 15% rate: Bandcamp takes $1.50 (revenue share) plus $0.59 (processing), totalling $2.09 in fees. You receive $7.91. At the lower 10% tier: Bandcamp takes $1.00 plus $0.59 processing, totalling $1.59 in fees. You receive $8.41.
-
-**Physical / merchandise sales:**
-
-Bandcamp charges a flat **10% revenue share** on physical goods — vinyl records, CDs, cassettes, T-shirts, posters, and other merchandise. This flat rate applies regardless of your total sales volume; there is no threshold step-down for physical goods. Payment processing of 2.9% + $0.30 applies on top.
-
-On a $30 vinyl record sale: Bandcamp takes $3.00 (10% revenue share) plus $1.17 (processing), totalling $4.17 in fees. You receive $25.83.
+Bandcamp Friday is the single biggest lever an artist has here — the $1.50 share on a $10 sale vanishes, so you keep about 19% more for doing nothing but timing the release. Only processing remains.
 
 ## What is Bandcamp Friday?
 
-Bandcamp Friday is a recurring one-day event on which Bandcamp **waives its entire revenue share**. On Bandcamp Friday, 100% of every sale — minus only the payment processing fee — goes directly to the artist. Bandcamp absorbs its own cut.
+It's a recurring event — roughly monthly — where Bandcamp waives its entire revenue share for 24 hours (Pacific time). Fans pay the same price; Bandcamp's cut goes to you instead. Processing still applies because that money goes to the card processor, not Bandcamp. Dates are announced in advance and shift around, so check [Bandcamp's official schedule](https://get.bandcamp.help/en/articles/15263119-bandcamp-friday-help) before planning a drop rather than trusting a copied list. Artists routinely time album releases and merch drops to these days.
 
-Payment processing fees (2.9% + $0.30 per transaction) still apply on Bandcamp Friday, because those fees go to the payment processor, not to Bandcamp. On a $10 sale during Bandcamp Friday: you pay $0.59 in processing and receive $9.41 — versus $7.91 on a regular day at the standard 15% rate.
+## The $5,000 tier drop.
 
-Bandcamp Friday is scheduled on specific dates throughout the year. In 2026, scheduled dates include February 6, March 6, May 1, August 7, September 4, October 2, November 6, and December 4. Sales must be completed within the 12:00am–11:59pm Pacific Time window to count.
+Your digital share falls from 15% to 10% once your lifetime digital sales cross $5,000. Bandcamp keeps you on the lower rate as long as you've done at least $5,000 in the trailing 12 months; drop below that and it reverts to 15%. Merch is always 10%, so the threshold only affects digital. Toggle "reached $5,000" above to see the difference — on a $10 sale it's worth an extra $0.50 kept.
 
-## Digital vs physical: which has lower fees?
+## Digital vs merch.
 
-Physical merch has a lower revenue share than standard digital sales: 10% versus 15%. However, once you cross the $5,000 digital sales threshold, digital and physical carry the same 10% revenue share. For artists just starting out, merch actually carries a lower platform fee than digital downloads.
+Starting out, **merch is actually cheaper than digital** — 10% flat vs 15% on downloads. Once you pass the $5,000 digital threshold the two even out at 10%. So a new artist selling a $10 download loses more to Bandcamp than one selling a $10 shirt.
 
-## Payment processing on Bandcamp.
+## Processing depends on how the fan pays.
 
-Bandcamp's payment processing fees depend on the payment method used by the buyer. The published rates for Enhanced Payments (Bandcamp's built-in checkout):
+Bandcamp's built-in checkout charges different rates by method:
 
-- **Credit/debit card:** 2.2% + $0.30 per transaction
-- **PayPal:** 1.9% + $0.30 per transaction
-- **Gift card:** 2.9% + $0.30 per transaction
+| Payment method | Processing fee |
+|---|---|
+| PayPal | 1.9% + $0.30 |
+| Credit / debit card | 2.2% + $0.30 |
+| Gift card | 2.9% + $0.30 |
 
-This calculator uses **2.9% + $0.30** as the representative card rate — a conservative estimate that covers the highest commonly encountered standard transaction rate. Your actual processing fee may be slightly lower depending on the buyer's payment method. For transactions under $8.07, Bandcamp applies a microtransaction rate.
+This calculator uses **2.9% + $0.30** as a conservative representative rate — so your real payout is usually a touch higher than shown, not lower. Sales under $8.07 use a separate microtransaction rate.
 
-## How Bandcamp compares to other creator platforms.
+## Bandcamp vs Gumroad vs Ko-fi vs Patreon.
 
-Bandcamp is unusually transparent and artist-friendly compared to streaming services. Spotify pays artists fractions of a cent per stream; Bandcamp pays artists a direct percentage of every transaction, with the remainder going to the artist immediately (or within a short payout window).
+| Platform | Fee on a digital sale | Processing | Best for |
+|---|---|---|---|
+| **Bandcamp** | 15% (10% after $5k) | + ~2.9% + $0.30 | Music, superfans |
+| **Gumroad** | 10% + $0.50 | + 2.9% + $0.30 | One-off digital products |
+| **Ko-fi** (Free) | 5% shop | + Stripe | Tips + small shop |
+| **Patreon** | 5–12% | + processing | Recurring membership |
 
-Compared to other direct-to-fan platforms: Ko-fi charges 0% on its free plan (or 5% on Ko-fi Gold shop sales); Gumroad charges 10% + $0.50 per sale; Substack charges 10% on subscriptions; Patreon charges 5–10% depending on the plan. Bandcamp's 15% standard digital rate is slightly higher than Gumroad's 10%, but Bandcamp brings significant organic music-fan discovery that general digital product platforms do not.
+Bandcamp's standard 15% is higher than [Gumroad](/gumroad-fee-calculator) (10% + $0.50) or [Ko-fi](/ko-fi-fee-calculator) (5%), but it's a dedicated music marketplace with real fan discovery, and Bandcamp Friday plus the $5k tier drop close much of the gap for working musicians. For merch and post-threshold digital, its 10% is competitive with anyone.
 
-## Accuracy and what this calculator covers.
+## How the math works.
 
-All rates in this calculator are sourced from Bandcamp's official help pages and verified on 2026-06-15. The revenue share rates (15% standard, 10% over-threshold for digital; 10% flat for physical; 0% on Bandcamp Friday) and the processing fee structure (2.9% + $0.30 representative card rate) are Bandcamp's currently published rates. Microtransaction rates for sales under $8.07, PayPal payout fees, gift card rates, and currency conversion fees are not modelled. The $5,000 rolling 12-month requirement for the lower digital tier is described in Bandcamp's terms; this calculator models whether you have crossed it via the threshold toggle. Always verify with your Bandcamp dashboard and the official sources listed below before making pricing decisions.`,
+Payout = price − (price × share) − (price × 2.9% + $0.30), where the share is 15%, 10%, or 0% depending on sale type, threshold, and whether it's Bandcamp Friday. The calculator applies the right share automatically from your toggles.
+
+## Accuracy and scope.
+
+Rates come from Bandcamp's official help pages, verified on 2026-08-06: digital 15% / 10% over $5,000, physical 10%, Bandcamp Friday 0%, and processing (card 2.2% / PayPal 1.9% / gift 2.9% + $0.30, modelled at the conservative 2.9%). Microtransaction rates under $8.07 and currency conversion aren't modelled. Sources are linked below.`,
 
   workedExample: {
     scenario: "You sell a $10 digital album to a fan (standard 15% rate, credit card payment).",
@@ -251,7 +265,7 @@ All rates in this calculator are sourced from Bandcamp's official help pages and
     },
     {
       q: "How do Bandcamp fees compare to Gumroad or Patreon?",
-      a: "Bandcamp's standard digital revenue share (15%) is higher than Gumroad's flat 10% + $0.50. However, Bandcamp's 10% reduced tier (after $5,000 in sales) is comparable to Gumroad's rate without the fixed per-transaction surcharge. Compared to Patreon's new flat 10% plan, Bandcamp's standard 15% is higher — but Bandcamp Friday (0% share) dramatically shifts the math on those days. For physical goods, Bandcamp's 10% is competitive. The key differentiator is that Bandcamp is a dedicated music platform with organic music-fan discovery built in.",
+      a: "Bandcamp's standard digital revenue share (15%) is higher than Gumroad's flat 10% + $0.50. However, Bandcamp's 10% reduced tier (after $5,000 in sales) is comparable to Gumroad's rate without the fixed per-transaction surcharge. Compared to Patreon (5–12% depending on plan), Bandcamp's standard 15% is higher — but Bandcamp Friday (0% share) dramatically shifts the math on those days. For physical goods, Bandcamp's 10% is competitive. The key differentiator is that Bandcamp is a dedicated music platform with organic music-fan discovery built in.",
     },
     {
       q: "What payment processing fees does Bandcamp charge?",
@@ -290,5 +304,5 @@ All rates in this calculator are sourced from Bandcamp's official help pages and
   ],
 
   feesVerifiedOn: "2026-08-06",
-  lastUpdated: "2026-06-15",
+  lastUpdated: "2026-08-08",
 };
