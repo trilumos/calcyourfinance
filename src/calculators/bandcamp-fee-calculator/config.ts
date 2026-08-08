@@ -165,9 +165,9 @@ export const bandcampFeeCalculator: CalculatorConfig = {
   },
 
   howItWorks:
-    "Every sale has two deductions: Bandcamp's revenue share, and a payment-processing fee. The share is the part that changes:\n\n- **Digital, standard: 15%** — the default on music and downloads.\n- **Digital, after $5,000: 10%** — once your digital sales pass $5,000 (kept on a rolling 12-month basis).\n- **Physical / merch: 10% flat** — vinyl, CDs, apparel, at any volume.\n- **Bandcamp Friday: 0%** — on those days Bandcamp waives its share entirely.\n- **Processing: ~2.9% + $0.30** — goes to the payment processor, so it applies even on Bandcamp Friday.\n\nOn a $10 digital sale that's $7.91 kept at the standard rate, $8.41 once you're past $5k, and **$9.41 on Bandcamp Friday** — about 19% more for the same sale. There are no listing, monthly, or discovery fees. Pick the sale type and toggles above to see your figure.",
+    "What Bandcamp keeps isn't one fixed number — its revenue share moves with what you sell and when, while processing stays roughly constant:\n\n- **Digital, standard: 15%** — the default on music and downloads.\n- **Digital, after $5,000: 10%** — once your digital sales pass $5,000 (kept on a rolling 12-month basis).\n- **Physical / merch: 10% flat** — vinyl, CDs, apparel, at any volume.\n- **Bandcamp Friday: 0%** — on those days Bandcamp waives its share entirely.\n- **Processing: ~2.9% + $0.30** — goes to the payment processor, so it applies even on Bandcamp Friday.\n\nOn a $10 digital sale that's $7.91 kept at the standard rate, $8.41 once you're past $5k, and **$9.41 on Bandcamp Friday** — about 19% more for the same sale. There are no listing, monthly, or discovery fees. Pick the sale type and toggles above to see your figure.",
 
-  seoContent: `**The short version:**
+  seoContent: `**What to know first:**
 
 - **Digital: 15%**, dropping to **10%** once your digital sales pass **$5,000** (rolling 12-month).
 - **Physical / merch: 10% flat**, at any volume.
@@ -223,13 +223,13 @@ This calculator uses **2.9% + $0.30** as a conservative representative rate — 
 
 Bandcamp's standard 15% is higher than [Gumroad](/gumroad-fee-calculator) (10% + $0.50) or [Ko-fi](/ko-fi-fee-calculator) (5%), but it's a dedicated music marketplace with real fan discovery, and Bandcamp Friday plus the $5k tier drop close much of the gap for working musicians. For merch and post-threshold digital, its 10% is competitive with anyone.
 
-## How the math works.
+## Adding it all up.
 
 Payout = price − (price × share) − (price × 2.9% + $0.30), where the share is 15%, 10%, or 0% depending on sale type, threshold, and whether it's Bandcamp Friday. The calculator applies the right share automatically from your toggles.
 
-## Accuracy and scope.
+## Sourcing and limits.
 
-Rates come from Bandcamp's official help pages, verified on 2026-08-06: digital 15% / 10% over $5,000, physical 10%, Bandcamp Friday 0%, and processing (card 2.2% / PayPal 1.9% / gift 2.9% + $0.30, modelled at the conservative 2.9%). Microtransaction rates under $8.07 and currency conversion aren't modelled. Sources are linked below.`,
+Bandcamp's help pages are the source for every rate here, last verified 2026-08-06: 15% digital (10% past $5,000), 10% physical, 0% on Bandcamp Friday, and processing modelled at the conservative 2.9% + $0.30 (the real card rate is 2.2%, PayPal 1.9%). We skip the sub-$8.07 microtransaction rate and currency conversion. The exact pages are listed below.`,
 
   workedExample: {
     scenario: "You sell a $10 digital album to a fan (standard 15% rate, credit card payment).",
@@ -261,7 +261,7 @@ Rates come from Bandcamp's official help pages, verified on 2026-08-06: digital 
     },
     {
       q: "Does Bandcamp charge listing fees or monthly fees?",
-      a: "No. Bandcamp does not charge listing fees, monthly account fees, discovery surcharges, or any upfront costs. You only pay when you make a sale — Bandcamp's revenue share and the payment processing fee are both deducted per transaction. There are no tiers or paid upgrades required to sell on Bandcamp.",
+      a: "No — no listing fees, monthly account fees, or upfront costs; you pay only when you sell, and only the revenue share plus processing. Better still, that share isn't fixed: it drops from 15% to 10% after $5,000 in digital sales, and falls to 0% on Bandcamp Friday, when only processing comes out.",
     },
     {
       q: "How do Bandcamp fees compare to Gumroad or Patreon?",

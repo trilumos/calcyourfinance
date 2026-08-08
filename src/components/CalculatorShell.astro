@@ -153,7 +153,7 @@ const comparisons =
     </header>
 
     <!-- THE TOOL, above the fold -->
-    <section class="calc-accent mb-5" aria-label="Calculator" style={accentStyle}>
+    <section class="calc-accent mb-2.5" aria-label="Calculator" style={accentStyle}>
       <CalculatorIsland
         client:load
         slug={config.slug}
@@ -164,6 +164,9 @@ const comparisons =
         showHistory
       />
     </section>
+    <!-- YMYL disclaimer directly under the result panel (in addition to the site
+         footer) — the estimate and its caveat should never be seen apart. -->
+    <p class="mb-6 max-w-[46rem] text-[12px] leading-relaxed text-mute">{SITE.disclaimer}</p>
 
     {
       config.kind === "comparison" && config.comparisonGuide && (

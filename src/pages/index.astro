@@ -287,45 +287,6 @@ const faqLd = {
     </div>
   </section>
 
-  <!-- Featured creator-payout calculators = the indexable batch. First content
-       block on scroll, so these pages get the strongest internal links from the
-       one page Google has indexed. Keyword-rich anchor text + the fee wedge. -->
-  {featuredBatch.length > 0 && (
-    <section class="border-b border-hairline bg-canvas" aria-labelledby="creator-h">
-      <div class="container mx-auto max-w-[64rem] px-4 py-12">
-        <p class="eyebrow">Start here</p>
-        <h2 id="creator-h" class="mb-1 mt-1">What creators actually keep.</h2>
-        <p class="mb-6 max-w-[42rem] text-[15px] text-body">
-          The real take-home on the platforms creators sell on — every headline rate broken down to
-          what lands in your account, with the fees the platforms don't advertise.
-        </p>
-        <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(17rem,1fr))]">
-          {featuredBatch.map((c) => (
-            <li>
-              <a
-                href={`/${c.slug}`}
-                class="calc-accent card group flex h-full flex-col gap-2 p-5 no-underline transition hover:border-body hover:shadow-float"
-                style={accentStyle(c.platform)}
-              >
-                <span class="flex items-center gap-2">
-                  <span class="size-2 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-                  <span class="text-[15px] font-semibold text-ink">
-                    {c.title.replace(" Calculator", "")}
-                  </span>
-                  <span
-                    class="ml-auto shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  >→</span>
-                </span>
-                <span class="text-[13px] leading-relaxed text-body">{batchHooks[c.slug]}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
-
   <!-- Browse by category: first thing on scroll (search lives in the navbar). -->
   <section class="border-b border-hairline bg-canvas-soft">
     <nav
@@ -378,6 +339,41 @@ const faqLd = {
                 class="shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5"
                 aria-hidden="true"
               >→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <!-- Creator-payout calculators = the indexable batch (config/indexing.ts). Kept
+       to a slim band here, below comparisons, so these priority pages get direct
+       homepage links (the crawl lever) without a second big card wall above the
+       category browse. Derived from the allowlist so it can't drift. -->
+  {featuredBatch.length > 0 && (
+    <section class="container mx-auto max-w-[64rem] px-4 py-12" aria-labelledby="creator-h">
+      <h2 id="creator-h" class="mb-1 mt-1">What creators actually keep.</h2>
+      <p class="mb-6 max-w-[42rem] text-[15px] text-body">
+        The real take-home on the platforms creators sell on — headline rates broken down to what
+        lands in your account, including the fees they don't advertise.
+      </p>
+      <ul class="grid list-none gap-3 p-0 [grid-template-columns:repeat(auto-fill,minmax(17rem,1fr))]">
+        {featuredBatch.map((c) => (
+          <li>
+            <a
+              href={`/${c.slug}`}
+              class="calc-accent card group flex h-full flex-col gap-1.5 p-4 no-underline transition hover:border-body hover:shadow-float"
+              style={accentStyle(c.platform)}
+            >
+              <span class="flex items-center gap-2">
+                <span class="size-2 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                <span class="text-[14px] font-semibold text-ink">{c.title.replace(" Calculator", "")}</span>
+                <span
+                  class="ml-auto shrink-0 text-[13px] text-mute transition group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                >→</span>
+              </span>
+              <span class="text-[13px] leading-relaxed text-body">{batchHooks[c.slug]}</span>
             </a>
           </li>
         ))}

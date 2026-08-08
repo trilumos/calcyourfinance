@@ -150,9 +150,9 @@ export const substackFeeCalculator: CalculatorConfig = {
   },
 
   howItWorks:
-    "Two fees come out of every paid subscription — and the second one is the one writers forget:\n\n- **Substack platform fee: 10%** — flat, monthly or annual, no tiers, no monthly cost.\n- **Stripe: 3.6% + $0.30** — 2.9% + $0.30 standard, plus a 0.7% recurring-billing fee Substack doesn't spell out.\n\nSo a $10/month subscription loses $1.66, not $1.00 — you keep **$8.34**. The fixed $0.30 is the sting on small, frequent payments: at $5/month your real take rate is ~20%.\n\n**Annual billing is the lever.** The percentages are identical, but a monthly plan pays that $0.30 twelve times a year while an annual plan pays it once. On the same $120/year subscriber, annual billing keeps **$3.30 more** than 12 monthly charges. Toggle annual above, and use the subscriber field to scale it across your list.",
+    "Substack's 10% is the number everyone knows. The one that surprises writers at payout is Stripe's cut on top of it:\n\n- **Substack platform fee: 10%** — flat, monthly or annual, no tiers, no monthly cost.\n- **Stripe: 3.6% + $0.30** — 2.9% + $0.30 standard, plus a 0.7% recurring-billing fee Substack doesn't spell out.\n\nSo a $10/month subscription loses $1.66, not $1.00 — you keep **$8.34**. The fixed $0.30 is the sting on small, frequent payments: at $5/month your real take rate is ~20%.\n\n**Annual billing is the lever.** The percentages are identical, but a monthly plan pays that $0.30 twelve times a year while an annual plan pays it once. On the same $120/year subscriber, annual billing keeps **$3.30 more** than 12 monthly charges. Toggle annual above, and use the subscriber field to scale it across your list.",
 
-  seoContent: `**The short version:**
+  seoContent: `**In one screen:**
 
 - **10% is only Substack's cut.** Stripe adds **3.6% + $0.30** on every payment — 2.9% + $0.30 standard plus a 0.7% recurring-billing fee.
 - **Real take: ~14% annual, ~17–20% on small monthly subs.** The fixed $0.30 dominates cheap, frequent payments.
@@ -208,9 +208,9 @@ At $10/month you keep $8.34 after fees, so you need about **120 paid subscribers
 
 No. Substack has no writer subscription, setup fee, or tier upgrades. Publishing free posts and growing an audience costs nothing; the 10% (plus Stripe) applies only once you turn on paid subscriptions and a reader pays.
 
-## Accuracy and scope.
+## Where these rates come from.
 
-Rates come from Substack's official support docs and Stripe's Billing pricing, verified on 2026-08-06: the 10% platform fee, Stripe's 2.9% + $0.30 base, and the 0.7% recurring-billing fee. The calculator models USD subscriptions on US cards; international card surcharges and currency conversion aren't included. Sources are linked below.`,
+The 10% platform fee is from Substack's own support docs; the Stripe 2.9% + $0.30 base and the 0.7% recurring-billing fee are from Stripe's Billing pricing — all re-checked 2026-08-06. This models USD subscriptions paid on US cards, so international card surcharges and currency conversion aren't in the figure. Check the linked sources before you set a price.`,
 
   workedExample: {
     scenario: "You have a $10/month paid Substack newsletter.",
@@ -225,8 +225,8 @@ Rates come from Substack's official support docs and Stripe's Billing pricing, v
 
   faqs: [
     {
-      q: "What percentage does Substack take?",
-      a: "Substack takes a flat 10% of all paid subscription revenue. On top of that, Stripe charges 2.9% + $0.30 per transaction plus a 0.7% recurring billing fee (added July 2024). Combined, the total fee burden is about 13.6% + $0.30 per payment. On a $10/month subscription, you keep $8.34.",
+      q: "Is Substack's fee really 10%?",
+      a: "10% is Substack's cut, not your total cost — Stripe adds 2.9% + $0.30 plus a 0.7% recurring-billing fee on every payment. Combined that's about 13.6% + $0.30, so a $10/month subscriber nets you $8.34 (~17%), and smaller monthly prices lose even more to the fixed $0.30.",
     },
     {
       q: "What are Substack fees on a $10/month subscription?",
@@ -246,7 +246,7 @@ Rates come from Substack's official support docs and Stripe's Billing pricing, v
     },
     {
       q: "Is there a monthly fee for Substack?",
-      a: "No — Substack has no monthly fee for writers. You only pay the 10% platform fee when subscribers pay you. Setting up a Substack, publishing free content, and growing your audience costs nothing. The 10% only kicks in when you enable paid subscriptions and a reader subscribes.",
+      a: "No — publishing, building a list, and staying on the platform cost writers nothing; the 10% (plus Stripe) applies only when a reader pays. If you want to keep more of what they pay, nudge subscribers toward annual billing — it pays the fixed $0.30 once a year instead of twelve times, worth about $3.30 per subscriber.",
     },
     {
       q: "How many subscribers do I need to make $1,000/month on Substack?",

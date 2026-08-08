@@ -149,9 +149,9 @@ export const bmacFeeCalculator: CalculatorConfig = {
   },
 
   howItWorks:
-    "Your payout is the amount minus two fees stacked on top of each other:\n\n- **BMaC platform fee: 5%** — on everything (coffees, memberships, shop, extras). No monthly fee; you only pay when you earn.\n- **Stripe processing: 3.4% + $0.30** — 2.9% + $0.30 standard, plus 0.5% payout.\n- **+1%** if the supporter's card is non-US; **+0.5%** on recurring memberships.\n\nThe headline is 5%, but the fixed $0.30 is what really bites small payments: on a $3 coffee your effective cut is ~18%, on $15 it's ~10%, and it only settles near 9% on larger amounts. Toggle international/membership above to see how much higher it climbs. BMaC does let you pass the Stripe fee to supporters (in your dashboard settings) so you absorb only the 5% — this calculator shows the default, where you absorb both.",
+    "The 5% everyone quotes is only Buy Me a Coffee's own cut — Stripe's processing comes out separately, so more leaves each payment than the headline suggests:\n\n- **BMaC platform fee: 5%** — on everything (coffees, memberships, shop, extras). No monthly fee; you only pay when you earn.\n- **Stripe processing: 3.4% + $0.30** — 2.9% + $0.30 standard, plus 0.5% payout.\n- **+1%** if the supporter's card is non-US; **+0.5%** on recurring memberships.\n\nThe headline is 5%, but the fixed $0.30 is what really bites small payments: on a $3 coffee your effective cut is ~18%, on $15 it's ~10%, and it only settles near 9% on larger amounts. Toggle international/membership above to see how much higher it climbs. BMaC does let you pass the Stripe fee to supporters (in your dashboard settings) so you absorb only the 5% — this calculator shows the default, where you absorb both.",
 
-  seoContent: `**The short version:**
+  seoContent: `**Quick numbers:**
 
 - **Platform fee: 5%** — flat, on everything (coffees, memberships, shop, extras). No monthly fee.
 - **Plus Stripe: 3.4% + $0.30** — 2.9% + $0.30 standard, plus a 0.5% payout fee.
@@ -181,7 +181,7 @@ Two surcharges stack on top of the base rate, and they compound:
 |---|---|---|
 | US one-time | — | ~11% |
 | International one-time | +1% | ~12% |
-| Recurring membership | +0.5% | ~11.5% |
+| Recurring membership | +0.5% | ~12% |
 | International membership | +1.5% | ~13% |
 
 A $10/month membership from an overseas supporter loses close to 13% — more than double the headline rate. Toggle **International** and **Membership** above to model your own mix.
@@ -201,13 +201,13 @@ If you mostly take small one-time tips, **Ko-fi's Free plan is cheaper** — it 
 
 Partly. BMaC lets you **pass the Stripe processing fee to supporters** in your dashboard settings — they pay a little extra at checkout and you absorb only the 5% platform fee. You can't remove the 5% itself. There's no paid plan that waives it (despite what some third-party guides claim). This calculator shows the default, where you absorb both fees.
 
-## How the math works.
+## Working out your take-home.
 
 Your payout = amount − (amount × 5%) − (amount × 3.4% + $0.30). Add 1% to the Stripe rate for international cards, and 0.5% for recurring memberships. The calculator does this instantly — adjust the amount and toggles to model any scenario.
 
-## Accuracy and scope.
+## How we sourced this.
 
-Rates come from Buy Me a Coffee's official help documentation, verified on 2026-08-06: the 5% platform fee and Stripe components (2.9% + 0.5% payout = 3.4% + $0.30), plus the +1% international and +0.5% subscription surcharges. Stripe rates for creators based outside the US differ by country and aren't modelled here — check your local Stripe pricing. Sources are linked below.`,
+Every figure here traces to Buy Me a Coffee's own help pages, last checked 2026-08-06 — the 5% platform cut and the Stripe stack (2.9% + $0.30, plus a 0.5% payout fee), along with the +1% international and +0.5% membership add-ons. One thing we don't model: Stripe's rates for creators based outside the US, which vary by country, so check your local Stripe pricing. The exact pages are linked below.`,
 
   workedExample: {
     scenario: "You receive a $15 one-time coffee from a US-based supporter.",
@@ -222,8 +222,8 @@ Rates come from Buy Me a Coffee's official help documentation, verified on 2026-
 
   faqs: [
     {
-      q: "What percentage does Buy Me a Coffee take?",
-      a: "Buy Me a Coffee takes a flat 5% platform fee on every transaction. On top of that, Stripe charges a 3.4% + $0.30 processing fee (2.9% standard + 0.5% payout processing). For a $15 payment, you keep $13.44. There's no monthly fee for creators — the 5% only applies when you earn.",
+      q: "Is Buy Me a Coffee really just 5%?",
+      a: "Not really — 5% is only the platform's share. Stripe adds 3.4% + $0.30 on top of it (2.9% + $0.30 plus a 0.5% payout fee), so a $15 coffee nets you $13.44, and a small $5 one is closer to ~14% than 5%. There's no monthly fee, though: you pay only when someone supports you.",
     },
     {
       q: "How much does Buy Me a Coffee charge on a $5 coffee?",
@@ -247,7 +247,7 @@ Rates come from Buy Me a Coffee's official help documentation, verified on 2026-
     },
     {
       q: "Is there a monthly fee for Buy Me a Coffee?",
-      a: "No — Buy Me a Coffee has no monthly creator subscription fee. You only pay the 5% platform fee when you receive a payment. This makes it genuinely free to set up and maintain until you start earning, which is one reason it's popular for creators just starting to monetise their audience.",
+      a: "No monthly or setup fee — the 5% (plus Stripe) is charged only when a supporter actually pays. And if you'd rather not absorb the Stripe part, BMaC can pass those processing fees to your supporters at checkout (a setting in your dashboard), leaving you with just the 5% platform cut.",
     },
   ],
 

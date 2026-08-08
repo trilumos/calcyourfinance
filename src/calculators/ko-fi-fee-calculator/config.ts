@@ -200,7 +200,7 @@ export const kofiFeeCalculator: CalculatorConfig = {
   },
 
   howItWorks:
-    "Your Ko-fi payout is the amount minus two stacked fees: **Ko-fi's platform fee** and **your payment processor's fee** (Stripe or PayPal — your own account, billed directly, no Ko-fi markup).\n\nThe platform fee depends on one setting and the income type:\n\n- **Tips, Contributor on (the default):** 5%\n- **Tips, Contributor off:** 0%\n- **Shop, memberships, commissions:** 5% (any non-Gold account)\n- **Ko-fi Gold ($12/mo):** 0% on everything\n\nSo two levers decide your take-home: the **Contributor toggle** (Settings → Payment — on by default, so most new creators pay 5% on tips without realising) and your **processor** (PayPal Micropayments keeps more on small tips, Stripe on larger payments). Set both in the calculator above; the guide below works through each, with the exact rates and break-even points.",
+    "What Ko-fi keeps hinges on one setting most creators don't realise is switched on — and on which payment processor you use. There are two deductions: **Ko-fi's platform fee** and **your payment processor's fee** (Stripe or PayPal — your own account, billed directly, no Ko-fi markup).\n\nThe platform fee depends on that setting and the income type:\n\n- **Tips, Contributor on (the default):** 5%\n- **Tips, Contributor off:** 0%\n- **Shop, memberships, commissions:** 5% (any non-Gold account)\n- **Ko-fi Gold ($12/mo):** 0% on everything\n\nSo two levers decide your take-home: the **Contributor toggle** (Settings → Payment — on by default, so most new creators pay 5% on tips without realising) and your **processor** (PayPal Micropayments keeps more on small tips, Stripe on larger payments). Set both in the calculator above; the guide below works through each, with the exact rates and break-even points.",
 
   seoContent: `Ko-fi is famous as the "0% on tips" platform — but that's only true if you turned a setting off, and your payment processor quietly changes your payout more than Ko-fi's own cut does. This tool runs your real numbers; here's what actually comes out of each payment.
 
@@ -344,6 +344,6 @@ Rates verified against Ko-fi's own help pages on **2026-08-08** — the Contribu
     },
   ],
 
-  feesVerifiedOn: "2026-08-06",
-  lastUpdated: "2026-06-13",
+  feesVerifiedOn: "2026-08-08",
+  lastUpdated: "2026-08-08",
 };

@@ -147,7 +147,7 @@ export const gumroadFeeCalculator: CalculatorConfig = {
   howItWorks:
     "Gumroad has no monthly fee, no tiers, and no volume discounts — you pay only when you sell. What you pay depends entirely on where the customer came from:\n\n- **Direct sale** (your link, profile, or embed): **10% + $0.50** to Gumroad, plus **Stripe 2.9% + $0.30** charged separately. On a $25 sale that's $3.00 + $1.03 = $4.03, so you keep **$20.97**.\n- **Gumroad Discover** (a buyer found you in Gumroad's marketplace): a flat **30%, all-in** — processing is included, nothing extra. On a $25 Discover sale you keep **$17.50**.\n\nBecause the direct fee has a fixed 80¢ built in ($0.50 + Stripe's $0.30), it bites hardest on cheap products: a $5 direct sale loses ~29%, nearly the 30% Discover rate. The bigger the price, the closer direct sales get to their ~13.7% floor. Toggle the sale source above to compare.",
 
-  seoContent: `**The short version:**
+  seoContent: `**Before you price anything:**
 
 - **Two prices.** A sale you drive costs **10% + $0.50 + Stripe (2.9% + $0.30)**; a sale from Gumroad Discover costs a flat **30%, all-in**.
 - **Direct sales run ~14%** on a $100 product — but **~29% on a $5 one**, because of the fixed 80¢.
@@ -203,13 +203,13 @@ No. Gumroad has no subscription, no plan tiers, and no volume minimums — you c
 
 Since 1 January 2025 Gumroad is the merchant of record on every sale. It calculates, collects, and remits VAT, GST, and US sales tax worldwide, and that tax is added to the buyer's total — it does not come out of your payout. You don't file or track it; Gumroad does. (It does not change the fees above.)
 
-## How the math works.
+## Doing the math on a sale.
 
 Direct payout = price − (price × 10% + $0.50) − (price × 2.9% + $0.30). Discover payout = price × 70% (nothing else is deducted). The calculator above does both instantly — switch the sale source and enter your price.
 
-## Accuracy and scope.
+## What these numbers include.
 
-Fees come from Gumroad's official help page, verified on 2026-08-06: the direct rate (10% + $0.50), the Discover rate (30%, all-in), and Stripe's standard US card rate (2.9% + $0.30). International card surcharges, PayPal, and currency-conversion fees aren't modelled. Sources are linked below.`,
+We pull the direct rate (10% + $0.50), the 30% Discover rate, and Stripe's US card rate (2.9% + $0.30) straight from Gumroad's fee page, last confirmed 2026-08-06. Not included: international card surcharges, PayPal, and currency conversion. Everything's cited below so you can check it against the source yourself.`,
 
   workedExample: {
     scenario: "You sell a $25 digital product through a direct link (your own audience).",
@@ -224,8 +224,8 @@ Fees come from Gumroad's official help page, verified on 2026-08-06: the direct 
 
   faqs: [
     {
-      q: "What percentage does Gumroad take?",
-      a: "On direct sales, Gumroad takes 10% of the sale price plus a fixed $0.50 per transaction — that's the Gumroad platform fee. Stripe charges an additional 2.9% + $0.30 on top for card processing. On a $25 sale, your total fees are $4.03 and you keep $20.97 (about 16.1% effective take). On sales through Gumroad Discover (the marketplace), the fee is a flat 30% all-inclusive, with no separate Stripe charge.",
+      q: "Why is Gumroad taking more than 10%?",
+      a: "Because 10% + $0.50 is only the direct-sale platform fee — Stripe's 2.9% + $0.30 is charged separately on top, so a $25 sale really costs $4.03 (~16%) and you keep $20.97. And if the buyer found you through Gumroad Discover rather than your own link, the fee jumps to a flat 30%, all-in.",
     },
     {
       q: "Does Gumroad still charge separate processing fees?",
@@ -241,7 +241,7 @@ Fees come from Gumroad's official help page, verified on 2026-08-06: the direct 
     },
     {
       q: "Is there a monthly fee on Gumroad?",
-      a: "No — Gumroad has no monthly subscription fee. You only pay fees when you make a sale. This makes Gumroad free to set up and use until you start earning. There are no plans, tiers, or paid upgrades — every seller pays the same 10% + $0.50 (plus Stripe processing) on direct sales regardless of revenue volume.",
+      a: "No — no subscription, no tiers, no minimums; you pay only when a sale happens. Every seller is on the same 10% + $0.50 (plus Stripe) for direct sales, whether you sell once a year or a thousand times. The one thing that changes your rate is where the buyer came from: a Gumroad Discover sale costs a flat 30% instead.",
     },
     {
       q: "How does Gumroad compare to Ko-fi and Substack for fees?",

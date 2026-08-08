@@ -31,6 +31,21 @@ export interface VerificationSession {
 
 export const verificationLog: VerificationSession[] = [
   {
+    date: "2026-08-08",
+    startUTC: "05:30",
+    endUTC: "07:15",
+    slot: "ad-hoc",
+    scope:
+      "Ad-hoc primary-source re-verification of Ko-fi during the batch-1 page rebuild, focused on its plan tiers.",
+    coverage:
+      "Ko-fi re-read against its own help centre (primary): the Contributor-status article, the fee overview, and the Gold page. Confirmed that a new account starts with Contributor status ON — which takes 5% of tips too, not the widely-repeated 0% — with 0% only if the creator opts out; shop/memberships stay 5% (0% on Gold at $12/mo). Its verified date moves to today.",
+    result:
+      "No rate-value changes. The tier the fee applies to was corrected to Ko-fi's own term 'Contributor' with the 5%-on-tips default; processor rates (Stripe, PayPal Micropayments) confirmed as standard US rates.",
+    changes: [],
+    method:
+      "Ko-fi's official help-centre articles (primary source), cross-checked against the on-page fee overview and the Gold pricing page.",
+  },
+  {
     date: "2026-08-06",
     startUTC: "06:42",
     endUTC: "07:45",
