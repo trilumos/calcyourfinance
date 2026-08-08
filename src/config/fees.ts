@@ -1826,9 +1826,29 @@ export const depopFeesROW: DepopFees = {
    =========================================================================== */
 export const KOFI_VERIFIED = "2026-08-06";
 
+/**
+ * Payment processors a creator connects their OWN account to. Ko-fi, Buy Me a
+ * Coffee, Gumroad, Substack and Bandcamp all pay into the creator's own Stripe
+ * or PayPal, so the processor fee is the CREATOR's choice — and on small tips
+ * the difference is material (PayPal Micropayments wins under ~$10). US rates,
+ * verified 2026-08-07 (stripe.com/pricing, paypal.com/us/business/fees;
+ * PayPal Micropayments must be enabled per-account).
+ */
+export const CREATOR_PROCESSORS = {
+  stripe: { label: "Stripe — 2.9% + $0.30", percent: 2.9, fixed: 0.3 },
+  paypal: { label: "PayPal — 3.49% + $0.49", percent: 3.49, fixed: 0.49 },
+  "paypal-micro": { label: "PayPal Micropayments — 4.99% + $0.09", percent: 4.99, fixed: 0.09 },
+} as const;
+export type CreatorProcessorId = keyof typeof CREATOR_PROCESSORS;
+
 export interface KofiFees {
   /** Ko-fi platform fee % on tips/donations (Free plan). */
   tipsPercent: number;
+  /** Contributor status: 5% on tips too (shop is 5% regardless). Ko-fi's OWN term
+   *  — "everyone who joins Ko-fi now starts with Contributor status" (5% of tips),
+   *  opt-out in Settings > Payment. This is the fee people miss when they say
+   *  "Ko-fi is 0% on tips". Source: help.ko-fi.com/.../25143210488477-Contributor-status */
+  contributorPercent: number;
   /** Ko-fi platform fee % on shop sales, memberships, commissions (Free plan). */
   shopPercent: number;
   /** Ko-fi Gold platform fee % on all income types. */
@@ -1842,12 +1862,14 @@ export interface KofiFees {
   currency: string;
   source: string;
   goldSource: string;
+  contributorSource: string;
   verifiedOn: string;
 }
 
 export const kofiFees: KofiFees = {
   tipsPercent: 0,
   shopPercent: 5,
+  contributorPercent: 5,
   goldPercent: 0,
   goldMonthlyCost: 12,
   processingPercent: 2.9,
@@ -1855,6 +1877,7 @@ export const kofiFees: KofiFees = {
   currency: "USD",
   source: "https://help.ko-fi.com/hc/en-us/articles/360002506494-Does-Ko-fi-take-a-fee",
   goldSource: "https://help.ko-fi.com/hc/en-us/articles/360005506873-What-is-Ko-fi-Gold",
+  contributorSource: "https://help.ko-fi.com/hc/en-us/articles/25143210488477-Contributor-status",
   verifiedOn: KOFI_VERIFIED,
 };
 

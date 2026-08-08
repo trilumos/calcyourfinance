@@ -135,3 +135,76 @@ describe("free tips vs free shop payout difference", () => {
     expect(+(tips.payout - shop.payout).toFixed(2)).toBe(2.5);
   });
 });
+
+/* ===========================================================================
+   Ko-fi tier + processor behaviour, driven through config.compute()
+   ---------------------------------------------------------------------------
+   These drive the real config rather than mirrored constants, because the bug
+   we are guarding against lives in the tier-selection logic, not the shared
+   engine.
+
+   Verified 2026-08-08 against Ko-fi's own help pages (primary source):
+     Contributor status (DEFAULT)    5% on tips too (shop stays 5%). "Everyone who
+                                     joins Ko-fi now starts with Contributor status";
+                                     opt out in Settings > Payment.
+                                     help.ko-fi.com/.../25143210488477-Contributor-status
+     Contributor off                 0% on tips; 5% on memberships/shop/commissions
+     Gold ($12/mo)                   0% on everything
+   "Contributor" IS Ko-fi's own term (an earlier note here wrongly said it wasn't).
+   =========================================================================== */
+
+import { kofiFeeCalculator } from "./config";
+
+const ctx = {
+  country: "US",
+  formatCurrency: (v: number) => `$${v.toFixed(2)}`,
+  formatPercent: (v: number) => `${v}%`,
+  formatNumber: (v: number) => String(v),
+};
+
+/** Net payout for a set of input values. */
+const net = (values: Record<string, unknown>) => {
+  const r = kofiFeeCalculator.compute(
+    { amount: 25, plan: "free", incomeType: "tips", processing: true, itemCost: 0, processor: "stripe", ...values },
+    ctx as never,
+  );
+  return Number(r.rows.find((x) => x.kind === "net")!.display.replace(/[^0-9.]/g, ""));
+};
+
+describe("Ko-fi plan tiers", () => {
+  it("charges 5% on tips under Contributor status — the default a new account is on", () => {
+    // The whole point: everyone repeats "Ko-fi is 0% on tips", but new accounts
+    // start with Contributor status ON, which takes 5% of tips too. You must opt out.
+    expect(net({ plan: "contributor", amount: 100 })).toBeCloseTo(net({ plan: "free", amount: 100 }) - 5, 2);
+  });
+
+  it("keeps tips at 0% with Contributor turned off", () => {
+    const gross = 100;
+    // 0% platform + Stripe 2.9% + $0.30
+    expect(net({ plan: "free", amount: gross })).toBeCloseTo(gross - (gross * 0.029 + 0.3), 2);
+  });
+
+  it("charges 0% on every income type on Gold", () => {
+    expect(net({ plan: "gold", incomeType: "shop", amount: 100 })).toBeCloseTo(
+      net({ plan: "gold", incomeType: "tips", amount: 100 }),
+      2,
+    );
+  });
+});
+
+describe("Ko-fi payment processor choice", () => {
+  // Ko-fi pays into YOUR OWN Stripe or PayPal account, so the processor fee is
+  // the creator's choice — and on small tips the difference is material.
+  it("PayPal micropayments beats Stripe on a small tip", () => {
+    expect(net({ processor: "paypal-micro", amount: 3 })).toBeGreaterThan(net({ processor: "stripe", amount: 3 }));
+  });
+
+  it("Stripe beats PayPal micropayments on a large payment", () => {
+    expect(net({ processor: "stripe", amount: 100 })).toBeGreaterThan(net({ processor: "paypal-micro", amount: 100 }));
+  });
+
+  it("crosses over near $10 (0.0499x + 0.09 = 0.029x + 0.30)", () => {
+    expect(net({ processor: "paypal-micro", amount: 9 })).toBeGreaterThan(net({ processor: "stripe", amount: 9 }));
+    expect(net({ processor: "stripe", amount: 12 })).toBeGreaterThan(net({ processor: "paypal-micro", amount: 12 }));
+  });
+});

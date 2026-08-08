@@ -1,5 +1,5 @@
 import type { CalculatorConfig, InputValues, ComputeCtx, CalcResult } from "../_types";
-import { kofiFees } from "../../config/fees";
+import { kofiFees, CREATOR_PROCESSORS, type CreatorProcessorId } from "../../config/fees";
 import { computeMarketplaceFee } from "../_shared/marketplaceFee";
 
 export const kofiFeeCalculator: CalculatorConfig = {
@@ -59,12 +59,13 @@ export const kofiFeeCalculator: CalculatorConfig = {
       id: "plan",
       label: "Ko-fi plan",
       type: "select",
-      default: "free",
+      default: "contributor",
       options: [
-        { value: "free", label: "Free plan" },
-        { value: "gold", label: "Ko-fi Gold ($12/mo)" },
+        { value: "contributor", label: "Contributor status — default (5% on tips too)" },
+        { value: "free", label: "Contributor off (0% tips, 5% shop)" },
+        { value: "gold", label: "Ko-fi Gold ($12/mo — 0% everything)" },
       ],
-      help: "Free plan: 0% on tips, 5% on shop/memberships/commissions. Gold: 0% on everything.",
+      help: "Every new Ko-fi account starts with Contributor status ON, which gives Ko-fi 5% of your tips as well. Turn it off in Settings → Payment to get 0% on tips (shop/memberships stay 5%). Gold removes all platform fees for $12/mo.",
     },
     {
       id: "incomeType",
@@ -78,11 +79,23 @@ export const kofiFeeCalculator: CalculatorConfig = {
       help: "Affects the platform fee on the Free plan. Gold always charges 0%.",
     },
     {
+      id: "processor",
+      label: "Your payment processor",
+      type: "select",
+      default: "stripe",
+      options: [
+        { value: "stripe", label: "Stripe — 2.9% + $0.30" },
+        { value: "paypal", label: "PayPal — 3.49% + $0.49" },
+        { value: "paypal-micro", label: "PayPal Micropayments — 4.99% + $0.09" },
+      ],
+      help: "Ko-fi pays into YOUR OWN Stripe or PayPal, so this fee is your choice. On small tips, PayPal Micropayments (must be enabled on your PayPal account) beats Stripe — the two cross over near $10.",
+    },
+    {
       id: "processing",
       label: "Include payment processing fee",
       type: "toggle",
       default: true,
-      help: "Stripe / PayPal processing (2.9% + $0.30). Always charged; toggle off to see platform fee only.",
+      help: "Processing is always charged (it's your processor's fee, not Ko-fi's). Toggle off to see Ko-fi's platform fee in isolation.",
     },
     {
       id: "itemCost",
@@ -96,21 +109,31 @@ export const kofiFeeCalculator: CalculatorConfig = {
 
   compute(values: InputValues, ctx: ComputeCtx): CalcResult {
     const amount = Math.max(0, Number(values.amount) || 0);
-    const plan = String(values.plan || "free");
+    const plan = String(values.plan || "contributor");
     const incomeType = String(values.incomeType || "tips");
     const includeProcessing = Boolean(values.processing !== false);
     const itemCost = Math.max(0, Number(values.itemCost) || 0);
 
     // Ko-fi platform fee:
-    // - Gold plan: always 0%
-    // - Free plan, tips: 0%
-    // - Free plan, shop/memberships/commissions: 5%
+    // - Gold plan:      0% on everything
+    // - Standard plan:  5% on EVERYTHING (tips included) — the default a new account is on
+    // - Free plan:      0% on tips, 5% on shop/memberships/commissions
     const isGold = plan === "gold";
+    const isContributor = plan === "contributor";
     const isShop = incomeType === "shop";
-    const sellingPercent = isGold ? 0 : isShop ? kofiFees.shopPercent : kofiFees.tipsPercent;
+    // Contributor takes 5% on tips too; shop/memberships are 5% on any non-Gold plan.
+    const sellingPercent = isGold
+      ? 0
+      : isShop
+        ? kofiFees.shopPercent
+        : isContributor
+          ? kofiFees.contributorPercent
+          : kofiFees.tipsPercent;
 
-    const processingPercent = includeProcessing ? kofiFees.processingPercent : 0;
-    const processingFixed = includeProcessing ? kofiFees.processingFixed : 0;
+    // Processing fee is the creator's OWN processor (Stripe / PayPal), their choice.
+    const proc = CREATOR_PROCESSORS[(values.processor as CreatorProcessorId)] ?? CREATOR_PROCESSORS.stripe;
+    const processingPercent = includeProcessing ? proc.percent : 0;
+    const processingFixed = includeProcessing ? proc.fixed : 0;
 
     const r = computeMarketplaceFee({
       itemPrice: amount,
@@ -122,10 +145,10 @@ export const kofiFeeCalculator: CalculatorConfig = {
     });
 
     const hasCost = itemCost > 0;
-    const planLabel = isGold ? "Ko-fi Gold" : "Free plan";
+    const planLabel = isGold ? "Ko-fi Gold" : isContributor ? "Contributor" : "Contributor off";
     const incomeLabel = isShop ? "shop/memberships/commissions" : "tips/donations";
     const feeLabel = sellingPercent === 0
-      ? `0% Ko-fi platform fee (${planLabel}${!isGold && !isShop ? " — tips" : ""})`
+      ? `0% Ko-fi platform fee (${planLabel}${plan === "free" && !isShop ? " — tips" : ""})`
       : `${ctx.formatPercent(sellingPercent)} Ko-fi platform fee (${planLabel})`;
 
     return {
@@ -147,7 +170,7 @@ export const kofiFeeCalculator: CalculatorConfig = {
         ...(includeProcessing
           ? [
               {
-                label: `Processing fee (${ctx.formatPercent(kofiFees.processingPercent)} + $${kofiFees.processingFixed.toFixed(2)} — Stripe/PayPal)`,
+                label: `Processing fee (${ctx.formatPercent(proc.percent)} + $${proc.fixed.toFixed(2)} — ${proc.label.split(" — ")[0]})`,
                 display: ctx.formatCurrency(r.processingFee),
                 kind: "deduction" as const,
               },
