@@ -1,14 +1,14 @@
 {
-  "date": "2026-08-10",
+  "date": "2026-08-17",
   "checked": 164,
   "counts": {
     "reached-no-assertion": 56,
     "unconfirmed": 50,
-    "unchanged": 19,
-    "blocked": 36,
+    "blocked": 37,
     "http-error": 2,
+    "unchanged": 18,
     "unreachable": 1
   },
   "actionable": 0,
-  "reportFile": "rate-verification/2026-08-10.md"
+  "reportFile": "rate-verification/2026-08-17.md"
 }
