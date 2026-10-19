@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-12",
+  "date": "2026-10-19",
   "checked": 164,
   "counts": {
     "reached-no-assertion": 57,
@@ -10,5 +10,5 @@
     "unreachable": 1
   },
   "actionable": 0,
-  "reportFile": "rate-verification/2026-10-12.md"
+  "reportFile": "rate-verification/2026-10-19.md"
 }
